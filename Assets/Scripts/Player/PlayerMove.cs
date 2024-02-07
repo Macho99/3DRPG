@@ -13,8 +13,6 @@ public class PlayerMove : MonoBehaviour
 	[SerializeField] float jumpForce = 10f;
 	[SerializeField] float slideSpeed = 5f;
 	[SerializeField] float slideAngle = 20f;
-	[SerializeField] int jumpAddAccuracyAmount = 250;
-	[SerializeField] float moveAccuracyRatio = 0.05f;
 	[SerializeField] float moveLerpSpeed = 50f;
 	[SerializeField] float rotationLerpSpeed = 5f;
 
