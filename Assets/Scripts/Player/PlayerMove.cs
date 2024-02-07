@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
-using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.HID;
@@ -11,13 +10,15 @@ public class PlayerMove : MonoBehaviour
 {
 	[SerializeField] Transform moveRoot;
 	[SerializeField] float moveSpeed = 3f;
-	[SerializeField] float runSpeed = 6f;
 	[SerializeField] float jumpForce = 10f;
 	[SerializeField] float slideSpeed = 5f;
 	[SerializeField] float slideAngle = 20f;
 	[SerializeField] int jumpAddAccuracyAmount = 250;
 	[SerializeField] float moveAccuracyRatio = 0.05f;
+	[SerializeField] float moveLerpSpeed = 50f;
+	[SerializeField] float rotationLerpSpeed = 5f;
 
+	private Vector3 curMoveVec;
 	private bool isGround;
 	public bool IsGround
 	{
@@ -93,27 +94,32 @@ public class PlayerMove : MonoBehaviour
 			velY += Physics.gravity.y * Time.deltaTime;
 		}
 
-		Vector3 moveDir = new Vector3();
-		moveDir += moveInput.x * moveSpeed * moveRoot.right;
+		Vector3 targetMoveVec = new Vector3();
+		targetMoveVec += moveInput.x * moveSpeed * moveRoot.right;
+		targetMoveVec += moveInput.y * moveSpeed * moveRoot.forward;
 		float animSpeed = moveInput.sqrMagnitude;
 
 		if (IsSprint)
 		{
-			//anim.SetFloat("YSpeed", moveInput.y * 2f, 0.5f, Time.deltaTime);
-			moveDir += moveInput.y * runSpeed * moveRoot.forward;
+			targetMoveVec *= 2f;
 			animSpeed *= 2f;
 		}
-		else
+
+		curMoveVec = Vector3.Lerp(curMoveVec, targetMoveVec, Time.deltaTime * moveLerpSpeed);
+
+		if (moveInput.sqrMagnitude > 0.1f)
 		{
-			//anim.SetFloat("YSpeed", moveInput.y, 0.5f, Time.deltaTime);
-			moveDir += moveInput.y * moveSpeed * moveRoot.forward;
+			anim.transform.rotation = Quaternion.Lerp(
+				anim.transform.rotation,
+				Quaternion.LookRotation(new Vector3(curMoveVec.x, 0f, curMoveVec.z)), 
+				Time.deltaTime * rotationLerpSpeed);
 		}
+
 		anim.SetFloat("Speed", animSpeed, 0.1f, Time.deltaTime);
-		anim.transform.rotation = moveRoot.rotation;
 
-		moveDir.y = velY;
+		curMoveVec.y = velY;
 
-		controller.Move(moveDir * Time.deltaTime);
+		controller.Move(curMoveVec * Time.deltaTime);
 	}
 
 	private void OnMove(InputValue value)

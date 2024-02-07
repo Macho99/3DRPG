@@ -20664,13 +20664,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveRoot: {fileID: 836442849}
-  moveSpeed: 5
-  runSpeed: 6
+  moveSpeed: 4
   jumpForce: 10
   slideSpeed: 5
   slideAngle: 20
   jumpAddAccuracyAmount: 250
   moveAccuracyRatio: 0.05
+  moveLerpSpeed: 50
+  rotationLerpSpeed: 10
 --- !u!143 &671886268
 CharacterController:
   m_ObjectHideFlags: 0
