@@ -33,6 +33,11 @@ public class PlayerAttack : MonoBehaviour
 		}
 	}
 
+	public float GetAnimNormalizedTime(int layer)
+	{
+		return anim.GetCurrentAnimatorStateInfo(layer).normalizedTime;
+	}
+
 	public bool IsAnimWait(int layer)
 	{
 		return anim.GetCurrentAnimatorStateInfo(layer).IsName("Wait");
@@ -41,5 +46,10 @@ public class PlayerAttack : MonoBehaviour
 	public void SetAnimTrigger(string str)
 	{
 		anim.SetTrigger(str);
+	}
+
+	public void SetAnimFloat(string str, float value)
+	{
+		anim.SetFloat(str, value);
 	}
 }

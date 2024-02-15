@@ -4,15 +4,23 @@ using UnityEngine;
 
 public class TargetFollower : MonoBehaviour
 {
-	[SerializeField] Transform target;
+	[SerializeField] public Transform target;
 	[SerializeField] bool followRotation;
 
 	private void Update()
 	{
-		transform.position = target.position;
+		if (target == null) return;
+
+        transform.position = target.position;
 		if(followRotation == true)
 		{
 			transform.rotation = target.rotation;
 		}
+	}
+
+	public void SetTarget(Transform target)
+	{
+		print(target);
+		this.target = target;
 	}
 }
