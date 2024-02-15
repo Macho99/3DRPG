@@ -63,6 +63,7 @@ public class Sword : Weapon
 		IsAttacking = true;
 		TargetFollower trail = GameManager.Resource.Instantiate<TargetFollower>("Prefab/SwordTrail", true);
 		trail.SetTarget(trailTrans);
+		trail.transform.position = trailTrans.position;
 		trail.GetComponent<TrailRenderer>().Clear();
 
 		while (IsAttacking == true)
@@ -72,11 +73,11 @@ public class Sword : Weapon
 			if(AttackCast(prev, hitList) == false)
 			{
 				playerAttack.SetAnimFloat("Reverse", -0.4f);
+				trail.SetTarget(null);
 				while (playerAttack.GetAnimNormalizedTime(1) > 0.01f)
 				{
 					yield return null;
 				}
-				trail.SetTarget(null);
 				playerAttack.SetAnimFloat("Reverse", 1f);
 				playerAnimEvent.OnAttackEnd.RemoveListener(AttackEnd);
 				IsAttacking = false;

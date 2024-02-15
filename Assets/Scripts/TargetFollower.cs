@@ -20,7 +20,6 @@ public class TargetFollower : MonoBehaviour
 
 	public void SetTarget(Transform target)
 	{
-		print(target);
 		this.target = target;
 	}
 }
