@@ -5,17 +5,20 @@ using UnityEngine;
 public class TargetFollower : MonoBehaviour
 {
 	[SerializeField] public Transform target;
-	[SerializeField] bool followRotation;
+	[SerializeField] bool followRotation = true;
+	[SerializeField] bool followScale = false;
 
 	private void Update()
 	{
 		if (target == null) return;
 
         transform.position = target.position;
+
 		if(followRotation == true)
-		{
 			transform.rotation = target.rotation;
-		}
+
+		if (followScale == true)
+			transform.localScale = target.localScale;
 	}
 
 	public void SetTarget(Transform target)
