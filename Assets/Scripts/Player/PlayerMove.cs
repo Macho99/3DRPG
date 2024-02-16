@@ -35,11 +35,15 @@ public class PlayerMove : MonoBehaviour
 			isGround = value;
 		}
 	}
-	public bool IsSprint { get; private set; }
+
+	public bool JumpInput { get; private set; }
+	public Vector2 MoveInput { get; private set; }
+	public bool SprintInput { get; private set; }
+	public float MoveMultiplier { private get; set; } = 1f;
+	public float VelY { set { velY = value; } }
 
 	Animator anim;
 	CharacterController controller;
-	Vector2 moveInput;
 	float velY;
 	bool colResult;
 	RaycastHit hitInfo;
@@ -66,7 +70,7 @@ public class PlayerMove : MonoBehaviour
 		//바닥과 충돌중이고, 경사면이고, 플레이어 인풋이 없을때
 		if (colResult == true && Vector3.Angle(hitInfo.normal, Vector3.up) > slideAngle)
 		{
-			if (moveInput.sqrMagnitude < 0.1f)
+			if (MoveInput.sqrMagnitude < 0.1f)
 			{
 				Vector3 slideDirection = hitInfo.normal;
 				slideDirection.y = 0f;
@@ -93,19 +97,22 @@ public class PlayerMove : MonoBehaviour
 		}
 
 		Vector3 targetMoveVec = new Vector3();
-		targetMoveVec += moveInput.x * moveSpeed * moveRoot.right;
-		targetMoveVec += moveInput.y * moveSpeed * moveRoot.forward;
-		float animSpeed = moveInput.sqrMagnitude;
+		targetMoveVec += MoveInput.x * moveSpeed * moveRoot.right;
+		targetMoveVec += MoveInput.y * moveSpeed * moveRoot.forward;
+		Vector2 animSpeedVec = MoveInput;
 
-		if (IsSprint)
-		{
-			targetMoveVec *= 2f;
-			animSpeed *= 2f;
-		}
+		//if (IsSprint)
+		//{
+		//	targetMoveVec *= 2f;
+		//	animSpeed *= 2f;
+		//}
+
+		targetMoveVec *= MoveMultiplier;
+		animSpeedVec *= MoveMultiplier;
 
 		curMoveVec = Vector3.Lerp(curMoveVec, targetMoveVec, Time.deltaTime * moveLerpSpeed);
 
-		if (moveInput.sqrMagnitude > 0.1f)
+		if (MoveInput.sqrMagnitude > 0.1f)
 		{
 			anim.transform.rotation = Quaternion.Lerp(
 				anim.transform.rotation,
@@ -113,7 +120,16 @@ public class PlayerMove : MonoBehaviour
 				Time.deltaTime * rotationLerpSpeed);
 		}
 
-		anim.SetFloat("Speed", animSpeed, 0.1f, Time.deltaTime);
+		if (true)
+		{
+			anim.SetFloat("Speed", animSpeedVec.sqrMagnitude, 0.1f, Time.deltaTime);
+			anim.SetFloat("SpeedY", animSpeedVec.sqrMagnitude, 0.1f, Time.deltaTime);
+		}
+		//else
+		//{
+		//	anim.SetFloat("SpeedX", animSpeedVec.x, 0.1f, Time.deltaTime);
+		//	anim.SetFloat("SpeedY", animSpeedVec.y, 0.1f, Time.deltaTime);
+		//}
 
 		curMoveVec.y = velY;
 
@@ -122,7 +138,7 @@ public class PlayerMove : MonoBehaviour
 
 	private void OnMove(InputValue value)
 	{
-		moveInput = value.Get<Vector2>();
+		MoveInput = value.Get<Vector2>();
 	}
 
 	private void OnJump(InputValue value)
@@ -136,7 +152,7 @@ public class PlayerMove : MonoBehaviour
 
 	private void OnSprint(InputValue value)
 	{
-		IsSprint = value.Get<float>() > 0.9f ? true : false;
+		SprintInput = value.Get<float>() > 0.9f ? true : false;
 	}
 
 	private void OnDrawGizmos()

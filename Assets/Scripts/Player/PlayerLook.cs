@@ -15,6 +15,7 @@ public class PlayerLook : MonoBehaviour
     [SerializeField] bool follow = true;
 
     public Transform AimPoint { get { return aimPoint; } }
+    public Vector2 LookInput { get { return lookInput; } }
 
     Vector2 lookInput;
     float lastLookDistSqr;
