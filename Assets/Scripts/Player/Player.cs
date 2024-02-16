@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+	[SerializeField] string curState;
+	public enum State { Idle, Walk, Run, Dash, Jump, OnAir, 
+		StandAttack, OnAirAttack, MoveAttack,
+		Stun, Die};
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+	private StateMachine<State, Player> stateMachine;
+
+	private void Awake()
+	{
+		stateMachine = new StateMachine<State, Player>(this);
+		stateMachine.AddState(State.Idle, new PlayerIdle(this, stateMachine));
+	}
 }

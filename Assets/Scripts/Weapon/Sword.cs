@@ -6,6 +6,7 @@ using UnityEngine;
 public class Sword : Weapon
 {
 	[SerializeField] Transform trailTrans;
+
 	private struct FrameInfo
 	{
 		public Vector3 position;
@@ -74,7 +75,7 @@ public class Sword : Weapon
 			{
 				playerAttack.SetAnimFloat("Reverse", -0.4f);
 				trail.SetTarget(null);
-				while (playerAttack.GetAnimNormalizedTime(1) > 0.01f)
+				while (playerAttack.GetAnimNormalizedTime(0) > 0.05f)
 				{
 					yield return null;
 				}
@@ -87,7 +88,7 @@ public class Sword : Weapon
 		}
 		trail.SetTarget(null);
 		playerAnimEvent.OnAttackEnd.RemoveListener(AttackEnd);
-		yield return new WaitUntil(() => playerAttack.IsAnimWait(1));
+		yield return new WaitUntil(() => playerAttack.IsAnimWait(0));
 
 		playerAttack.SetAnimTrigger("Exit");
 

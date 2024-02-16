@@ -7,177 +7,241 @@ AvatarMask:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: PlayerUpperMask
-  m_Mask: 01000000010000000100000000000000000000000100000001000000010000000100000001000000010000000100000001000000
+  m_Mask: 00000000010000000100000000000000000000000100000001000000010000000100000001000000010000000100000001000000
   m_Elements:
   - m_Path: 
     m_Weight: 1
-  - m_Path: Frank_Mesh_Unity
+  - m_Path: PT_Female_Armor_01_A_body
     m_Weight: 1
-  - m_Path: FX_Slash_R
+  - m_Path: PT_Female_Armor_01_A_boots
     m_Weight: 1
-  - m_Path: Mesh_Pants
+  - m_Path: PT_Female_Armor_01_A_cape
     m_Weight: 1
-  - m_Path: Quick_Slash
+  - m_Path: PT_Female_Armor_01_A_gauntlets
     m_Weight: 1
-  - m_Path: R_Shash_FX
+  - m_Path: PT_Female_Armor_01_A_helmet
     m_Weight: 1
-  - m_Path: root
+  - m_Path: PT_Female_Armor_01_A_legs
     m_Weight: 1
-  - m_Path: root/ik_foot_root
+  - m_Path: PT_Female_Armor_05_C_body
     m_Weight: 1
-  - m_Path: root/ik_foot_root/ik_foot_l
+  - m_Path: PT_Female_Armor_05_C_boots
     m_Weight: 1
-  - m_Path: root/ik_foot_root/ik_foot_r
+  - m_Path: PT_Female_Armor_05_C_cape
     m_Weight: 1
-  - m_Path: root/ik_hand_root
+  - m_Path: PT_Female_Armor_05_C_gauntlets
     m_Weight: 1
-  - m_Path: root/ik_hand_root/ik_hand_gun
+  - m_Path: PT_Female_Armor_05_C_helmet
     m_Weight: 1
-  - m_Path: root/ik_hand_root/ik_hand_gun/ik_hand_l
+  - m_Path: PT_Female_Armor_05_C_legs
     m_Weight: 1
-  - m_Path: root/ik_hand_root/ik_hand_gun/ik_hand_r
+  - m_Path: PT_Female_Armor_cloth_00_body
     m_Weight: 1
-  - m_Path: root/pelvis
+  - m_Path: PT_Female_Armor_cloth_00_boots
     m_Weight: 1
-  - m_Path: root/pelvis/Center_Slash_FX
+  - m_Path: PT_Female_Armor_cloth_00_gauntlets
     m_Weight: 1
-  - m_Path: root/pelvis/Main_Camera
+  - m_Path: PT_Female_Armor_cloth_00_legs
     m_Weight: 1
-  - m_Path: root/pelvis/spine_01
+  - m_Path: PT_Female_Armor_hair_01
     m_Weight: 1
-  - m_Path: root/pelvis/spine_01/spine_02
+  - m_Path: PT_Female_Armor_hair_30
     m_Weight: 1
-  - m_Path: root/pelvis/spine_01/spine_02/spine_03
+  - m_Path: PT_Female_Armor_head_01
     m_Weight: 1
-  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l
+  - m_Path: PT_Female_Armor_head_10
     m_Weight: 1
-  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l/upperarm_l
+  - m_Path: PT_Female_Armor_naked_body
     m_Weight: 1
-  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l/upperarm_l/lowerarm_l
+  - m_Path: PT_Female_Armor_naked_boots
     m_Weight: 1
-  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l/upperarm_l/lowerarm_l/hand_l
+  - m_Path: PT_Female_Armor_naked_gauntlets
     m_Weight: 1
-  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l/upperarm_l/lowerarm_l/hand_l/index_01_l
+  - m_Path: PT_Female_Armor_naked_legs
     m_Weight: 1
-  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l/upperarm_l/lowerarm_l/hand_l/index_01_l/index_02_l
+  - m_Path: PT_Hips
     m_Weight: 1
-  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l/upperarm_l/lowerarm_l/hand_l/index_01_l/index_02_l/index_03_l
+  - m_Path: PT_Hips/Adapter
     m_Weight: 1
-  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l/upperarm_l/lowerarm_l/hand_l/L_Hand_Weapon
+  - m_Path: PT_Hips/Adapter/Sword_Case
     m_Weight: 1
-  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l/upperarm_l/lowerarm_l/hand_l/middle_01_l
+  - m_Path: PT_Hips/Adapter/Sword_Case/SwordCaseRenderer
     m_Weight: 1
-  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l/upperarm_l/lowerarm_l/hand_l/middle_01_l/middle_02_l
+  - m_Path: PT_Hips/Adapter/Sword_Case/Weapon_Sword_Dummy
     m_Weight: 1
-  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l/upperarm_l/lowerarm_l/hand_l/middle_01_l/middle_02_l/middle_03_l
+  - m_Path: PT_Hips/PT_Left_Accessories_slot
+    m_Weight: 0
+  - m_Path: PT_Hips/PT_LeftUpLeg
+    m_Weight: 0
+  - m_Path: PT_Hips/PT_LeftUpLeg/PT_Left_BackCloth
+    m_Weight: 0
+  - m_Path: PT_Hips/PT_LeftUpLeg/PT_Left_BackCloth/PT_Left_BackCloth2
+    m_Weight: 0
+  - m_Path: PT_Hips/PT_LeftUpLeg/PT_Left_BackCloth/PT_Left_BackCloth2/PT_Left_BackCloth3
+    m_Weight: 0
+  - m_Path: PT_Hips/PT_LeftUpLeg/PT_Left_FrontCloth
+    m_Weight: 0
+  - m_Path: PT_Hips/PT_LeftUpLeg/PT_Left_FrontCloth/PT_Left_FrontCloth2
+    m_Weight: 0
+  - m_Path: PT_Hips/PT_LeftUpLeg/PT_Left_FrontCloth/PT_Left_FrontCloth2/PT_Left_FrontCloth3
+    m_Weight: 0
+  - m_Path: PT_Hips/PT_LeftUpLeg/PT_LeftLeg
+    m_Weight: 0
+  - m_Path: PT_Hips/PT_LeftUpLeg/PT_LeftLeg/PT_LeftFoot
+    m_Weight: 0
+  - m_Path: PT_Hips/PT_LeftUpLeg/PT_LeftLeg/PT_LeftFoot/PT_LeftToe
+    m_Weight: 0
+  - m_Path: PT_Hips/PT_Right_Accessories_slot
+    m_Weight: 0
+  - m_Path: PT_Hips/PT_RightUpLeg
+    m_Weight: 0
+  - m_Path: PT_Hips/PT_RightUpLeg/PT_Right_BackCloth
+    m_Weight: 0
+  - m_Path: PT_Hips/PT_RightUpLeg/PT_Right_BackCloth/PT_Right_BackCloth2
+    m_Weight: 0
+  - m_Path: PT_Hips/PT_RightUpLeg/PT_Right_BackCloth/PT_Right_BackCloth2/PT_Right_BackCloth3
+    m_Weight: 0
+  - m_Path: PT_Hips/PT_RightUpLeg/PT_Right_FrontCloth
+    m_Weight: 0
+  - m_Path: PT_Hips/PT_RightUpLeg/PT_Right_FrontCloth/PT_Right_FrontCloth2
+    m_Weight: 0
+  - m_Path: PT_Hips/PT_RightUpLeg/PT_Right_FrontCloth/PT_Right_FrontCloth2/PT_Right_FrontCloth3
+    m_Weight: 0
+  - m_Path: PT_Hips/PT_RightUpLeg/PT_RightLeg
+    m_Weight: 0
+  - m_Path: PT_Hips/PT_RightUpLeg/PT_RightLeg/PT_RightFoot
+    m_Weight: 0
+  - m_Path: PT_Hips/PT_RightUpLeg/PT_RightLeg/PT_RightFoot/PT_RightToe
+    m_Weight: 0
+  - m_Path: PT_Hips/PT_Second_Weapon_slot
     m_Weight: 1
-  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l/upperarm_l/lowerarm_l/hand_l/pinky_01_l
+  - m_Path: PT_Hips/PT_Spine
     m_Weight: 1
-  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l/upperarm_l/lowerarm_l/hand_l/pinky_01_l/pinky_02_l
+  - m_Path: PT_Hips/PT_Spine/PT_Spine2
     m_Weight: 1
-  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l/upperarm_l/lowerarm_l/hand_l/pinky_01_l/pinky_02_l/pinky_03_l
+  - m_Path: PT_Hips/PT_Spine/PT_Spine2/PT_Spine3
     m_Weight: 1
-  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l/upperarm_l/lowerarm_l/hand_l/ring_01_l
+  - m_Path: PT_Hips/PT_Spine/PT_Spine2/PT_Spine3/PT_LeftCape
     m_Weight: 1
-  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l/upperarm_l/lowerarm_l/hand_l/ring_01_l/ring_02_l
+  - m_Path: PT_Hips/PT_Spine/PT_Spine2/PT_Spine3/PT_LeftCape/PT_LeftCape2
     m_Weight: 1
-  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l/upperarm_l/lowerarm_l/hand_l/ring_01_l/ring_02_l/ring_03_l
+  - m_Path: PT_Hips/PT_Spine/PT_Spine2/PT_Spine3/PT_LeftCape/PT_LeftCape2/PT_LeftCape3
     m_Weight: 1
-  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l/upperarm_l/lowerarm_l/hand_l/thumb_01_l
+  - m_Path: PT_Hips/PT_Spine/PT_Spine2/PT_Spine3/PT_LeftCape/PT_LeftCape2/PT_LeftCape3/PT_LeftCape4
     m_Weight: 1
-  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l/upperarm_l/lowerarm_l/hand_l/thumb_01_l/thumb_02_l
+  - m_Path: PT_Hips/PT_Spine/PT_Spine2/PT_Spine3/PT_LeftCape/PT_LeftCape2/PT_LeftCape3/PT_LeftCape4/PT_LeftCape5
     m_Weight: 1
-  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l/upperarm_l/lowerarm_l/hand_l/thumb_01_l/thumb_02_l/thumb_03_l
+  - m_Path: PT_Hips/PT_Spine/PT_Spine2/PT_Spine3/PT_LeftShoulder
     m_Weight: 1
-  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l/upperarm_l/lowerarm_l/lowerarm_twist_01_l
+  - m_Path: PT_Hips/PT_Spine/PT_Spine2/PT_Spine3/PT_LeftShoulder/PT_LeftArm
     m_Weight: 1
-  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l/upperarm_l/upperarm_twist_01_l
+  - m_Path: PT_Hips/PT_Spine/PT_Spine2/PT_Spine3/PT_LeftShoulder/PT_LeftArm/PT_LeftArmTwist
     m_Weight: 1
-  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r
+  - m_Path: PT_Hips/PT_Spine/PT_Spine2/PT_Spine3/PT_LeftShoulder/PT_LeftArm/PT_LeftForeArm
     m_Weight: 1
-  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r
+  - m_Path: PT_Hips/PT_Spine/PT_Spine2/PT_Spine3/PT_LeftShoulder/PT_LeftArm/PT_LeftForeArm/PT_LeftHand
     m_Weight: 1
-  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r
+  - m_Path: PT_Hips/PT_Spine/PT_Spine2/PT_Spine3/PT_LeftShoulder/PT_LeftArm/PT_LeftForeArm/PT_LeftHand/PT_Left_Hand_Shield_slot
     m_Weight: 1
-  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r/hand_r
+  - m_Path: PT_Hips/PT_Spine/PT_Spine2/PT_Spine3/PT_LeftShoulder/PT_LeftArm/PT_LeftForeArm/PT_LeftHand/PT_Left_Hand_Weapon_slot
     m_Weight: 1
-  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r/hand_r/index_01_r
+  - m_Path: PT_Hips/PT_Spine/PT_Spine2/PT_Spine3/PT_LeftShoulder/PT_LeftArm/PT_LeftForeArm/PT_LeftHand/PT_LeftHandIndex1
     m_Weight: 1
-  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r/hand_r/index_01_r/index_02_r
+  - m_Path: PT_Hips/PT_Spine/PT_Spine2/PT_Spine3/PT_LeftShoulder/PT_LeftArm/PT_LeftForeArm/PT_LeftHand/PT_LeftHandIndex1/PT_LeftHandIndex2
     m_Weight: 1
-  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r/hand_r/index_01_r/index_02_r/index_03_r
+  - m_Path: PT_Hips/PT_Spine/PT_Spine2/PT_Spine3/PT_LeftShoulder/PT_LeftArm/PT_LeftForeArm/PT_LeftHand/PT_LeftHandIndex1/PT_LeftHandIndex2/PT_LeftHandIndex3
     m_Weight: 1
-  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r/hand_r/middle_01_r
+  - m_Path: PT_Hips/PT_Spine/PT_Spine2/PT_Spine3/PT_LeftShoulder/PT_LeftArm/PT_LeftForeArm/PT_LeftHand/PT_LeftHandMiddle1
     m_Weight: 1
-  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r/hand_r/middle_01_r/middle_02_r
+  - m_Path: PT_Hips/PT_Spine/PT_Spine2/PT_Spine3/PT_LeftShoulder/PT_LeftArm/PT_LeftForeArm/PT_LeftHand/PT_LeftHandMiddle1/PT_LeftHandMiddle2
     m_Weight: 1
-  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r/hand_r/middle_01_r/middle_02_r/middle_03_r
+  - m_Path: PT_Hips/PT_Spine/PT_Spine2/PT_Spine3/PT_LeftShoulder/PT_LeftArm/PT_LeftForeArm/PT_LeftHand/PT_LeftHandMiddle1/PT_LeftHandMiddle2/PT_LeftHandMiddle3
     m_Weight: 1
-  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r/hand_r/pinky_01_r
+  - m_Path: PT_Hips/PT_Spine/PT_Spine2/PT_Spine3/PT_LeftShoulder/PT_LeftArm/PT_LeftForeArm/PT_LeftHand/PT_LeftHandPinky1
     m_Weight: 1
-  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r/hand_r/pinky_01_r/pinky_02_r
+  - m_Path: PT_Hips/PT_Spine/PT_Spine2/PT_Spine3/PT_LeftShoulder/PT_LeftArm/PT_LeftForeArm/PT_LeftHand/PT_LeftHandPinky1/PT_LeftHandPinky2
     m_Weight: 1
-  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r/hand_r/pinky_01_r/pinky_02_r/pinky_03_r
+  - m_Path: PT_Hips/PT_Spine/PT_Spine2/PT_Spine3/PT_LeftShoulder/PT_LeftArm/PT_LeftForeArm/PT_LeftHand/PT_LeftHandPinky1/PT_LeftHandPinky2/PT_LeftHandPinky3
     m_Weight: 1
-  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r/hand_r/R_Hand_Weapon
+  - m_Path: PT_Hips/PT_Spine/PT_Spine2/PT_Spine3/PT_LeftShoulder/PT_LeftArm/PT_LeftForeArm/PT_LeftHand/PT_LeftHandRing1
     m_Weight: 1
-  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r/hand_r/R_Hand_Weapon/Weapon_Sword
+  - m_Path: PT_Hips/PT_Spine/PT_Spine2/PT_Spine3/PT_LeftShoulder/PT_LeftArm/PT_LeftForeArm/PT_LeftHand/PT_LeftHandRing1/PT_LeftHandRing2
     m_Weight: 1
-  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r/hand_r/R_Hand_Weapon/Weapon_Sword/R_Slash_FX_Bone
+  - m_Path: PT_Hips/PT_Spine/PT_Spine2/PT_Spine3/PT_LeftShoulder/PT_LeftArm/PT_LeftForeArm/PT_LeftHand/PT_LeftHandRing1/PT_LeftHandRing2/PT_LeftHandRing3
     m_Weight: 1
-  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r/hand_r/R_Hand_Weapon/Weapon_Sword/Weapon_Blade
+  - m_Path: PT_Hips/PT_Spine/PT_Spine2/PT_Spine3/PT_LeftShoulder/PT_LeftArm/PT_LeftForeArm/PT_LeftHand/PT_LeftHandThumb1
     m_Weight: 1
-  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r/hand_r/ring_01_r
+  - m_Path: PT_Hips/PT_Spine/PT_Spine2/PT_Spine3/PT_LeftShoulder/PT_LeftArm/PT_LeftForeArm/PT_LeftHand/PT_LeftHandThumb1/PT_LeftHandThumb2
     m_Weight: 1
-  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r/hand_r/ring_01_r/ring_02_r
+  - m_Path: PT_Hips/PT_Spine/PT_Spine2/PT_Spine3/PT_LeftShoulder/PT_LeftArm/PT_LeftForeArm/PT_LeftHand/PT_LeftHandThumb1/PT_LeftHandThumb2/PT_LeftHandThumb3
     m_Weight: 1
-  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r/hand_r/ring_01_r/ring_02_r/ring_03_r
+  - m_Path: PT_Hips/PT_Spine/PT_Spine2/PT_Spine3/PT_Long_Bow_slot
     m_Weight: 1
-  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r/hand_r/thumb_01_r
+  - m_Path: PT_Hips/PT_Spine/PT_Spine2/PT_Spine3/PT_Medium_Bow_slot
     m_Weight: 1
-  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r/hand_r/thumb_01_r/thumb_02_r
+  - m_Path: PT_Hips/PT_Spine/PT_Spine2/PT_Spine3/PT_Neck
     m_Weight: 1
-  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r/hand_r/thumb_01_r/thumb_02_r/thumb_03_r
+  - m_Path: PT_Hips/PT_Spine/PT_Spine2/PT_Spine3/PT_Neck/PT_Head
     m_Weight: 1
-  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r/lowerarm_twist_01_r
+  - m_Path: PT_Hips/PT_Spine/PT_Spine2/PT_Spine3/PT_Neck/PT_Head/PT_HeadTop
     m_Weight: 1
-  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/upperarm_twist_01_r
+  - m_Path: PT_Hips/PT_Spine/PT_Spine2/PT_Spine3/PT_Neck/PT_Head/PT_HeadTop/PT_HeadTopFeathers
     m_Weight: 1
-  - m_Path: root/pelvis/spine_01/spine_02/spine_03/neck_01
+  - m_Path: PT_Hips/PT_Spine/PT_Spine2/PT_Spine3/PT_Quiver_Shield_slot
     m_Weight: 1
-  - m_Path: root/pelvis/spine_01/spine_02/spine_03/neck_01/head
+  - m_Path: PT_Hips/PT_Spine/PT_Spine2/PT_Spine3/PT_RightCape
     m_Weight: 1
-  - m_Path: root/pelvis/Sword_Case
+  - m_Path: PT_Hips/PT_Spine/PT_Spine2/PT_Spine3/PT_RightCape/PT_RightCape2
     m_Weight: 1
-  - m_Path: root/pelvis/Sword_Case/Weapon_Sword_Dummy
+  - m_Path: PT_Hips/PT_Spine/PT_Spine2/PT_Spine3/PT_RightCape/PT_RightCape2/PT_RightCape3
     m_Weight: 1
-  - m_Path: root/pelvis/thigh_l
+  - m_Path: PT_Hips/PT_Spine/PT_Spine2/PT_Spine3/PT_RightCape/PT_RightCape2/PT_RightCape3/PT_RightCape4
     m_Weight: 1
-  - m_Path: root/pelvis/thigh_l/calf_l
+  - m_Path: PT_Hips/PT_Spine/PT_Spine2/PT_Spine3/PT_RightCape/PT_RightCape2/PT_RightCape3/PT_RightCape4/PT_RightCape5
     m_Weight: 1
-  - m_Path: root/pelvis/thigh_l/calf_l/calf_twist_01_l
+  - m_Path: PT_Hips/PT_Spine/PT_Spine2/PT_Spine3/PT_RightShoulder
     m_Weight: 1
-  - m_Path: root/pelvis/thigh_l/calf_l/foot_l
+  - m_Path: PT_Hips/PT_Spine/PT_Spine2/PT_Spine3/PT_RightShoulder/PT_RightArm
     m_Weight: 1
-  - m_Path: root/pelvis/thigh_l/calf_l/foot_l/ball_l
+  - m_Path: PT_Hips/PT_Spine/PT_Spine2/PT_Spine3/PT_RightShoulder/PT_RightArm/PT_RightArmTwist
     m_Weight: 1
-  - m_Path: root/pelvis/thigh_l/thigh_twist_01_l
+  - m_Path: PT_Hips/PT_Spine/PT_Spine2/PT_Spine3/PT_RightShoulder/PT_RightArm/PT_RightForeArm
     m_Weight: 1
-  - m_Path: root/pelvis/thigh_r
+  - m_Path: PT_Hips/PT_Spine/PT_Spine2/PT_Spine3/PT_RightShoulder/PT_RightArm/PT_RightForeArm/PT_RightHand
     m_Weight: 1
-  - m_Path: root/pelvis/thigh_r/calf_r
+  - m_Path: PT_Hips/PT_Spine/PT_Spine2/PT_Spine3/PT_RightShoulder/PT_RightArm/PT_RightForeArm/PT_RightHand/PT_Right_Hand_Weapon_slot
     m_Weight: 1
-  - m_Path: root/pelvis/thigh_r/calf_r/calf_twist_01_r
+  - m_Path: PT_Hips/PT_Spine/PT_Spine2/PT_Spine3/PT_RightShoulder/PT_RightArm/PT_RightForeArm/PT_RightHand/PT_Right_Hand_Weapon_slot/KatanaHolder
     m_Weight: 1
-  - m_Path: root/pelvis/thigh_r/calf_r/foot_r
+  - m_Path: PT_Hips/PT_Spine/PT_Spine2/PT_Spine3/PT_RightShoulder/PT_RightArm/PT_RightForeArm/PT_RightHand/PT_RightHandIndex1
     m_Weight: 1
-  - m_Path: root/pelvis/thigh_r/calf_r/foot_r/ball_r
+  - m_Path: PT_Hips/PT_Spine/PT_Spine2/PT_Spine3/PT_RightShoulder/PT_RightArm/PT_RightForeArm/PT_RightHand/PT_RightHandIndex1/PT_RightHandIndex2
     m_Weight: 1
-  - m_Path: root/pelvis/thigh_r/thigh_twist_01_r
+  - m_Path: PT_Hips/PT_Spine/PT_Spine2/PT_Spine3/PT_RightShoulder/PT_RightArm/PT_RightForeArm/PT_RightHand/PT_RightHandIndex1/PT_RightHandIndex2/PT_RightHandIndex3
     m_Weight: 1
-  - m_Path: Sword_Case_Mesh
+  - m_Path: PT_Hips/PT_Spine/PT_Spine2/PT_Spine3/PT_RightShoulder/PT_RightArm/PT_RightForeArm/PT_RightHand/PT_RightHandMiddle1
     m_Weight: 1
-  - m_Path: Sword_Dummy
+  - m_Path: PT_Hips/PT_Spine/PT_Spine2/PT_Spine3/PT_RightShoulder/PT_RightArm/PT_RightForeArm/PT_RightHand/PT_RightHandMiddle1/PT_RightHandMiddle2
     m_Weight: 1
-  - m_Path: Sword_Mesh
+  - m_Path: PT_Hips/PT_Spine/PT_Spine2/PT_Spine3/PT_RightShoulder/PT_RightArm/PT_RightForeArm/PT_RightHand/PT_RightHandMiddle1/PT_RightHandMiddle2/PT_RightHandMiddle3
+    m_Weight: 1
+  - m_Path: PT_Hips/PT_Spine/PT_Spine2/PT_Spine3/PT_RightShoulder/PT_RightArm/PT_RightForeArm/PT_RightHand/PT_RightHandPinky1
+    m_Weight: 1
+  - m_Path: PT_Hips/PT_Spine/PT_Spine2/PT_Spine3/PT_RightShoulder/PT_RightArm/PT_RightForeArm/PT_RightHand/PT_RightHandPinky1/PT_RightHandPinky2
+    m_Weight: 1
+  - m_Path: PT_Hips/PT_Spine/PT_Spine2/PT_Spine3/PT_RightShoulder/PT_RightArm/PT_RightForeArm/PT_RightHand/PT_RightHandPinky1/PT_RightHandPinky2/PT_RightHandPinky3
+    m_Weight: 1
+  - m_Path: PT_Hips/PT_Spine/PT_Spine2/PT_Spine3/PT_RightShoulder/PT_RightArm/PT_RightForeArm/PT_RightHand/PT_RightHandRing1
+    m_Weight: 1
+  - m_Path: PT_Hips/PT_Spine/PT_Spine2/PT_Spine3/PT_RightShoulder/PT_RightArm/PT_RightForeArm/PT_RightHand/PT_RightHandRing1/PT_RightHandRing2
+    m_Weight: 1
+  - m_Path: PT_Hips/PT_Spine/PT_Spine2/PT_Spine3/PT_RightShoulder/PT_RightArm/PT_RightForeArm/PT_RightHand/PT_RightHandRing1/PT_RightHandRing2/PT_RightHandRing3
+    m_Weight: 1
+  - m_Path: PT_Hips/PT_Spine/PT_Spine2/PT_Spine3/PT_RightShoulder/PT_RightArm/PT_RightForeArm/PT_RightHand/PT_RightHandThumb1
+    m_Weight: 1
+  - m_Path: PT_Hips/PT_Spine/PT_Spine2/PT_Spine3/PT_RightShoulder/PT_RightArm/PT_RightForeArm/PT_RightHand/PT_RightHandThumb1/PT_RightHandThumb2
+    m_Weight: 1
+  - m_Path: PT_Hips/PT_Spine/PT_Spine2/PT_Spine3/PT_RightShoulder/PT_RightArm/PT_RightForeArm/PT_RightHand/PT_RightHandThumb1/PT_RightHandThumb2/PT_RightHandThumb3
+    m_Weight: 1
+  - m_Path: PT_Hips/PT_Weapon_slot
     m_Weight: 1
