@@ -8,7 +8,9 @@ public class Katana : Sword
 	[SerializeField] State curState;
 
 	[Serializable]
-	public enum State { Idle, Unarmed, QuickSheath, Equip, S1Combo01_01, AttackFail };
+	public enum State { Idle, Unarmed, QuickSheath, Equip, 
+		S1Combo01_01, S1Combo01_02, S1Combo01_03,
+		AttackFail };
 	private GameObject swordDummy;
 	private StateMachine<State, Katana> stateMachine;
 
@@ -21,6 +23,8 @@ public class Katana : Sword
 		stateMachine.AddState(State.QuickSheath, new KatanaQuickSheath(this, stateMachine));
 		stateMachine.AddState(State.Equip, new KatanaEquip(this, stateMachine));
 		stateMachine.AddState(State.S1Combo01_01, new KatanaS1Combo01_01(this, stateMachine));
+		stateMachine.AddState(State.S1Combo01_02, new KatanaS1Combo01_02(this, stateMachine));
+		stateMachine.AddState(State.S1Combo01_03, new KatanaS1Combo01_03(this, stateMachine));
 		stateMachine.AddState(State.AttackFail, new KatanaAttackFail(this, stateMachine));
 	}
 

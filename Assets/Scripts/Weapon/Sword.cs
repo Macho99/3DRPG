@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -19,7 +20,8 @@ public abstract class Sword : Weapon
 		}
 	}
 
-	List<GameObject> hitList;
+	private GameObject[] hitList;
+	private int hitListCnt;
 	private RaycastHit[] hits;
 	private BoxCollider col;
 	private FrameInfo prev;
@@ -28,13 +30,15 @@ public abstract class Sword : Weapon
 	protected override void Awake()
 	{
 		base.Awake();
-		hitList = new List<GameObject>(20);
+		hitList = new GameObject[20];
+		hitListCnt = 0;
 		hits = new RaycastHit[10];
 		col = GetComponentInChildren<BoxCollider>(true);
 	}
 
 	public TargetFollower BeginAttack()
 	{
+		hitListCnt = 0;
 		TargetFollower trail = GameManager.Resource.Instantiate<TargetFollower>("Prefab/SwordTrail", true);
 		trail.SetTarget(trailTrans);
 		trail.transform.position = trailTrans.position;
@@ -47,6 +51,7 @@ public abstract class Sword : Weapon
 	{
 		cur.Set(col.transform.position + col.transform.rotation * col.center, col.transform.rotation);
 		float moveDist = Vector3.Distance(prev.position, cur.position);
+		moveDist *= 1.2f;
 
 		ExtDebug.DrawBoxCastBox(
 			cur.position,
@@ -72,13 +77,25 @@ public abstract class Sword : Weapon
 		for(int i = hitNum - 1; i >= 0; i--)
 		{
 			RaycastHit hit = hits[i];
-			if (hitList.Contains(hit.collider.gameObject) == false)
+
+			bool findResult = false;
+			for(int cnt = 0; cnt < hitListCnt; cnt++)
+			{
+				if(hitList[cnt] == hit.collider.gameObject)
+				{
+					findResult = true;
+					break;
+				}
+			}
+
+			if (findResult == false)
 			{
 				if ((monsterMask.value & (1 << hit.collider.gameObject.layer)) == 0)
 				{
 					return false;
 				}
-				hitList.Add(hit.collider.gameObject);
+				hitList[hitListCnt] = hit.collider.gameObject;
+				hitListCnt++;
 				print(hit.collider.gameObject);
 			}
 		}

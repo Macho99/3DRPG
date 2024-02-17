@@ -5,86 +5,24 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class KatanaS1Combo01_01 : StateBase<Katana.State, Katana>
+public class KatanaS1Combo01_01 : KatanaSwingBase
 {
-	PlayerAttack playerAttack;
-	PlayerAnimEvent playerAnimEvent;
-	TargetFollower trail;
-	AttackProcess attackProcess;
-
-	public KatanaS1Combo01_01(Katana owner, StateMachine<Katana.State, Katana> stateMachine) : base(owner, stateMachine)
+	public KatanaS1Combo01_01(Katana owner, StateMachine<Katana.State, Katana> stateMachine) : base(owner, stateMachine, "Attack1")
 	{
 	}
 
 	public override void Enter()
 	{
-		attackProcess = AttackProcess.BeforeAttack;
-		playerAttack.SetAnimTrigger("Attack1");
-		playerAnimEvent.OnAttackStart.AddListener(AttackStart);
-		playerAnimEvent.OnAttackEnd.AddListener(AttackEnd);
+		base.Enter();
+		owner.ChangePlayerState(Player.State.StandAttack);
 	}
 
-	private void AttackStart()
+	protected override void Attack1BtnCombo(Player.State state)
 	{
-		attackProcess = AttackProcess.Attacking;
-		trail = owner.BeginAttack();
-	}
-
-	private void AttackEnd()
-	{
-		trail.SetTarget(null);
-		attackProcess = AttackProcess.AfterAttack;
-	}
-
-	public override void Exit()
-	{
-		playerAnimEvent.OnAttackStart.RemoveListener(AttackStart);
-		playerAnimEvent.OnAttackEnd.RemoveListener(AttackEnd);
-		trail = null;
-	}
-
-	public override void Setup()
-	{
-		playerAttack = owner.PlayerAttack;
-		playerAnimEvent = owner.PlayerAnimEvent;
-	}
-
-	public override void Transition()
-	{
-		if(attackProcess == AttackProcess.End)
+		if(curAttack == AttackProcess.AfterAttack)
 		{
-			if(playerAttack.IsAnimWait(0) == false)
-			{
-				stateMachine.ChangeState(Katana.State.Idle); 
-				return;
-			}
-		}
-	}
-
-	public override void Update()
-	{
-		switch (attackProcess)
-		{
-			case AttackProcess.BeforeAttack:
-				break;
-			case AttackProcess.Attacking:
-				bool result = owner.Attack();
-				if (result == false)
-				{
-					trail.SetTarget(null);
-					stateMachine.ChangeState(Katana.State.AttackFail);
-					return;
-				}
-				break;
-			case AttackProcess.AfterAttack:
-				if (playerAttack.IsAnimWait(0) == true)
-				{
-					attackProcess = AttackProcess.End;
-					playerAttack.SetAnimTrigger("BaseExit");
-				}
-				break;
-			default:
-				break;
+			stateMachine.ChangeState(Katana.State.S1Combo01_02);
+			return;
 		}
 	}
 }

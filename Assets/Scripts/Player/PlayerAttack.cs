@@ -27,8 +27,8 @@ public class PlayerAttack : MonoBehaviour
 	private void Awake()
 	{
 		player = GetComponent<Player>();
-		animEvent = GetComponentInChildren<PlayerAnimEvent>();
-		anim = GetComponentInChildren<Animator>();
+		animEvent = GetComponent<PlayerAnimEvent>();
+		anim = GetComponent<Animator>();
 		weapons = weaponHolder.GetComponentsInChildren<Weapon>();
 
 		OnAttack1Down = new UnityEvent<Player.State>();

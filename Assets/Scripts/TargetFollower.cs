@@ -7,12 +7,13 @@ public class TargetFollower : MonoBehaviour
 	[SerializeField] public Transform target;
 	[SerializeField] bool followRotation = true;
 	[SerializeField] bool followScale = false;
+	[SerializeField] Vector3 positionOffset;
 
 	private void Update()
 	{
 		if (target == null) return;
 
-        transform.position = target.position;
+        transform.position = target.position + positionOffset;
 
 		if(followRotation == true)
 			transform.rotation = target.rotation;

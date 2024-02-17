@@ -7,6 +7,7 @@ public abstract class Weapon : MonoBehaviour
 {
 	protected LayerMask hitMask;
 	protected LayerMask monsterMask;
+	protected Player player;
 	protected PlayerAttack playerAttack;
 	protected PlayerAnimEvent playerAnimEvent;
 	protected new MeshRenderer renderer;
@@ -21,7 +22,8 @@ public abstract class Weapon : MonoBehaviour
 		hitMask = LayerMask.GetMask("Monster", "Environment", "Tree");
 		monsterMask = LayerMask.GetMask("Monster");
 		renderer = GetComponentInChildren<MeshRenderer>();
-		playerAttack = FieldSFC.Player.GetComponent<PlayerAttack>();
+		player = FieldSFC.Player.GetComponent<Player>();
+		playerAttack = player.PlayerAttack;
 	}
 
 	protected virtual void Start()
@@ -30,4 +32,19 @@ public abstract class Weapon : MonoBehaviour
 	}
 
 	public abstract void SetUnArmed();
+
+	public void ChangePlayerState(Player.State state)
+	{
+		switch (state)
+		{
+			case Player.State.StandAttack:
+			case Player.State.MoveAttack:
+			case Player.State.OnAirAttack:
+				player.ChangeState(state);
+				break;
+			default:
+				print($"{state}는 Weapon이 변경할 수 없는 상태입니다");
+				break;
+		}
+	}
 }
