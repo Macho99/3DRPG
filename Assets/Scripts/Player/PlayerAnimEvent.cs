@@ -7,6 +7,7 @@ public class PlayerAnimEvent : MonoBehaviour
 {
 	[HideInInspector] public UnityEvent OnAttackStart;
 	[HideInInspector] public UnityEvent OnAttackEnd;
+	[HideInInspector] public UnityEvent OnEquipChange;
 
 	private void Awake()
 	{
@@ -22,5 +23,10 @@ public class PlayerAnimEvent : MonoBehaviour
 	private void AttackEnd()
 	{
 		OnAttackEnd?.Invoke();
+	}
+
+	private void EquipChange()
+	{
+		OnEquipChange?.Invoke();
 	}
 }

@@ -1,10 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-	[SerializeField] string curState;
+	[SerializeField] State curState;
+
+	[Serializable]
 	public enum State { Idle, Walk, Run, Dash, Jump, OnAir, 
 		StandAttack, OnAirAttack, MoveAttack,
 		Stun, Die};
@@ -14,6 +17,7 @@ public class Player : MonoBehaviour
 	private PlayerAttack playerAttack;
 	private StateMachine<State, Player> stateMachine;
 
+	public State CurState { get { return curState; } }
 	public PlayerLook PlayerLook { get {  return playerLook; } }
 	public PlayerMove PlayerMove { get {  return playerMove; } }
 	public PlayerAttack PlayerAttack { get {  return playerAttack; } }
@@ -22,6 +26,7 @@ public class Player : MonoBehaviour
 	{
 		playerLook = GetComponent<PlayerLook>();
 		playerMove = GetComponent<PlayerMove>();
+		playerAttack = GetComponent<PlayerAttack>();
 
 		stateMachine = new StateMachine<State, Player>(this);
 		stateMachine.AddState(State.Idle, new PlayerIdle(this, stateMachine));
@@ -38,6 +43,11 @@ public class Player : MonoBehaviour
 	private void Update()
 	{
 		stateMachine.Update();
-		curState = stateMachine.GetCurStateStr();
+		curState = stateMachine.GetCurState();
+	}
+
+	public void ChangeState(State newState)
+	{
+		stateMachine.ChangeState(newState);
 	}
 }

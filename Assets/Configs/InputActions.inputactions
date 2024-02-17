@@ -43,21 +43,21 @@
                 },
                 {
                     "name": "Attack1",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "68f5bb0c-0996-4308-93fe-b2d530811082",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Attack2",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "eff340fd-9f88-48c3-9b1b-8d6dbc4d6e22",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [

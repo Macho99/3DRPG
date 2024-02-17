@@ -108,7 +108,6 @@ public class PlayerMove : MonoBehaviour
 		//}
 
 		targetMoveVec *= MoveMultiplier;
-		animSpeedVec *= MoveMultiplier;
 
 		curMoveVec = Vector3.Lerp(curMoveVec, targetMoveVec, Time.deltaTime * moveLerpSpeed);
 
@@ -120,10 +119,12 @@ public class PlayerMove : MonoBehaviour
 				Time.deltaTime * rotationLerpSpeed);
 		}
 
+		//에임 고정 아닐 때
 		if (true)
 		{
-			anim.SetFloat("Speed", animSpeedVec.sqrMagnitude, 0.1f, Time.deltaTime);
-			anim.SetFloat("SpeedY", animSpeedVec.sqrMagnitude, 0.1f, Time.deltaTime);
+			float animSpeed = animSpeedVec.sqrMagnitude * MoveMultiplier;
+			anim.SetFloat("Speed", animSpeed, 0.1f, Time.deltaTime);
+			anim.SetFloat("SpeedY", animSpeed, 0.1f, Time.deltaTime);
 		}
 		//else
 		//{
