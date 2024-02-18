@@ -15,6 +15,10 @@ public abstract class KatanaSwingBase : StateBase<Katana.State, Katana>
 
 	protected AttackProcess curAttack;
 	protected string triggerName;
+	protected bool attack1Pressed;
+	protected bool attack2Pressed;
+	protected bool attack1Holded;
+	protected bool attack2Holded;
 
 	public KatanaSwingBase(Katana owner, StateMachine<Katana.State, Katana> stateMachine, string triggerName) : base(owner, stateMachine)
 	{
@@ -23,11 +27,18 @@ public abstract class KatanaSwingBase : StateBase<Katana.State, Katana>
 
 	public override void Enter()
 	{
+		attack1Pressed = false;
+		attack2Pressed = false;
+		attack1Holded = false;
+		attack2Holded = false;
 		curAttack = AttackProcess.BeforeAttack;
 		playerAttack.SetAnimTrigger(triggerName);
 		playerAnimEvent.OnAttackStart.AddListener(AttackStart);
 		playerAnimEvent.OnAttackEnd.AddListener(AttackEnd);
-		playerAttack.OnAttack1Down.AddListener(Attack1BtnCombo);
+		playerAttack.OnAttack1Down.AddListener(AttackBtn1Pressed);
+		playerAttack.OnAttack2Down.AddListener(AttackBtn2Pressed);
+		playerAttack.OnAttack1Hold.AddListener(AttackBtn1Hold);
+		playerAttack.OnAttack2Hold.AddListener(AttackBtn2Hold);
 	}
 
 	public override void Exit()
@@ -35,7 +46,10 @@ public abstract class KatanaSwingBase : StateBase<Katana.State, Katana>
 		trail = null;
 		playerAnimEvent.OnAttackStart.RemoveListener(AttackStart);
 		playerAnimEvent.OnAttackEnd.RemoveListener(AttackEnd);
-		playerAttack.OnAttack1Down.RemoveListener(Attack1BtnCombo);
+		playerAttack.OnAttack1Down.RemoveListener(AttackBtn1Pressed);
+		playerAttack.OnAttack2Down.RemoveListener(AttackBtn2Pressed);
+		playerAttack.OnAttack1Hold.RemoveListener(AttackBtn1Hold);
+		playerAttack.OnAttack2Hold.RemoveListener(AttackBtn2Hold);
 	}
 
 	private void AttackStart()
@@ -84,6 +98,10 @@ public abstract class KatanaSwingBase : StateBase<Katana.State, Katana>
 				}
 				break;
 			case AttackProcess.AfterAttack:
+				if(CheckTransition() == true)
+				{
+					return;
+				}
 				if (playerAttack.IsAnimWait(0) == true)
 				{
 					curAttack = AttackProcess.End;
@@ -95,5 +113,25 @@ public abstract class KatanaSwingBase : StateBase<Katana.State, Katana>
 		}
 	}
 
-	protected abstract void Attack1BtnCombo(Player.State state);
+	protected void AttackBtn1Pressed(Player.State state)
+	{
+		attack1Pressed = true;
+	}
+
+	protected void AttackBtn2Pressed(Player.State state)
+	{
+		attack2Pressed = true;
+	}
+
+	protected void AttackBtn1Hold(Player.State state)
+	{
+		attack1Holded = true;
+	}
+
+	private void AttackBtn2Hold(Player.State arg0)
+	{
+		attack2Holded = true;
+	}
+
+	protected abstract bool CheckTransition();
 }

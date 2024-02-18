@@ -16,8 +16,13 @@ public class KatanaS1Combo01_03 : KatanaSwingBase
 		owner.ChangePlayerState(Player.State.StandAttack);
 	}
 
-	protected override void Attack1BtnCombo(Player.State state)
+	protected override bool CheckTransition()
 	{
-		//empty
+		if(attack2Holded == true)
+		{
+			stateMachine.ChangeState(Katana.State.QuickDrawIdle);
+			return true;
+		}
+		return false;
 	}
 }

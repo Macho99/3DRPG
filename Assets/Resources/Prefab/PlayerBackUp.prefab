@@ -683,6 +683,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 1803470973155700964}
   followRotation: 1
+  followScale: 0
+  positionOffset: {x: 0, y: 0, z: 0}
 --- !u!1 &1686054767590413637
 GameObject:
   m_ObjectHideFlags: 0
@@ -789,6 +791,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   OnAttackStart:
+    m_PersistentCalls:
+      m_Calls: []
+  OnAttackEnd:
+    m_PersistentCalls:
+      m_Calls: []
+  OnEquipChange:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &1867420419291812688
@@ -3706,6 +3714,7 @@ MonoBehaviour:
   slideAngle: 20
   moveLerpSpeed: 50
   rotationLerpSpeed: 10
+  gravity: -25
 --- !u!114 &3773688810392848674
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3719,6 +3728,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponHolder: {fileID: 39744634149109528}
+  swordDummy: {fileID: 0}
+  OnAttack1Down:
+    m_PersistentCalls:
+      m_Calls: []
+  OnAttack1Up:
+    m_PersistentCalls:
+      m_Calls: []
+  OnAttack2Down:
+    m_PersistentCalls:
+      m_Calls: []
+  OnAttack2Up:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!143 &4405571231499708980
 CharacterController:
   m_ObjectHideFlags: 0
@@ -4496,7 +4518,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5049255553273483182}
-  - component: {fileID: 7836838828546846288}
   - component: {fileID: 8880112904607546069}
   - component: {fileID: 3466365528810622504}
   m_Layer: 3
@@ -4522,18 +4543,6 @@ Transform:
   - {fileID: 9176428903791649653}
   m_Father: {fileID: 39744634149109528}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7836838828546846288
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8952080147479022166}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 649d7e490f6a8194e885a46326880545, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!33 &8880112904607546069
 MeshFilter:
   m_ObjectHideFlags: 0

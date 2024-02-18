@@ -50690,7 +50690,7 @@ Transform:
   m_GameObject: {fileID: 1398643659}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.896, y: 0, z: -0.06}
+  m_LocalPosition: {x: -0.532, y: -0, z: -0.026}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -79353,7 +79353,7 @@ Transform:
   m_GameObject: {fileID: 627341634985739006}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -16.37, y: 0, z: -3.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -82828,7 +82828,7 @@ Transform:
   - {fileID: 2147666510349277855}
   - {fileID: 3985567713676595071}
   m_Father: {fileID: 1184541287611249586}
-  m_LocalEulerAnglesHint: {x: -40.57181, y: -88.9615, z: -70.635155}
+  m_LocalEulerAnglesHint: {x: 28.073044, y: -175.90039, z: -74.01132}
 --- !u!1 &5428796186873906725
 GameObject:
   m_ObjectHideFlags: 0
@@ -83441,16 +83441,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponHolder: {fileID: 1075058487}
   swordDummy: {fileID: 7837173409394321987}
+  attackHoldTime: 0.3
   OnAttack1Down:
     m_PersistentCalls:
       m_Calls: []
   OnAttack1Up:
     m_PersistentCalls:
       m_Calls: []
+  OnAttack1Hold:
+    m_PersistentCalls:
+      m_Calls: []
   OnAttack2Down:
     m_PersistentCalls:
       m_Calls: []
   OnAttack2Up:
+    m_PersistentCalls:
+      m_Calls: []
+  OnAttack2Hold:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &5845758282053179560

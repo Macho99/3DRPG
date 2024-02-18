@@ -23,7 +23,7 @@ public abstract class Weapon : MonoBehaviour
 		monsterMask = LayerMask.GetMask("Monster");
 		renderer = GetComponentInChildren<MeshRenderer>();
 		player = FieldSFC.Player.GetComponent<Player>();
-		playerAttack = player.PlayerAttack;
+		playerAttack = player.GetComponent<PlayerAttack>();
 	}
 
 	protected virtual void Start()

@@ -42,7 +42,6 @@ public abstract class Sword : Weapon
 		TargetFollower trail = GameManager.Resource.Instantiate<TargetFollower>("Prefab/SwordTrail", true);
 		trail.SetTarget(trailTrans);
 		trail.transform.position = trailTrans.position;
-		trail.GetComponent<TrailRenderer>().Clear();
 		prev.Set(col.transform.position + col.transform.rotation * col.center, col.transform.rotation);
 		return trail;
 	}
@@ -61,6 +60,8 @@ public abstract class Sword : Weapon
 			moveDist,
 			Color.red
 			);
+
+		Debug.DrawLine(prev.position, cur.position);
 
 		int hitNum = Physics.BoxCastNonAlloc(
 			cur.position,
@@ -92,7 +93,13 @@ public abstract class Sword : Weapon
 			{
 				if ((monsterMask.value & (1 << hit.collider.gameObject.layer)) == 0)
 				{
-					return false;
+					if (hit.point.y - player.transform.position.y > 0.5f)
+					{
+						//print(hit.point.y - player.transform.position.y);
+						return false;
+					}
+					else
+						continue;
 				}
 				hitList[hitListCnt] = hit.collider.gameObject;
 				hitListCnt++;
