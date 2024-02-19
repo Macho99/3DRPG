@@ -9,6 +9,7 @@ public class KatanaQuickSheath : StateBase<Katana.State, Katana>
 {
 	PlayerAttack playerAttack;
 	PlayerAnimEvent playerAnimEvent;
+
 	public KatanaQuickSheath(Katana owner, StateMachine<Katana.State, Katana> stateMachine) : base(owner, stateMachine)
 	{
 	}

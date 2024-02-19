@@ -11,6 +11,7 @@ public abstract class KatanaSwingBase : StateBase<Katana.State, Katana>
 	protected Player player;
 	protected PlayerAttack playerAttack;
 	protected PlayerAnimEvent playerAnimEvent;
+	protected PlayerMove playerMove;
 	protected TargetFollower trail;
 
 	protected AttackProcess curAttack;
@@ -39,6 +40,7 @@ public abstract class KatanaSwingBase : StateBase<Katana.State, Katana>
 		playerAttack.OnAttack2Down.AddListener(AttackBtn2Pressed);
 		playerAttack.OnAttack1Hold.AddListener(AttackBtn1Hold);
 		playerAttack.OnAttack2Hold.AddListener(AttackBtn2Hold);
+		player.ChangeState(Player.State.StandAttack);
 	}
 
 	public override void Exit()
@@ -68,6 +70,8 @@ public abstract class KatanaSwingBase : StateBase<Katana.State, Katana>
 	{
 		playerAttack = owner.PlayerAttack;
 		playerAnimEvent = owner.PlayerAnimEvent;
+		player = playerAttack.GetComponent<Player>();
+		playerMove = player.GetComponent<PlayerMove>();
 	}
 
 	public override void Transition()

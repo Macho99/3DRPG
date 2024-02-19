@@ -17,7 +17,7 @@ public class PlayerRun : StateBase<Player.State, Player>
 	public override void Enter()
 	{
 		playerMove.MoveMultiplier = 2f;
-		playerAttack.SetUnarmed();
+		//playerAttack.SetUnarmed();
 	}
 
 	public override void Exit()

@@ -46,8 +46,10 @@ public class KatanaIdle : StateBase<Katana.State, Katana>
 		{
 			case Player.State.Idle:
 			case Player.State.Walk:
-			case Player.State.Run:
 				stateMachine.ChangeState(Katana.State.S1Combo01_01);
+				break;
+			case Player.State.Run:
+				stateMachine.ChangeState(Katana.State.DashAttackVerA);
 				break;
 		}
 	}

@@ -37,12 +37,13 @@ public class PlayerMove : MonoBehaviour
 		}
 	}
 
-	public bool ApplyGravity { get; set; } = true;
 	public bool JumpInput { get; private set; }
 	public Vector2 MoveInput { get; private set; }
 	public bool SprintInput { get; private set; }
+	public float GravityMultiplier { get; set; } = 1f;
 	public float MoveMultiplier { private get; set; } = 1f;
 	public float VelY { set { velY = value; } }
+	public Vector3 MoveForward { get { return moveRoot.forward; } }
 
 	Animator anim;
 	Transform animTrans;
@@ -107,14 +108,7 @@ public class PlayerMove : MonoBehaviour
 			velY = -2f;
 		else
 		{
-			if(ApplyGravity == true)
-			{
-				velY += gravity * Time.deltaTime;
-			}
-			else
-			{
-				velY = 0f;
-			}
+			velY += gravity * GravityMultiplier * Time.deltaTime;
 		}
 
 		Vector3 targetMoveVec = new Vector3();
@@ -139,7 +133,7 @@ public class PlayerMove : MonoBehaviour
 		{
 			float animSpeed = animSpeedVec.sqrMagnitude * MoveMultiplier;
 			anim.SetFloat("Speed", animSpeed, 0.1f, Time.deltaTime);
-			anim.SetFloat("SpeedY", animSpeed, 0.1f, Time.deltaTime); 
+			anim.SetFloat("SpeedY", animSpeed, 0.1f, Time.deltaTime);
 
 			if (MoveInput.sqrMagnitude * MoveMultiplier > 0.1f)
 			{

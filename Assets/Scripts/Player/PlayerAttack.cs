@@ -104,6 +104,11 @@ public class PlayerAttack : MonoBehaviour
 		return anim.GetCurrentAnimatorStateInfo(layer).IsName("Wait");
 	}
 
+	public bool IsAnimName(int layer, string name)
+	{
+		return anim.GetCurrentAnimatorStateInfo(layer).IsName(name);
+	}
+
 	public void SetAnimTrigger(string str)
 	{
 		anim.SetTrigger(str);

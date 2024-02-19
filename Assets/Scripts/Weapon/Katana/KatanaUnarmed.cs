@@ -45,8 +45,10 @@ public class KatanaUnarmed : StateBase<Katana.State, Katana>
 		{
 			case Player.State.Idle:
 			case Player.State.Walk:
-			case Player.State.Run:
 				stateMachine.ChangeState(Katana.State.Equip);
+				break;
+			case Player.State.Run:
+				stateMachine.ChangeState(Katana.State.DashAttackVerB);
 				break;
 		}
 	}

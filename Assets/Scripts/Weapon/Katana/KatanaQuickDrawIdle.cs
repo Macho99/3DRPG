@@ -13,6 +13,7 @@ public class KatanaQuickDrawIdle : StateBase<Katana.State, Katana>
 
 	public override void Enter()
 	{
+		player.ChangeState(Player.State.StandAttack);
 		if(owner.QuickDrawCnt == 0)
 		{
 			playerAttack.SetAnimTrigger("Hold1");
@@ -44,10 +45,14 @@ public class KatanaQuickDrawIdle : StateBase<Katana.State, Katana>
 	{
 		if (playerMove.MoveInput.sqrMagnitude > 0.1f)
 		{
-			player.ChangeState(Player.State.Idle);
-			playerAttack.SetAnimTrigger("BaseExit");
-			stateMachine.ChangeState(Katana.State.Unarmed);
-			return;
+			if (playerAttack.IsAnimName(0, "Hold1Idle"))
+			{
+				owner.QuickDrawCnt = 0;
+				player.ChangeState(Player.State.Idle);
+				playerAttack.SetAnimTrigger("BaseExit");
+				stateMachine.ChangeState(Katana.State.Unarmed);
+				return;
+			}
 		}
 	}
 

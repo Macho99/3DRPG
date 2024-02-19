@@ -43,6 +43,7 @@ public class Player : MonoBehaviour
 
 		stateMachine.AddState(State.StandAttack, new PlayerAttackStand(this, stateMachine));
 		stateMachine.AddState(State.MoveAttack, new PlayerAttackMove(this, stateMachine));
+		stateMachine.AddState(State.OnAirAttack, new PlayerAttackOnAir(this, stateMachine));
 	}
 
 	private void Start()
@@ -60,8 +61,7 @@ public class Player : MonoBehaviour
 
 	public void ChangeState(State newState)
 	{
-		if (curState != newState)
-			stateMachine.ChangeState(newState);
+		stateMachine.ChangeState(newState);
 	}
 
 	public void WeaponIdle()
