@@ -13,6 +13,7 @@ public class KatanaQuickDrawIdle : StateBase<Katana.State, Katana>
 
 	public override void Enter()
 	{
+		playerAttack.SetAnimFloat("Grruzam", 0f);
 		player.ChangeState(Player.State.StandAttack);
 		if(owner.QuickDrawCnt == 0)
 		{

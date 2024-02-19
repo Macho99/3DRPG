@@ -14,6 +14,7 @@ public class KatanaDashAttackVerA : KatanaSwingBase
 		base.Enter();
 		player.ChangeState(Player.State.OnAirAttack);
 		playerMove.GravityMultiplier = 0.2f;
+		playerAttack.SetAnimFloat("Grruzam", 1f);
 	}
 
 	protected override bool CheckTransition()

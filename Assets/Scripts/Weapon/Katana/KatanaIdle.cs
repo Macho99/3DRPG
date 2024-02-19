@@ -37,7 +37,7 @@ public class KatanaIdle : StateBase<Katana.State, Katana>
 
 	public override void Update()
 	{
-
+		playerAttack.SetAnimFloat("Grruzam", 0f, 0.1f, Time.deltaTime);
 	}
 
 	private void BtnDownTransition(Player.State state)
