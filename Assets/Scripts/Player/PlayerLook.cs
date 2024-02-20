@@ -36,6 +36,22 @@ public class PlayerLook : MonoBehaviour
 		//GameManager.Instance.OnFocus.RemoveListener(AutoEnable);
 	}
 
+    private void OnEscape(InputValue value)
+    {
+        if(value.isPressed == true)
+        {
+            enabled = false;
+        }
+    }
+
+    private void OnAttack1(InputValue value)
+    {
+        if(value.isPressed == true)
+        {
+            enabled = true;
+        }
+    }
+
 	private void AutoEnable(bool focus)
     {
         enabled = focus;

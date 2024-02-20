@@ -46,7 +46,7 @@ public class PlayerAttackStand : StateBase<Player.State, Player>
 		owner.transform.rotation = Quaternion.Lerp(
 			owner.transform.rotation,
 			Quaternion.LookRotation(new Vector3(moveForward.x, 0f, moveForward.z)),
-			Time.deltaTime * 5f);
+			Time.deltaTime * 10f);
 	}
 
 	private void ChangeToIdle()

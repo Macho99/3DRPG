@@ -29,5 +29,7 @@ public class VFXAutoOff : MonoBehaviour
 	private void OnDisable()
 	{
 		curTime = 0f;
+		transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
+		transform.localScale = Vector3.one;
 	}
 }

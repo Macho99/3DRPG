@@ -14,6 +14,7 @@ public abstract class Weapon : MonoBehaviour
 
 	public LayerMask HitMask { get { return hitMask; } }
 	public LayerMask MonsterMask { get { return monsterMask; } }
+	public Player Player { get { return player; } }
 	public PlayerAttack PlayerAttack { get { return playerAttack; } }
 	public PlayerAnimEvent PlayerAnimEvent { get { return playerAnimEvent; } }
 
