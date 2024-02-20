@@ -9,7 +9,6 @@ public abstract class KatanaQuickDrawBase : StateBase<Katana.State, Katana>
 	PlayerAnimEvent playerAnimEvent;
 	Player player;
 	bool dummyActive;
-	bool attacked;
 	string triggerName;
 
 	public KatanaQuickDrawBase(Katana owner, StateMachine<Katana.State, Katana> stateMachine, string triggerName) : base(owner, stateMachine)
@@ -19,7 +18,6 @@ public abstract class KatanaQuickDrawBase : StateBase<Katana.State, Katana>
 
 	public override void Enter()
 	{
-		attacked = false;
 		dummyActive = true;
 		player.ChangeState(Player.State.StandAttack);
 		playerAttack.SetAnimTrigger(triggerName);
@@ -73,7 +71,6 @@ public abstract class KatanaQuickDrawBase : StateBase<Katana.State, Katana>
 
 	private void Attack(bool clockwise)
 	{
-		attacked = true;
 		VisualEffect effect = GameManager.Resource.Instantiate<VisualEffect>("Prefab/SlashVFX", true);
 		effect.transform.position = player.transform.position + player.transform.forward + Vector3.up;
 

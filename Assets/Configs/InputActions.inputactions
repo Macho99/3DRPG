@@ -60,6 +60,15 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "Evasion",
+                    "type": "Button",
+                    "id": "2e403235-2a06-431b-b1b2-b0565ed51034",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Escape",
                     "type": "Button",
                     "id": "54319b0b-adbb-4d56-82ce-cc3393c92fb9",
@@ -188,6 +197,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Escape",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fed86d11-6d08-4ac9-9f84-4c32e52c4e10",
+                    "path": "<Keyboard>/leftCtrl",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Evasion",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
