@@ -23,13 +23,13 @@ public class KatanaQuickDrawIdle : StateBase<Katana.State, Katana>
 			playerAttack.SetAnimTrigger("Hold1Idle");
 		}
 		owner.QuickDrawCnt++;
-		playerAttack.OnAttack1Down.AddListener(QuickDrawTransition);
+		playerAttack.OnAttack1Up.AddListener(QuickDrawTransition);
 		playerAnimEvent.OnEquipChange.AddListener(EquipChange);
 	}
 
 	public override void Exit()
 	{
-		playerAttack.OnAttack1Down.RemoveListener(QuickDrawTransition);
+		playerAttack.OnAttack1Up.RemoveListener(QuickDrawTransition);
 		playerAnimEvent.OnEquipChange.RemoveListener(EquipChange);
 	}
 
