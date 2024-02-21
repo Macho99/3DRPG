@@ -1,9 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class Sword : Weapon
+public abstract class Sword : Weapon
 {
 	[SerializeField] Transform trailTrans;
 
@@ -19,89 +20,37 @@ public class Sword : Weapon
 		}
 	}
 
+	private GameObject[] hitList;
+	private int hitListCnt;
 	private RaycastHit[] hits;
 	private BoxCollider col;
-	private PlayerAttack playerAttack;
-	private PlayerAnimEvent playerAnimEvent;
-	private bool IsAttacking;
 	private FrameInfo prev;
 	private FrameInfo cur;
 
 	protected override void Awake()
 	{
 		base.Awake();
+		hitList = new GameObject[20];
+		hitListCnt = 0;
 		hits = new RaycastHit[10];
 		col = GetComponentInChildren<BoxCollider>(true);
-		playerAttack = FieldSFC.Player.GetComponent<PlayerAttack>();
 	}
 
-	private void Start()
+	public TargetFollower BeginAttack()
 	{
-		playerAnimEvent = playerAttack.AnimEvent;
-	}
-
-	public override void Attack()
-	{
-		playerAttack.SetAnimTrigger("Attack1");
-		playerAnimEvent.OnAttackStart.AddListener(AttackStart);
-		playerAnimEvent.OnAttackEnd.AddListener(AttackEnd);
-	}
-
-	private void AttackStart()
-	{
-		_ = StartCoroutine(CoAttack());
-		playerAnimEvent.OnAttackStart.RemoveListener(AttackStart);
-	}
-
-	private void AttackEnd()
-	{
-		IsAttacking = false;
-	}
-
-	private IEnumerator CoAttack()
-	{
-		List<GameObject> hitList = new List<GameObject>();
-		IsAttacking = true;
+		hitListCnt = 0;
 		TargetFollower trail = GameManager.Resource.Instantiate<TargetFollower>("Prefab/SwordTrail", true);
 		trail.SetTarget(trailTrans);
 		trail.transform.position = trailTrans.position;
-		trail.GetComponent<TrailRenderer>().Clear();
-
-		while (IsAttacking == true)
-		{
-			prev.Set(col.transform.position + col.transform.rotation * col.center, col.transform.rotation);
-			yield return null;
-			if(AttackCast(prev, hitList) == false)
-			{
-				playerAttack.SetAnimFloat("Reverse", -0.4f);
-				trail.SetTarget(null);
-				while (playerAttack.GetAnimNormalizedTime(0) > 0.05f)
-				{
-					yield return null;
-				}
-				playerAttack.SetAnimFloat("Reverse", 1f);
-				playerAnimEvent.OnAttackEnd.RemoveListener(AttackEnd);
-				IsAttacking = false;
-				playerAttack.SetAnimTrigger("Exit");
-				yield break;
-			}
-		}
-		trail.SetTarget(null);
-		playerAnimEvent.OnAttackEnd.RemoveListener(AttackEnd);
-		yield return new WaitUntil(() => playerAttack.IsAnimWait(0));
-
-		playerAttack.SetAnimTrigger("Exit");
-
-		//foreach(GameObject obj in hitList)
-		//{
-		//	print(obj.name);
-		//}
+		prev.Set(col.transform.position + col.transform.rotation * col.center, col.transform.rotation);
+		return trail;
 	}
 
-	private bool AttackCast(FrameInfo prev, in List<GameObject> hitList)
+	public bool Attack()
 	{
 		cur.Set(col.transform.position + col.transform.rotation * col.center, col.transform.rotation);
 		float moveDist = Vector3.Distance(prev.position, cur.position);
+		moveDist *= 1.2f;
 
 		ExtDebug.DrawBoxCastBox(
 			cur.position,
@@ -111,6 +60,8 @@ public class Sword : Weapon
 			moveDist,
 			Color.red
 			);
+
+		Debug.DrawLine(prev.position, cur.position);
 
 		int hitNum = Physics.BoxCastNonAlloc(
 			cur.position,
@@ -122,16 +73,36 @@ public class Sword : Weapon
 			hitMask
 			);
 
+		prev = cur;
+
 		for(int i = hitNum - 1; i >= 0; i--)
 		{
 			RaycastHit hit = hits[i];
-			if (hitList.Contains(hit.collider.gameObject) == false)
+
+			bool findResult = false;
+			for(int cnt = 0; cnt < hitListCnt; cnt++)
+			{
+				if(hitList[cnt] == hit.collider.gameObject)
+				{
+					findResult = true;
+					break;
+				}
+			}
+
+			if (findResult == false)
 			{
 				if ((monsterMask.value & (1 << hit.collider.gameObject.layer)) == 0)
 				{
-					return false;
+					if (hit.point.y - player.transform.position.y > 0.5f)
+					{
+						//print(hit.point.y - player.transform.position.y);
+						return false;
+					}
+					else
+						continue;
 				}
-				hitList.Add(hit.collider.gameObject);
+				hitList[hitListCnt] = hit.collider.gameObject;
+				hitListCnt++;
 				print(hit.collider.gameObject);
 			}
 		}

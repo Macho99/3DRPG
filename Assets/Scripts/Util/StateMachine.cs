@@ -5,6 +5,7 @@ using UnityEngine;
 public class StateMachine<TState, TOwner>
 {
 	private TOwner owner;
+	private TState curStateEnum;
 	private Dictionary<TState, StateBase<TState, TOwner>> states;
 	private StateBase<TState, TOwner> curState;
 
@@ -26,6 +27,7 @@ public class StateMachine<TState, TOwner>
 			state.Setup();
 		}
 
+		curStateEnum = startState;
 		curState = states[startState];
 		curState.Enter();
 	}
@@ -39,6 +41,7 @@ public class StateMachine<TState, TOwner>
 	public void ChangeState(TState newState)
 	{
 		curState.Exit();
+		curStateEnum = newState;
 		curState = states[newState];
 		curState.Enter();
 	}
@@ -48,8 +51,8 @@ public class StateMachine<TState, TOwner>
 		curState?.Exit();
 	}
 
-	public string GetCurStateStr()
+	public TState GetCurState()
 	{
-		return curState.ToString();
+		return curStateEnum;
 	}
 }

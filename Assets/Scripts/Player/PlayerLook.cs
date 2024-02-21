@@ -15,6 +15,7 @@ public class PlayerLook : MonoBehaviour
     [SerializeField] bool follow = true;
 
     public Transform AimPoint { get { return aimPoint; } }
+    public Vector2 LookInput { get { return lookInput; } }
 
     Vector2 lookInput;
     float lastLookDistSqr;
@@ -34,6 +35,22 @@ public class PlayerLook : MonoBehaviour
 	{
 		//GameManager.Instance.OnFocus.RemoveListener(AutoEnable);
 	}
+
+    private void OnEscape(InputValue value)
+    {
+        if(value.isPressed == true)
+        {
+            enabled = false;
+        }
+    }
+
+    private void OnAttack1(InputValue value)
+    {
+        if(value.isPressed == true)
+        {
+            enabled = true;
+        }
+    }
 
 	private void AutoEnable(bool focus)
     {

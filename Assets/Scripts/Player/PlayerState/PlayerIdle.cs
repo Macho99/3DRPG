@@ -27,7 +27,10 @@ public class PlayerIdle : StateBase<Player.State, Player>
 
 	public override void Transition()
 	{
-
+		if(owner.PlayerMove.MoveInput.sqrMagnitude > 0.1f)
+		{
+			stateMachine.ChangeState(Player.State.Walk);
+		}
 	}
 
 	public override void Update()

@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class KatanaIdle : StateBase<Katana.State, Katana>
 {
+	Player player;
+	PlayerAttack playerAttack;
 	public KatanaIdle(Katana owner, StateMachine<Katana.State, Katana> stateMachine) : base(owner, stateMachine)
 	{
 
@@ -10,17 +12,22 @@ public class KatanaIdle : StateBase<Katana.State, Katana>
 
 	public override void Enter()
 	{
-
+		owner.QuickDrawCnt = 0;
+		playerAttack.SetAnimFloat("Armed", 1f);
+		playerAttack.OnAttack1Down.AddListener(BtnDownTransition);
+		owner.SetDummyRender(false);
+		player.WeaponIdle();
 	}
 
 	public override void Exit()
 	{
-
+		playerAttack.OnAttack1Down.RemoveListener(BtnDownTransition);
 	}
 
 	public override void Setup()
 	{
-
+		playerAttack = owner.PlayerAttack;
+		player = playerAttack.GetComponent<Player>();
 	}
 
 	public override void Transition()
@@ -30,6 +37,20 @@ public class KatanaIdle : StateBase<Katana.State, Katana>
 
 	public override void Update()
 	{
+		playerAttack.SetAnimFloat("Grruzam", 0f, 0.1f, Time.deltaTime);
+	}
 
+	private void BtnDownTransition(Player.State state)
+	{
+		switch(state)
+		{
+			case Player.State.Idle:
+			case Player.State.Walk:
+				stateMachine.ChangeState(Katana.State.S1Combo01_01);
+				break;
+			case Player.State.Run:
+				stateMachine.ChangeState(Katana.State.DashAttackVerA);
+				break;
+		}
 	}
 }

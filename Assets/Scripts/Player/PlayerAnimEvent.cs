@@ -7,11 +7,15 @@ public class PlayerAnimEvent : MonoBehaviour
 {
 	[HideInInspector] public UnityEvent OnAttackStart;
 	[HideInInspector] public UnityEvent OnAttackEnd;
-
+	[HideInInspector] public UnityEvent OnClockWiseAttack;
+	[HideInInspector] public UnityEvent OnCounterClockWiseAttack;
+	[HideInInspector] public UnityEvent OnEquipChange;
 	private void Awake()
 	{
 		OnAttackStart = new UnityEvent();
 		OnAttackEnd = new UnityEvent();
+		OnClockWiseAttack = new UnityEvent();
+		OnEquipChange = new UnityEvent();
 	}
 
 	private void AttackStart()
@@ -22,5 +26,20 @@ public class PlayerAnimEvent : MonoBehaviour
 	private void AttackEnd()
 	{
 		OnAttackEnd?.Invoke();
+	}
+
+	private void ClockWiseAttack()
+	{
+		OnClockWiseAttack?.Invoke();
+	}
+
+	private void CounterClockWiseAttack()
+	{
+		OnCounterClockWiseAttack?.Invoke();
+	}
+
+	private void EquipChange()
+	{
+		OnEquipChange?.Invoke();
 	}
 }

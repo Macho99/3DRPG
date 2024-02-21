@@ -15,6 +15,7 @@ public class FieldSFC : MonoBehaviour
 			return player;
 		}
 	}
+
 	public static FieldSFC Instance
 	{
 		get { return instance; }
