@@ -208,11 +208,13 @@ public class Monster : MonoBehaviour
     {
         if (state == State.DEAD) { return; }
 
-        currentHp -= damage;
-        anim.SetTrigger("Hit");
-        StopCoroutine(Attack());
 
-        if (currentHp <= 0f)
+        if (currentHp > 0f)
+        {
+            currentHp -= damage;
+            anim.SetTrigger("Hit");
+        }
+        else
         {
             Die();
         }
@@ -220,7 +222,7 @@ public class Monster : MonoBehaviour
 
     private void Die()
     {
-        anim.SetBool("Die", true);
+        anim.SetTrigger("Die");
         StopAllCoroutines();
         state = State.DEAD;
         Destroy(gameObject, 3f);

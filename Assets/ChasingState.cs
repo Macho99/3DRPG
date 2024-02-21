@@ -20,6 +20,14 @@ public class ChasingState : StateMachineBehaviour
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        if (monster.state == State.DEAD)
+        {
+            animator.SetBool("isAttacking", false);
+            animator.SetBool("isChasing", false);
+            animator.SetTrigger("Dead");
+            return;
+        }
+
         if (target == null && Vector3.Distance(animator.transform.position, monster.spawnPosition) <= agent.stoppingDistance + .5f)
         {
             animator.SetBool("isChasing", false);
