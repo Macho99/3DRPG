@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class PopUpUI : BaseUI
 {
-
-
 	public override void CloseUI()
 	{
 		GameManager.UI.ClosePopUpUI();

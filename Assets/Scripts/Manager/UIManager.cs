@@ -14,6 +14,8 @@ public class UIManager : MonoBehaviour
 
 	private Canvas inGameCanvas;
 
+	public MenuUI menu;
+
 	private void Awake()
 	{
 		eventSystem = GameManager.Resource.Instantiate<EventSystem>("UI/EventSystem");
@@ -33,9 +35,16 @@ public class UIManager : MonoBehaviour
 		inGameCanvas = GameManager.Resource.Instantiate<Canvas>("UI/Canvas");
 		inGameCanvas.gameObject.name = "InGameCanvas";
 		inGameCanvas.sortingOrder = 0;
+
+		menu = GameManager.Resource.Instantiate<MenuUI>("UI/PopUpUI/Menu");
 	}
 
-	public T ShowPopUpUI<T>(T popUpUI) where T : PopUpUI
+    private void Start()
+    {
+		ShowInGameUI<PlayerConditionUI>("UI/InGame/PlayerConditionUI");
+    }
+
+    public T ShowPopUpUI<T>(T popUpUI) where T : PopUpUI
 	{
 		if (popUpStack.Count > 0)
 		{
