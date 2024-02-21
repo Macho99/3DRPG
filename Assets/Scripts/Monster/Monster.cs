@@ -14,32 +14,31 @@ public enum State
 
 public class Monster : MonoBehaviour
 {
-    public int maxHp;
-    public int currentHp;
-    public int damage;
+    [SerializeField] private int maxHp;
+    [SerializeField] private int currentHp;
+    [SerializeField] private int damage;
     public float attackRange;
-    public float attackDelay;
+    [SerializeField] private float attackDelay;
     public float moveSpeed;
-    public float rotationSpeed;
+    [SerializeField] private float rotationSpeed;
 
-    public float viewRadius; // 탐지 범위
+    [SerializeField] private float viewRadius; // 탐지 범위
     public float viewAngle; // 탐지 각도
-    private float originViewAngle;
+    public float originViewAngle;
 
-    private Vector3 spawnPosition; // 처음 스폰된 위치
+    public Vector3 spawnPosition; // 처음 스폰된 위치
     public float distanceFromOriginPos; // 처음 있던 위치로부터의 거리
-    private Transform target;
+    public Transform target;
 
-    private bool isReturning; // 돌아가는 상태 체크
+    public bool isReturning; // 돌아가는 상태 체크
 
-    public LayerMask targetMask; // 타겟레이어
-    public LayerMask obstacleMask; // 장애물레이어
+    [SerializeField] private LayerMask targetMask; // 타겟레이어
+    [SerializeField] private LayerMask obstacleMask; // 장애물레이어
 
     NavMeshAgent agent;
     Animator anim;
 
-    [SerializeField]
-    State state;
+    public State state;
 
     private void Awake()
     {
@@ -93,6 +92,7 @@ public class Monster : MonoBehaviour
 
             transform.LookAt(target.position);
 
+            agent.isStopped = true;
             agent.velocity = Vector3.zero;
             anim.SetTrigger("Attack");
             // 플레이어 Attack
@@ -100,7 +100,8 @@ public class Monster : MonoBehaviour
 
             yield return new WaitForSeconds(2f);
         }
-
+        print("1");
+        agent.isStopped = false;
         state = State.MOVE;
     }
 
@@ -135,9 +136,8 @@ public class Monster : MonoBehaviour
         {
             viewAngle = 360f;
             obstacleMask = LayerMask.NameToLayer("Nothing");
+            return;
         }
-
-        target = null;
 
         Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, targetMask);
 
@@ -153,7 +153,7 @@ public class Monster : MonoBehaviour
                 if (!Physics.Raycast(transform.position, dirToTarget, distToTarget, obstacleMask))
                 {
                     this.target = target;
-                    agent.SetDestination(target.position);
+                    //agent.SetDestination(target.position);
                 }
             }
         }
@@ -161,12 +161,12 @@ public class Monster : MonoBehaviour
 
     private void Update()
     {
-        if (target != null && state != State.DEAD)
-        {
-            Move();
+        //if (target != null && state != State.DEAD)
+        //{
+        //    Move();
 
-            CheckDistance();
-        }
+        //    CheckDistance();
+        //}
     }
 
     private void CheckDistance()
