@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class FieldSFC : MonoBehaviour
 {
@@ -38,4 +39,23 @@ public class FieldSFC : MonoBehaviour
 			player = null;
 		}
 	}
+
+    private void OnOpenMenu(InputValue value)
+    {
+        if (value.isPressed == true)
+        {
+            GameManager.UI.menuOpen = !GameManager.UI.menuOpen;
+
+            if (GameManager.UI.menuOpen == false)
+            {
+                GameManager.UI.ShowPopUpUI(GameManager.UI.menu);
+                player.GetComponent<PlayerInput>().enabled = false;
+            }
+            else
+            {
+                GameManager.UI.ClearPopUpUI();
+                player.GetComponent<PlayerInput>().enabled = true;
+            }
+        }
+    }
 }

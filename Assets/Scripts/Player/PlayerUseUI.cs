@@ -5,15 +5,13 @@ using UnityEngine.InputSystem;
 
 public class PlayerUseUI : MonoBehaviour
 {
-    bool menuOpen = true;
-
     private void OnOpenMenu(InputValue value)
     {
         if(value.isPressed == true)
         {
-            menuOpen = !menuOpen;
+            GameManager.UI.menuOpen = !GameManager.UI.menuOpen;
 
-            if (menuOpen == false)
+            if (GameManager.UI.menuOpen == false)
             {
                 GameManager.UI.ShowPopUpUI(GameManager.UI.menu);
                 gameObject.GetComponent<PlayerLook>().enabled = false;

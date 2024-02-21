@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,7 +17,9 @@ public class UIManager : MonoBehaviour
 
 	public MenuUI menu;
 
-	private void Awake()
+	public bool menuOpen = true;
+
+    private void Awake()
 	{
 		eventSystem = GameManager.Resource.Instantiate<EventSystem>("UI/EventSystem");
 		eventSystem.transform.parent = transform;
@@ -42,6 +45,7 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
 		ShowInGameUI<PlayerConditionUI>("UI/InGame/PlayerConditionUI");
+		ShowInGameUI<MountingItemsUI>("UI/InGame/MountingItemsUI");
     }
 
     public T ShowPopUpUI<T>(T popUpUI) where T : PopUpUI
@@ -56,11 +60,25 @@ public class UIManager : MonoBehaviour
 		ui.transform.SetParent(popUpCanvas.transform, false);
 		popUpStack.Push(ui);
 
-		Time.timeScale = 0f;
+		_ = StartCoroutine(FadeIn(ui.GetComponent<CanvasGroup>()));
+		
 		return ui;
 	}
 
-	public T ShowPopUpUI<T>(string path) where T : PopUpUI
+	private IEnumerator FadeIn(CanvasGroup cg)
+	{
+		float fadeTime = 1f;
+		float accumTime = 0f;
+        while (accumTime < fadeTime)
+        {
+            cg.alpha = Mathf.Lerp(0f, 1f, accumTime / fadeTime);
+            yield return 0;
+            accumTime += Time.deltaTime * 2;
+        }
+        cg.alpha = 1f;
+    }
+
+    public T ShowPopUpUI<T>(string path) where T : PopUpUI
 	{
 		T ui = GameManager.Resource.Load<T>(path);
 		return ShowPopUpUI(ui);
@@ -81,8 +99,20 @@ public class UIManager : MonoBehaviour
 			Time.timeScale = 1f;
 		}
 	}
+    private IEnumerator FadeOut(CanvasGroup cg)
+    {
+        float fadeTime = 1f;
+        float accumTime = 0f;
+        while (accumTime < fadeTime)
+        {
+            cg.alpha = Mathf.Lerp(0f, 1f, accumTime / fadeTime);
+            yield return 0;
+            accumTime += Time.deltaTime * 2;
+        }
+        cg.alpha = 1f;
+    }
 
-	public void ClearPopUpUI()
+    public void ClearPopUpUI()
 	{
 		while (popUpStack.Count > 0)
 		{

@@ -36,6 +36,7 @@ public class InventoryUI : PopUpUI
 
     private void Update()
     {
+
         switch (onToggle.gameObject.name)
         {
             case "ShowAll":

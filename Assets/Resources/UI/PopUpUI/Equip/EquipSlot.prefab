@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7725205707648874326}
   - component: {fileID: 7351002781934943406}
   m_Layer: 5
-  m_Name: Slot
+  m_Name: EquipSlot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
