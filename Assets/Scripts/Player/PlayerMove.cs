@@ -67,7 +67,7 @@ public class PlayerMove : MonoBehaviour
 		Move();
 		GroundCheck();
 		Slide();
-		//LerpCharacter();
+		print(velY);
 	}
 
 	private void Slide()
@@ -222,6 +222,23 @@ public class PlayerMove : MonoBehaviour
 	public void Jump()
 	{
 		velY = jumpForce;
+		print("Jumped");
 		IsGround = false;
+	}
+
+	public float CalcLandTime()
+	{
+		if(Physics.Raycast(transform.position, Vector3.down, out RaycastHit hitInfo, 100f, environmentMask) == false)
+		{
+			return 10f;
+		}
+		else if(velY >= 0f)
+		{
+			return 10f;
+		}
+
+		float dist = Vector3.Distance(hitInfo.point, transform.position);
+		return dist / velY;
+		// TODO : 중력가속도도 고려해서 다시 계산
 	}
 }

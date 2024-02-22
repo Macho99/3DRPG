@@ -10,10 +10,15 @@ public class Player : MonoBehaviour
 	[SerializeField] State curState;
 
 	[Serializable]
-	public enum State { Idle, Walk, Run, Dodge, Jump, OnAir, 
+	public enum JumpState { None, Jump, OnAir, Land, DoubleJump, DoubleOnAir, DoubleLand }
+
+	[Serializable]
+	public enum State { Idle, Walk, Run, Dodge, OnAir, DoubleJump, 
 		StandAttack, OnAirAttack, MoveAttack,
 		Stun, Die};
 
+	public JumpState CurJumpState { get { return curJumpState; } set { curJumpState = value; } }
+	[SerializeField] private JumpState curJumpState;
 	private Animator anim;
 	private MMFollowTarget camRootFollower;
 	private PlayerLook playerLook;
@@ -46,7 +51,7 @@ public class Player : MonoBehaviour
 		stateMachine.AddState(State.Walk, new PlayerWalk(this, stateMachine));
 		stateMachine.AddState(State.Run, new PlayerRun(this, stateMachine));
 		stateMachine.AddState(State.Dodge, new PlayerDodge(this, stateMachine));
-		stateMachine.AddState(State.Jump, new PlayerJump(this, stateMachine));
+		stateMachine.AddState(State.OnAir, new PlayerOnAir(this, stateMachine));
 
 		stateMachine.AddState(State.StandAttack, new PlayerAttackStand(this, stateMachine));
 		stateMachine.AddState(State.MoveAttack, new PlayerAttackMove(this, stateMachine));
@@ -113,15 +118,19 @@ public class Player : MonoBehaviour
 
 	public void Jump()
 	{
-		Jump(true);
+		OnAir(true);
 	}
 
-	public void Jump(bool jumpUp)
+	public void OnAir(bool jumpUp)
 	{
 		if (jumpUp == true) {
-			playerMove.Jump();
+			CurJumpState = JumpState.Jump;
 		}
-
-		stateMachine.ChangeState(Player.State.Jump);
+		else
+		{
+			CurJumpState = JumpState.OnAir;
+		}
+		
+		stateMachine.ChangeState(Player.State.OnAir);
 	}
 }
