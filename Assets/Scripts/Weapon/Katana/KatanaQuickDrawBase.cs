@@ -5,15 +5,17 @@ using UnityEngine.VFX;
 
 public abstract class KatanaQuickDrawBase : StateBase<Katana.State, Katana>
 {
-	PlayerAttack playerAttack;
-	PlayerAnimEvent playerAnimEvent;
-	Player player;
+	protected PlayerAttack playerAttack;
+	protected PlayerAnimEvent playerAnimEvent;
+	protected Player player;
 	bool dummyActive;
 	string triggerName;
+	bool endQuickDraw;
 
-	public KatanaQuickDrawBase(Katana owner, StateMachine<Katana.State, Katana> stateMachine, string triggerName) : base(owner, stateMachine)
+	public KatanaQuickDrawBase(Katana owner, StateMachine<Katana.State, Katana> stateMachine, string triggerName, bool endQuickDraw) : base(owner, stateMachine)
 	{
 		this.triggerName = triggerName;
+		this.endQuickDraw = endQuickDraw;
 	}
 
 	public override void Enter()
@@ -24,6 +26,11 @@ public abstract class KatanaQuickDrawBase : StateBase<Katana.State, Katana>
 		playerAnimEvent.OnEquipChange.AddListener(EquipChange);
 		playerAnimEvent.OnClockWiseAttack.AddListener(ClockWiseAttack);
 		playerAnimEvent.OnCounterClockWiseAttack.AddListener(CounterClockWiseAttack);
+
+		if(endQuickDraw == true)
+		{
+			playerAnimEvent.OnAttackEnd.AddListener(ReturnToIdle);
+		}
 	}
 
 	public override void Exit()
@@ -31,6 +38,10 @@ public abstract class KatanaQuickDrawBase : StateBase<Katana.State, Katana>
 		playerAnimEvent.OnEquipChange.RemoveListener(EquipChange);
 		playerAnimEvent.OnClockWiseAttack.RemoveListener(ClockWiseAttack);
 		playerAnimEvent.OnCounterClockWiseAttack.RemoveListener(CounterClockWiseAttack);
+		if(endQuickDraw == true)
+		{
+			playerAnimEvent.OnAttackEnd.RemoveListener(ReturnToIdle);
+		}
 	}
 
 	public override void Update()
@@ -69,7 +80,7 @@ public abstract class KatanaQuickDrawBase : StateBase<Katana.State, Katana>
 		Attack(false);
 	}
 
-	private void Attack(bool clockwise)
+	protected virtual void Attack(bool clockwise)
 	{
 		VisualEffect effect = GameManager.Resource.Instantiate<VisualEffect>("Prefab/SlashVFX", true);
 		effect.transform.position = player.transform.position + player.transform.forward + Vector3.up;
@@ -87,5 +98,11 @@ public abstract class KatanaQuickDrawBase : StateBase<Katana.State, Katana>
 		zAxisRotation = Quaternion.Euler(0f, 0f, rotAngle);
 		effect.transform.rotation = quaternion * zAxisRotation;
 		effect.transform.localScale = Vector3.one * 2f;
+	}
+
+	private void ReturnToIdle()
+	{
+		stateMachine.ChangeState(Katana.State.Idle);
+		playerAttack.SetAnimTrigger("BaseExit");
 	}
 }

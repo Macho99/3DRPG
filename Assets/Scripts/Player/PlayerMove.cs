@@ -96,6 +96,8 @@ public class PlayerMove : MonoBehaviour
 
 	private void GroundCheck()
 	{
+		if (velY > 0.1f) return;
+
 		colResult = Physics.SphereCast(transform.position + controller.center, controller.radius,
 			Vector3.down, out hitInfo, controller.center.y + 0.1f - controller.radius, environmentMask);
 

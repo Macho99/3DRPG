@@ -1,3 +1,4 @@
+using MoreMountains.Feedbacks;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,10 +7,11 @@ using UnityEngine;
 public class Katana : Sword
 {
 	[SerializeField] State curState;
+	[SerializeField] MMF_Player deathfaultFeedback;
 
 	[Serializable]
 	public enum State { Idle, Unarmed, QuickSheath, Equip, 
-		QuickDrawIdle, QuickDraw1, QuickDraw2, QuickDraw3, QuickDraw4, 
+		QuickDrawIdle, QuickDraw1, QuickDraw2, QuickDraw3, QuickDraw4, QuickDraw5, 
 		DashAttackVerA, DashAttackVerB,
 		DashComboVerA01, DashComboVerA02, DashComboVerA03, DashComboVerA04,
 		DashComboVerB01, DashComboVerB02, DashComboVerB03,
@@ -33,6 +35,7 @@ public class Katana : Sword
 		stateMachine.AddState(State.QuickDraw2, new KatanaQuickDraw2(this, stateMachine));
 		stateMachine.AddState(State.QuickDraw3, new KatanaQuickDraw3(this, stateMachine));
 		stateMachine.AddState(State.QuickDraw4, new KatanaQuickDraw4(this, stateMachine));
+		stateMachine.AddState(State.QuickDraw5, new KatanaQuickDraw5(this, stateMachine));
 		stateMachine.AddState(State.DashAttackVerA, new KatanaDashAttackVerA(this, stateMachine));
 		stateMachine.AddState(State.DashAttackVerB, new KatanaDashAttackVerB(this, stateMachine));
 		stateMachine.AddState(State.DashComboVerA01, new KatanaDashComboVerA01(this, stateMachine));
@@ -81,5 +84,10 @@ public class Katana : Sword
 			renderer.gameObject.SetActive(true);
 			swordDummy.gameObject.SetActive(false);
 		}
+	}
+
+	public void PlayDeathfaultFeedback()
+	{
+		deathfaultFeedback?.PlayFeedbacks();
 	}
 }

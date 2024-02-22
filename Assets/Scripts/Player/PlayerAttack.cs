@@ -1,3 +1,4 @@
+using MoreMountains.Feedbacks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,7 @@ public class PlayerAttack : MonoBehaviour
 	[SerializeField] Transform weaponHolder;
 	[SerializeField] GameObject swordDummy;
 	[SerializeField] float attackHoldTime = 0.3f;
+	[SerializeField] MMF_Player attackFailFeedback;
 
 	[HideInInspector] public UnityEvent<Player.State> OnAttack1Down;
 	[HideInInspector] public UnityEvent<Player.State> OnAttack1Up;
@@ -21,6 +23,8 @@ public class PlayerAttack : MonoBehaviour
 	private Coroutine Attack1HoldCoroutine;
 	private Coroutine Attack2HoldCoroutine;
 
+	public bool Attack1Pressed { get; private set; }
+	public bool Attack2Pressed { get; private set; }
 	public GameObject SwordDummy { get => swordDummy; }
 	public PlayerAnimEvent AnimEvent { get => animEvent; }
 
@@ -52,9 +56,9 @@ public class PlayerAttack : MonoBehaviour
 
 	private void OnAttack1(InputValue value)
 	{
-		bool pressed = value.Get<float>() > 0.9f ? true : false;
+		Attack1Pressed = value.Get<float>() > 0.9f ? true : false;
 
-		if (pressed)
+		if (Attack1Pressed)
 		{
 			OnAttack1Down?.Invoke(player.CurState);
 			Attack1HoldCoroutine = StartCoroutine(CoAttackHold(OnAttack1Hold));
@@ -69,9 +73,9 @@ public class PlayerAttack : MonoBehaviour
 
 	private void OnAttack2(InputValue value)
 	{
-		bool pressed = value.Get<float>() > 0.9f ? true : false;
+		Attack2Pressed = value.Get<float>() > 0.9f ? true : false;
 
-		if (pressed)
+		if (Attack2Pressed)
 		{
 			OnAttack2Down?.Invoke(player.CurState);
 			Attack2HoldCoroutine = StartCoroutine(CoAttackHold(OnAttack2Hold));
@@ -127,5 +131,10 @@ public class PlayerAttack : MonoBehaviour
 	public void SetUnarmed()
 	{
 		curWeapon.SetUnArmed();
+	}
+
+	public void PlayAttackFailFeedback()
+	{
+		attackFailFeedback?.PlayFeedbacks();
 	}
 }

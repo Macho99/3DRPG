@@ -96,6 +96,7 @@ public abstract class Sword : Weapon
 					if (hit.point.y - player.transform.position.y > 0.5f)
 					{
 						//print(hit.point.y - player.transform.position.y);
+						playerAttack.PlayAttackFailFeedback();
 						return false;
 					}
 					else
