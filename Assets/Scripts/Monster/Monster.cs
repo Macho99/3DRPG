@@ -1,24 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Android;
 
 public enum State
 {
     IDLE,
-    MOVE,
-    ATTACK,
     BLOCK,
+    GUARD_BREAK,
     DEAD
 }
 
 public class Monster : MonoBehaviour
 {
-    [SerializeField] private int maxHp;
-    [SerializeField] private int currentHp;
-    [SerializeField] private int damage;
+    [SerializeField] private float maxHp;
+    [SerializeField] private float currentHp;
+    [SerializeField] private float damage;
+    [SerializeField] private float maxStamina;
+    public float currentStamina;
     public float attackRange;
-    [SerializeField] private float attackDelay;
+    public float attackDelay;
     public float moveSpeed;
     [SerializeField] private float rotationSpeed;
 
@@ -40,6 +43,8 @@ public class Monster : MonoBehaviour
 
     public State state;
 
+    [SerializeField] private float staminaRate; // 스태미너 재생성 수치
+
     private void Awake()
     {
         anim = GetComponent<Animator>();
@@ -49,6 +54,7 @@ public class Monster : MonoBehaviour
     private void Start()
     {
         currentHp = maxHp;
+        currentStamina = maxStamina;
         originViewAngle = viewAngle;
         spawnPosition = transform.position;
         agent.speed = moveSpeed;
@@ -57,67 +63,27 @@ public class Monster : MonoBehaviour
         StartCoroutine(FindTargetWithDelay(.2f));
     }
 
-
-    private void Move()
+    private void Update()
     {
-        if (state == State.ATTACK) { return; }
-
-        if (agent.remainingDistance <= agent.stoppingDistance)
+        if (state == State.IDLE)
         {
-            StartCoroutine(Attack());
-            anim.SetBool("Move", false);
-        }
-        else if (target == null)
-        {
-            state = State.IDLE;
-            agent.SetDestination(transform.position);
-            anim.SetBool("Move", false);
-        }
-        else
-        {
-            StopCoroutine(Attack());
-            agent.SetDestination(target.position);
-            anim.SetBool("Move", true);
-            state = State.MOVE;
+            currentStamina = Mathf.Clamp(currentStamina + staminaRate * Time.deltaTime, 0, maxStamina);
         }
     }
 
-    IEnumerator Attack()
-    {
-        state = State.ATTACK;
+    //IEnumerator Turn(Vector3 target)
+    //{
+    //    while (Quaternion.Angle(transform.rotation, Quaternion.LookRotation(target - transform.position)) > .1f)
+    //    {
+    //        Vector3 directionToTarget = target - transform.position;
+    //        directionToTarget.y = 0;
+    //        Quaternion targetRotation = Quaternion.LookRotation(directionToTarget.normalized);
+    //        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
-        while (agent.remainingDistance <= agent.stoppingDistance && target != null)
-        {
-            if (state == State.DEAD) { yield break; }
+    //        yield return null;
+    //    }
 
-            transform.LookAt(target.position);
-
-            agent.isStopped = true;
-            agent.velocity = Vector3.zero;
-            anim.SetTrigger("Attack");
-            // 플레이어 Attack
-            print("Attack");
-
-            yield return new WaitForSeconds(2f);
-        }
-        print("1");
-        agent.isStopped = false;
-        state = State.MOVE;
-    }
-
-    IEnumerator Turn(Vector3 target)
-    {
-        while (Quaternion.Angle(transform.rotation, Quaternion.LookRotation(target - transform.position)) > .1f)
-        {
-            Vector3 directionToTarget = target - transform.position;
-            directionToTarget.y = 0;
-            Quaternion targetRotation = Quaternion.LookRotation(directionToTarget.normalized);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-
-            yield return null;
-        }
-
-    }
+    //}
 
     IEnumerator FindTargetWithDelay(float delay)
     {
@@ -153,66 +119,22 @@ public class Monster : MonoBehaviour
                 if (!Physics.Raycast(transform.position, dirToTarget, distToTarget, obstacleMask))
                 {
                     this.target = target;
-                    //agent.SetDestination(target.position);
                 }
             }
         }
     }
 
-    private void Update()
-    {
-        //if (target != null && state != State.DEAD)
-        //{
-        //    Move();
-
-        //    CheckDistance();
-        //}
-    }
-
-    private void CheckDistance()
-    {
-        if (Vector3.Distance(transform.position, spawnPosition) > distanceFromOriginPos)
-        {
-            if (!isReturning)
-            {
-                target = null;
-                StartCoroutine(ReturnToOriginPos());
-            }
-        }
-        else
-        {
-            StopCoroutine(ReturnToOriginPos());
-            isReturning = false;
-        }
-    }
-
-    IEnumerator ReturnToOriginPos()
-    {
-        isReturning = true;
-        viewAngle = originViewAngle;
-        obstacleMask = LayerMask.NameToLayer("Structure");
-
-        while (Vector3.Distance(transform.position, spawnPosition) > .5f)
-        {
-            agent.SetDestination(spawnPosition);
-            agent.stoppingDistance = 0f;
-            currentHp = maxHp;
-            yield return null;
-        }
-
-        isReturning = false;
-        agent.stoppingDistance = attackRange;
-    }
-
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         if (state == State.DEAD) { return; }
 
+        currentHp -= damage;
 
         if (currentHp > 0f)
         {
-            currentHp -= damage;
             anim.SetTrigger("Hit");
+            viewAngle = 360f;
+            obstacleMask = LayerMask.NameToLayer("Nothing");
         }
         else
         {
@@ -222,9 +144,12 @@ public class Monster : MonoBehaviour
 
     private void Die()
     {
-        anim.SetTrigger("Die");
+        anim.SetTrigger("Dead");
         StopAllCoroutines();
+        target = null;
         state = State.DEAD;
         Destroy(gameObject, 3f);
     }
+
+    // TODO: 어택 판정 구체화, 회전 부드럽게 수정, Hit Effect 추가, Sound 추가
 }
