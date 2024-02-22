@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
 	public enum JumpState { None, Jump, OnAir, Land, DoubleJump, DoubleOnAir, DoubleLand }
 
 	[Serializable]
-	public enum State { Idle, Walk, Run, Dodge, OnAir, DoubleJump, 
+	public enum State { Idle, Walk, Run, Dodge, Jump, OnAir, DoubleJump, 
 		StandAttack, OnAirAttack, MoveAttack,
 		Stun, Die};
 
@@ -51,6 +51,7 @@ public class Player : MonoBehaviour
 		stateMachine.AddState(State.Walk, new PlayerWalk(this, stateMachine));
 		stateMachine.AddState(State.Run, new PlayerRun(this, stateMachine));
 		stateMachine.AddState(State.Dodge, new PlayerDodge(this, stateMachine));
+		stateMachine.AddState(State.Jump, new PlayerJump(this, stateMachine));
 		stateMachine.AddState(State.OnAir, new PlayerOnAir(this, stateMachine));
 
 		stateMachine.AddState(State.StandAttack, new PlayerAttackStand(this, stateMachine));
@@ -99,7 +100,7 @@ public class Player : MonoBehaviour
 		while (true)
 		{
 			camRootFollower.FollowPositionSpeed = 
-				Mathf.Lerp(camRootFollower.FollowPositionSpeed, target, 5f * Time.deltaTime);
+				Mathf.Lerp(camRootFollower.FollowPositionSpeed, target, Time.deltaTime);
 
 			if(Mathf.Approximately(camRootFollower.FollowPositionSpeed, target))
 			{
@@ -118,19 +119,11 @@ public class Player : MonoBehaviour
 
 	public void Jump()
 	{
-		OnAir(true);
+		stateMachine.ChangeState(Player.State.Jump);
 	}
 
-	public void OnAir(bool jumpUp)
+	public void OnAir()
 	{
-		if (jumpUp == true) {
-			CurJumpState = JumpState.Jump;
-		}
-		else
-		{
-			CurJumpState = JumpState.OnAir;
-		}
-		
 		stateMachine.ChangeState(Player.State.OnAir);
 	}
 }

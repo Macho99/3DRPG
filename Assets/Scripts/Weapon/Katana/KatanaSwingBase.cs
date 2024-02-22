@@ -97,8 +97,7 @@ public abstract class KatanaSwingBase : StateBase<Katana.State, Katana>
 				bool result = owner.Attack();
 				if (result == false)
 				{
-					trail.SetTarget(null);
-					stateMachine.ChangeState(Katana.State.AttackFail);
+					AttackFail();
 					return;
 				}
 				break;
@@ -116,6 +115,12 @@ public abstract class KatanaSwingBase : StateBase<Katana.State, Katana>
 			default:
 				break;
 		}
+	}
+
+	protected virtual void AttackFail()
+	{
+		trail.SetTarget(null);
+		stateMachine.ChangeState(Katana.State.AttackFail);
 	}
 
 	protected void AttackBtn1Pressed(Player.State state)

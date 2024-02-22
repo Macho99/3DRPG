@@ -40,7 +40,7 @@ public class PlayerMove : MonoBehaviour
 	public bool SprintInput { get; private set; }
 	public float GravityMultiplier { get; set; } = 1f;
 	public float MoveMultiplier { private get; set; } = 1f;
-	public float VelY { set { velY = value; } }
+	public float VelY { get { return velY; } }
 	public Vector3 MoveForward { get { return moveRoot.forward; } }
 
 	Animator anim;
@@ -67,7 +67,7 @@ public class PlayerMove : MonoBehaviour
 		Move();
 		GroundCheck();
 		Slide();
-		print(velY);
+		//print(velY);
 	}
 
 	private void Slide()
@@ -156,7 +156,7 @@ public class PlayerMove : MonoBehaviour
 
 	private void OnJump(InputValue value)
 	{
-		JumpInput = value.Get<float>() > 0.9f ? true : false;
+		JumpInput = value.Get<float>() > 0.9f;
 		if(JumpInput == true)
 		{
 			OnJumpDown?.Invoke();
@@ -165,7 +165,7 @@ public class PlayerMove : MonoBehaviour
 
 	private void OnDodge(InputValue value)
 	{
-		DodgeInput = value.Get<float>() > 0.9f ? true : false;
+		DodgeInput = value.Get<float>() > 0.9f;
 		if(DodgeInput == true)
 		{
 			OnDodgeDown?.Invoke();
@@ -174,7 +174,7 @@ public class PlayerMove : MonoBehaviour
 
 	private void OnSprint(InputValue value)
 	{
-		SprintInput = value.Get<float>() > 0.9f ? true : false;
+		SprintInput = value.Get<float>() > 0.9f;
 	}
 
 	private void OnDrawGizmos()
@@ -222,7 +222,6 @@ public class PlayerMove : MonoBehaviour
 	public void Jump()
 	{
 		velY = jumpForce;
-		print("Jumped");
 		IsGround = false;
 	}
 

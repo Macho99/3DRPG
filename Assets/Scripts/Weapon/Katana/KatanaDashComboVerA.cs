@@ -68,7 +68,7 @@ public class KatanaDashComboVerA04 : KatanaSwingBase
 	{
 		if (attack2Holded)
 		{
-			stateMachine.ChangeState(Katana.State.QuickDrawIdle);
+			stateMachine.ChangeState(Katana.State.QuickDrawEntry);
 			return true;
 		}
 		return false;

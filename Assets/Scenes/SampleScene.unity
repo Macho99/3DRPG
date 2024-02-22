@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.4478156, g: 0.49780184, b: 0.57543576, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -81608,6 +81608,7 @@ Transform:
   m_Children:
   - {fileID: 1521013355}
   - {fileID: 7552663518493671703}
+  - {fileID: 8756067098103440702}
   m_Father: {fileID: 1367018616166912867}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &770689854939618290
@@ -81880,7 +81881,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 718883728277211549}
-  - {fileID: 8756067098103440702}
+  - {fileID: 5428937409812661769}
+  - {fileID: 8136548716969632804}
   - {fileID: 1767795648}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -85084,7 +85086,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8756067098103440702}
+  m_Father: {fileID: 1367018616166912867}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &5467494588048735412
 Transform:
@@ -85707,7 +85709,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveRoot: {fileID: 8136548716969632804}
   moveSpeed: 4
-  jumpForce: 10
+  jumpForce: 20
   slideSpeed: 5
   slideAngle: 20
   moveLerpSpeed: 50
@@ -85750,6 +85752,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   curState: 0
+  curJumpState: 0
   OnWeaponIdle:
     m_PersistentCalls:
       m_Calls: []
@@ -88021,7 +88024,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8756067098103440702}
   m_Layer: 3
-  m_Name: Followers
+  m_Name: FastFollowers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -88040,7 +88043,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8756067098103440702}
+  m_Father: {fileID: 1367018616166912867}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8193355174127559572
 GameObject:
@@ -88321,16 +88324,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7972985005807670605}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 16.37, y: 0, z: 3.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7351068038340856969}
   - {fileID: 1075058487}
-  - {fileID: 5428937409812661769}
-  - {fileID: 8136548716969632804}
-  m_Father: {fileID: 1367018616166912867}
+  m_Father: {fileID: 718883728277211549}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &8789741499382705673
 Transform:

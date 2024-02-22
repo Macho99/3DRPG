@@ -26,4 +26,11 @@ public class KatanaDashAttackVerA : KatanaSwingBase
 		}
 		return false;
 	}
+
+	protected override void AttackFail()
+	{
+		base.AttackFail();
+		player.SetAnimRootMotion(false);
+		playerMove.SetAnimFloat("Reverse", -1f);
+	}
 }

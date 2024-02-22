@@ -15,22 +15,8 @@ public class PlayerOnAir : StateBase<Player.State, Player>
 
 	public override void Enter()
 	{
-		switch (owner.CurJumpState)
-		{
-			case Player.JumpState.Jump:
-				playerMove.Jump();
-				playerMove.SetAnimFloat("Jump", 1f);
-				break;
-			case Player.JumpState.OnAir:
-				if (playerMove.CalcLandTime() > 0.1f)
-				{
-					playerMove.SetAnimFloat("Jump", 2f);
-				}
-				break;
-			default:
-				Debug.Log($"{owner.CurJumpState}는 OnAir상태에서 유효하지 않습니다");
-				break;
-		}
+		playerMove.SetAnimFloat("Jump", 2f);
+		owner.CurJumpState = Player.JumpState.OnAir;
 	}
 
 	public override void Exit()
@@ -46,8 +32,10 @@ public class PlayerOnAir : StateBase<Player.State, Player>
 	public override void Transition()
 	{
 		float time = playerMove.CalcLandTime();
+		print(time);
 		if(time < 0.5f)
 		{
+			playerMove.SetAnimFloat("Jump", 3f);
 			stateMachine.ChangeState(Player.State.Idle);
 		}
 	}
