@@ -45,6 +45,7 @@ public abstract class KatanaSwingBase : StateBase<Katana.State, Katana>
 
 	public override void Exit()
 	{
+		trail?.SetTarget(null);
 		trail = null;
 		playerAnimEvent.OnAttackStart.RemoveListener(AttackStart);
 		playerAnimEvent.OnAttackEnd.RemoveListener(AttackEnd);

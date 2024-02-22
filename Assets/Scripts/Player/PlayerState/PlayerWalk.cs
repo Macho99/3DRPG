@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 public class PlayerWalk : StateBase<Player.State, Player>
 {
 	PlayerMove playerMove;
+
 	public PlayerWalk(Player owner, StateMachine<Player.State, Player> stateMachine) : base(owner, stateMachine)
 	{
 
@@ -15,11 +16,12 @@ public class PlayerWalk : StateBase<Player.State, Player>
 	public override void Enter()
 	{
 		playerMove.MoveMultiplier = 1f;
+		playerMove.OnDodgeDown.AddListener(owner.Dodge);
 	}
 
 	public override void Exit()
 	{
-
+		playerMove.OnDodgeDown.RemoveListener(owner.Dodge);
 	}
 
 	public override void Setup()

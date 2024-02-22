@@ -60,13 +60,13 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Evasion",
-                    "type": "Button",
+                    "name": "Dodge",
+                    "type": "Value",
                     "id": "2e403235-2a06-431b-b1b2-b0565ed51034",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Escape",
@@ -207,7 +207,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Evasion",
+                    "action": "Dodge",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

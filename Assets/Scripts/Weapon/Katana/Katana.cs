@@ -20,6 +20,7 @@ public class Katana : Sword
 	private GameObject swordDummy;
 	private StateMachine<State, Katana> stateMachine;
 
+	public bool Armed { get; set; }
 	public int QuickDrawCnt { get; set; } = 0;
 
 	protected override void Awake()
@@ -89,5 +90,24 @@ public class Katana : Sword
 	public void PlayDeathfaultFeedback()
 	{
 		deathfaultFeedback?.PlayFeedbacks();
+	}
+
+	public override void ChangeStateToIdle(bool forceIdle = false)
+	{
+		if(forceIdle == true)
+		{
+			stateMachine.ChangeState(State.Idle);
+			return;
+		}
+
+		if(Armed == true)
+		{
+			stateMachine.ChangeState(State.Idle);
+		}
+		else
+		{
+			print("HH");
+			stateMachine.ChangeState(State.Unarmed);
+		}
 	}
 }

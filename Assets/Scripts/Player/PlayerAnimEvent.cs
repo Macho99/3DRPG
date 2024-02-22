@@ -10,6 +10,7 @@ public class PlayerAnimEvent : MonoBehaviour
 	[HideInInspector] public UnityEvent OnClockWiseAttack;
 	[HideInInspector] public UnityEvent OnCounterClockWiseAttack;
 	[HideInInspector] public UnityEvent OnEquipChange;
+
 	private void Awake()
 	{
 		OnAttackStart = new UnityEvent();

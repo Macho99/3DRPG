@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.HID;
 
@@ -19,25 +20,22 @@ public class PlayerMove : MonoBehaviour
 
 	private Vector3 curMoveVec;
 	private bool isGround;
+
+	public Transform MoveRoot { get { return moveRoot; } }
 	public bool IsGround
 	{
 		get { return isGround; }
 		private set
 		{
-			if (isGround == false && value == true)
-			{
-				anim.SetBool("IsJump", false);
-			}
-			else if (isGround == true && value == false)
-			{
-
-			}
-
 			isGround = value;
 		}
 	}
 
+	[HideInInspector] public UnityEvent OnJumpDown = new UnityEvent();
+	[HideInInspector] public UnityEvent OnDodgeDown = new UnityEvent();
+
 	public bool JumpInput { get; private set; }
+	public bool DodgeInput { get; private set; }
 	public Vector2 MoveInput { get; private set; }
 	public bool SprintInput { get; private set; }
 	public float GravityMultiplier { get; set; } = 1f;
@@ -70,14 +68,6 @@ public class PlayerMove : MonoBehaviour
 		GroundCheck();
 		Slide();
 		//LerpCharacter();
-	}
-
-	private void LerpCharacter()
-	{
-		Vector3 diff = animTrans.position - transform.position;
-		diff *= 0.1f;
-		transform.Translate(diff, Space.World);
-		animTrans.Translate(-diff, Space.World);
 	}
 
 	private void Slide()
@@ -147,13 +137,16 @@ public class PlayerMove : MonoBehaviour
 		}
 		//else
 		//{
-		//	anim.SetFloat("SpeedX", animSpeedVec.x, 0.1f, Time.deltaTime);
-		//	anim.SetFloat("SpeedY", animSpeedVec.y, 0.1f, Time.deltaTime);
-		//}
 
+		//}
 		curMoveVec.y = velY;
 
 		controller.Move(curMoveVec * Time.deltaTime);
+	}
+
+	public void ManualMove(Vector3 moveVec, float time)
+	{
+		controller.Move(moveVec * time);
 	}
 
 	private void OnMove(InputValue value)
@@ -163,11 +156,20 @@ public class PlayerMove : MonoBehaviour
 
 	private void OnJump(InputValue value)
 	{
-		if (false == IsGround) { return; }
+		JumpInput = value.Get<float>() > 0.9f ? true : false;
+		if(JumpInput == true)
+		{
+			OnJumpDown?.Invoke();
+		}
+	}
 
-		IsGround = false;
-		velY = jumpForce;
-		anim.SetBool("IsJump", true);
+	private void OnDodge(InputValue value)
+	{
+		DodgeInput = value.Get<float>() > 0.9f ? true : false;
+		if(DodgeInput == true)
+		{
+			OnDodgeDown?.Invoke();
+		}
 	}
 
 	private void OnSprint(InputValue value)
@@ -185,5 +187,41 @@ public class PlayerMove : MonoBehaviour
 		colPoint.y += controller.radius;
 
 		Gizmos.DrawWireSphere(colPoint, controller.radius);
+	}
+
+	public float GetAnimNormalizedTime(int layer)
+	{
+		return anim.GetCurrentAnimatorStateInfo(layer).normalizedTime;
+	}
+
+	public bool IsAnimWait(int layer)
+	{
+		return anim.GetCurrentAnimatorStateInfo(layer).IsName("Wait");
+	}
+
+	public bool IsAnimName(int layer, string name)
+	{
+		return anim.GetCurrentAnimatorStateInfo(layer).IsName(name);
+	}
+
+	public void SetAnimTrigger(string str)
+	{
+		anim.SetTrigger(str);
+	}
+
+	public void SetAnimFloat(string str, float value)
+	{
+		anim.SetFloat(str, value);
+	}
+
+	public void SetAnimFloat(string str, float value, float dampTime, float deltaTime)
+	{
+		anim.SetFloat(str, value, dampTime, deltaTime);
+	}
+
+	public void Jump()
+	{
+		velY = jumpForce;
+		IsGround = false;
 	}
 }

@@ -98,6 +98,11 @@ public class PlayerAttack : MonoBehaviour
 		holdevent?.Invoke(player.CurState);
 	}
 
+	public void ChangeStateToIdle(bool forceIdle = false)
+	{
+		curWeapon.ChangeStateToIdle(forceIdle);
+	}
+
 	public float GetAnimNormalizedTime(int layer)
 	{
 		return anim.GetCurrentAnimatorStateInfo(layer).normalizedTime;

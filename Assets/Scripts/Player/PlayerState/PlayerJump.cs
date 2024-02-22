@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 public class PlayerJump : StateBase<Player.State, Player>
 {
 	PlayerMove playerMove;
+
 	public PlayerJump(Player owner, StateMachine<Player.State, Player> stateMachine) : base(owner, stateMachine)
 	{
 	}
@@ -28,7 +29,7 @@ public class PlayerJump : StateBase<Player.State, Player>
 
 	public override void Transition()
 	{
-
+		stateMachine.ChangeState(Player.State.Idle);
 	}
 
 	public override void Update()
