@@ -37,6 +37,8 @@ public class MonsterShield : MonoBehaviour
 
     private void FindTargets()
     {
+        blockTarget = null;
+
         Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, targetMask);
 
         for (int i = 0; i < targetsInViewRadius.Length; i++)

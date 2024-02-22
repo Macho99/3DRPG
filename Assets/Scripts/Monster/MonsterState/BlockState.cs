@@ -1,22 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting.FullSerializer;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class BattleIdleState : StateMachineBehaviour
+public class BlockState : StateMachineBehaviour
 {
+    public float rotationValue;
     float timer;
     float attackDelay;
     Transform target;
+    Transform myTf;
     NavMeshAgent agent;
+    Monster monster;
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         attackDelay = animator.GetComponent<Monster>().attackDelay;
         timer = 0f;
         target = animator.GetComponent<Monster>().target;
+        myTf = animator.GetComponent<Transform>();
         agent = animator.GetComponent<NavMeshAgent>();
+        monster = animator.GetComponent<Monster>();
+
+        monster.state = State.BLOCK;
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -29,7 +36,7 @@ public class BattleIdleState : StateMachineBehaviour
             return;
         }
 
-        animator.transform.LookAt(target.position);
+        Turn(target, myTf);
 
         if (timer > attackDelay)
         {
@@ -39,11 +46,18 @@ public class BattleIdleState : StateMachineBehaviour
             }
             animator.SetBool("AttackDelay", false);
         }
-
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
 
+    }
+
+    private void Turn(Transform target, Transform myTf)
+    {
+        Vector3 directionToTarget = target.position - myTf.position;
+        directionToTarget.y = 0;
+        Quaternion targetRotation = Quaternion.LookRotation(directionToTarget.normalized);
+        myTf.rotation = Quaternion.Slerp(myTf.rotation, targetRotation, rotationValue * Time.deltaTime);
     }
 }

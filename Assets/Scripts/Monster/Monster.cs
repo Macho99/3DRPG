@@ -151,5 +151,8 @@ public class Monster : MonoBehaviour
         Destroy(gameObject, 3f);
     }
 
-    // TODO: 어택 판정 구체화, 회전 부드럽게 수정, Hit Effect 추가, Sound 추가
+    // TODO: 어택 판정 구체화, Hit Effect 추가, Sound 추가, 원거리 몹 추가
+    // BattleIdle 상태에서 좌우로 움직이던지 해서 자연스럽게 변경
+    // 근거리, 근거리 방패, 원거리, 미믹 ( 버퍼? 근접 원거리 스위칭? )
+    // 상태이상?
 }
