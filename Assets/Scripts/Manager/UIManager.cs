@@ -67,13 +67,13 @@ public class UIManager : MonoBehaviour
 
 	private IEnumerator FadeIn(CanvasGroup cg)
 	{
-		float fadeTime = 1f;
+		float fadeTime = 0.2f;
 		float accumTime = 0f;
         while (accumTime < fadeTime)
         {
             cg.alpha = Mathf.Lerp(0f, 1f, accumTime / fadeTime);
             yield return 0;
-            accumTime += Time.deltaTime * 2;
+            accumTime += Time.deltaTime;
         }
         cg.alpha = 1f;
     }
@@ -87,29 +87,28 @@ public class UIManager : MonoBehaviour
 	public void ClosePopUpUI()
 	{
 		PopUpUI ui = popUpStack.Pop();
-		GameManager.Pool.ReleaseUI(ui.gameObject);
+		_= StartCoroutine(FadeOut(ui.gameObject.GetComponent<CanvasGroup>()));
+		//GameManager.Pool.ReleaseUI(ui.gameObject);
 
 		if (popUpStack.Count > 0)
 		{
 			PopUpUI curUI = popUpStack.Peek();
 			curUI.gameObject.SetActive(true);
 		}
-		else
-		{
-			Time.timeScale = 1f;
-		}
 	}
+
     private IEnumerator FadeOut(CanvasGroup cg)
     {
-        float fadeTime = 1f;
+        float fadeTime = 0.2f;
         float accumTime = 0f;
         while (accumTime < fadeTime)
         {
-            cg.alpha = Mathf.Lerp(0f, 1f, accumTime / fadeTime);
+            cg.alpha = Mathf.Lerp(1f, 0f, accumTime / fadeTime);
             yield return 0;
-            accumTime += Time.deltaTime * 2;
+            accumTime += Time.deltaTime;
         }
-        cg.alpha = 1f;
+        cg.alpha = 0f;
+        GameManager.Pool.ReleaseUI(cg.GetComponent<PopUpUI>().gameObject);
     }
 
     public void ClearPopUpUI()

@@ -3415,6 +3415,7 @@ GameObject:
   - component: {fileID: 6630541355526724797}
   - component: {fileID: 3633726612392964449}
   - component: {fileID: 8049359190986310457}
+  - component: {fileID: 1222848294184831506}
   m_Layer: 5
   m_Name: Inventory
   m_TagString: Untagged
@@ -3502,6 +3503,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!225 &1222848294184831506
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8282480174667485599}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &8736984592578041231
 GameObject:
   m_ObjectHideFlags: 0
