@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 public class PlayerRun : StateBase<Player.State, Player>
 {
 	PlayerMove playerMove;
-	PlayerAttack playerAttack; 
+	PlayerAnimEvent playerAnimEvent;
 
 	public PlayerRun(Player owner, StateMachine<Player.State, Player> stateMachine) : base(owner, stateMachine)
 	{
@@ -17,18 +17,18 @@ public class PlayerRun : StateBase<Player.State, Player>
 	public override void Enter()
 	{
 		playerMove.MoveMultiplier = 2f;
-		//playerAttack.SetUnarmed();
+		playerMove.OnJumpDown.AddListener(owner.Jump);
 	}
 
 	public override void Exit()
 	{
-
+		playerMove.OnJumpDown.RemoveListener(owner.Jump);
 	}
 
 	public override void Setup()
 	{
-		playerAttack = owner.PlayerAttack;
 		playerMove = owner.PlayerMove;
+		playerAnimEvent = owner.PlayerAnimEvent;
 	}
 
 	public override void Transition()

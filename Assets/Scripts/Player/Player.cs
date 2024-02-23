@@ -24,6 +24,7 @@ public class Player : MonoBehaviour
 	private PlayerLook playerLook;
 	private PlayerMove playerMove;
 	private PlayerAttack playerAttack;
+	private PlayerAnimEvent playerAnimEvent;
 	private StateMachine<State, Player> stateMachine;
 	private Coroutine followSpeedCoroutine;
 
@@ -35,6 +36,7 @@ public class Player : MonoBehaviour
 	public PlayerLook PlayerLook { get {  return playerLook; } }
 	public PlayerMove PlayerMove { get {  return playerMove; } }
 	public PlayerAttack PlayerAttack { get {  return playerAttack; } }
+	public PlayerAnimEvent PlayerAnimEvent { get { return playerAnimEvent; } }
 
 	private void Awake()
 	{
@@ -42,6 +44,7 @@ public class Player : MonoBehaviour
 		playerLook = GetComponent<PlayerLook>();
 		playerMove = GetComponent<PlayerMove>();
 		playerAttack = GetComponent<PlayerAttack>();
+		playerAnimEvent = GetComponent<PlayerAnimEvent>();
 
 		camRootFollower = playerLook.CamRoot.GetComponent<MMFollowTarget>();
 		OnWeaponIdle = new UnityEvent();
@@ -85,22 +88,32 @@ public class Player : MonoBehaviour
 		anim.applyRootMotion = value;
 		if(value == true)
 		{
-			camRootFollower.FollowPositionSpeed = 5f;
-			if(followSpeedCoroutine != null)
-				StopCoroutine(followSpeedCoroutine);
+			SetCamFollowSpeed(5f);
 		}
 		else
 		{
-			followSpeedCoroutine = StartCoroutine(CoFollowSpeedSet(50f));
+			SetCamFollowSpeed(50f, 1f);
 		}
 	}
 
-	private IEnumerator CoFollowSpeedSet(float target)
+	public void SetCamFollowSpeed(float speed)
+	{
+		if (followSpeedCoroutine != null)
+			StopCoroutine(followSpeedCoroutine);
+		camRootFollower.FollowPositionSpeed = 5f;
+	}
+	
+	public void SetCamFollowSpeed(float speed, float lerpSpeed)
+	{
+		followSpeedCoroutine = StartCoroutine(CoFollowSpeedSet(speed, lerpSpeed));
+	}
+
+	private IEnumerator CoFollowSpeedSet(float target, float lerpSpeed)
 	{
 		while (true)
 		{
 			camRootFollower.FollowPositionSpeed = 
-				Mathf.Lerp(camRootFollower.FollowPositionSpeed, target, Time.deltaTime);
+				Mathf.Lerp(camRootFollower.FollowPositionSpeed, target, lerpSpeed * Time.deltaTime);
 
 			if(Mathf.Approximately(camRootFollower.FollowPositionSpeed, target))
 			{

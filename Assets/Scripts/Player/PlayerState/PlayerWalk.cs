@@ -17,11 +17,13 @@ public class PlayerWalk : StateBase<Player.State, Player>
 	{
 		playerMove.MoveMultiplier = 1f;
 		playerMove.OnDodgeDown.AddListener(owner.Dodge);
+		playerMove.OnJumpDown.AddListener(owner.Jump);
 	}
 
 	public override void Exit()
 	{
 		playerMove.OnDodgeDown.RemoveListener(owner.Dodge);
+		playerMove.OnJumpDown.RemoveListener(owner.Jump);
 	}
 
 	public override void Setup()

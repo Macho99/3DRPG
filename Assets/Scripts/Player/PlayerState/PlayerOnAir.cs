@@ -15,13 +15,14 @@ public class PlayerOnAir : StateBase<Player.State, Player>
 
 	public override void Enter()
 	{
+		playerMove.SetAnimFloat("Grruzam", 1f);
 		playerMove.SetAnimFloat("Jump", 2f);
 		owner.CurJumpState = Player.JumpState.OnAir;
 	}
 
 	public override void Exit()
 	{
-
+		owner.SetCamFollowSpeed(50f, 1f);
 	}
 
 	public override void Setup()

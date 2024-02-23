@@ -85605,6 +85605,9 @@ MonoBehaviour:
   OnEquipChange:
     m_PersistentCalls:
       m_Calls: []
+  OnJumpStart:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!143 &5845758282053179557
 CharacterController:
   m_ObjectHideFlags: 0
@@ -85709,7 +85712,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveRoot: {fileID: 8136548716969632804}
   moveSpeed: 4
-  jumpForce: 20
+  jumpForce: 4
   slideSpeed: 5
   slideAngle: 20
   moveLerpSpeed: 50
