@@ -32,7 +32,7 @@ public class PlayerOnAir : StateBase<Player.State, Player>
 	public override void Transition()
 	{
 		float time = playerMove.CalcLandTime();
-		Debug.Log(time);
+		//Debug.Log(time);
 		if (time < 0.05f)
 		{
 			stateMachine.ChangeState(Player.State.Land);

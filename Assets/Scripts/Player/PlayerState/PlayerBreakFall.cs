@@ -4,23 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-public class PlayerDoubleLand : StateBase<Player.State, Player>
+public class PlayerBreakFall : StateBase<Player.State, Player>
 {
 	PlayerMove playerMove;
 	PlayerAnimEvent playerAnimEvent;
-
-	bool landEnd;
-
-	public PlayerDoubleLand(Player owner, StateMachine<Player.State, Player> stateMachine) : base(owner, stateMachine)
+	public PlayerBreakFall(Player owner, StateMachine<Player.State, Player> stateMachine) : base(owner, stateMachine)
 	{
 	}
 
 	public override void Enter()
 	{
-		owner.SetCamFollowSpeed(50f, 1f);
-		landEnd = false;
-		playerMove.SetAnimTrigger("Land");
-		playerMove.SetAnimTrigger("BaseExit");
+		owner.SetAnimRootMotion(true);
+		playerMove.SetAnimTrigger("BreakFall");
 		playerAnimEvent.OnLandStart.AddListener(LandStart);
 		playerAnimEvent.OnLandEnd.AddListener(LandEnd);
 	}
@@ -41,11 +36,6 @@ public class PlayerDoubleLand : StateBase<Player.State, Player>
 
 	public override void Transition()
 	{
-		if (landEnd == false) return;
-		if(playerMove.IsAnimName(0, "Double_Jump_End") == true)
-		{
-			stateMachine.ChangeState(Player.State.Idle);
-		}
 	}
 
 	public override void Update()
@@ -59,6 +49,7 @@ public class PlayerDoubleLand : StateBase<Player.State, Player>
 
 	private void LandEnd()
 	{
-		landEnd = true;
+		owner.SetAnimRootMotion(false);
+		stateMachine.ChangeState(Player.State.Idle);
 	}
 }

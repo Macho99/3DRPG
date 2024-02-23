@@ -20,7 +20,7 @@ public class PlayerMove : MonoBehaviour
 	[SerializeField] float moveLerpSpeed = 50f;
 	[SerializeField] float rotationLerpSpeed = 5f;
 	[SerializeField] float gravity = -25f;
-	[SerializeField] float fallCheckDist = 1f;
+	[SerializeField] float fallCheckDist = 2f;
 
 	private Vector3 curMoveVec;
 	private bool isGround;
@@ -115,7 +115,6 @@ public class PlayerMove : MonoBehaviour
 					continue;
 				}
 			}
-			print("FallCall");
 			OnFalling?.Invoke();
 			break;
 		}
@@ -184,6 +183,7 @@ public class PlayerMove : MonoBehaviour
 		JumpInput = value.Get<float>() > 0.9f;
 		if(JumpInput == true)
 		{
+			print("JumpDown");
 			OnJumpDown?.Invoke();
 		}
 	}
@@ -231,7 +231,7 @@ public class PlayerMove : MonoBehaviour
 
 	public void SetAnimTrigger(string str)
 	{
-		print(str);
+		//print(str);
 		anim.SetTrigger(str);
 	}
 
@@ -265,16 +265,18 @@ public class PlayerMove : MonoBehaviour
 
 	public float CalcLandTime()
 	{
-		if(Physics.Raycast(transform.position + Vector3.up * 0.2f, Vector3.down, 
-			out RaycastHit hitInfo, 100f, environmentMask) == false)
+		Vector3 offset = Vector3.up * 0.1f;
+		if (Physics.SphereCast(transform.position + offset, controller.radius,
+			Vector3.down, out hitInfo, 100f, environmentMask) == false)
 		{
 			return 10f;
 		}
 
-		float dist = Vector3.Distance(hitInfo.point, transform.position);
+		float dist = Vector3.Distance(hitInfo.point, transform.position + offset);
 		float gd2 = 2 * -gravity * dist;
 		float sqrt = Mathf.Sqrt(velY * velY + gd2);
 		float result = (velY + sqrt) / -gravity;
+		print(result);
 		return result;
 	}
 }

@@ -16,7 +16,6 @@ public class PlayerDoubleOnAir : StateBase<Player.State, Player>
 
 	public override void Exit()
 	{
-		owner.SetCamFollowSpeed(50f, 1f);
 	}
 
 	public override void Setup()
@@ -27,11 +26,20 @@ public class PlayerDoubleOnAir : StateBase<Player.State, Player>
 	public override void Transition()
 	{
 		float time = playerMove.CalcLandTime();
-		if (time < 0.4f)
+		if (playerMove.MoveInput.sqrMagnitude > 0.1f)
 		{
-			playerMove.SetAnimTrigger("Land");
-			playerMove.SetAnimFloat("Grruzam", 1f);
-			stateMachine.ChangeState(Player.State.Idle);
+			if (time < 0.05f || playerMove.IsGround == true)
+			{
+				stateMachine.ChangeState(Player.State.BreakFall);
+			}
+		}
+		else
+		{
+			if (time < 0.2f || playerMove.IsGround == true)
+			{
+				stateMachine.ChangeState(Player.State.DoubleLand);
+				return;
+			}
 		}
 	}
 

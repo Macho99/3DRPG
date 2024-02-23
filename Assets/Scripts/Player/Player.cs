@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
 	[Serializable]
 	public enum State { Idle, Walk, Run, Dodge, Jump, OnAir, Land,
 		JumpTest,
-		DoubleJump, DoubleOnAir, DoubleLand, 
+		DoubleJump, DoubleOnAir, DoubleLand, BreakFall,
 		StandAttack, OnAirAttack, MoveAttack,
 		Stun, Die};
 
@@ -56,6 +56,7 @@ public class Player : MonoBehaviour
 		stateMachine.AddState(State.DoubleJump, new PlayerDoubleJump(this, stateMachine));
 		stateMachine.AddState(State.DoubleOnAir, new PlayerDoubleOnAir(this, stateMachine));
 		stateMachine.AddState(State.DoubleLand, new PlayerDoubleLand(this, stateMachine));
+		stateMachine.AddState(State.BreakFall, new PlayerBreakFall(this, stateMachine));
 
 		stateMachine.AddState(State.StandAttack, new PlayerAttackStand(this, stateMachine));
 		stateMachine.AddState(State.MoveAttack, new PlayerAttackMove(this, stateMachine));
@@ -145,7 +146,7 @@ public class Player : MonoBehaviour
 	}
 	public void OnAir()
 	{
-		stateMachine.ChangeState(Player.State.OnAir);
+		playerMove.SetAnimTrigger("Fall");
+		stateMachine.ChangeState(Player.State.DoubleOnAir);
 	}
-
 }

@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class PlayerDoubleJump : StateBase<Player.State, Player>
 {
@@ -15,7 +12,6 @@ public class PlayerDoubleJump : StateBase<Player.State, Player>
 	{
 		playerMove.Jump(true);
 		owner.SetCamFollowSpeed(5f);
-		playerMove.Jump(true);
 		playerMove.SetAnimTrigger("DoubleJump");
 	}
 
@@ -30,9 +26,27 @@ public class PlayerDoubleJump : StateBase<Player.State, Player>
 
 	public override void Transition()
 	{
-		if(playerMove.IsAnimName(0, "Double_Jump_Loop") == true)
+		float time = playerMove.CalcLandTime();
+		if(playerMove.MoveInput.sqrMagnitude > 0.1f)
+		{
+			if(time < 0.05f || playerMove.IsGround == true)
+			{
+				stateMachine.ChangeState(Player.State.BreakFall);
+			}
+		}
+		else
+		{
+			if (time < 0.2f || playerMove.IsGround == true)
+			{
+				stateMachine.ChangeState(Player.State.DoubleLand);
+				return;
+			}
+		}
+
+		if (playerMove.IsAnimName(0, "Double_Jump_Loop") == true)
 		{
 			stateMachine.ChangeState(Player.State.DoubleOnAir);
+			return;
 		}
 	}
 

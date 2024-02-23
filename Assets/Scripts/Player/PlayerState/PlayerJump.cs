@@ -16,11 +16,13 @@ public class PlayerJump : StateBase<Player.State, Player>
 	{
 		playerMove.SetAnimTrigger("Jump");
 		owner.SetCamFollowSpeed(5f);
+		playerMove.OnJumpDown.AddListener(owner.DoubleJump);
 		playerAnimEvent.OnJumpStart.AddListener(Jump);
 	}
 
 	public override void Exit()
 	{
+		playerMove.OnJumpDown.RemoveListener(owner.DoubleJump);
 		playerAnimEvent.OnJumpStart.RemoveListener(Jump);
 	}
 
