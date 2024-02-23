@@ -157,4 +157,5 @@ public class Monster : MonoBehaviour
     // 상태이상?
 
     // # 비활성화 미믹에 상호작용 하면 미믹은 Taunt 애니메이션 ( 플레이어 넘어짐 )
+    // # 스폰 지점 근처가 아닐 때, target이 null이 된지 일정 시간이 지나면 return (버그 방지)
 }
