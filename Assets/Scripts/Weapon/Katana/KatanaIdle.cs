@@ -53,6 +53,12 @@ public class KatanaIdle : StateBase<Katana.State, Katana>
 			case Player.State.Run:
 				stateMachine.ChangeState(Katana.State.DashAttackVerA);
 				break;
+			case Player.State.Jump:
+			case Player.State.OnAir:
+			case Player.State.DoubleJump:
+			case Player.State.DoubleOnAir:
+				stateMachine.ChangeState(Katana.State.JumpCombo01); 
+				break;
 		}
 	}
 }

@@ -10,15 +10,12 @@ public class Player : MonoBehaviour
 	[SerializeField] State curState;
 
 	[Serializable]
-	public enum JumpState { None, Jump, OnAir, Land, DoubleJump, DoubleOnAir, DoubleLand }
-
-	[Serializable]
-	public enum State { Idle, Walk, Run, Dodge, Jump, OnAir, DoubleJump, 
+	public enum State { Idle, Walk, Run, Dodge, Jump, OnAir, Land,
+		JumpTest,
+		DoubleJump, DoubleOnAir, DoubleLand, 
 		StandAttack, OnAirAttack, MoveAttack,
 		Stun, Die};
 
-	public JumpState CurJumpState { get { return curJumpState; } set { curJumpState = value; } }
-	[SerializeField] private JumpState curJumpState;
 	private Animator anim;
 	private MMFollowTarget camRootFollower;
 	private PlayerLook playerLook;
@@ -26,12 +23,11 @@ public class Player : MonoBehaviour
 	private PlayerAttack playerAttack;
 	private PlayerAnimEvent playerAnimEvent;
 	private StateMachine<State, Player> stateMachine;
-	private Coroutine followSpeedCoroutine;
+	private bool camFollowFixed;
 
 	[HideInInspector] public UnityEvent OnWeaponIdle;
 
 	public Transform MoveRoot { get => playerMove.MoveRoot; }
-	//public bool AimHolded {  get; set; }
 	public State CurState { get { return curState; } }
 	public PlayerLook PlayerLook { get {  return playerLook; } }
 	public PlayerMove PlayerMove { get {  return playerMove; } }
@@ -56,10 +52,16 @@ public class Player : MonoBehaviour
 		stateMachine.AddState(State.Dodge, new PlayerDodge(this, stateMachine));
 		stateMachine.AddState(State.Jump, new PlayerJump(this, stateMachine));
 		stateMachine.AddState(State.OnAir, new PlayerOnAir(this, stateMachine));
+		stateMachine.AddState(State.Land, new PlayerLand(this, stateMachine));
+		stateMachine.AddState(State.DoubleJump, new PlayerDoubleJump(this, stateMachine));
+		stateMachine.AddState(State.DoubleOnAir, new PlayerDoubleOnAir(this, stateMachine));
+		stateMachine.AddState(State.DoubleLand, new PlayerDoubleLand(this, stateMachine));
 
 		stateMachine.AddState(State.StandAttack, new PlayerAttackStand(this, stateMachine));
 		stateMachine.AddState(State.MoveAttack, new PlayerAttackMove(this, stateMachine));
 		stateMachine.AddState(State.OnAirAttack, new PlayerAttackOnAir(this, stateMachine));
+
+		stateMachine.AddState(State.JumpTest, new PlayerJumpTest(this, stateMachine));
 	}
 
 	private void Start()
@@ -83,9 +85,11 @@ public class Player : MonoBehaviour
 		OnWeaponIdle?.Invoke();
 	}
 
-	public void SetAnimRootMotion(bool value)
+	public void SetAnimRootMotion(bool value, bool camSetting = true)
 	{
 		anim.applyRootMotion = value;
+		if (camSetting == false) return;
+
 		if(value == true)
 		{
 			SetCamFollowSpeed(5f);
@@ -98,24 +102,24 @@ public class Player : MonoBehaviour
 
 	public void SetCamFollowSpeed(float speed)
 	{
-		if (followSpeedCoroutine != null)
-			StopCoroutine(followSpeedCoroutine);
+		camFollowFixed = true;
 		camRootFollower.FollowPositionSpeed = 5f;
 	}
 	
 	public void SetCamFollowSpeed(float speed, float lerpSpeed)
 	{
-		followSpeedCoroutine = StartCoroutine(CoFollowSpeedSet(speed, lerpSpeed));
+		camFollowFixed = false;
+		_ = StartCoroutine(CoFollowSpeedSet(speed, lerpSpeed));
 	}
 
 	private IEnumerator CoFollowSpeedSet(float target, float lerpSpeed)
 	{
-		while (true)
+		while (camFollowFixed == false)
 		{
 			camRootFollower.FollowPositionSpeed = 
 				Mathf.Lerp(camRootFollower.FollowPositionSpeed, target, lerpSpeed * Time.deltaTime);
 
-			if(Mathf.Approximately(camRootFollower.FollowPositionSpeed, target))
+			if(camRootFollower.FollowPositionSpeed > target - 10f)
 			{
 				camRootFollower.FollowPositionSpeed = target;
 				break;
@@ -135,8 +139,13 @@ public class Player : MonoBehaviour
 		stateMachine.ChangeState(Player.State.Jump);
 	}
 
+	public void DoubleJump()
+	{
+		stateMachine.ChangeState(Player.State.DoubleJump);
+	}
 	public void OnAir()
 	{
 		stateMachine.ChangeState(Player.State.OnAir);
 	}
+
 }

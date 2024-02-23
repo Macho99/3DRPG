@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-public class KatanaDashAttackVerB : KatanaSwingBase
+public class KatanaDashAttackVerB : KatanaStandSwingBase
 {
 	public KatanaDashAttackVerB(Katana owner, StateMachine<Katana.State, Katana> stateMachine) 
 		: base(owner, stateMachine, "Attack9")

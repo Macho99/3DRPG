@@ -7,36 +7,33 @@ using System.Threading.Tasks;
 public class PlayerJump : StateBase<Player.State, Player>
 {
 	PlayerMove playerMove;
-	PlayerAnimEvent PlayerAnimEvent;
+	PlayerAnimEvent playerAnimEvent;
 	public PlayerJump(Player owner, StateMachine<Player.State, Player> stateMachine) : base(owner, stateMachine)
 	{
 	}
 
 	public override void Enter()
 	{
-		playerMove.SetAnimFloat("Jump", 1f);
-		playerMove.GravityMultiplier = 0f;
+		playerMove.SetAnimTrigger("Jump");
 		owner.SetCamFollowSpeed(5f);
-		owner.CurJumpState = Player.JumpState.Jump;
-		PlayerAnimEvent.OnJumpStart.AddListener(Jump);
+		playerAnimEvent.OnJumpStart.AddListener(Jump);
 	}
 
 	public override void Exit()
 	{
-
+		playerAnimEvent.OnJumpStart.RemoveListener(Jump);
 	}
 
 	public override void Setup()
 	{
 		playerMove = owner.PlayerMove;
-		PlayerAnimEvent = owner.PlayerAnimEvent;
+		playerAnimEvent = owner.PlayerAnimEvent;
 	}
 
 	public override void Transition()
 	{
-		if (playerMove.IsAnimWait(0))
+		if (playerMove.IsAnimName(0, "Jump_Loop"))
 		{
-			playerMove.GravityMultiplier = 1f;
 			stateMachine.ChangeState(Player.State.OnAir);
 		}
 	}

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-public class KatanaDashComboVerB01 : KatanaSwingBase
+public class KatanaDashComboVerB01 : KatanaStandSwingBase
 {
 	public KatanaDashComboVerB01(Katana owner, StateMachine<Katana.State, Katana> stateMachine)
 		: base(owner, stateMachine, "Attack14")
@@ -22,7 +22,7 @@ public class KatanaDashComboVerB01 : KatanaSwingBase
 	}
 }
 
-public class KatanaDashComboVerB02 : KatanaSwingBase
+public class KatanaDashComboVerB02 : KatanaStandSwingBase
 {
 	public KatanaDashComboVerB02(Katana owner, StateMachine<Katana.State, Katana> stateMachine)
 		: base(owner, stateMachine, "Attack15")
@@ -39,7 +39,7 @@ public class KatanaDashComboVerB02 : KatanaSwingBase
 		return false;
 	}
 }
-public class KatanaDashComboVerB03 : KatanaSwingBase
+public class KatanaDashComboVerB03 : KatanaStandSwingBase
 {
 	public KatanaDashComboVerB03(Katana owner, StateMachine<Katana.State, Katana> stateMachine)
 		: base(owner, stateMachine, "Attack16")

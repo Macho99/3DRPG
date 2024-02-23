@@ -16,6 +16,7 @@ public class Katana : Sword
 		DashComboVerA01, DashComboVerA02, DashComboVerA03, DashComboVerA04,
 		DashComboVerB01, DashComboVerB02, DashComboVerB03,
 		S1Combo01_01, S1Combo01_02, S1Combo01_03,
+		JumpCombo01, JumpCombo02, JumpCombo03, JumpCombo04, JumpCombo05, JumpCombo06,
 		AttackFail };
 	private GameObject swordDummy;
 	private StateMachine<State, Katana> stateMachine;
@@ -50,6 +51,7 @@ public class Katana : Sword
 		stateMachine.AddState(State.S1Combo01_01, new KatanaS1Combo01_01(this, stateMachine));
 		stateMachine.AddState(State.S1Combo01_02, new KatanaS1Combo01_02(this, stateMachine));
 		stateMachine.AddState(State.S1Combo01_03, new KatanaS1Combo01_03(this, stateMachine));
+		stateMachine.AddState(State.JumpCombo01, new KatanaJumpCombo01(this, stateMachine));
 		stateMachine.AddState(State.AttackFail, new KatanaAttackFail(this, stateMachine));
 	}
 

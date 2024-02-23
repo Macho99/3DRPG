@@ -15,14 +15,13 @@ public class PlayerOnAir : StateBase<Player.State, Player>
 
 	public override void Enter()
 	{
-		playerMove.SetAnimFloat("Grruzam", 1f);
-		playerMove.SetAnimFloat("Jump", 2f);
-		owner.CurJumpState = Player.JumpState.OnAir;
+		playerMove.OnJumpDown.AddListener(owner.DoubleJump);
+		owner.SetCamFollowSpeed(5f);
 	}
 
 	public override void Exit()
 	{
-		owner.SetCamFollowSpeed(50f, 1f);
+		playerMove.OnJumpDown.RemoveListener(owner.DoubleJump);
 	}
 
 	public override void Setup()
@@ -33,11 +32,10 @@ public class PlayerOnAir : StateBase<Player.State, Player>
 	public override void Transition()
 	{
 		float time = playerMove.CalcLandTime();
-		print(time);
-		if(time < 0.5f)
+		Debug.Log(time);
+		if (time < 0.05f)
 		{
-			playerMove.SetAnimFloat("Jump", 3f);
-			stateMachine.ChangeState(Player.State.Idle);
+			stateMachine.ChangeState(Player.State.Land);
 		}
 	}
 

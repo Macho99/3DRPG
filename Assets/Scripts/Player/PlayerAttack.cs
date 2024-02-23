@@ -133,6 +133,12 @@ public class PlayerAttack : MonoBehaviour
 		anim.SetFloat(str, value, dampTime, deltaTime);
 	}
 
+	private void OnUnarm(InputValue value)
+	{
+		if(value.isPressed == true)
+			SetUnarmed();
+	}
+
 	public void SetUnarmed()
 	{
 		curWeapon.SetUnArmed();

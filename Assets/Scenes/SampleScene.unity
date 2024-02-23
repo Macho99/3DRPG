@@ -85605,9 +85605,6 @@ MonoBehaviour:
   OnEquipChange:
     m_PersistentCalls:
       m_Calls: []
-  OnJumpStart:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!143 &5845758282053179557
 CharacterController:
   m_ObjectHideFlags: 0
@@ -85712,18 +85709,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveRoot: {fileID: 8136548716969632804}
   moveSpeed: 4
-  jumpForce: 4
+  jumpForce: 10
+  doubleJumpForce: 12
+  airAttackForce: 3
   slideSpeed: 5
   slideAngle: 20
   moveLerpSpeed: 50
   rotationLerpSpeed: 10
   gravity: -25
+  fallCheckDist: 1
   OnJumpDown:
     m_PersistentCalls:
       m_Calls: []
   OnDodgeDown:
     m_PersistentCalls:
       m_Calls: []
+  OnFalling:
+    m_PersistentCalls:
+      m_Calls: []
+  velY: 0
 --- !u!114 &5845758282053179561
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -85755,7 +85759,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   curState: 0
-  curJumpState: 0
   OnWeaponIdle:
     m_PersistentCalls:
       m_Calls: []

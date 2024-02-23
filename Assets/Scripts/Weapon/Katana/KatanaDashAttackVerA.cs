@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class KatanaDashAttackVerA : KatanaSwingBase
+public class KatanaDashAttackVerA : KatanaStandSwingBase
 {
 	public KatanaDashAttackVerA(Katana owner, StateMachine<Katana.State, Katana> stateMachine) 
 		: base(owner, stateMachine, "Attack8")

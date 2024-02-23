@@ -21,9 +21,28 @@ public abstract class KatanaSwingBase : StateBase<Katana.State, Katana>
 	protected bool attack1Holded;
 	protected bool attack2Holded;
 
-	public KatanaSwingBase(Katana owner, StateMachine<Katana.State, Katana> stateMachine, string triggerName) : base(owner, stateMachine)
+	private Player.State attackMode;
+	private string exitTriggerName;
+
+	public KatanaSwingBase(Katana owner, StateMachine<Katana.State, Katana> stateMachine,
+		string triggerName, Player.State attackMode)
+		: base(owner, stateMachine)
 	{
 		this.triggerName = triggerName;
+		switch (attackMode)
+		{
+			case Player.State.StandAttack:
+			case Player.State.OnAirAttack:
+				exitTriggerName = "BaseExit";
+				break;
+			case Player.State.MoveAttack:
+				exitTriggerName = "Fall";
+				break;
+			default:
+				Debug.LogError($"{attackMode}는 유효하지 않습니다");
+				return;
+		}
+		this.attackMode = attackMode;
 	}
 
 	public override void Enter()
@@ -40,7 +59,7 @@ public abstract class KatanaSwingBase : StateBase<Katana.State, Katana>
 		playerAttack.OnAttack2Down.AddListener(AttackBtn2Pressed);
 		playerAttack.OnAttack1Hold.AddListener(AttackBtn1Hold);
 		playerAttack.OnAttack2Hold.AddListener(AttackBtn2Hold);
-		player.ChangeState(Player.State.StandAttack);
+		player.ChangeState(attackMode);
 	}
 
 	public override void Exit()
@@ -109,7 +128,7 @@ public abstract class KatanaSwingBase : StateBase<Katana.State, Katana>
 				if (playerAttack.IsAnimWait(0) == true)
 				{
 					curAttack = AttackProcess.End;
-					playerAttack.SetAnimTrigger("BaseExit");
+					playerAttack.SetAnimTrigger(exitTriggerName);
 				}
 				break;
 			default:

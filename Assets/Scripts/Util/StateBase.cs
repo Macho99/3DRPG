@@ -18,9 +18,4 @@ public abstract class StateBase<TState, TOwner>
 	public abstract void Update();
 	public abstract void Transition();
 	public abstract void Exit();
-
-	protected void print(object msg)
-	{
-		Debug.Log(msg);
-	}
 }

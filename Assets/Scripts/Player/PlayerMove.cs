@@ -1,3 +1,4 @@
+using MoreMountains.Feedbacks;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,12 +12,15 @@ public class PlayerMove : MonoBehaviour
 {
 	[SerializeField] Transform moveRoot;
 	[SerializeField] float moveSpeed = 3f;
-	[SerializeField] float jumpForce = 10f;
+	[SerializeField] float jumpForce = 4f;
+	[SerializeField] float doubleJumpForce = 6f;
+	[SerializeField] float airAttackForce = 3f;
 	[SerializeField] float slideSpeed = 5f;
 	[SerializeField] float slideAngle = 20f;
 	[SerializeField] float moveLerpSpeed = 50f;
 	[SerializeField] float rotationLerpSpeed = 5f;
 	[SerializeField] float gravity = -25f;
+	[SerializeField] float fallCheckDist = 1f;
 
 	private Vector3 curMoveVec;
 	private bool isGround;
@@ -33,6 +37,7 @@ public class PlayerMove : MonoBehaviour
 
 	[HideInInspector] public UnityEvent OnJumpDown = new UnityEvent();
 	[HideInInspector] public UnityEvent OnDodgeDown = new UnityEvent();
+	[HideInInspector] public UnityEvent OnFalling = new UnityEvent();
 
 	public bool JumpInput { get; private set; }
 	public bool DodgeInput { get; private set; }
@@ -47,7 +52,7 @@ public class PlayerMove : MonoBehaviour
 	Transform animTrans;
 	CharacterController controller;
 	Transform characterTrans;
-	float velY;
+	[SerializeField] float velY;
 	bool colResult;
 	RaycastHit hitInfo;
 	LayerMask environmentMask;
@@ -58,7 +63,7 @@ public class PlayerMove : MonoBehaviour
 		controller = GetComponentInChildren<CharacterController>();
 		anim = GetComponentInChildren<Animator>();
 		animTrans = anim.transform;
-		environmentMask = LayerMask.GetMask("Environment");
+		environmentMask = LayerMask.GetMask("Environment", "Tree", "Monster");
 		isGround = true;
 	}
 
@@ -67,7 +72,6 @@ public class PlayerMove : MonoBehaviour
 		Move();
 		GroundCheck();
 		Slide();
-		//print(velY);
 	}
 
 	private void Slide()
@@ -91,7 +95,30 @@ public class PlayerMove : MonoBehaviour
 		colResult = Physics.SphereCast(transform.position + controller.center, controller.radius,
 			Vector3.down, out hitInfo, controller.center.y + 0.1f - controller.radius, environmentMask);
 
+		if(isGround == true && colResult == false)
+		{
+			IsGround = colResult;
+			_ = StartCoroutine(CoFallCheck());
+		}
 		IsGround = colResult;
+	}
+
+	private IEnumerator CoFallCheck()
+	{
+		while(IsGround == false)
+		{
+			if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hitInfo, 100f, environmentMask) == true)
+			{
+				if ((hitInfo.point - transform.position).sqrMagnitude < fallCheckDist * fallCheckDist)
+				{
+					yield return null;
+					continue;
+				}
+			}
+			print("FallCall");
+			OnFalling?.Invoke();
+			break;
+		}
 	}
 
 	private void Move()
@@ -117,8 +144,6 @@ public class PlayerMove : MonoBehaviour
 		targetMoveVec *= MoveMultiplier;
 
 		curMoveVec = Vector3.Lerp(curMoveVec, targetMoveVec, Time.deltaTime * moveLerpSpeed);
-
-
 
 		//에임 고정 아닐 때
 		if (true)
@@ -206,6 +231,7 @@ public class PlayerMove : MonoBehaviour
 
 	public void SetAnimTrigger(string str)
 	{
+		print(str);
 		anim.SetTrigger(str);
 	}
 
@@ -219,25 +245,36 @@ public class PlayerMove : MonoBehaviour
 		anim.SetFloat(str, value, dampTime, deltaTime);
 	}
 
-	public void Jump()
+	public void Jump(bool doubleJump = false)
 	{
-		velY = jumpForce;
-		IsGround = false;
+		if(doubleJump == false)
+		{
+			velY = jumpForce;
+			IsGround = false;
+		}
+		else
+		{
+			velY = doubleJumpForce;
+		}
+	}
+
+	public void OnAirAttack()
+	{
+		velY = airAttackForce;
 	}
 
 	public float CalcLandTime()
 	{
-		if(Physics.Raycast(transform.position, Vector3.down, out RaycastHit hitInfo, 100f, environmentMask) == false)
-		{
-			return 10f;
-		}
-		else if(velY >= 0f)
+		if(Physics.Raycast(transform.position + Vector3.up * 0.2f, Vector3.down, 
+			out RaycastHit hitInfo, 100f, environmentMask) == false)
 		{
 			return 10f;
 		}
 
 		float dist = Vector3.Distance(hitInfo.point, transform.position);
-		return dist / velY;
-		// TODO : 중력가속도도 고려해서 다시 계산
+		float gd2 = 2 * -gravity * dist;
+		float sqrt = Mathf.Sqrt(velY * velY + gd2);
+		float result = (velY + sqrt) / -gravity;
+		return result;
 	}
 }

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class KatanaS1Combo01_01 : KatanaSwingBase
+public class KatanaS1Combo01_01 : KatanaStandSwingBase
 {
 	public KatanaS1Combo01_01(Katana owner, StateMachine<Katana.State, Katana> stateMachine) : base(owner, stateMachine, "Attack1")
 	{
@@ -28,7 +28,7 @@ public class KatanaS1Combo01_01 : KatanaSwingBase
 	}
 }
 
-public class KatanaS1Combo01_02 : KatanaSwingBase
+public class KatanaS1Combo01_02 : KatanaStandSwingBase
 {
 	public KatanaS1Combo01_02(Katana owner, StateMachine<Katana.State, Katana> stateMachine) : base(owner, stateMachine, "Attack2")
 	{
@@ -52,7 +52,7 @@ public class KatanaS1Combo01_02 : KatanaSwingBase
 	}
 }
 
-public class KatanaS1Combo01_03 : KatanaSwingBase
+public class KatanaS1Combo01_03 : KatanaStandSwingBase
 {
 	public KatanaS1Combo01_03(Katana owner, StateMachine<Katana.State, Katana> stateMachine) : base(owner, stateMachine, "Attack3")
 	{
