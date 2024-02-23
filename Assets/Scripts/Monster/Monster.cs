@@ -23,7 +23,7 @@ public class Monster : MonoBehaviour
     public float attackRange;
     public float attackDelay;
     public float moveSpeed;
-    [SerializeField] private float rotationSpeed;
+    public float rotationSpeed;
 
     [SerializeField] private float viewRadius; // 탐지 범위
     public float viewAngle; // 탐지 각도
@@ -151,8 +151,10 @@ public class Monster : MonoBehaviour
         Destroy(gameObject, 3f);
     }
 
-    // TODO: 어택 판정 구체화, Hit Effect 추가, Sound 추가, 원거리 몹 추가
-    // BattleIdle 상태에서 좌우로 움직이던지 해서 자연스럽게 변경
+    // TODO: *Patrol? *어택 판정 구체화, *어택 variation 추가, Hit Effect 추가, Sound 추가, *원거리 몹 추가
+    // *BattleIdle 상태에서 좌우로 움직이던지 해서 자연스럽게 변경 ( 앞으로 걷다가 잠깐 좌우로 왔다갔다, 다시 앞으로 걷기 )
     // 근거리, 근거리 방패, 원거리, 미믹 ( 버퍼? 근접 원거리 스위칭? )
     // 상태이상?
+
+    // # 비활성화 미믹에 상호작용 하면 미믹은 Taunt 애니메이션 ( 플레이어 넘어짐 )
 }

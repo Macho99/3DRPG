@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class AttackState : StateMachineBehaviour
+public class RangedAttackState : StateMachineBehaviour
 {
     Transform target;
     Monster monster;
+    RangedMonster rangedMonster;
     NavMeshAgent agent;
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         monster = animator.GetComponent<Monster>();
+        rangedMonster = animator.GetComponent<RangedMonster>();
         target = animator.GetComponent<Monster>().target;
         agent = animator.GetComponent<NavMeshAgent>();
 
@@ -24,12 +26,19 @@ public class AttackState : StateMachineBehaviour
         if (target == null)
         {
             animator.SetBool("isAttacking", false);
+            animator.SetBool("isInRanged", false);
             return;
         }
 
         if (Vector3.Distance(animator.transform.position, target.position) > agent.stoppingDistance)
         {
             animator.SetBool("isAttacking", false);
+            animator.SetBool("isInRanged", false);
+        }
+
+        if(rangedMonster.meleeDistance >= Vector3.Distance(animator.transform.position, target.position))
+        {
+            animator.SetBool("isInMelee", true);
         }
 
         animator.SetBool("AttackDelay", true);

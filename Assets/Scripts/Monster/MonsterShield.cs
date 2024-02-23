@@ -15,6 +15,8 @@ public class MonsterShield : MonoBehaviour
 
     [SerializeField] private LayerMask targetMask; // 타겟레이어
 
+    public bool guardHit; // 방패로 막았었는지 체크
+
     private void Awake()
     {
         monster = GetComponent<Monster>();
@@ -59,6 +61,8 @@ public class MonsterShield : MonoBehaviour
         {
             // 감소된 데미지 받음
             monster.currentStamina -= 20;
+            anim.SetTrigger("Guard");
+            guardHit = true;
             print("Reduce Damage or Guard Damage");
 
             if (monster.currentStamina <= 0)

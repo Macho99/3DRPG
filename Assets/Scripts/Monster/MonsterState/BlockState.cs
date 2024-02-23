@@ -6,22 +6,25 @@ using UnityEngine.AI;
 
 public class BlockState : StateMachineBehaviour
 {
-    public float rotationValue;
+    float rotationValue;
     float timer;
     float attackDelay;
     Transform target;
     Transform myTf;
     NavMeshAgent agent;
     Monster monster;
+    MonsterShield monsterShield;
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        monster = animator.GetComponent<Monster>();
+        monsterShield = animator.GetComponent<MonsterShield>();
         attackDelay = animator.GetComponent<Monster>().attackDelay;
-        timer = 0f;
+        rotationValue = animator.GetComponent<Monster>().rotationSpeed;
         target = animator.GetComponent<Monster>().target;
         myTf = animator.GetComponent<Transform>();
         agent = animator.GetComponent<NavMeshAgent>();
-        monster = animator.GetComponent<Monster>();
+        timer = monsterShield.guardHit ? monster.attackDelay - 1 : 0f;
 
         monster.state = State.BLOCK;
     }
@@ -50,7 +53,7 @@ public class BlockState : StateMachineBehaviour
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-
+        monsterShield.guardHit = false;
     }
 
     private void Turn(Transform target, Transform myTf)

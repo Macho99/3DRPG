@@ -1,10 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class ChasingState : StateMachineBehaviour
+public class RangedChasingState : StateMachineBehaviour
 {
     NavMeshAgent agent;
     [SerializeField] Transform target;
@@ -18,11 +17,12 @@ public class ChasingState : StateMachineBehaviour
         target = animator.GetComponent<Monster>().target;
 
         monster.state = State.IDLE;
+        animator.SetBool("isInRanged", false);
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (target == null && Vector3.Distance(animator.transform.position, monster.spawnPosition) <= agent.stoppingDistance + .5f)
+        if (target == null && Vector3.Distance(animator.transform.position, monster.spawnPosition) <= .5f)
         {
             agent.stoppingDistance = monster.attackRange;
             animator.SetBool("isChasing", false);
@@ -46,6 +46,7 @@ public class ChasingState : StateMachineBehaviour
         if (Vector3.Distance(animator.transform.position, target.position) <= agent.stoppingDistance)
         {
             animator.SetBool("isAttacking", true);
+            animator.SetBool("isInRanged", true);
         }
 
         agent.SetDestination(target.position);

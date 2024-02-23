@@ -1,20 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class BattleIdleState : StateMachineBehaviour
+public class RangedBattleState : StateMachineBehaviour
 {
-    public float rotationValue;
+    float rotationValue;
     float timer;
     float attackDelay;
     Transform target;
     Transform myTf;
     NavMeshAgent agent;
+    RangedMonster rangedMonster;
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        rangedMonster = animator.GetComponent<RangedMonster>();
         attackDelay = animator.GetComponent<Monster>().attackDelay;
         rotationValue = animator.GetComponent<Monster>().rotationSpeed;
         timer = 0f;
@@ -44,11 +45,19 @@ public class BattleIdleState : StateMachineBehaviour
             animator.SetBool("AttackDelay", false);
         }
 
+        if (Vector3.Distance(myTf.position, target.position) <= rangedMonster.meleeDistance)
+        {
+            animator.SetBool("isInMelee", true);
+        }
+        else
+        {
+            animator.SetBool("isInMelee", false);
+        }
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-
+        
     }
 
     private void Turn(Transform target, Transform myTf)
