@@ -29,6 +29,7 @@ public class Katana : Sword
 	protected override void Awake()
 	{
 		base.Awake();
+
 		stateMachine = new StateMachine<State, Katana>(this);
 		stateMachine.AddState(State.Idle, new KatanaIdle(this, stateMachine));
 		stateMachine.AddState(State.Unarmed, new KatanaUnarmed(this, stateMachine));
