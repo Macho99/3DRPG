@@ -11,12 +11,14 @@ public class Katana : Sword
 
 	[Serializable]
 	public enum State { Idle, Unarmed, QuickSheath, Equip, 
-		QuickDrawEntry, QuickDrawIdle, QuickDraw1, QuickDraw2, QuickDraw3, QuickDraw4, QuickDraw5, 
+		QuickDrawEntry, QuickDrawIdle, QuickDraw1, QuickDraw2, QuickDraw3, QuickDraw4, QuickDraw5, QuickDraw6,
 		DashAttackVerA, DashAttackVerB,
 		DashComboVerA01, DashComboVerA02, DashComboVerA03, DashComboVerA04,
 		DashComboVerB01, DashComboVerB02, DashComboVerB03,
 		S1Combo01_01, S1Combo01_02, S1Combo01_03,
-		JumpCombo01, JumpCombo02, JumpCombo03, JumpCombo04, JumpCombo05, JumpCombo06,
+		S2Combo01_01, S2Combo01_02, S2Combo01_03,
+		S2Combo02_01, S2Combo02_02, S2Combo02_03, S2Combo02_04,
+		JumpCombo01, JumpCombo02, JumpCombo03, JumpCombo04, JumpCombo05, JumpCombo06, JumpCombo07,
 		AttackFail };
 	private GameObject swordDummy;
 	private StateMachine<State, Katana> stateMachine;
@@ -39,6 +41,7 @@ public class Katana : Sword
 		stateMachine.AddState(State.QuickDraw3, new KatanaQuickDraw3(this, stateMachine));
 		stateMachine.AddState(State.QuickDraw4, new KatanaQuickDraw4(this, stateMachine));
 		stateMachine.AddState(State.QuickDraw5, new KatanaQuickDraw5(this, stateMachine));
+		stateMachine.AddState(State.QuickDraw6, new KatanaQuickDraw6(this, stateMachine));
 		stateMachine.AddState(State.DashAttackVerA, new KatanaDashAttackVerA(this, stateMachine));
 		stateMachine.AddState(State.DashAttackVerB, new KatanaDashAttackVerB(this, stateMachine));
 		stateMachine.AddState(State.DashComboVerA01, new KatanaDashComboVerA01(this, stateMachine));
@@ -51,7 +54,20 @@ public class Katana : Sword
 		stateMachine.AddState(State.S1Combo01_01, new KatanaS1Combo01_01(this, stateMachine));
 		stateMachine.AddState(State.S1Combo01_02, new KatanaS1Combo01_02(this, stateMachine));
 		stateMachine.AddState(State.S1Combo01_03, new KatanaS1Combo01_03(this, stateMachine));
+		stateMachine.AddState(State.S2Combo01_01, new KatanaS2Combo01_01(this, stateMachine));
+		stateMachine.AddState(State.S2Combo01_02, new KatanaS2Combo01_02(this, stateMachine));
+		stateMachine.AddState(State.S2Combo01_03, new KatanaS2Combo01_03(this, stateMachine));
+		stateMachine.AddState(State.S2Combo02_01, new KatanaS2Combo02_01(this, stateMachine));
+		stateMachine.AddState(State.S2Combo02_02, new KatanaS2Combo02_02(this, stateMachine));
+		stateMachine.AddState(State.S2Combo02_03, new KatanaS2Combo02_03(this, stateMachine));
+		stateMachine.AddState(State.S2Combo02_04, new KatanaS2Combo02_04(this, stateMachine));
 		stateMachine.AddState(State.JumpCombo01, new KatanaJumpCombo01(this, stateMachine));
+		stateMachine.AddState(State.JumpCombo02, new KatanaJumpCombo02(this, stateMachine));
+		stateMachine.AddState(State.JumpCombo03, new KatanaJumpCombo03(this, stateMachine));
+		stateMachine.AddState(State.JumpCombo04, new KatanaJumpCombo04(this, stateMachine));
+		stateMachine.AddState(State.JumpCombo05, new KatanaJumpCombo05(this, stateMachine));
+		stateMachine.AddState(State.JumpCombo06, new KatanaJumpCombo06(this, stateMachine));
+		stateMachine.AddState(State.JumpCombo07, new KatanaJumpCombo07(this, stateMachine));
 		stateMachine.AddState(State.AttackFail, new KatanaAttackFail(this, stateMachine));
 	}
 

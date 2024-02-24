@@ -19,7 +19,7 @@ public class PlayerJumpTest : StateBase<Player.State, Player>
 	public override void Exit()
 	{
 		owner.SetCamFollowSpeed(50f, 1f);
-		playerMove.SetAnimFloat("Grruzam", 1f);
+		playerMove.SetAnimFloat("IdleAdapter", 1f);
 		playerAnimEvent.OnJumpStart.RemoveListener(owner.Jump);
 	}
 

@@ -15,6 +15,7 @@ public class KatanaQuickDrawEntry : StateBase<Katana.State, Katana>
 
 	public override void Enter()
 	{
+		playerAttack.SetAnimFloat("IdleAdapter", 0f);
 		playerAttack.SetAnimTrigger("Hold1");
 		playerAnimEvent.OnEquipChange.AddListener(EquipChange);
 	}

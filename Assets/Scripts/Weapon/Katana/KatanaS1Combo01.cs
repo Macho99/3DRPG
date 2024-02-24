@@ -71,6 +71,11 @@ public class KatanaS1Combo01_03 : KatanaStandSwingBase
 			stateMachine.ChangeState(Katana.State.QuickDrawEntry);
 			return true;
 		}
+		if (attack2Up == true)
+		{
+			stateMachine.ChangeState(Katana.State.S2Combo02_01);
+			return true;
+		}
 		return false;
 	}
 }

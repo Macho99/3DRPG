@@ -15,13 +15,13 @@ public class PlayerOnAir : StateBase<Player.State, Player>
 
 	public override void Enter()
 	{
-		playerMove.OnJumpDown.AddListener(owner.DoubleJump);
+		playerMove.OnJumpDown.AddListener(DoubleJump);
 		owner.SetCamFollowSpeed(5f);
 	}
 
 	public override void Exit()
 	{
-		playerMove.OnJumpDown.RemoveListener(owner.DoubleJump);
+		playerMove.OnJumpDown.RemoveListener(DoubleJump);
 	}
 
 	public override void Setup()
@@ -32,8 +32,7 @@ public class PlayerOnAir : StateBase<Player.State, Player>
 	public override void Transition()
 	{
 		float time = playerMove.CalcLandTime();
-		//Debug.Log(time);
-		if (time < 0.05f)
+		if (time < 0.05f || playerMove.IsGround == true)
 		{
 			stateMachine.ChangeState(Player.State.Land);
 		}
@@ -42,5 +41,12 @@ public class PlayerOnAir : StateBase<Player.State, Player>
 	public override void Update()
 	{
 
+	}
+	public void DoubleJump()
+	{
+		if (owner.DoubleJumped == false)
+		{
+			stateMachine.ChangeState(Player.State.DoubleJump);
+		}
 	}
 }

@@ -39,7 +39,7 @@ public class KatanaIdle : StateBase<Katana.State, Katana>
 
 	public override void Update()
 	{
-		playerAttack.SetAnimFloat("Grruzam", 0f, 0.1f, Time.deltaTime);
+		playerAttack.SetAnimFloat("IdleAdapter", 0f, 0.1f, Time.deltaTime);
 	}
 
 	private void BtnDownTransition(Player.State state)
@@ -47,13 +47,14 @@ public class KatanaIdle : StateBase<Katana.State, Katana>
 		switch(state)
 		{
 			case Player.State.Idle:
-			case Player.State.Walk:
 				stateMachine.ChangeState(Katana.State.S1Combo01_01);
+				break;
+			case Player.State.Walk:
+				stateMachine.ChangeState(Katana.State.S2Combo01_01);
 				break;
 			case Player.State.Run:
 				stateMachine.ChangeState(Katana.State.DashAttackVerA);
 				break;
-			case Player.State.Jump:
 			case Player.State.OnAir:
 			case Player.State.DoubleJump:
 			case Player.State.DoubleOnAir:

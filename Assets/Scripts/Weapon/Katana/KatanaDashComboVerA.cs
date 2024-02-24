@@ -71,6 +71,11 @@ public class KatanaDashComboVerA04 : KatanaStandSwingBase
 			stateMachine.ChangeState(Katana.State.QuickDrawEntry);
 			return true;
 		}
+		if (attack2Up)
+		{
+			stateMachine.ChangeState(Katana.State.S2Combo02_01);
+			return true;
+		}
 		return false;
 	}
 }

@@ -10,6 +10,7 @@ public class PlayerDoubleJump : StateBase<Player.State, Player>
 
 	public override void Enter()
 	{
+		owner.DoubleJumped = true;
 		playerMove.Jump(true);
 		owner.SetCamFollowSpeed(5f);
 		playerMove.SetAnimTrigger("DoubleJump");
@@ -27,12 +28,13 @@ public class PlayerDoubleJump : StateBase<Player.State, Player>
 	public override void Transition()
 	{
 		float time = playerMove.CalcLandTime();
+		
 		if(playerMove.MoveInput.sqrMagnitude > 0.1f)
 		{
 			if(time < 0.05f || playerMove.IsGround == true)
 			{
 				stateMachine.ChangeState(Player.State.BreakFall);
-			}
+			}	
 		}
 		else
 		{

@@ -18,9 +18,9 @@ public class PlayerAttackOnAir : StateBase<Player.State, Player>
 	{
 		moveForward = playerMove.MoveForward;
 		owner.SetAnimRootMotion(true);
-		playerMove.MoveMultiplier = 0f;
-		playerMove.GravityMultiplier = 0.2f;
-		playerMove.OnAirAttack();
+		playerMove.MoveMultiplier = 0.5f;
+		playerMove.GravityScale = 0.5f;
+		playerMove.OnAirJump();
 		owner.OnWeaponIdle.AddListener(ChangeToIdle);
 	}
 
@@ -28,7 +28,7 @@ public class PlayerAttackOnAir : StateBase<Player.State, Player>
 	{
 		owner.SetAnimRootMotion(false);
 		playerMove.MoveMultiplier = 1f;
-		playerMove.GravityMultiplier = 1f;
+		playerMove.GravityScale = 1f;
 		owner.OnWeaponIdle.RemoveListener(ChangeToIdle);
 	}
 
@@ -40,7 +40,13 @@ public class PlayerAttackOnAir : StateBase<Player.State, Player>
 
 	public override void Transition()
 	{
-
+		float time = playerMove.CalcLandTime();
+		if (time < 0.05f || playerMove.IsGround == true)
+		{
+			playerMove.SetAnimTrigger("FastLand");
+			stateMachine.ChangeState(Player.State.Land);
+			playerAttack.ChangeStateToIdle();
+		}
 	}
 
 	public override void Update()
@@ -53,7 +59,6 @@ public class PlayerAttackOnAir : StateBase<Player.State, Player>
 
 	private void ChangeToIdle()
 	{
-		playerMove.SetAnimTrigger("Fall");
-		stateMachine.ChangeState(Player.State.DoubleOnAir);
+		stateMachine.ChangeState(Player.State.OnAir);
 	}
 }

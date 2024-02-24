@@ -14,6 +14,7 @@ public class PlayerIdle : StateBase<Player.State, Player>
 
 	public override void Enter()
 	{
+		owner.DoubleJumped = false;
 		playerMove.OnDodgeDown.AddListener(owner.Dodge);
 		playerMove.OnJumpDown.AddListener(owner.Jump);
 		playerMove.OnFalling.AddListener(owner.OnAir);

@@ -8,21 +8,25 @@ public class PlayerJump : StateBase<Player.State, Player>
 {
 	PlayerMove playerMove;
 	PlayerAnimEvent playerAnimEvent;
+
+	bool jumpUp;
+
 	public PlayerJump(Player owner, StateMachine<Player.State, Player> stateMachine) : base(owner, stateMachine)
 	{
 	}
 
 	public override void Enter()
 	{
+		jumpUp = false;
 		playerMove.SetAnimTrigger("Jump");
 		owner.SetCamFollowSpeed(5f);
-		playerMove.OnJumpDown.AddListener(owner.DoubleJump);
+		playerMove.OnJumpDown.AddListener(DoubleJump);
 		playerAnimEvent.OnJumpStart.AddListener(Jump);
 	}
 
 	public override void Exit()
 	{
-		playerMove.OnJumpDown.RemoveListener(owner.DoubleJump);
+		playerMove.OnJumpDown.RemoveListener(DoubleJump);
 		playerAnimEvent.OnJumpStart.RemoveListener(Jump);
 	}
 
@@ -47,6 +51,15 @@ public class PlayerJump : StateBase<Player.State, Player>
 
 	private void Jump()
 	{
+		jumpUp = true;
 		playerMove.Jump();
+	}
+
+	public void DoubleJump()
+	{
+		if (owner.DoubleJumped == false && jumpUp == true)
+		{
+			stateMachine.ChangeState(Player.State.DoubleJump);
+		}
 	}
 }

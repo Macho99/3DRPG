@@ -40,7 +40,7 @@ public class PlayerDodge : StateBase<Player.State, Player>
 		playerMove.SetAnimFloat("DodgeY", moveVec.y);
 		playerMove.SetAnimTrigger("Dodge");
 
-		playerMove.GravityMultiplier = 0f;
+		playerMove.GravityScale = 0f;
 		playerMove.MoveMultiplier = 0f;
 		owner.SetAnimRootMotion(true);
 		afterimage.Play();
@@ -48,7 +48,7 @@ public class PlayerDodge : StateBase<Player.State, Player>
 
 	public override void Exit()
 	{
-		playerMove.GravityMultiplier = 1f;
+		playerMove.GravityScale = 1f;
 		playerMove.MoveMultiplier = 1f;
 		owner.SetAnimRootMotion(false);
 	}

@@ -22,7 +22,7 @@ public class PlayerBreakFall : StateBase<Player.State, Player>
 
 	public override void Exit()
 	{
-		playerMove.SetAnimFloat("Grruzam", 1f);
+		playerMove.SetAnimFloat("IdleAdapter", 1f);
 		playerMove.MoveMultiplier = 1f;
 		playerAnimEvent.OnLandStart.RemoveListener(LandStart);
 		playerAnimEvent.OnLandEnd.RemoveListener(LandEnd);

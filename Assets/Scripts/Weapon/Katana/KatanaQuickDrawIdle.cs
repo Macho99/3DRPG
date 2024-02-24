@@ -27,7 +27,7 @@ public class KatanaQuickDrawIdle : StateBase<Katana.State, Katana>
 		attack1DownTriggered = false;
 		attack1Up = false;
 
-		playerAttack.SetAnimFloat("Grruzam", 0f);
+		playerAttack.SetAnimFloat("IdleAdapter", 0f);
 
 		if(playerAttack.Attack1Pressed == false)
 		{
@@ -83,6 +83,9 @@ public class KatanaQuickDrawIdle : StateBase<Katana.State, Katana>
 				case 3:
 					stateMachine.ChangeState(Katana.State.QuickDraw3);
 					break;
+				case 4:
+					stateMachine.ChangeState(Katana.State.QuickDraw4);
+					break;
 				default:
 					Debug.Log("올바르지 않은 QuickDrawCnt : " + owner.QuickDrawCnt);
 					break;
@@ -90,11 +93,11 @@ public class KatanaQuickDrawIdle : StateBase<Katana.State, Katana>
 		}
 		else if (attack1DownTime + charge2Time > Time.time)
 		{
-			stateMachine.ChangeState(Katana.State.QuickDraw4);
+			stateMachine.ChangeState(Katana.State.QuickDraw5);
 		}
 		else
 		{
-			stateMachine.ChangeState(Katana.State.QuickDraw5);
+			stateMachine.ChangeState(Katana.State.QuickDraw6);
 		}
 	}
 

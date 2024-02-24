@@ -27,6 +27,7 @@ public class Player : MonoBehaviour
 
 	[HideInInspector] public UnityEvent OnWeaponIdle;
 
+	public bool DoubleJumped { get; set; }
 	public Transform MoveRoot { get => playerMove.MoveRoot; }
 	public State CurState { get { return curState; } }
 	public PlayerLook PlayerLook { get {  return playerLook; } }
@@ -140,10 +141,6 @@ public class Player : MonoBehaviour
 		stateMachine.ChangeState(Player.State.Jump);
 	}
 
-	public void DoubleJump()
-	{
-		stateMachine.ChangeState(Player.State.DoubleJump);
-	}
 	public void OnAir()
 	{
 		playerMove.SetAnimTrigger("Fall");

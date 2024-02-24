@@ -14,7 +14,7 @@ public class PlayerMove : MonoBehaviour
 	[SerializeField] float moveSpeed = 3f;
 	[SerializeField] float jumpForce = 4f;
 	[SerializeField] float doubleJumpForce = 6f;
-	[SerializeField] float airAttackForce = 3f;
+	[SerializeField] float airAttackJumpForce = 3f;
 	[SerializeField] float slideSpeed = 5f;
 	[SerializeField] float slideAngle = 20f;
 	[SerializeField] float moveLerpSpeed = 50f;
@@ -39,11 +39,12 @@ public class PlayerMove : MonoBehaviour
 	[HideInInspector] public UnityEvent OnDodgeDown = new UnityEvent();
 	[HideInInspector] public UnityEvent OnFalling = new UnityEvent();
 
+	public float ScaledGravity { get => gravity * GravityScale; }
 	public bool JumpInput { get; private set; }
 	public bool DodgeInput { get; private set; }
 	public Vector2 MoveInput { get; private set; }
 	public bool SprintInput { get; private set; }
-	public float GravityMultiplier { get; set; } = 1f;
+	public float GravityScale { get; set; } = 1f;
 	public float MoveMultiplier { private get; set; } = 1f;
 	public float VelY { get { return velY; } }
 	public Vector3 MoveForward { get { return moveRoot.forward; } }
@@ -126,7 +127,7 @@ public class PlayerMove : MonoBehaviour
 			velY = -2f;
 		else
 		{
-			velY += gravity * GravityMultiplier * Time.deltaTime;
+			velY += ScaledGravity * Time.deltaTime;
 		}
 
 		Vector3 targetMoveVec = new Vector3();
@@ -183,7 +184,6 @@ public class PlayerMove : MonoBehaviour
 		JumpInput = value.Get<float>() > 0.9f;
 		if(JumpInput == true)
 		{
-			print("JumpDown");
 			OnJumpDown?.Invoke();
 		}
 	}
@@ -258,9 +258,9 @@ public class PlayerMove : MonoBehaviour
 		}
 	}
 
-	public void OnAirAttack()
+	public void OnAirJump()
 	{
-		velY = airAttackForce;
+		velY = airAttackJumpForce;
 	}
 
 	public float CalcLandTime()
@@ -273,10 +273,10 @@ public class PlayerMove : MonoBehaviour
 		}
 
 		float dist = Vector3.Distance(hitInfo.point, transform.position + offset);
-		float gd2 = 2 * -gravity * dist;
+		float gd2 = 2 * -ScaledGravity * dist;
 		float sqrt = Mathf.Sqrt(velY * velY + gd2);
-		float result = (velY + sqrt) / -gravity;
-		print(result);
+		float result = (velY + sqrt) / -ScaledGravity;
+		//print(result);
 		return result;
 	}
 }

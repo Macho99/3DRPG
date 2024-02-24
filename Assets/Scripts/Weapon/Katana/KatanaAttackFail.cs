@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 public class KatanaAttackFail : StateBase<Katana.State, Katana>
 {
+	Player player;
 	PlayerAttack playerAttack;
 	public KatanaAttackFail(Katana owner, StateMachine<Katana.State, Katana> stateMachine) : base(owner, stateMachine)
 	{
@@ -23,6 +24,7 @@ public class KatanaAttackFail : StateBase<Katana.State, Katana>
 
 	public override void Setup()
 	{
+		player = owner.Player;
 		playerAttack = owner.PlayerAttack;
 	}
 
@@ -30,7 +32,14 @@ public class KatanaAttackFail : StateBase<Katana.State, Katana>
 	{
 		if(playerAttack.GetAnimNormalizedTime(0) < 0.05f)
 		{
-			playerAttack.SetAnimTrigger("BaseExit");
+			if(player.CurState == Player.State.OnAirAttack)
+			{
+				playerAttack.SetAnimTrigger("FastLand");
+			}
+			else if(player.CurState == Player.State.StandAttack)
+			{
+				playerAttack.SetAnimTrigger("BaseExit");
+			}
 			stateMachine.ChangeState(Katana.State.Idle);
 		}
 	}

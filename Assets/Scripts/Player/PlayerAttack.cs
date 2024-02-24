@@ -120,6 +120,7 @@ public class PlayerAttack : MonoBehaviour
 
 	public void SetAnimTrigger(string str)
 	{
+		//print(str);
 		anim.SetTrigger(str);
 	}
 

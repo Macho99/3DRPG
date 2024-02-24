@@ -7846,7 +7846,7 @@ Transform:
   m_GameObject: {fileID: 195028708}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 7.62, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -52256,7 +52256,7 @@ Transform:
   m_GameObject: {fileID: 1398643659}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.532, y: -0, z: -0.026}
+  m_LocalPosition: {x: -0.774, y: 0, z: -0.026}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -76998,8 +76998,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 0
   serializedVersion: 3
-  m_Size: {x: 0.044463415, y: 0.08347427, z: 0.9}
-  m_Center: {x: 0.004195361, y: 0.004374297, z: 0.54}
+  m_Size: {x: 0.044463415, y: 0.08347427, z: 1.2811562}
+  m_Center: {x: 0.004192791, y: 0.004374151, z: 0.73057806}
 --- !u!1001 &2051641564
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -85605,6 +85605,15 @@ MonoBehaviour:
   OnEquipChange:
     m_PersistentCalls:
       m_Calls: []
+  OnJumpStart:
+    m_PersistentCalls:
+      m_Calls: []
+  OnLandStart:
+    m_PersistentCalls:
+      m_Calls: []
+  OnLandEnd:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!143 &5845758282053179557
 CharacterController:
   m_ObjectHideFlags: 0
@@ -85711,13 +85720,13 @@ MonoBehaviour:
   moveSpeed: 4
   jumpForce: 10
   doubleJumpForce: 12
-  airAttackForce: 3
+  airAttackJumpForce: 3
   slideSpeed: 5
   slideAngle: 20
   moveLerpSpeed: 50
   rotationLerpSpeed: 10
   gravity: -25
-  fallCheckDist: 1
+  fallCheckDist: 2
   OnJumpDown:
     m_PersistentCalls:
       m_Calls: []
