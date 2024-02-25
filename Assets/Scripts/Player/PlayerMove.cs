@@ -258,7 +258,7 @@ public class PlayerMove : MonoBehaviour
 		}
 	}
 
-	public void OnAirJump()
+	public void OnAirAttackJump()
 	{
 		velY = airAttackJumpForce;
 	}

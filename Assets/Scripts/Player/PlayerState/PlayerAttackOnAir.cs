@@ -20,7 +20,7 @@ public class PlayerAttackOnAir : StateBase<Player.State, Player>
 		owner.SetAnimRootMotion(true);
 		playerMove.MoveMultiplier = 0.5f;
 		playerMove.GravityScale = 0.5f;
-		playerMove.OnAirJump();
+		playerMove.OnAirAttackJump();
 		owner.OnWeaponIdle.AddListener(ChangeToIdle);
 	}
 

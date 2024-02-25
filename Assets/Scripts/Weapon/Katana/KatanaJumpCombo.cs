@@ -122,7 +122,8 @@ public class KatanaJumpCombo07 : KatanaStandSwingBase
 	{
 		base.Enter();
 		playerMove.GravityScale = 0.2f;
-		playerMove.OnAirJump();
+		playerAttack.SetAnimFloat("IdleAdapter", 0f);
+		playerMove.OnAirAttackJump();
 	}
 
 	public override void Exit()

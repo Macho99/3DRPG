@@ -26,6 +26,7 @@ public class Player : MonoBehaviour
 	private bool camFollowFixed;
 
 	[HideInInspector] public UnityEvent OnWeaponIdle;
+	[HideInInspector] public UnityEvent OnDodgeAttackStart;
 
 	public bool DoubleJumped { get; set; }
 	public Transform MoveRoot { get => playerMove.MoveRoot; }
@@ -45,6 +46,7 @@ public class Player : MonoBehaviour
 
 		camRootFollower = playerLook.CamRoot.GetComponent<MMFollowTarget>();
 		OnWeaponIdle = new UnityEvent();
+		OnDodgeAttackStart = new UnityEvent();
 
 		stateMachine = new StateMachine<State, Player>(this);
 		stateMachine.AddState(State.Idle, new PlayerIdle(this, stateMachine));
@@ -145,5 +147,10 @@ public class Player : MonoBehaviour
 	{
 		playerMove.SetAnimTrigger("Fall");
 		stateMachine.ChangeState(Player.State.DoubleOnAir);
+	}
+
+	public void DodgeAttackStart()
+	{
+		OnDodgeAttackStart?.Invoke();
 	}
 }

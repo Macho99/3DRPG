@@ -85771,6 +85771,9 @@ MonoBehaviour:
   OnWeaponIdle:
     m_PersistentCalls:
       m_Calls: []
+  OnDodgeAttackStart:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &5845758282053179563
 MonoBehaviour:
   m_ObjectHideFlags: 0

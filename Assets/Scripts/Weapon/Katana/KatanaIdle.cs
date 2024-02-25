@@ -19,11 +19,13 @@ public class KatanaIdle : StateBase<Katana.State, Katana>
 		playerAttack.OnAttack1Down.AddListener(BtnDownTransition);
 		owner.SetDummyRender(false);
 		player.WeaponIdle();
+		player.OnDodgeAttackStart.AddListener(DodgeAttack);
 	}
 
 	public override void Exit()
 	{
 		playerAttack.OnAttack1Down.RemoveListener(BtnDownTransition);
+		player.OnDodgeAttackStart.RemoveListener(DodgeAttack);
 	}
 
 	public override void Setup()
@@ -61,5 +63,10 @@ public class KatanaIdle : StateBase<Katana.State, Katana>
 				stateMachine.ChangeState(Katana.State.JumpCombo01); 
 				break;
 		}
+	}
+
+	private void DodgeAttack()
+	{
+		stateMachine.ChangeState(Katana.State.DodgeAttack);
 	}
 }

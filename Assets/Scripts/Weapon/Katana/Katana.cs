@@ -19,6 +19,7 @@ public class Katana : Sword
 		S2Combo01_01, S2Combo01_02, S2Combo01_03,
 		S2Combo02_01, S2Combo02_02, S2Combo02_03, S2Combo02_04,
 		JumpCombo01, JumpCombo02, JumpCombo03, JumpCombo04, JumpCombo05, JumpCombo06, JumpCombo07,
+		DodgeAttack, 
 		AttackFail };
 	private GameObject swordDummy;
 	private StateMachine<State, Katana> stateMachine;
@@ -69,6 +70,7 @@ public class Katana : Sword
 		stateMachine.AddState(State.JumpCombo05, new KatanaJumpCombo05(this, stateMachine));
 		stateMachine.AddState(State.JumpCombo06, new KatanaJumpCombo06(this, stateMachine));
 		stateMachine.AddState(State.JumpCombo07, new KatanaJumpCombo07(this, stateMachine));
+		stateMachine.AddState(State.DodgeAttack, new KatanaDodgeAttack(this, stateMachine));
 		stateMachine.AddState(State.AttackFail, new KatanaAttackFail(this, stateMachine));
 	}
 
@@ -126,7 +128,6 @@ public class Katana : Sword
 		}
 		else
 		{
-			print("HH");
 			stateMachine.ChangeState(State.Unarmed);
 		}
 	}
