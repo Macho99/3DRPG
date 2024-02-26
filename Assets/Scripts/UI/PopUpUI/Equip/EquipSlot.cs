@@ -9,7 +9,7 @@ public class EquipSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     public Image iconImage;
 
     Transform iconParent;
-    internal Item item = null;
+    internal SOItem item = null;
 
     public Image highLight;
 
@@ -18,7 +18,7 @@ public class EquipSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         iconParent = iconImage.rectTransform.parent;
     }
 
-    public virtual bool TrySetItem(Item item)
+    public virtual bool TrySetItem(SOItem item)
     {
         if (item == null) { return false; }
         this.item = item;

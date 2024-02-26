@@ -8,6 +8,8 @@ using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
 {
+    public InventoryUI inventoryUI;
+
     public RectTransform weaponContent;
     public RectTransform armorContent;
     public RectTransform consumContent;
@@ -18,6 +20,14 @@ public class InventoryManager : MonoBehaviour
 
     public InventorySlot focusSlot = null;
     public InventorySlot selectedSlot = null;
+
+
+    private void Start()
+    {
+        GameManager.UI.StartSetPopUpUI<InventoryUI>("UI/PopUpUI/Inventory/Inventory");
+        GameManager.UI.StartSetPopUpUI<EquipUI>("UI/PopUpUI/Equip/EquipUI");
+        GameManager.UI.EndSetPopUpUI();
+    }
 
     public void MakeSlotParent(InventoryUI inventory)
     {
@@ -58,23 +68,34 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    public bool TryGainConsumItem(Consum item)
+    public bool TryGainItem(SOItem item)
     {
-        var emptySlot = consumList.Find((x) => { return x.item == null; });
-
-        if(emptySlot == null)
+        InventorySlot emptySlot;
+        if (item.itemType == ItemType.Weapon)
         {
-            return false;
+            emptySlot = weaponList.Find((x) => { return x.item == null; });
+            if (emptySlot == null)
+            {
+                return false;
+            }
         }
-
-        return emptySlot.TrySetItem(item);
-    }
-
-    public bool TryGainArmorItem(Armor item)
-    {
-        var emptySlot = armorList.Find((x) => { return x.item == null; });
-
-        if (emptySlot == null)
+        else if(item.itemType == ItemType.Armor)
+        {
+            emptySlot = armorList.Find((x) => { return x.item == null; });
+            if (emptySlot == null)
+            {
+                return false;
+            }
+        }
+        else if (item.itemType == ItemType.Consum)
+        {
+            emptySlot = consumList.Find((x) => { return x.item == null; });
+            if (emptySlot == null)
+            {
+                return false;
+            }
+        }
+        else
         {
             return false;
         }

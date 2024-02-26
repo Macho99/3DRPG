@@ -17,8 +17,7 @@ public class InventoryUI : PopUpUI
     public TextMeshProUGUI itemStatus;
     public Image itemIcon;
 
-
-    private void Start()
+    protected override void Awake()
     {
         GameManager.Inven.MakeSlotParent(this);
     }

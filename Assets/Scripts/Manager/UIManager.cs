@@ -50,7 +50,13 @@ public class UIManager : MonoBehaviour
 
     public T ShowPopUpUI<T>(T popUpUI) where T : PopUpUI
 	{
-		if (popUpStack.Count > 0)
+        if (FieldSFC.Player.GetComponent<PlayerLook>().enabled == true &&
+			menuOpen == true)
+        {
+            FieldSFC.Player.GetComponent<PlayerLook>().enabled = false;
+        }
+        
+        if (popUpStack.Count > 0)
 		{
 			PopUpUI prevUI = popUpStack.Peek();
 			prevUI.gameObject.SetActive(false);
@@ -65,10 +71,10 @@ public class UIManager : MonoBehaviour
 		return ui;
 	}
 
-	private IEnumerator FadeIn(CanvasGroup cg)
+    private IEnumerator FadeIn(CanvasGroup cg)
 	{
 		float fadeTime = 0.2f;
-		float accumTime = 0f;
+        float accumTime = 0f;
         while (accumTime < fadeTime)
         {
             cg.alpha = Mathf.Lerp(0f, 1f, accumTime / fadeTime);
@@ -84,7 +90,40 @@ public class UIManager : MonoBehaviour
 		return ShowPopUpUI(ui);
 	}
 
-	public void ClosePopUpUI()
+
+    public T StartSetPopUpUI<T>(T popUpUI) where T : PopUpUI
+    {
+        if (popUpStack.Count > 0)
+        {
+            PopUpUI prevUI = popUpStack.Peek();
+            prevUI.gameObject.SetActive(false);
+        }
+
+        T ui = GameManager.Pool.GetUI<T>(popUpUI);
+        ui.transform.SetParent(popUpCanvas.transform, false);
+        popUpStack.Push(ui);
+
+		ui.GetComponent<CanvasGroup>().alpha = 0f;
+
+        return ui;
+    }
+
+    public void EndSetPopUpUI()
+    {
+		while(popUpStack.Count > 0)
+		{
+            PopUpUI ui = popUpStack.Pop();
+            GameManager.Pool.ReleaseUI(ui.gameObject);
+        }
+    }
+
+    public T StartSetPopUpUI<T>(string path) where T : PopUpUI
+    {
+        T ui = GameManager.Resource.Load<T>(path);
+        return StartSetPopUpUI(ui);
+    }
+
+    public void ClosePopUpUI()
 	{
 		PopUpUI ui = popUpStack.Pop();
 		_= StartCoroutine(FadeOut(ui.gameObject.GetComponent<CanvasGroup>()));
@@ -95,6 +134,12 @@ public class UIManager : MonoBehaviour
 			PopUpUI curUI = popUpStack.Peek();
 			curUI.gameObject.SetActive(true);
 		}
+
+		if(FieldSFC.Player.GetComponent<PlayerLook>().enabled == false && 
+			menuOpen == false)
+		{
+            FieldSFC.Player.GetComponent<PlayerLook>().enabled = true;
+        }
 	}
 
     private IEnumerator FadeOut(CanvasGroup cg)

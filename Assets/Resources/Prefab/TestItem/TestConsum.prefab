@@ -44,9 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ea1ff3d67884764b9d07ccec028518b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  consum:
-    itemIcon: {fileID: 21300008, guid: 358b5d9f23bc9413e87c9948acc67ee1, type: 3}
-    itemName: "\uD14C\uC2A4\uD2B8 \uBB3C\uC57D"
-    itemExplain: "\uD14C\uC2A4\uD2B8\uC6A9 \uBB3C\uC57D, \uD14D\uC2A4\uD2B8 \uB178\uCD9C
-      \uD655\uC778"
-    itemStatus: "\uC2A4\uD14C\uC774\uD130\uC2A4 \uB178\uCD9C \uD655\uC778"
+  TestConsum: {fileID: 11400000, guid: a36e6a5aa48e2b448ab9b4ba2d3c96a4, type: 2}
+  TestWeapon: {fileID: 11400000, guid: 67a39596c8261a64f939bfaf63c433ab, type: 2}
+  TestArmor: {fileID: 11400000, guid: 8b7f4136310107346b90de71e7905a0e, type: 2}

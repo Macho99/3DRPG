@@ -74,7 +74,7 @@ public class FieldSFC : MonoBehaviour
 		{
 			Debug.Log("getItem");
 			_ = StartCoroutine(player.GetComponent<PlayerUseUI>().testCube.ShowGainItem());
-            GameManager.Inven.TryGainConsumItem(player.GetComponent<PlayerUseUI>().testCube.testItem);
+            GameManager.Inven.TryGainItem(player.GetComponent<PlayerUseUI>().testCube.testItem);
             player.GetComponent<PlayerUseUI>().testCube.haveItem = false;
         }
 		else if (player.GetComponent<PlayerUseUI>().testCube != null && player.GetComponent<PlayerUseUI>().testCube.haveItem == false)

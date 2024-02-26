@@ -7,7 +7,7 @@ using UnityEngine;
 public class TestCube : MonoBehaviour
 {
     public NoticeUI noticeUI;
-    public Consum testItem;
+    public SOItem testItem;
     public bool haveItem;
 
     private void Awake()
@@ -20,11 +20,11 @@ public class TestCube : MonoBehaviour
     {
         if(haveItem == true)
         {
-            noticeUI.SetTexts("E", $": {gameObject.name} 열기");
+            noticeUI.SetTexts("E", $": {gameObject.name} 확인");
         }
         else if (haveItem == false)
         {
-            noticeUI.SetTexts("E", $": {gameObject.name} 닫기");
+            return;
         }
     }
 
