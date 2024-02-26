@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Unity.VisualScripting;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,56 +12,70 @@ public class InventoryUI : PopUpUI
 
     public RectTransform showItemArea;
 
-    public ItemListUI weaponList;
-    public ItemListUI armorList;
-    public ItemListUI expList;
+    public TextMeshProUGUI itemName;
+    public TextMeshProUGUI itemExplain;
+    public TextMeshProUGUI itemStatus;
+    public Image itemIcon;
+
 
     private void Start()
     {
-        weaponList = GameManager.Resource.Instantiate<ItemListUI>("UI/PopUpUI/Inventory/ItemList");
-        weaponList.gameObject.name = "WeaponList";
-        weaponList.transform.parent = showItemArea.transform;
-        
-        armorList = GameManager.Resource.Instantiate<ItemListUI>("UI/PopUpUI/Inventory/ItemList");
-        armorList.gameObject.name = "ArmorList";
-        armorList.transform.parent = showItemArea.transform;
-        
-        expList = GameManager.Resource.Instantiate<ItemListUI>("UI/PopUpUI/Inventory/ItemList");
-        expList.gameObject.name = "EXPList";
-        expList.transform.parent = showItemArea.transform;
+        GameManager.Inven.MakeSlotParent(this);
     }
 
     private void Update()
     {
-
         switch (onToggle.gameObject.name)
         {
             case "ShowAll":
-                weaponList.gameObject.SetActive(true);
-                armorList.gameObject.SetActive(true);
-                expList.gameObject.SetActive(true);
+                GameManager.Inven.weaponContent.gameObject.SetActive(true);
+                GameManager.Inven.armorContent.gameObject.SetActive(true);
+                GameManager.Inven.consumContent.gameObject.SetActive(true);
                 break;
             case "ShowWeapon":
-                weaponList.gameObject.SetActive(true);
-                armorList.gameObject.SetActive(false);
-                expList.gameObject.SetActive(false);
+                GameManager.Inven.weaponContent.gameObject.SetActive(true);
+                GameManager.Inven.armorContent.gameObject.SetActive(false);
+                GameManager.Inven.consumContent.gameObject.SetActive(false);
                 break;
             case "ShowArmor":
-                weaponList.gameObject.SetActive(false);
-                armorList.gameObject.SetActive(true);
-                expList.gameObject.SetActive(false);
+                GameManager.Inven.weaponContent.gameObject.SetActive(false);
+                GameManager.Inven.armorContent.gameObject.SetActive(true);
+                GameManager.Inven.consumContent.gameObject.SetActive(false);
                 break;
-            case "ShowExp":
-                weaponList.gameObject.SetActive(false);
-                armorList.gameObject.SetActive(false);
-                expList.gameObject.SetActive(true);
+            case "ShowConsum":
+                GameManager.Inven.weaponContent.gameObject.SetActive(false);
+                GameManager.Inven.armorContent.gameObject.SetActive(false);
+                GameManager.Inven.consumContent.gameObject.SetActive(true);
                 break;
+        }
+
+        if (GameManager.Inven.focusSlot == null)
+        {
+            itemName.text = "-";
+            itemExplain.text = "-";
+            itemStatus.text = "-";
+            itemIcon.sprite = null;
+        }
+        else if(GameManager.Inven.focusSlot != null && GameManager.Inven.focusSlot.item == null)
+        {
+            itemName.text = "-";
+            itemExplain.text = "-";
+            itemStatus.text = "-";
+            itemIcon.sprite = null;
+        }
+        else if(GameManager.Inven.focusSlot != null && GameManager.Inven.focusSlot.item != null)
+        {
+            itemName.text = GameManager.Inven.focusSlot.item.itemName;
+            itemExplain.text = GameManager.Inven.focusSlot.item.itemExplain;
+            itemStatus.text = GameManager.Inven.focusSlot.item.itemStatus;
+            itemIcon.sprite = GameManager.Inven.focusSlot.item.itemIcon;
         }
     }
 
     private void OnEnable()
     {
-        foreach(Transform child in tabToggle.GetComponentInChildren<Transform>())
+        // 인벤토리 오픈 시 초기화
+        foreach (Transform child in tabToggle.GetComponentInChildren<Transform>())
         {
             child.GetComponent<Toggle>().isOn = false;
         }
@@ -72,7 +83,8 @@ public class InventoryUI : PopUpUI
 
     public void CloseThis()
     {
-        GameManager.UI.ClosePopUpUI();
+        GameManager.UI.ClearPopUpUI();
+        GameManager.UI.ClearWindowUI();
         GameManager.UI.ShowPopUpUI(GameManager.UI.menu);
     }
 }

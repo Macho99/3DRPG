@@ -6,11 +6,11 @@ public class MountingItemsUI : InGameUI
 {
     private void Update()
     {
-        if (GameManager.UI.menuOpen == false)
+        if (GameManager.UI.menuOpen)
         {
             gameObject.GetComponent<CanvasGroup>().alpha = 0f;
         }
-        else if (GameManager.UI.menuOpen == true)
+        else
         {
             gameObject.GetComponent<CanvasGroup>().alpha = 1f;
         }

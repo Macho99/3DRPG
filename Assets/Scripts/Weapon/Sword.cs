@@ -132,7 +132,7 @@ public class Sword : Weapon
 					return false;
 				}
 				hitList.Add(hit.collider.gameObject);
-				print(hit.collider.gameObject);
+				Debug.Log(hit.collider.gameObject);
 			}
 		}
 		return true;

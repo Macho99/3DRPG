@@ -46,7 +46,7 @@ public class FieldSFC : MonoBehaviour
         {
             GameManager.UI.menuOpen = !GameManager.UI.menuOpen;
 
-            if (GameManager.UI.menuOpen == false)
+            if (GameManager.UI.menuOpen == true)
             {
 				GameManager.UI.ShowPopUpUI(GameManager.UI.menu);
                 Cursor.lockState = CursorLockMode.Confined;
@@ -63,6 +63,23 @@ public class FieldSFC : MonoBehaviour
 
 	private void OnInteraction(InputValue value)
 	{
-
+		if(player.GetComponent<PlayerUseUI>().testCube == null)
+		{
+			Debug.Log("nonObj");
+			return;
+		}
+		else if (player.GetComponent<PlayerUseUI>().testCube != null &&
+			player.GetComponent<PlayerUseUI>().testCube.haveItem == true)
+		{
+			Debug.Log("getItem");
+			_ = StartCoroutine(player.GetComponent<PlayerUseUI>().testCube.ShowGainItem());
+            GameManager.Inven.TryGainConsumItem(player.GetComponent<PlayerUseUI>().testCube.testItem);
+            player.GetComponent<PlayerUseUI>().testCube.haveItem = false;
+        }
+		else if (player.GetComponent<PlayerUseUI>().testCube != null && player.GetComponent<PlayerUseUI>().testCube.haveItem == false)
+		{
+			Debug.Log("ClearWindow");
+			GameManager.UI.ClearWindowUI();
+		}
 	}
 }

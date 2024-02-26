@@ -17,7 +17,7 @@ public class UIManager : MonoBehaviour
 
 	public MenuUI menu;
 
-	public bool menuOpen = true;
+	public bool menuOpen = false;
 
     private void Awake()
 	{
