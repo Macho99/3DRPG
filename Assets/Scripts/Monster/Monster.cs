@@ -140,8 +140,4 @@ public class Monster : MonoBehaviour
         state = State.DEAD;
         Destroy(gameObject, 3f);
     }
-
-    // TODO: Patrol, 어택 판정 구체화, Hit Effect 추가, Sound 추가
-    // 근거리, 근거리 방패, 원거리, 미믹 ( 버퍼? 근접 원거리 스위칭? )
-    // 상태이상?
 }

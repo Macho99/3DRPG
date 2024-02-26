@@ -1,0 +1,12 @@
+TODO:
+
+- 공격 판정 생성
+- Hit Effect, Sound
+
+
+
+## 보스 구현 ##
+
+- DeathKnight를 주축으로 애니메이션 + VFX or Asset 활용하여 제작
+
+- DeathKnight Animation과 VFX and Effect Asset으로 반피, 이후 광폭 컨셉으로 투핸드 애니메이션 사용
