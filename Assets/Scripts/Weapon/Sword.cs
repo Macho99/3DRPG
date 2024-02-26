@@ -103,10 +103,6 @@ public abstract class Sword : Weapon
 				}
 				hitList[hitListCnt] = hit.collider.gameObject;
 				hitListCnt++;
-				if (hit.collider.gameObject.TryGetComponent(out MonsterShield monsterShield))
-				{
-					monsterShield.TakeDamage(20);
-				}
 				print(hit.collider.gameObject);
 			}
 		}

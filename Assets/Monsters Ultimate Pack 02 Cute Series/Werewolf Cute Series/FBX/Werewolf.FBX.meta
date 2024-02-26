@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 28f5370d627d60e42aa0738753feeff8
+guid: 7dec072d10df8ff4284c5750e26adf24
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable:
@@ -543,28 +543,28 @@ ModelImporter:
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
   referencedClips:
-  - 7d63a7d7739738d468c7c5fb12d9cd2b
-  - c9188aca16487e941958a5b50f4d34d9
-  - a16a3479cc19f6b419d4c1a535dda96f
-  - 5a38ac8da9e2b024f98c22b0ff94f875
-  - 9f274519dc228314faf35a2cf13a57eb
-  - 117f6bea394ab2c48ab0df9c682a2dac
-  - ac2537a5170c7f541a6e09bdd5de2880
-  - ac63e3d5f397656428387c8095e413f8
-  - 8128fa8a1bc8eaa4c966dcc30489461e
-  - de0b3eade399a214989eaab3eebb9806
-  - 09ca25c1d91448141848f0be92be5b60
-  - 92c42065c5177d649a0211a83ff76034
-  - 6a0d8e69f69b4e64cbcf48f26b6e7b05
-  - 58267f042a3f8bf44a83cf8fdc84e2e1
-  - 0f7589ada9d27404e99510a5a2ca2a58
-  - 68bef141595a8e141b1eb7f3a5902775
-  - f18e0dde1245a5b49adf99b4b1a94502
-  - 78de12aec98f9634ba3e676ca09441bf
-  - f848445c6cbe3b44d88f1b6fb3ef5119
-  - 5d58093ded22b6545a13f206fe0228b7
-  - 10eba71eea0b4be4c850552bcf25e9a2
-  - 95d31ca1ee2365445b39e8bc60bfa8b4
+  - 19c1033f4472d604b9c945c65aabcd0d
+  - f0be6e35738ae904eab1bb5502ed70aa
+  - 8deb95391b1409a47bf24b3ac2d4fed2
+  - b8666ae0e4200704fa6ace311e913e22
+  - f0798c1643f831b48aab0f61d4386dc7
+  - 9ab36c3d7b9f8084ba4c66e9a096aa24
+  - 1177693d0da222f448613e7816bb7aca
+  - 774d1525e69e56a479d21abc36a5b748
+  - 15ea6108aed7c7b40bdccda011cf309a
+  - 2a7451527fe485a4ab04b23ca8dad436
+  - 455daac7e2eb3a047b13ed3a589568df
+  - b1c0978d7caa6554da87b51a78f14ffc
+  - cc0dde8fc126fb440b91cfbfe6494072
+  - c6b538becf9e494438410a605dbc161a
+  - bc1e60b2fb9d4854f8ded9fa9b6b513e
+  - 3dc787e01a66ddd4fb918eadf06cbe1f
+  - 7cab93ba5eb2ecc4ba68e1515618958c
+  - 94c84f3adc5a5224897af964374bc8b8
+  - 8986e7e8f0124ab4592b13e2e2b8cda9
+  - a4514beebaadf4b4491b16035b364c4f
+  - a190cfd388e775f49bd5f9ab51cb20c2
+  - 7884185f338179444bfc5d1aa7a331be
   importAnimation: 1
   humanDescription:
     serializedVersion: 3

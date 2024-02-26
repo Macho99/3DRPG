@@ -61,7 +61,6 @@ public class MonsterShield : MonoBehaviour
         {
             // 감소된 데미지 받음
             monster.currentStamina -= 20;
-            anim.SetTrigger("Guard");
             guardHit = true;
             print("Reduce Damage or Guard Damage");
 
@@ -71,6 +70,10 @@ public class MonsterShield : MonoBehaviour
                 monster.state = State.GUARD_BREAK;
                 anim.SetTrigger("GuardBreak");
                 print("Guard Break");
+            }
+            else
+            {
+                anim.SetTrigger("Guard");
             }
         }
         else if (monster.state == State.GUARD_BREAK)

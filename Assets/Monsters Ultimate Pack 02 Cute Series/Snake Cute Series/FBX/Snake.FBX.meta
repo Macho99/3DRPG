@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: a62c5c5d376520340aa80f2f3643c54e
+guid: 4e931c6e185cff046b61d35b361c6823
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable:
@@ -444,20 +444,20 @@ ModelImporter:
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
   referencedClips:
-  - c743334be13cd3f4fbbaf6dc670cfe7c
-  - 32944684722f3d04385a121eb092b0c8
-  - 57b55e7b615faea40b7b70b5f79de56e
-  - 857b5c872d94978419c7fe4d01186c1a
-  - f5df896c2025ae44d8fba09bf5eaf696
-  - 84991dbb2bffa5b449aa1cfe68cd2c50
-  - 72b52b28d83cf284189d8d92559eb80e
-  - 537260b6b4684f74e8aee21f92635229
-  - 0e48384e595ec284caa41284da20893a
-  - cdc2204dc218af44f98115355477375e
-  - a9db19057d3eb724eb0365631f75a66c
-  - f32daa8082e70ca4494d16d070bb5066
-  - 007dee787a2a7e546b20274950c5835e
-  - f728de0e95e095d40968698ae81bd9c5
+  - 79ec87843d775444f9a1f5c35984e6e8
+  - 2970839b002d6bf4fa5d29ac05830878
+  - 0598b7786e0966e48a85f3b1c2c60bed
+  - 8243668ad3c73304dacef9b21deee7ca
+  - bdb0541413e495c42a225d5d97f7df02
+  - 170adf27518c0e5419162120355f19d7
+  - 74bdb451eda8c9c429dccbd9a5a6ea9b
+  - 621879c2168448e40bff797f58654d3c
+  - 4325c44636e899b44ae1853093ce4eb1
+  - 20e973d49b5263b4d879dcf6d50bfaac
+  - faa9366cd7ac16f45ad901995321f569
+  - b75b960de6a71cb4ca01f89914022f5e
+  - 49c70b3f04a6e7242aa7f3d07d926ab4
+  - 534e4b20ff7f2c94eaaf10ec54489083
   importAnimation: 1
   humanDescription:
     serializedVersion: 3
