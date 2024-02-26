@@ -8,6 +8,7 @@ public class Katana : Sword
 {
 	[SerializeField] State curState;
 	[SerializeField] MMF_Player deathfaultFeedback;
+	[SerializeField] ChargeFeedback chargeFeedback;
 
 	[Serializable]
 	public enum State { Idle, Unarmed, QuickSheath, Equip, 
@@ -112,6 +113,26 @@ public class Katana : Sword
 	public void PlayDeathfaultFeedback()
 	{
 		deathfaultFeedback?.PlayFeedbacks();
+	}
+
+	public void PlayChargeFeedback(int level)
+	{
+		switch (level)
+		{
+			case 0:
+				chargeFeedback.Stop();
+				return;
+			case 1:
+				chargeFeedback.Play();
+				break;
+			case 2:
+			case 3:
+				break;
+			default:
+				print($"레벨은 0~3이어야 합니다 {level}");
+				return;
+		}
+		chargeFeedback.SetChargeLevel(level);
 	}
 
 	public override void ChangeStateToIdle(bool forceIdle = false)

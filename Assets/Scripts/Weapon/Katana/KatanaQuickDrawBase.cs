@@ -82,7 +82,7 @@ public abstract class KatanaQuickDrawBase : StateBase<Katana.State, Katana>
 
 	protected virtual void Attack(bool clockwise)
 	{
-		VisualEffect effect = GameManager.Resource.Instantiate<VisualEffect>("Prefab/SlashVFX", true);
+		ParticleSystem effect = GameManager.Resource.Instantiate<ParticleSystem>("Prefab/SlashVFX", true);
 		effect.transform.position = player.transform.position + player.transform.forward + Vector3.up;
 
 		Quaternion quaternion = player.transform.rotation;
