@@ -9,11 +9,13 @@ public class GameManager : MonoBehaviour
 	private static PoolManager poolManager;
 	private static ResourceManager resourceManager;
 	private static UIManager uiManager;
+	private static InventoryManager inventoryManager;
 
 	public static GameManager Instance { get { return instance; } }
 	public static PoolManager Pool { get { return poolManager; } }
 	public static ResourceManager Resource { get { return resourceManager; } }
 	public static UIManager UI { get { return uiManager; } }
+	public static InventoryManager Inven { get { return inventoryManager; } }
 
 	private void Awake()
 	{
@@ -50,5 +52,10 @@ public class GameManager : MonoBehaviour
 		uiObj.name = "UIManager";
 		uiObj.transform.parent = transform;
 		uiManager = uiObj.AddComponent<UIManager>();
-	}
+
+        GameObject invenObj = new GameObject();
+        invenObj.name = "InventoryManager";
+        invenObj.transform.parent = transform;
+        inventoryManager = invenObj.AddComponent<InventoryManager>();
+    }
 }

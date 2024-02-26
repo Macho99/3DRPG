@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,7 +15,11 @@ public class UIManager : MonoBehaviour
 
 	private Canvas inGameCanvas;
 
-	private void Awake()
+	public MenuUI menu;
+
+	public bool menuOpen = false;
+
+    private void Awake()
 	{
 		eventSystem = GameManager.Resource.Instantiate<EventSystem>("UI/EventSystem");
 		eventSystem.transform.parent = transform;
@@ -33,9 +38,17 @@ public class UIManager : MonoBehaviour
 		inGameCanvas = GameManager.Resource.Instantiate<Canvas>("UI/Canvas");
 		inGameCanvas.gameObject.name = "InGameCanvas";
 		inGameCanvas.sortingOrder = 0;
+
+		menu = GameManager.Resource.Instantiate<MenuUI>("UI/PopUpUI/Menu");
 	}
 
-	public T ShowPopUpUI<T>(T popUpUI) where T : PopUpUI
+    private void Start()
+    {
+		ShowInGameUI<PlayerConditionUI>("UI/InGame/PlayerConditionUI");
+		ShowInGameUI<MountingItemsUI>("UI/InGame/MountingItemsUI");
+    }
+
+    public T ShowPopUpUI<T>(T popUpUI) where T : PopUpUI
 	{
 		if (popUpStack.Count > 0)
 		{
@@ -47,11 +60,25 @@ public class UIManager : MonoBehaviour
 		ui.transform.SetParent(popUpCanvas.transform, false);
 		popUpStack.Push(ui);
 
-		Time.timeScale = 0f;
+		_ = StartCoroutine(FadeIn(ui.GetComponent<CanvasGroup>()));
+		
 		return ui;
 	}
 
-	public T ShowPopUpUI<T>(string path) where T : PopUpUI
+	private IEnumerator FadeIn(CanvasGroup cg)
+	{
+		float fadeTime = 0.2f;
+		float accumTime = 0f;
+        while (accumTime < fadeTime)
+        {
+            cg.alpha = Mathf.Lerp(0f, 1f, accumTime / fadeTime);
+            yield return 0;
+            accumTime += Time.deltaTime;
+        }
+        cg.alpha = 1f;
+    }
+
+    public T ShowPopUpUI<T>(string path) where T : PopUpUI
 	{
 		T ui = GameManager.Resource.Load<T>(path);
 		return ShowPopUpUI(ui);
@@ -60,20 +87,31 @@ public class UIManager : MonoBehaviour
 	public void ClosePopUpUI()
 	{
 		PopUpUI ui = popUpStack.Pop();
-		GameManager.Pool.ReleaseUI(ui.gameObject);
+		_= StartCoroutine(FadeOut(ui.gameObject.GetComponent<CanvasGroup>()));
+		//GameManager.Pool.ReleaseUI(ui.gameObject);
 
 		if (popUpStack.Count > 0)
 		{
 			PopUpUI curUI = popUpStack.Peek();
 			curUI.gameObject.SetActive(true);
 		}
-		else
-		{
-			Time.timeScale = 1f;
-		}
 	}
 
-	public void ClearPopUpUI()
+    private IEnumerator FadeOut(CanvasGroup cg)
+    {
+        float fadeTime = 0.2f;
+        float accumTime = 0f;
+        while (accumTime < fadeTime)
+        {
+            cg.alpha = Mathf.Lerp(1f, 0f, accumTime / fadeTime);
+            yield return 0;
+            accumTime += Time.deltaTime;
+        }
+        cg.alpha = 0f;
+        GameManager.Pool.ReleaseUI(cg.GetComponent<PopUpUI>().gameObject);
+    }
+
+    public void ClearPopUpUI()
 	{
 		while (popUpStack.Count > 0)
 		{

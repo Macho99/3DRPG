@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class FieldSFC : MonoBehaviour
 {
@@ -37,6 +38,49 @@ public class FieldSFC : MonoBehaviour
 		{
 			instance = null;
 			player = null;
+		}
+	}
+
+    private void OnOpenMenu(InputValue value)
+    {
+        if (value.isPressed == true)
+        {
+            GameManager.UI.menuOpen = !GameManager.UI.menuOpen;
+
+            if (GameManager.UI.menuOpen == true)
+            {
+				GameManager.UI.ShowPopUpUI(GameManager.UI.menu);
+                Cursor.lockState = CursorLockMode.Confined;
+                player.GetComponent<PlayerInput>().enabled = false;
+            }
+            else
+            {
+                GameManager.UI.ClearPopUpUI();
+				Cursor.lockState = CursorLockMode.Locked;
+                player.GetComponent<PlayerInput>().enabled = true;
+            }
+        }
+    }
+
+	private void OnInteraction(InputValue value)
+	{
+		if(player.GetComponent<PlayerUseUI>().testCube == null)
+		{
+			Debug.Log("nonObj");
+			return;
+		}
+		else if (player.GetComponent<PlayerUseUI>().testCube != null &&
+			player.GetComponent<PlayerUseUI>().testCube.haveItem == true)
+		{
+			Debug.Log("getItem");
+			_ = StartCoroutine(player.GetComponent<PlayerUseUI>().testCube.ShowGainItem());
+            GameManager.Inven.TryGainConsumItem(player.GetComponent<PlayerUseUI>().testCube.testItem);
+            player.GetComponent<PlayerUseUI>().testCube.haveItem = false;
+        }
+		else if (player.GetComponent<PlayerUseUI>().testCube != null && player.GetComponent<PlayerUseUI>().testCube.haveItem == false)
+		{
+			Debug.Log("ClearWindow");
+			GameManager.UI.ClearWindowUI();
 		}
 	}
 }
