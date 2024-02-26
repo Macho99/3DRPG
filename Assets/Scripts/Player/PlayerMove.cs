@@ -1,8 +1,10 @@
+using MoreMountains.Feedbacks;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.HID;
 
@@ -10,46 +12,48 @@ public class PlayerMove : MonoBehaviour
 {
 	[SerializeField] Transform moveRoot;
 	[SerializeField] float moveSpeed = 3f;
-	[SerializeField] float jumpForce = 10f;
+	[SerializeField] float jumpForce = 4f;
+	[SerializeField] float doubleJumpForce = 6f;
+	[SerializeField] float airAttackJumpForce = 3f;
 	[SerializeField] float slideSpeed = 5f;
 	[SerializeField] float slideAngle = 20f;
 	[SerializeField] float moveLerpSpeed = 50f;
 	[SerializeField] float rotationLerpSpeed = 5f;
 	[SerializeField] float gravity = -25f;
+	[SerializeField] float fallCheckDist = 2f;
 
 	private Vector3 curMoveVec;
 	private bool isGround;
+
+	public Transform MoveRoot { get { return moveRoot; } }
 	public bool IsGround
 	{
 		get { return isGround; }
 		private set
 		{
-			if (isGround == false && value == true)
-			{
-				anim.SetBool("IsJump", false);
-			}
-			else if (isGround == true && value == false)
-			{
-
-			}
-
 			isGround = value;
 		}
 	}
 
+	[HideInInspector] public UnityEvent OnJumpDown = new UnityEvent();
+	[HideInInspector] public UnityEvent OnDodgeDown = new UnityEvent();
+	[HideInInspector] public UnityEvent OnFalling = new UnityEvent();
+
+	public float ScaledGravity { get => gravity * GravityScale; }
 	public bool JumpInput { get; private set; }
+	public bool DodgeInput { get; private set; }
 	public Vector2 MoveInput { get; private set; }
 	public bool SprintInput { get; private set; }
-	public float GravityMultiplier { get; set; } = 1f;
+	public float GravityScale { get; set; } = 1f;
 	public float MoveMultiplier { private get; set; } = 1f;
-	public float VelY { set { velY = value; } }
+	public float VelY { get { return velY; } }
 	public Vector3 MoveForward { get { return moveRoot.forward; } }
 
 	Animator anim;
 	Transform animTrans;
 	CharacterController controller;
 	Transform characterTrans;
-	float velY;
+	[SerializeField] float velY;
 	bool colResult;
 	RaycastHit hitInfo;
 	LayerMask environmentMask;
@@ -60,7 +64,7 @@ public class PlayerMove : MonoBehaviour
 		controller = GetComponentInChildren<CharacterController>();
 		anim = GetComponentInChildren<Animator>();
 		animTrans = anim.transform;
-		environmentMask = LayerMask.GetMask("Environment");
+		environmentMask = LayerMask.GetMask("Environment", "Tree", "Monster");
 		isGround = true;
 	}
 
@@ -69,15 +73,6 @@ public class PlayerMove : MonoBehaviour
 		Move();
 		GroundCheck();
 		Slide();
-		//LerpCharacter();
-	}
-
-	private void LerpCharacter()
-	{
-		Vector3 diff = animTrans.position - transform.position;
-		diff *= 0.1f;
-		transform.Translate(diff, Space.World);
-		animTrans.Translate(-diff, Space.World);
 	}
 
 	private void Slide()
@@ -96,10 +91,34 @@ public class PlayerMove : MonoBehaviour
 
 	private void GroundCheck()
 	{
+		if (velY > 0.1f) return;
+
 		colResult = Physics.SphereCast(transform.position + controller.center, controller.radius,
 			Vector3.down, out hitInfo, controller.center.y + 0.1f - controller.radius, environmentMask);
 
+		if(isGround == true && colResult == false)
+		{
+			IsGround = colResult;
+			_ = StartCoroutine(CoFallCheck());
+		}
 		IsGround = colResult;
+	}
+
+	private IEnumerator CoFallCheck()
+	{
+		while(IsGround == false)
+		{
+			if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hitInfo, 100f, environmentMask) == true)
+			{
+				if ((hitInfo.point - transform.position).sqrMagnitude < fallCheckDist * fallCheckDist)
+				{
+					yield return null;
+					continue;
+				}
+			}
+			OnFalling?.Invoke();
+			break;
+		}
 	}
 
 	private void Move()
@@ -108,7 +127,7 @@ public class PlayerMove : MonoBehaviour
 			velY = -2f;
 		else
 		{
-			velY += gravity * GravityMultiplier * Time.deltaTime;
+			velY += ScaledGravity * Time.deltaTime;
 		}
 
 		Vector3 targetMoveVec = new Vector3();
@@ -125,8 +144,6 @@ public class PlayerMove : MonoBehaviour
 		targetMoveVec *= MoveMultiplier;
 
 		curMoveVec = Vector3.Lerp(curMoveVec, targetMoveVec, Time.deltaTime * moveLerpSpeed);
-
-
 
 		//에임 고정 아닐 때
 		if (true)
@@ -145,13 +162,16 @@ public class PlayerMove : MonoBehaviour
 		}
 		//else
 		//{
-		//	anim.SetFloat("SpeedX", animSpeedVec.x, 0.1f, Time.deltaTime);
-		//	anim.SetFloat("SpeedY", animSpeedVec.y, 0.1f, Time.deltaTime);
-		//}
 
+		//}
 		curMoveVec.y = velY;
 
 		controller.Move(curMoveVec * Time.deltaTime);
+	}
+
+	public void ManualMove(Vector3 moveVec, float time)
+	{
+		controller.Move(moveVec * time);
 	}
 
 	private void OnMove(InputValue value)
@@ -161,16 +181,25 @@ public class PlayerMove : MonoBehaviour
 
 	private void OnJump(InputValue value)
 	{
-		if (false == IsGround) { return; }
+		JumpInput = value.Get<float>() > 0.9f;
+		if(JumpInput == true)
+		{
+			OnJumpDown?.Invoke();
+		}
+	}
 
-		IsGround = false;
-		velY = jumpForce;
-		anim.SetBool("IsJump", true);
+	private void OnDodge(InputValue value)
+	{
+		DodgeInput = value.Get<float>() > 0.9f;
+		if(DodgeInput == true)
+		{
+			OnDodgeDown?.Invoke();
+		}
 	}
 
 	private void OnSprint(InputValue value)
 	{
-		SprintInput = value.Get<float>() > 0.9f ? true : false;
+		SprintInput = value.Get<float>() > 0.9f;
 	}
 
 	private void OnDrawGizmos()
@@ -183,5 +212,71 @@ public class PlayerMove : MonoBehaviour
 		colPoint.y += controller.radius;
 
 		Gizmos.DrawWireSphere(colPoint, controller.radius);
+	}
+
+	public float GetAnimNormalizedTime(int layer)
+	{
+		return anim.GetCurrentAnimatorStateInfo(layer).normalizedTime;
+	}
+
+	public bool IsAnimWait(int layer)
+	{
+		return anim.GetCurrentAnimatorStateInfo(layer).IsName("Wait");
+	}
+
+	public bool IsAnimName(int layer, string name)
+	{
+		return anim.GetCurrentAnimatorStateInfo(layer).IsName(name);
+	}
+
+	public void SetAnimTrigger(string str)
+	{
+		//print(str);
+		anim.SetTrigger(str);
+	}
+
+	public void SetAnimFloat(string str, float value)
+	{
+		anim.SetFloat(str, value);
+	}
+
+	public void SetAnimFloat(string str, float value, float dampTime, float deltaTime)
+	{
+		anim.SetFloat(str, value, dampTime, deltaTime);
+	}
+
+	public void Jump(bool doubleJump = false)
+	{
+		if(doubleJump == false)
+		{
+			velY = jumpForce;
+			IsGround = false;
+		}
+		else
+		{
+			velY = doubleJumpForce;
+		}
+	}
+
+	public void OnAirAttackJump()
+	{
+		velY = airAttackJumpForce;
+	}
+
+	public float CalcLandTime()
+	{
+		Vector3 offset = Vector3.up * 0.1f;
+		if (Physics.SphereCast(transform.position + offset, controller.radius,
+			Vector3.down, out hitInfo, 100f, environmentMask) == false)
+		{
+			return 10f;
+		}
+
+		float dist = Vector3.Distance(hitInfo.point, transform.position + offset);
+		float gd2 = 2 * -ScaledGravity * dist;
+		float sqrt = Mathf.Sqrt(velY * velY + gd2);
+		float result = (velY + sqrt) / -ScaledGravity;
+		//print(result);
+		return result;
 	}
 }

@@ -14,6 +14,7 @@ public class KatanaUnarmed : StateBase<Katana.State, Katana>
 
 	public override void Enter()
 	{
+		owner.Armed = false;
 		playerAttack.SetAnimFloat("Armed", 0f);
 		owner.SetDummyRender(true);
 		playerAttack.OnAttack1Down.AddListener(Equip);

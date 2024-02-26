@@ -4,9 +4,16 @@ using UnityEngine;
 
 public class VFXAutoOff : MonoBehaviour
 {
-	[SerializeField] float OffTime = 1f;
+	[SerializeField] float offTime = 1f;
+	private float initOffTime; 
 
 	private float curTime = 0f;
+
+
+	private void Awake()
+	{
+		initOffTime = offTime;
+	}
 
 	private void OnEnable()
 	{
@@ -17,7 +24,7 @@ public class VFXAutoOff : MonoBehaviour
 	{
 		while(true)
 		{
-			if(curTime > OffTime)
+			if(curTime > offTime)
 			{
 				GameManager.Resource.Destroy(gameObject);
 			}
@@ -29,7 +36,13 @@ public class VFXAutoOff : MonoBehaviour
 	private void OnDisable()
 	{
 		curTime = 0f;
+		offTime = initOffTime;
 		transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
 		transform.localScale = Vector3.one;
+	}
+
+	public void SetOffTime(float value)
+	{
+		offTime = value;
 	}
 }

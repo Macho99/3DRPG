@@ -26,6 +26,7 @@ public abstract class Sword : Weapon
 	private BoxCollider col;
 	private FrameInfo prev;
 	private FrameInfo cur;
+	private RaycastHitComparer comparer = new RaycastHitComparer();
 
 	protected override void Awake()
 	{
@@ -52,21 +53,23 @@ public abstract class Sword : Weapon
 		float moveDist = Vector3.Distance(prev.position, cur.position);
 		moveDist *= 1.2f;
 
+		Vector3 castStartPos = prev.position + (prev.position - cur.position) * 0.2f;
+
 		ExtDebug.DrawBoxCastBox(
-			cur.position,
+			castStartPos,
 			col.size * 0.5f,
 			cur.rotation,
-			prev.position - cur.position,
+			cur.position - prev.position,
 			moveDist,
 			Color.red
 			);
 
-		Debug.DrawLine(prev.position, cur.position);
+		Debug.DrawLine(castStartPos, cur.position);
 
 		int hitNum = Physics.BoxCastNonAlloc(
-			cur.position,
+			castStartPos,
 			col.size * 0.5f,
-			(prev.position - cur.position).normalized,
+			(cur.position - prev.position).normalized,
 			hits,
 			cur.rotation,
 			moveDist,
@@ -74,10 +77,15 @@ public abstract class Sword : Weapon
 			);
 
 		prev = cur;
+		comparer.Init(castStartPos);
+		Array.Sort(hits, 0, hitNum, comparer);
 
-		for(int i = hitNum - 1; i >= 0; i--)
+		//print("Start");
+		for(int i = 0; i < hitNum; i++)
 		{
 			RaycastHit hit = hits[i];
+
+			//print(Vector3.Distance(hit.point, castStartPos));
 
 			bool findResult = false;
 			for(int cnt = 0; cnt < hitListCnt; cnt++)
@@ -96,6 +104,7 @@ public abstract class Sword : Weapon
 					if (hit.point.y - player.transform.position.y > 0.5f)
 					{
 						//print(hit.point.y - player.transform.position.y);
+						playerAttack.PlayAttackFailFeedback();
 						return false;
 					}
 					else
@@ -106,6 +115,25 @@ public abstract class Sword : Weapon
 				print(hit.collider.gameObject);
 			}
 		}
+		//print("End;");
 		return true;
+	}
+}
+
+public class RaycastHitComparer : IComparer<RaycastHit>
+{
+	private Vector3 castStartPos;
+
+	public void Init(Vector3 castStartPos)
+	{
+		this.castStartPos = castStartPos;
+	}
+
+	public int Compare(RaycastHit a, RaycastHit b)
+	{
+		float distA = Vector3.SqrMagnitude(a.point - castStartPos);
+		float distB = Vector3.SqrMagnitude(b.point - castStartPos);
+
+		return distA.CompareTo(distB);
 	}
 }

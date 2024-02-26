@@ -14,6 +14,7 @@ public class PlayerLook : MonoBehaviour
     [SerializeField] Transform aimPoint;
     [SerializeField] bool follow = true;
 
+    public Transform CamRoot { get { return camRoot; } }
     public Transform AimPoint { get { return aimPoint; } }
     public Vector2 LookInput { get { return lookInput; } }
 

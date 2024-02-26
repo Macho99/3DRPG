@@ -60,18 +60,27 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Evasion",
-                    "type": "Button",
+                    "name": "Dodge",
+                    "type": "Value",
                     "id": "2e403235-2a06-431b-b1b2-b0565ed51034",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Escape",
+                    "type": "Button",
+                    "id": "54319b0b-adbb-4d56-82ce-cc3393c92fb9",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Escape",
+                    "name": "Unarm",
                     "type": "Button",
-                    "id": "54319b0b-adbb-4d56-82ce-cc3393c92fb9",
+                    "id": "ca6aeb9d-daac-47e0-93b4-2283dd0d6749",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -207,7 +216,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Evasion",
+                    "action": "Dodge",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5daa4aba-1d4c-482d-8a64-26e56a3fba2f",
+                    "path": "<Keyboard>/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Unarm",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

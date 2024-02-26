@@ -48,4 +48,6 @@ public abstract class Weapon : MonoBehaviour
 				break;
 		}
 	}
+
+	public abstract void ChangeStateToIdle(bool forceIdle = false);
 }

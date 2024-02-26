@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-public class KatanaDashAttackVerB : KatanaSwingBase
+public class KatanaDashAttackVerB : KatanaStandSwingBase
 {
 	public KatanaDashAttackVerB(Katana owner, StateMachine<Katana.State, Katana> stateMachine) 
 		: base(owner, stateMachine, "Attack9")
@@ -16,8 +16,7 @@ public class KatanaDashAttackVerB : KatanaSwingBase
 		base.Enter();
 		playerAttack.SetAnimFloat("Armed", 1f);
 		owner.SetDummyRender(false);
-		player.ChangeState(Player.State.StandAttack);
-		playerAttack.SetAnimFloat("Grruzam", 1f);
+		playerAttack.SetAnimFloat("IdleAdapter", 1f);
 	}
 
 	protected override bool CheckTransition()

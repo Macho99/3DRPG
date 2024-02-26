@@ -17,6 +17,7 @@ public class PlayerAttackMove : StateBase<Player.State, Player>
 		owner.SetAnimRootMotion(true);
 		playerMove.MoveMultiplier = 1f;
 		owner.OnWeaponIdle.AddListener(ChangeToIdle);
+		playerMove.OnDodgeDown.AddListener(owner.Dodge);
 	}
 
 	public override void Exit()
@@ -24,6 +25,7 @@ public class PlayerAttackMove : StateBase<Player.State, Player>
 		owner.SetAnimRootMotion(false);
 		playerMove.MoveMultiplier = 1f;
 		owner.OnWeaponIdle.RemoveListener(ChangeToIdle);
+		playerMove.OnDodgeDown.RemoveListener(owner.Dodge);
 	}
 
 	public override void Setup()
