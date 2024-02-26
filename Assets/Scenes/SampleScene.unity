@@ -82885,11 +82885,13 @@ MonoBehaviour:
   attackDelay: 1
   moveSpeed: 5
   rotationSpeed: 3
+  specialAttackRange: 0
   viewRadius: 100
   viewAngle: 120
   originViewAngle: 0
   spawnPosition: {x: 0, y: 0, z: 0}
   distanceFromOriginPos: 20
+  spawnDir: {x: 0, y: 0, z: 0}
   target: {fileID: 0}
   isReturning: 0
   targetMask:
@@ -85936,7 +85938,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &4734550182720601906
 GameObject:
   m_ObjectHideFlags: 0
@@ -86646,7 +86648,7 @@ Animator:
   m_GameObject: {fileID: 4734550182720601904}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: d7e4aa9c5d644727a262e2b22d8586af, type: 3}
-  m_Controller: {fileID: 9100000, guid: ebfddc7a41cc424791cbedf3d89f8361, type: 2}
+  m_Controller: {fileID: 9100000, guid: 9d8c2e73b164ecb48b4dda79edf524b6, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -86678,11 +86680,13 @@ MonoBehaviour:
   attackDelay: 3
   moveSpeed: 3
   rotationSpeed: 3
+  specialAttackRange: 2
   viewRadius: 50
   viewAngle: 120
   originViewAngle: 0
   spawnPosition: {x: 0, y: 0, z: 0}
   distanceFromOriginPos: 10
+  spawnDir: {x: 0, y: 0, z: 0}
   target: {fileID: 0}
   isReturning: 0
   targetMask:
@@ -86883,7 +86887,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4864028341998843405}
+  - component: {fileID: 4864028342008093174}
   - component: {fileID: 4864028342008093171}
+  - component: {fileID: 4864028342008093173}
+  - component: {fileID: 4864028342008093172}
   m_Layer: 0
   m_Name: OrcPADefault
   m_TagString: Untagged
@@ -88953,10 +88960,10 @@ Animator:
   m_GameObject: {fileID: 4864028341998610989}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 1b1c0636a9064e88bf6df6272afee809, type: 3}
-  m_Controller: {fileID: 9100000, guid: 7cddcfa7ebba46acb81b53474fdc677e, type: 2}
+  m_Controller: {fileID: 9100000, guid: 9086ef2863f0a1f4db16b6a3d32fce60, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -88964,6 +88971,89 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!136 &4864028342008093172
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4864028341998610989}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
+--- !u!195 &4864028342008093173
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4864028341998610989}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &4864028342008093174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4864028341998610989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2673b790b827eec488fb2dddc1b44939, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHp: 100
+  currentHp: 0
+  damage: 10
+  maxStamina: 100
+  currentStamina: 0
+  attackRange: 4
+  attackDelay: 2
+  moveSpeed: 5
+  rotationSpeed: 3
+  specialAttackRange: 5
+  viewRadius: 100
+  viewAngle: 120
+  originViewAngle: 0
+  spawnPosition: {x: 0, y: 0, z: 0}
+  distanceFromOriginPos: 20
+  spawnDir: {x: 0, y: 0, z: 0}
+  target: {fileID: 0}
+  isReturning: 0
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 8
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 0
+  state: 0
+  staminaRate: 10
 --- !u!1 &4905591104919671009
 GameObject:
   m_ObjectHideFlags: 0
@@ -89022,7 +89112,7 @@ Animator:
   m_GameObject: {fileID: 4997077961207857211}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: b76bf1c8faa444ce8d02f6db4364d2ac, type: 3}
-  m_Controller: {fileID: 9100000, guid: b944050466ca43dc83648f27a6defdb9, type: 2}
+  m_Controller: {fileID: 9100000, guid: a072fcb0ce72c88439d921fa51508d48, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -89367,7 +89457,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &4997077961207857213
 GameObject:
   m_ObjectHideFlags: 0
@@ -90407,11 +90497,13 @@ MonoBehaviour:
   attackDelay: 5
   moveSpeed: 5
   rotationSpeed: 3
+  specialAttackRange: 0
   viewRadius: 100
   viewAngle: 120
   originViewAngle: 0
   spawnPosition: {x: 0, y: 0, z: 0}
   distanceFromOriginPos: 20
+  spawnDir: {x: 0, y: 0, z: 0}
   target: {fileID: 0}
   isReturning: 0
   targetMask:
@@ -95113,7 +95205,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &8351070704353668989
 GameObject:
   m_ObjectHideFlags: 0
@@ -95475,7 +95567,7 @@ Animator:
   m_GameObject: {fileID: 8351070704353668987}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 312c0120222f0734c98c90003b5e96bf, type: 3}
-  m_Controller: {fileID: 9100000, guid: 04768899646c35e4585fed52922bca60, type: 2}
+  m_Controller: {fileID: 9100000, guid: 0f249b7487aedb74687f38909abbd69a, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -95507,11 +95599,13 @@ MonoBehaviour:
   attackDelay: 3
   moveSpeed: 3
   rotationSpeed: 3
+  specialAttackRange: 0
   viewRadius: 50
   viewAngle: 120
   originViewAngle: 0
   spawnPosition: {x: 0, y: 0, z: 0}
   distanceFromOriginPos: 10
+  spawnDir: {x: 0, y: 0, z: 0}
   target: {fileID: 0}
   isReturning: 0
   targetMask:

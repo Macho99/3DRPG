@@ -25,12 +25,15 @@ public class Monster : MonoBehaviour
     public float moveSpeed;
     public float rotationSpeed;
 
+    public int specialAttackRange;
+
     [SerializeField] private float viewRadius; // 탐지 범위
     public float viewAngle; // 탐지 각도
     public float originViewAngle;
 
     public Vector3 spawnPosition; // 처음 스폰된 위치
     public float distanceFromOriginPos; // 처음 있던 위치로부터의 거리
+    public Vector3 spawnDir; // 처음 바라본 방향
     public Transform target;
 
     public bool isReturning; // 돌아가는 상태 체크
@@ -57,6 +60,7 @@ public class Monster : MonoBehaviour
         currentStamina = maxStamina;
         originViewAngle = viewAngle;
         spawnPosition = transform.position;
+        spawnDir = transform.forward;
         agent.speed = moveSpeed;
         agent.stoppingDistance = attackRange;
         state = State.IDLE;
@@ -70,20 +74,6 @@ public class Monster : MonoBehaviour
             currentStamina = Mathf.Clamp(currentStamina + staminaRate * Time.deltaTime, 0, maxStamina);
         }
     }
-
-    //IEnumerator Turn(Vector3 target)
-    //{
-    //    while (Quaternion.Angle(transform.rotation, Quaternion.LookRotation(target - transform.position)) > .1f)
-    //    {
-    //        Vector3 directionToTarget = target - transform.position;
-    //        directionToTarget.y = 0;
-    //        Quaternion targetRotation = Quaternion.LookRotation(directionToTarget.normalized);
-    //        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-
-    //        yield return null;
-    //    }
-
-    //}
 
     IEnumerator FindTargetWithDelay(float delay)
     {
@@ -151,11 +141,7 @@ public class Monster : MonoBehaviour
         Destroy(gameObject, 3f);
     }
 
-    // TODO: *Patrol? *어택 판정 구체화, *어택 variation 추가, Hit Effect 추가, Sound 추가, *원거리 몹 추가
-    // *BattleIdle 상태에서 좌우로 움직이던지 해서 자연스럽게 변경 ( 앞으로 걷다가 잠깐 좌우로 왔다갔다, 다시 앞으로 걷기 )
+    // TODO: Patrol, 어택 판정 구체화, Hit Effect 추가, Sound 추가
     // 근거리, 근거리 방패, 원거리, 미믹 ( 버퍼? 근접 원거리 스위칭? )
     // 상태이상?
-
-    // # 비활성화 미믹에 상호작용 하면 미믹은 Taunt 애니메이션 ( 플레이어 넘어짐 )
-    // # 스폰 지점 근처가 아닐 때, target이 null이 된지 일정 시간이 지나면 return (버그 방지)
 }

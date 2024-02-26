@@ -24,6 +24,7 @@ public class ChasingState : StateMachineBehaviour
     {
         if (target == null && Vector3.Distance(animator.transform.position, monster.spawnPosition) <= agent.stoppingDistance + .5f)
         {
+            animator.transform.forward = monster.spawnDir;
             agent.stoppingDistance = monster.attackRange;
             animator.SetBool("isChasing", false);
             monster.isReturning = false;
