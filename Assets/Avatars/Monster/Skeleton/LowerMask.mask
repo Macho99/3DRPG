@@ -7,192 +7,175 @@ AvatarMask:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: LowerMask
-  m_Mask: 01000000000000000000000001000000010000000000000000000000000000000000000000000000000000000000000000000000
+  m_Mask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
   m_Elements:
   - m_Path: 
     m_Weight: 1
-  - m_Path: Character
+  - m_Path: root
     m_Weight: 0
-  - m_Path: Character/Character Pelvis
+  - m_Path: root/ik_foot_root
     m_Weight: 0
-  - m_Path: Character/Character Pelvis/Character L Thigh
+  - m_Path: root/ik_foot_root/ik_foot_l
+    m_Weight: 0
+  - m_Path: root/ik_foot_root/ik_foot_r
+    m_Weight: 0
+  - m_Path: root/ik_hand_root
+    m_Weight: 0
+  - m_Path: root/ik_hand_root/ik_hand_gun
+    m_Weight: 0
+  - m_Path: root/ik_hand_root/ik_hand_gun/ik_hand_l
+    m_Weight: 0
+  - m_Path: root/ik_hand_root/ik_hand_gun/ik_hand_r
+    m_Weight: 0
+  - m_Path: root/pelvis
+    m_Weight: 0
+  - m_Path: root/pelvis/spine_01
+    m_Weight: 0
+  - m_Path: root/pelvis/spine_01/spine_02
+    m_Weight: 0
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03
+    m_Weight: 0
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l
+    m_Weight: 0
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l/clavicle_l_armor
+    m_Weight: 0
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l/clavicle_l_armor/Bone_shoulder_L
+    m_Weight: 0
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l/upperarm_l
+    m_Weight: 0
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l/upperarm_l/lowerarm_l
+    m_Weight: 0
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l/upperarm_l/lowerarm_l/hand_l
+    m_Weight: 0
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l/upperarm_l/lowerarm_l/hand_l/index_01_l
+    m_Weight: 0
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l/upperarm_l/lowerarm_l/hand_l/index_01_l/index_02_l
+    m_Weight: 0
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l/upperarm_l/lowerarm_l/hand_l/index_01_l/index_02_l/index_03_l
+    m_Weight: 0
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l/upperarm_l/lowerarm_l/hand_l/middle_01_l
+    m_Weight: 0
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l/upperarm_l/lowerarm_l/hand_l/middle_01_l/middle_02_l
+    m_Weight: 0
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l/upperarm_l/lowerarm_l/hand_l/middle_01_l/middle_02_l/middle_03_l
+    m_Weight: 0
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l/upperarm_l/lowerarm_l/hand_l/pinky_01_l
+    m_Weight: 0
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l/upperarm_l/lowerarm_l/hand_l/pinky_01_l/pinky_02_l
+    m_Weight: 0
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l/upperarm_l/lowerarm_l/hand_l/pinky_01_l/pinky_02_l/pinky_03_l
+    m_Weight: 0
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l/upperarm_l/lowerarm_l/hand_l/ring_01_l
+    m_Weight: 0
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l/upperarm_l/lowerarm_l/hand_l/ring_01_l/ring_02_l
+    m_Weight: 0
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l/upperarm_l/lowerarm_l/hand_l/ring_01_l/ring_02_l/ring_03_l
+    m_Weight: 0
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l/upperarm_l/lowerarm_l/hand_l/thumb_01_l
+    m_Weight: 0
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l/upperarm_l/lowerarm_l/hand_l/thumb_01_l/thumb_02_l
+    m_Weight: 0
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l/upperarm_l/lowerarm_l/hand_l/thumb_01_l/thumb_02_l/thumb_03_l
+    m_Weight: 0
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l/upperarm_l/lowerarm_l/lowerarm_twist_01_l
+    m_Weight: 0
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_l/upperarm_l/upperarm_twist_01_l
+    m_Weight: 0
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r
+    m_Weight: 0
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/clavicle_r_armor
+    m_Weight: 0
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/clavicle_r_armor/Bone_shoulder_R
+    m_Weight: 0
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r
+    m_Weight: 0
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r
+    m_Weight: 0
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r/hand_r
+    m_Weight: 0
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r/hand_r/Bone_Sword
+    m_Weight: 0
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r/hand_r/index_01_r
+    m_Weight: 0
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r/hand_r/index_01_r/index_02_r
+    m_Weight: 0
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r/hand_r/index_01_r/index_02_r/index_03_r
+    m_Weight: 0
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r/hand_r/middle_01_r
+    m_Weight: 0
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r/hand_r/middle_01_r/middle_02_r
+    m_Weight: 0
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r/hand_r/middle_01_r/middle_02_r/middle_03_r
+    m_Weight: 0
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r/hand_r/pinky_01_r
+    m_Weight: 0
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r/hand_r/pinky_01_r/pinky_02_r
+    m_Weight: 0
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r/hand_r/pinky_01_r/pinky_02_r/pinky_03_r
+    m_Weight: 0
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r/hand_r/ring_01_r
+    m_Weight: 0
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r/hand_r/ring_01_r/ring_02_r
+    m_Weight: 0
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r/hand_r/ring_01_r/ring_02_r/ring_03_r
+    m_Weight: 0
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r/hand_r/thumb_01_r
+    m_Weight: 0
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r/hand_r/thumb_01_r/thumb_02_r
+    m_Weight: 0
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r/hand_r/thumb_01_r/thumb_02_r/thumb_03_r
+    m_Weight: 0
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/lowerarm_r/lowerarm_twist_01_r
+    m_Weight: 0
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/clavicle_r/upperarm_r/upperarm_twist_01_r
+    m_Weight: 0
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/neck_01
+    m_Weight: 0
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/neck_01/head
+    m_Weight: 0
+  - m_Path: root/pelvis/spine_01/spine_02/spine_03/neck_01/head/bone_jaw
+    m_Weight: 0
+  - m_Path: root/pelvis/thigh_l
     m_Weight: 1
-  - m_Path: Character/Character Pelvis/Character L Thigh/Character L Calf
+  - m_Path: root/pelvis/thigh_l/calf_l
     m_Weight: 1
-  - m_Path: Character/Character Pelvis/Character L Thigh/Character L Calf/Character
-      L Foot
+  - m_Path: root/pelvis/thigh_l/calf_l/calf_twist_01_l
     m_Weight: 1
-  - m_Path: Character/Character Pelvis/Character L Thigh/Character L Calf/Character
-      L Foot/Character L Toe0
+  - m_Path: root/pelvis/thigh_l/calf_l/foot_l
     m_Weight: 1
-  - m_Path: Character/Character Pelvis/Character R Thigh
+  - m_Path: root/pelvis/thigh_l/calf_l/foot_l/ball_l
     m_Weight: 1
-  - m_Path: Character/Character Pelvis/Character R Thigh/Character R Calf
+  - m_Path: root/pelvis/thigh_l/thigh_twist_01_l
     m_Weight: 1
-  - m_Path: Character/Character Pelvis/Character R Thigh/Character R Calf/Character
-      R Foot
+  - m_Path: root/pelvis/thigh_r
     m_Weight: 1
-  - m_Path: Character/Character Pelvis/Character R Thigh/Character R Calf/Character
-      R Foot/Character R Toe0
+  - m_Path: root/pelvis/thigh_r/calf_r
     m_Weight: 1
-  - m_Path: Character/Character Pelvis/Character Spine
+  - m_Path: root/pelvis/thigh_r/calf_r/calf_twist_01_r
+    m_Weight: 1
+  - m_Path: root/pelvis/thigh_r/calf_r/foot_r
+    m_Weight: 1
+  - m_Path: root/pelvis/thigh_r/calf_r/foot_r/ball_r
+    m_Weight: 1
+  - m_Path: root/pelvis/thigh_r/thigh_twist_01_r
     m_Weight: 0
-  - m_Path: Character/Character Pelvis/Character Spine/Character Spine1
+  - m_Path: SK_DarkKnight2_Armor_Breast
     m_Weight: 0
-  - m_Path: Character/Character Pelvis/Character Spine/Character Spine1/Character
-      Spine2
+  - m_Path: SK_DarkKnight2_Armor_Cloth
     m_Weight: 0
-  - m_Path: Character/Character Pelvis/Character Spine/Character Spine1/Character
-      Spine2/Character L Clavicle
+  - m_Path: SK_DarkKnight2_Armor_Gloves
     m_Weight: 0
-  - m_Path: Character/Character Pelvis/Character Spine/Character Spine1/Character
-      Spine2/Character L Clavicle/Character L UpperArm
+  - m_Path: SK_DarkKnight2_Armor_Helm
     m_Weight: 0
-  - m_Path: Character/Character Pelvis/Character Spine/Character Spine1/Character
-      Spine2/Character L Clavicle/Character L UpperArm/Character L Forearm
+  - m_Path: SK_DarkKnight2_Armor_Knees
     m_Weight: 0
-  - m_Path: Character/Character Pelvis/Character Spine/Character Spine1/Character
-      Spine2/Character L Clavicle/Character L UpperArm/Character L Forearm/Character
-      L Hand
+  - m_Path: SK_DarkKnight2_Armor_Shoulders1
     m_Weight: 0
-  - m_Path: Character/Character Pelvis/Character Spine/Character Spine1/Character
-      Spine2/Character L Clavicle/Character L UpperArm/Character L Forearm/Character
-      L Hand/Character L Finger0
+  - m_Path: SK_DarkKnight2_Armor_Shoulders2
     m_Weight: 0
-  - m_Path: Character/Character Pelvis/Character Spine/Character Spine1/Character
-      Spine2/Character L Clavicle/Character L UpperArm/Character L Forearm/Character
-      L Hand/Character L Finger0/Character L Finger01
+  - m_Path: SK_DarkKnight2_Armor_Shoulders3
     m_Weight: 0
-  - m_Path: Character/Character Pelvis/Character Spine/Character Spine1/Character
-      Spine2/Character L Clavicle/Character L UpperArm/Character L Forearm/Character
-      L Hand/Character L Finger0/Character L Finger01/Character L Finger02
+  - m_Path: SK_DarkKnight2_Body
     m_Weight: 0
-  - m_Path: Character/Character Pelvis/Character Spine/Character Spine1/Character
-      Spine2/Character L Clavicle/Character L UpperArm/Character L Forearm/Character
-      L Hand/Character L Finger1
-    m_Weight: 0
-  - m_Path: Character/Character Pelvis/Character Spine/Character Spine1/Character
-      Spine2/Character L Clavicle/Character L UpperArm/Character L Forearm/Character
-      L Hand/Character L Finger1/Character L Finger11
-    m_Weight: 0
-  - m_Path: Character/Character Pelvis/Character Spine/Character Spine1/Character
-      Spine2/Character L Clavicle/Character L UpperArm/Character L Forearm/Character
-      L Hand/Character L Finger1/Character L Finger11/Character L Finger12
-    m_Weight: 0
-  - m_Path: Character/Character Pelvis/Character Spine/Character Spine1/Character
-      Spine2/Character L Clavicle/Character L UpperArm/Character L Forearm/Character
-      L Hand/Character L Finger2
-    m_Weight: 0
-  - m_Path: Character/Character Pelvis/Character Spine/Character Spine1/Character
-      Spine2/Character L Clavicle/Character L UpperArm/Character L Forearm/Character
-      L Hand/Character L Finger2/Character L Finger21
-    m_Weight: 0
-  - m_Path: Character/Character Pelvis/Character Spine/Character Spine1/Character
-      Spine2/Character L Clavicle/Character L UpperArm/Character L Forearm/Character
-      L Hand/Character L Finger2/Character L Finger21/Character L Finger22
-    m_Weight: 0
-  - m_Path: Character/Character Pelvis/Character Spine/Character Spine1/Character
-      Spine2/Character L Clavicle/Character L UpperArm/Character L Forearm/Character
-      L Hand/Character L Finger3
-    m_Weight: 0
-  - m_Path: Character/Character Pelvis/Character Spine/Character Spine1/Character
-      Spine2/Character L Clavicle/Character L UpperArm/Character L Forearm/Character
-      L Hand/Character L Finger3/Character L Finger31
-    m_Weight: 0
-  - m_Path: Character/Character Pelvis/Character Spine/Character Spine1/Character
-      Spine2/Character L Clavicle/Character L UpperArm/Character L Forearm/Character
-      L Hand/Character L Finger3/Character L Finger31/Character L Finger32
-    m_Weight: 0
-  - m_Path: Character/Character Pelvis/Character Spine/Character Spine1/Character
-      Spine2/Character L Clavicle/Character L UpperArm/Character L Forearm/Character
-      L Hand/Character L Finger4
-    m_Weight: 0
-  - m_Path: Character/Character Pelvis/Character Spine/Character Spine1/Character
-      Spine2/Character L Clavicle/Character L UpperArm/Character L Forearm/Character
-      L Hand/Character L Finger4/Character L Finger41
-    m_Weight: 0
-  - m_Path: Character/Character Pelvis/Character Spine/Character Spine1/Character
-      Spine2/Character L Clavicle/Character L UpperArm/Character L Forearm/Character
-      L Hand/Character L Finger4/Character L Finger41/Character L Finger42
-    m_Weight: 0
-  - m_Path: Character/Character Pelvis/Character Spine/Character Spine1/Character
-      Spine2/Character Neck
-    m_Weight: 0
-  - m_Path: Character/Character Pelvis/Character Spine/Character Spine1/Character
-      Spine2/Character Neck/Character Head
-    m_Weight: 0
-  - m_Path: Character/Character Pelvis/Character Spine/Character Spine1/Character
-      Spine2/Character R Clavicle
-    m_Weight: 0
-  - m_Path: Character/Character Pelvis/Character Spine/Character Spine1/Character
-      Spine2/Character R Clavicle/Character R UpperArm
-    m_Weight: 0
-  - m_Path: Character/Character Pelvis/Character Spine/Character Spine1/Character
-      Spine2/Character R Clavicle/Character R UpperArm/Character R Forearm
-    m_Weight: 0
-  - m_Path: Character/Character Pelvis/Character Spine/Character Spine1/Character
-      Spine2/Character R Clavicle/Character R UpperArm/Character R Forearm/Character
-      R Hand
-    m_Weight: 0
-  - m_Path: Character/Character Pelvis/Character Spine/Character Spine1/Character
-      Spine2/Character R Clavicle/Character R UpperArm/Character R Forearm/Character
-      R Hand/Character R Finger0
-    m_Weight: 0
-  - m_Path: Character/Character Pelvis/Character Spine/Character Spine1/Character
-      Spine2/Character R Clavicle/Character R UpperArm/Character R Forearm/Character
-      R Hand/Character R Finger0/Character R Finger01
-    m_Weight: 0
-  - m_Path: Character/Character Pelvis/Character Spine/Character Spine1/Character
-      Spine2/Character R Clavicle/Character R UpperArm/Character R Forearm/Character
-      R Hand/Character R Finger0/Character R Finger01/Character R Finger02
-    m_Weight: 0
-  - m_Path: Character/Character Pelvis/Character Spine/Character Spine1/Character
-      Spine2/Character R Clavicle/Character R UpperArm/Character R Forearm/Character
-      R Hand/Character R Finger1
-    m_Weight: 0
-  - m_Path: Character/Character Pelvis/Character Spine/Character Spine1/Character
-      Spine2/Character R Clavicle/Character R UpperArm/Character R Forearm/Character
-      R Hand/Character R Finger1/Character R Finger11
-    m_Weight: 0
-  - m_Path: Character/Character Pelvis/Character Spine/Character Spine1/Character
-      Spine2/Character R Clavicle/Character R UpperArm/Character R Forearm/Character
-      R Hand/Character R Finger1/Character R Finger11/Character R Finger12
-    m_Weight: 0
-  - m_Path: Character/Character Pelvis/Character Spine/Character Spine1/Character
-      Spine2/Character R Clavicle/Character R UpperArm/Character R Forearm/Character
-      R Hand/Character R Finger2
-    m_Weight: 0
-  - m_Path: Character/Character Pelvis/Character Spine/Character Spine1/Character
-      Spine2/Character R Clavicle/Character R UpperArm/Character R Forearm/Character
-      R Hand/Character R Finger2/Character R Finger21
-    m_Weight: 0
-  - m_Path: Character/Character Pelvis/Character Spine/Character Spine1/Character
-      Spine2/Character R Clavicle/Character R UpperArm/Character R Forearm/Character
-      R Hand/Character R Finger2/Character R Finger21/Character R Finger22
-    m_Weight: 0
-  - m_Path: Character/Character Pelvis/Character Spine/Character Spine1/Character
-      Spine2/Character R Clavicle/Character R UpperArm/Character R Forearm/Character
-      R Hand/Character R Finger3
-    m_Weight: 0
-  - m_Path: Character/Character Pelvis/Character Spine/Character Spine1/Character
-      Spine2/Character R Clavicle/Character R UpperArm/Character R Forearm/Character
-      R Hand/Character R Finger3/Character R Finger31
-    m_Weight: 0
-  - m_Path: Character/Character Pelvis/Character Spine/Character Spine1/Character
-      Spine2/Character R Clavicle/Character R UpperArm/Character R Forearm/Character
-      R Hand/Character R Finger3/Character R Finger31/Character R Finger32
-    m_Weight: 0
-  - m_Path: Character/Character Pelvis/Character Spine/Character Spine1/Character
-      Spine2/Character R Clavicle/Character R UpperArm/Character R Forearm/Character
-      R Hand/Character R Finger4
-    m_Weight: 0
-  - m_Path: Character/Character Pelvis/Character Spine/Character Spine1/Character
-      Spine2/Character R Clavicle/Character R UpperArm/Character R Forearm/Character
-      R Hand/Character R Finger4/Character R Finger41
-    m_Weight: 0
-  - m_Path: Character/Character Pelvis/Character Spine/Character Spine1/Character
-      Spine2/Character R Clavicle/Character R UpperArm/Character R Forearm/Character
-      R Hand/Character R Finger4/Character R Finger41/Character R Finger42
-    m_Weight: 0
-  - m_Path: Male_Animation_Skeleton
+  - m_Path: SM_DarkKnight2_Sword
     m_Weight: 0
