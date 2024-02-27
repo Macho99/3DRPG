@@ -51,8 +51,8 @@ public class TestCube : MonoBehaviour
     public IEnumerator ShowGainItem()
     {
         var window = GameManager.UI.ShowWindowUI<GainItemWindow>("UI/WIndowUI/GainItemNotice");
-        window.itemName.text = testItem.itemName;
-        window.itemImage.sprite = testItem.itemIcon;
+        window.itemName.text = testItem.Name;
+        window.itemImage.sprite = testItem.Icon;
         yield return null;
     }
 

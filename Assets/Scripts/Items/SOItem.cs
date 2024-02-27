@@ -1,47 +1,38 @@
+using JetBrains.Annotations;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Profiling.Memory.Experimental;
 using UnityEngine;
 
 [Serializable]
 public enum ItemID
 {
+    // 무기
     Katana,
-    NomalArmor,
-    Bow,
+
+    // 방어구
+    MetalArmor,
+
+    // 소모품
     Apple,
 }
+
+[Serializable]
 public enum ItemType
 {
-    Weapon,
     Consum,
+    Weapon,
     Armor,
+    ETC // 기타 아이템
 }
 
-public class Item
+public abstract class SOItem : ScriptableObject
 {
-    public ItemID itemID;
-    public ItemType itemType;
-    public Sprite itemIcon;
-    public string itemName;
-    public string itemExplain;
-    public string itemStatus;
-
-    public GameObject itemPrefab;
-
-    public Item DeepCopy()
-    {
-        Item copy = new Item();
-        copy.itemID = this.itemID;
-        copy.itemType = this.itemType;
-
-        return copy;
-    }
-}
-
-[CreateAssetMenu]
-public class SOItem : ScriptableObject
-{
-
+    public ItemID ID;
+    public ItemType Type;
+    public string Name;
+    [TextArea(15, 20)]
+    public string Description;
+    [TextArea(15, 20)]
+    public string Summary;
+    public int Price;
+    public Sprite Icon;
 }

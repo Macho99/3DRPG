@@ -19747,6 +19747,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: TestConsum
       objectReference: {fileID: 0}
+    - target: {fileID: 5349012997842200951, guid: abf2d9b9cc5493048bf7a3b73864fa2a, type: 3}
+      propertyPath: TestArmor
+      value: 
+      objectReference: {fileID: 11400000, guid: 5909fed3ea421ea44a7ab920a648e0eb, type: 2}
+    - target: {fileID: 5349012997842200951, guid: abf2d9b9cc5493048bf7a3b73864fa2a, type: 3}
+      propertyPath: TestConsum
+      value: 
+      objectReference: {fileID: 11400000, guid: 1943f1ac2457b914a9c65370359f884b, type: 2}
+    - target: {fileID: 5349012997842200951, guid: abf2d9b9cc5493048bf7a3b73864fa2a, type: 3}
+      propertyPath: TestWeapon
+      value: 
+      objectReference: {fileID: 11400000, guid: 6df2929f98ed5d449bf06204acc22cc5, type: 2}
     - target: {fileID: 8306809810455225761, guid: abf2d9b9cc5493048bf7a3b73864fa2a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 335

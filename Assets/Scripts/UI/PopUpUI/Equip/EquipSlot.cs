@@ -23,7 +23,7 @@ public class EquipSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         if (item == null) { return false; }
         this.item = item;
         iconImage.enabled = true;
-        iconImage.sprite = item.itemIcon;
+        iconImage.sprite = item.Icon;
         return true;
     }
 
@@ -45,7 +45,7 @@ public class EquipSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         }
         else if (item != null)
         {
-            Debug.Log($"Click {item.itemName}");
+            Debug.Log($"Click {item.Name}");
         }
     }
 }

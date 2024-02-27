@@ -13,11 +13,14 @@ public class ForTestAddConsum : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(1f);
-            GameManager.Inven.TryGainItem(TestConsum);
+            Debug.Log("Katana");
+            GameManager.Inven.dataBase.AbbItem(TestWeapon, 1);
             yield return new WaitForSeconds(1f);
-            GameManager.Inven.TryGainItem(TestWeapon);
+            Debug.Log("Armor");
+            GameManager.Inven.dataBase.AbbItem(TestConsum, 1);
             yield return new WaitForSeconds(1f);
-            GameManager.Inven.TryGainItem(TestArmor);
+            Debug.Log("Apple");
+            GameManager.Inven.dataBase.AbbItem(TestArmor, 1);
         }
         //yield return new WaitForSeconds(3f);
         //Debug.Log("consum");

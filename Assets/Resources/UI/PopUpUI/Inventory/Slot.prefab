@@ -54,7 +54,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   iconImage: {fileID: 8452408596123966828}
-  ItemUsePopUpPoint: {fileID: 0}
+  item: {fileID: 0}
+  amount: 0
+  amountText: {fileID: 4652503274051411388}
+  hasItem: 0
   highLight: {fileID: 6785187454727574001}
 --- !u!222 &3698028987585793008
 CanvasRenderer:

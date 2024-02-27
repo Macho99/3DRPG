@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEditor.PackageManager.UI;
 using UnityEditor.UIElements;
 using UnityEngine;
@@ -13,7 +14,11 @@ public class InventorySlot : MonoBehaviour,
     public Image iconImage;
 
     Transform iconParent;
-    internal SOItem item = null;
+    public SOItem item = null;
+    public int amount;
+    public TextMeshProUGUI amountText;
+
+    public bool hasItem = false;
 
     public Image highLight;
 
@@ -27,7 +32,7 @@ public class InventorySlot : MonoBehaviour,
         if (item == null) { return false; }
         this.item = item;
         iconImage.enabled = true;
-        iconImage.sprite = item.itemIcon;
+        iconImage.sprite = item.Icon;
         return true;
     }
 
@@ -51,7 +56,7 @@ public class InventorySlot : MonoBehaviour,
         }
         else if (item != null)
         {
-            Debug.Log($"Click {item.itemName}");
+            Debug.Log($"Click {item.Name}");
             GameManager.Inven.selectedSlot = this;
         }
     }

@@ -64,10 +64,10 @@ public class InventoryUI : PopUpUI
         }
         else if(GameManager.Inven.focusSlot != null && GameManager.Inven.focusSlot.item != null)
         {
-            itemName.text = GameManager.Inven.focusSlot.item.itemName;
-            itemExplain.text = GameManager.Inven.focusSlot.item.itemExplain;
-            itemStatus.text = GameManager.Inven.focusSlot.item.itemStatus;
-            itemIcon.sprite = GameManager.Inven.focusSlot.item.itemIcon;
+            itemName.text = GameManager.Inven.focusSlot.item.Name;
+            itemExplain.text = GameManager.Inven.focusSlot.item.Description;
+            itemStatus.text = GameManager.Inven.focusSlot.item.Summary;
+            itemIcon.sprite = GameManager.Inven.focusSlot.item.Icon;
         }
     }
 
