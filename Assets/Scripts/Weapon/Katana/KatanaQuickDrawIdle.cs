@@ -48,7 +48,8 @@ public class KatanaQuickDrawIdle : StateBase<Katana.State, Katana>
 	{
 		playerAttack.OnAttack1Down.RemoveListener(Attack1Down);
 		playerAttack.OnAttack1Up.RemoveListener(Attack1Up);
-		owner.PlayChargeFeedback(0);
+		if(chargeLevel != 0)
+			owner.PlayChargeFeedback(0);
 	}
 
 	public override void Setup()

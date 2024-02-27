@@ -12,7 +12,7 @@ public class Katana : Sword
 
 	[Serializable]
 	public enum State { Idle, Unarmed, QuickSheath, Equip, 
-		QuickDrawEntry, QuickDrawIdle, QuickDraw1, QuickDraw2, QuickDraw3, QuickDraw4, QuickDraw5, QuickDraw6,
+		QuickDrawEntry, QuickDrawIdle, QuickDraw1, QuickDraw2, QuickDraw3, QuickDraw4, QuickDraw5, QuickDraw6, QuickDraw7,
 		DashAttackVerA, DashAttackVerB,
 		DashComboVerA01, DashComboVerA02, DashComboVerA03, DashComboVerA04,
 		DashComboVerB01, DashComboVerB02, DashComboVerB03,
@@ -45,6 +45,7 @@ public class Katana : Sword
 		stateMachine.AddState(State.QuickDraw4, new KatanaQuickDraw4(this, stateMachine));
 		stateMachine.AddState(State.QuickDraw5, new KatanaQuickDraw5(this, stateMachine));
 		stateMachine.AddState(State.QuickDraw6, new KatanaQuickDraw6(this, stateMachine));
+		stateMachine.AddState(State.QuickDraw7, new KatanaQuickDraw7(this, stateMachine));
 		stateMachine.AddState(State.DashAttackVerA, new KatanaDashAttackVerA(this, stateMachine));
 		stateMachine.AddState(State.DashAttackVerB, new KatanaDashAttackVerB(this, stateMachine));
 		stateMachine.AddState(State.DashComboVerA01, new KatanaDashComboVerA01(this, stateMachine));

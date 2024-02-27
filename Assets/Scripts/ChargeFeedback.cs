@@ -36,6 +36,7 @@ public class ChargeFeedback : MonoBehaviour
 		playing = true;
 		CamFollower.gameObject.SetActive(true);
 		chargeShakeCam.transform.localPosition = Vector3.zero;
+		zValue = 0f;
 		chargeShakeCam.transform.localRotation = Quaternion.identity;
 		tick = Random.Range(-10f, 10f);
 		_ = StartCoroutine(CoPlay());
@@ -44,6 +45,7 @@ public class ChargeFeedback : MonoBehaviour
 	public void Stop()
 	{
 		GameManager.Resource.Destroy(particle);
+		particle = null;
 		playing = false;
 		CamFollower.gameObject.SetActive(false);
 	}
@@ -63,6 +65,8 @@ public class ChargeFeedback : MonoBehaviour
 				lerpZ);
 			yield return null;
 		}
+		yield return new WaitForSeconds(1f);
+		chargeShakeCam.localPosition = Vector3.zero;
 	}
 
 	public void SetChargeLevel(int level)

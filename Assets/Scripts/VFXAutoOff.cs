@@ -10,12 +10,12 @@ public class VFXAutoOff : MonoBehaviour
 	private float curTime = 0f;
 
 
-	private void Awake()
+	protected virtual void Awake()
 	{
 		initOffTime = offTime;
 	}
 
-	private void OnEnable()
+	protected void OnEnable()
 	{
 		_ = StartCoroutine(CoOff());
 	}
@@ -33,7 +33,7 @@ public class VFXAutoOff : MonoBehaviour
 		}
 	}
 
-	private void OnDisable()
+	protected virtual void OnDisable()
 	{
 		curTime = 0f;
 		offTime = initOffTime;
