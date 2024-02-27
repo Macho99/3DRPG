@@ -6,11 +6,7 @@ public class SetModeState : StateMachineBehaviour
 {
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (!animator.GetBool("Normal") && !animator.GetBool("TwoHanded"))
-        {
-            animator.SetBool("Normal", true);
-        }
-        else if (animator.GetBool("Normal") && !animator.GetBool("TwoHanded"))
+        if (animator.GetComponent<DeathKnight>().bossState == BossState.TWOHANDED)
         {
             animator.SetBool("Normal", false);
             animator.SetBool("TwoHanded", true);

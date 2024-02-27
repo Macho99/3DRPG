@@ -45,6 +45,7 @@ public class DeathKnight : MonoBehaviour
         currentHp = maxHp;
         agent.speed = moveSpeed;
         agent.stoppingDistance = skillAttackRange;
+        bossState = BossState.NORMAL;
     }
 
     public void TakeDamage(float damage)
@@ -88,7 +89,7 @@ public class DeathKnight : MonoBehaviour
 
     public void ChangeAvatar()
     {
+        bossState = BossState.TWOHANDED;
         anim.avatar = this.avatar;
-        print("1");
     }
 }
