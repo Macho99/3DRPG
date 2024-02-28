@@ -998,18 +998,9 @@ ModelImporter:
     removeConstantScaleCurves: 0
     motionNodeName: 
     rigImportErrors: 
-    rigImportWarnings: "Copied Avatar Rig Configuration mis-match. Bone length in
-      copied configuration does not match position in animation file:\n\t'thigh_l'
-      : position error = 19.810369 mm\n\t'calf_l' : position error = 5.013759 mm\n\t'foot_l'
-      : position error = 9.393208 mm\n\t'ball_l' : position error = 6.786989 mm\n\t'thigh_r'
-      : position error = 19.440481 mm\n\t'calf_r' : position error = 15.769271 mm\n\t'foot_r'
-      : position error = 13.160174 mm\n\t'ball_r' : position error = 8.922356 mm\n"
+    rigImportWarnings: 
     animationImportErrors: 
-    animationImportWarnings: "\nClip 'Take 001' has import animation warnings that
-      might lower retargeting quality:\nNote: Activate translation DOF on avatar
-      to improve retargeting quality.\n\t'calf_r' has translation animation that
-      will be discarded.\n\t'foot_r' has translation animation that will be discarded.\n\t'ball_r'
-      has translation animation that will be discarded.\n"
+    animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
@@ -1046,7 +1037,35 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0
+        functionName: OnAttackReady
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0.6
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.28231728
+        functionName: OnAttackStart
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0.7
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.7497802
+        functionName: OnAttackEnd
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0.5
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.31111112
+        functionName: UseNormalSkill_1
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask:
       - path: 
         weight: 1
