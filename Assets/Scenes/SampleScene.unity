@@ -79824,8 +79824,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   normalSKills:
   - {fileID: 1871041086231115576, guid: 2deb22a80675da14386faa797e6425c6, type: 3}
+  - {fileID: 1992029900475280859, guid: 3f143c63be59f1341a0960e47d101b36, type: 3}
+  - {fileID: 3946140628572098603, guid: 130426332735bf74a97566eea600f876, type: 3}
+  - {fileID: 8170752514618103492, guid: 3f68106e94df7a546a0345024228a871, type: 3}
   twoHandedSkills: []
-  shotPoint: {fileID: 2215676009449357686}
+  weaponPoint: {fileID: 2215676009449357686}
+  kickPoint: {fileID: 7308165306828733261}
 --- !u!1 &8382382070878624805
 GameObject:
   m_ObjectHideFlags: 0

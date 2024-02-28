@@ -65,7 +65,7 @@ public class NormalAttackCDState : StateMachineBehaviour
 
     void ChooseNextMotion(Animator animator)
     {
-        int rand = Random.Range(0, 7);
+        int rand = Random.Range(0, 8);
 
         switch (rand)
         {
@@ -78,22 +78,26 @@ public class NormalAttackCDState : StateMachineBehaviour
                 agent.stoppingDistance = knight.meleeAttackRange;
                 break;
             case 2:
-                animator.SetTrigger("MeleeCombo1");
+                animator.SetTrigger("MeleeAttack3");
                 agent.stoppingDistance = knight.meleeAttackRange;
                 break;
             case 3:
-                animator.SetTrigger("MeleeCombo2");
+                animator.SetTrigger("MeleeCombo1");
                 agent.stoppingDistance = knight.meleeAttackRange;
                 break;
             case 4:
+                animator.SetTrigger("MeleeCombo2");
+                agent.stoppingDistance = knight.meleeAttackRange;
+                break;
+            case 5:
                 animator.SetTrigger("Skill1");
                 agent.stoppingDistance = knight.skillAttackRange;
                 break;
-            case 5:
+            case 6:
                 animator.SetTrigger("Skill2");
                 agent.stoppingDistance = knight.skillAttackRange;
                 break;
-            case 6:
+            case 7:
                 animator.SetTrigger("Skill3");
                 agent.stoppingDistance = knight.skillAttackRange;
                 break;
