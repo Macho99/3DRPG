@@ -8,9 +8,11 @@ public class MotioningState : StateMachineBehaviour
     float rotationValue;
     Transform target;
     Transform myTf;
+    NavMeshAgent agent;
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        agent = animator.GetComponent<NavMeshAgent>();
         rotationValue = animator.GetComponent<DeathKnight>().rotationSpeed;
         target = animator.GetComponent<DeathKnight>().target;
         myTf = animator.GetComponent<Transform>();
@@ -24,6 +26,7 @@ public class MotioningState : StateMachineBehaviour
         }
 
         Turn(target, myTf);
+        agent.SetDestination(myTf.position);
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

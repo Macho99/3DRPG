@@ -14,7 +14,7 @@ public class BossSkills : MonoBehaviour
     {
         GameObject skill1Prefab = Instantiate(normalSKills[2], kickPoint.position, Quaternion.identity);
         skill1Prefab.transform.forward = transform.forward;
-        Destroy(skill1Prefab, .5f);
+        Destroy(skill1Prefab, 1f);
     }
 
     private void UseNormalSkill_1()
@@ -41,7 +41,7 @@ public class BossSkills : MonoBehaviour
         Vector3 spawnPosition = transform.position + 7f * transform.forward;
         GameObject skill1Prefab = Instantiate(normalSKills[3], spawnPosition, Quaternion.identity);
         skill1Prefab.transform.forward = transform.forward;
-        Destroy(skill1Prefab, 10f);
+        Destroy(skill1Prefab, 7f);
     }
 
     private void UseTwoHandedSkill_1()

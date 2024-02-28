@@ -29,6 +29,7 @@ public class DeathKnight : MonoBehaviour
 
     NavMeshAgent agent;
     Animator anim;
+    Rigidbody rb;
 
     public BossState bossState;
 
@@ -38,6 +39,7 @@ public class DeathKnight : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
+        rb = GetComponent<Rigidbody>();
     }
 
     private void Start()
@@ -85,6 +87,16 @@ public class DeathKnight : MonoBehaviour
     private void OnAttackEnd(float speedValue)
     {
         anim.SetFloat("AttackSpeed", speedValue);
+    }
+
+    private void OnMoveForward(float moveSpeed)
+    {
+        rb.velocity = moveSpeed * transform.forward;
+    }
+
+    private void OnMoveStop()
+    {
+        rb.velocity = Vector3.zero;
     }
 
     public void ChangeAvatar()
