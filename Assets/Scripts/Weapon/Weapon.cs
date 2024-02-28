@@ -5,9 +5,12 @@ using UnityEngine;
 public enum AttackProcess { BeforeAttack, Attacking, AfterAttack, End }
 public abstract class Weapon : MonoBehaviour
 {
+	[SerializeField] RuntimeAnimatorController controller;
+
 	protected LayerMask hitMask;
 	protected LayerMask monsterMask;
 	protected Player player;
+	protected PlayerMove playerMove;
 	protected PlayerAttack playerAttack;
 	protected PlayerAnimEvent playerAnimEvent;
 	protected new MeshRenderer renderer;
@@ -15,6 +18,7 @@ public abstract class Weapon : MonoBehaviour
 	public LayerMask HitMask { get { return hitMask; } }
 	public LayerMask MonsterMask { get { return monsterMask; } }
 	public Player Player { get { return player; } }
+	public PlayerMove PlayerMove { get { return playerMove; } }
 	public PlayerAttack PlayerAttack { get { return playerAttack; } }
 	public PlayerAnimEvent PlayerAnimEvent { get { return playerAnimEvent; } }
 
@@ -25,6 +29,7 @@ public abstract class Weapon : MonoBehaviour
 		renderer = GetComponentInChildren<MeshRenderer>();
 		player = FieldSFC.Player.GetComponent<Player>();
 		playerAttack = player.GetComponent<PlayerAttack>();
+		playerMove = player.GetComponent<PlayerMove>();
 	}
 
 	protected virtual void Start()
@@ -50,4 +55,8 @@ public abstract class Weapon : MonoBehaviour
 	}
 
 	public abstract void ChangeStateToIdle(bool forceIdle = false);
+
+	public RuntimeAnimatorController GetAnimController() {
+		return controller; 
+	}
 }

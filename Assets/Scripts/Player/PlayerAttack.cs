@@ -9,7 +9,6 @@ using UnityEngine.Rendering.LookDev;
 public class PlayerAttack : MonoBehaviour
 {
 	[SerializeField] Transform weaponHolder;
-	[SerializeField] GameObject swordDummy;
 	[SerializeField] float attackHoldTime = 0.3f;
 	[SerializeField] MMF_Player attackFailFeedback;
 
@@ -25,7 +24,6 @@ public class PlayerAttack : MonoBehaviour
 
 	public bool Attack1Pressed { get; private set; }
 	public bool Attack2Pressed { get; private set; }
-	public GameObject SwordDummy { get => swordDummy; }
 	public PlayerAnimEvent AnimEvent { get => animEvent; }
 
 	private Player player;
@@ -51,6 +49,7 @@ public class PlayerAttack : MonoBehaviour
 		if(weapons.Length > 0)
 		{
 			curWeapon = weapons[0];
+			anim.runtimeAnimatorController = curWeapon.GetAnimController();
 		}
 	}
 
@@ -100,7 +99,7 @@ public class PlayerAttack : MonoBehaviour
 
 	public void ChangeStateToIdle(bool forceIdle = false)
 	{
-		curWeapon.ChangeStateToIdle(forceIdle);
+		curWeapon?.ChangeStateToIdle(forceIdle);
 	}
 
 	public float GetAnimNormalizedTime(int layer)
@@ -134,6 +133,11 @@ public class PlayerAttack : MonoBehaviour
 		anim.SetFloat(str, value, dampTime, deltaTime);
 	}
 
+	public void SetAnimBool(string str, bool value)
+	{ 
+		anim.SetBool(str, value);
+	}
+
 	private void OnUnarm(InputValue value)
 	{
 		if(value.isPressed == true)
@@ -142,7 +146,7 @@ public class PlayerAttack : MonoBehaviour
 
 	public void SetUnarmed()
 	{
-		curWeapon.SetUnArmed();
+		curWeapon?.SetUnArmed();
 	}
 
 	public void PlayAttackFailFeedback()

@@ -9,7 +9,7 @@ public class ChargeFeedback : MonoBehaviour
 	[SerializeField] float[] zValueArr;			//zÃà °ª
 	[SerializeField] float xMultiplier = 1f;
 	[SerializeField] float yMultiplier = 0.5f;
-	[SerializeField] Transform CamFollower;
+	[SerializeField] TargetFollower CamFollower;
 
 	GameObject particle;
 	Transform chargeShakeCam;
@@ -24,7 +24,7 @@ public class ChargeFeedback : MonoBehaviour
 
 	private void Awake()
 	{
-		chargeShakeCam = CamFollower.GetChild(0);
+		chargeShakeCam = CamFollower.transform.GetChild(0);
 		SetChargeLevel(chargeLevel);
 	}
 
@@ -34,6 +34,7 @@ public class ChargeFeedback : MonoBehaviour
 		particle = GameManager.Resource.Instantiate<GameObject>("Prefab/ChargeParticle", 
 			playerTrans.position, playerTrans.rotation, true);
 		playing = true;
+		CamFollower.Update();
 		CamFollower.gameObject.SetActive(true);
 		chargeShakeCam.transform.localPosition = Vector3.zero;
 		zValue = 0f;

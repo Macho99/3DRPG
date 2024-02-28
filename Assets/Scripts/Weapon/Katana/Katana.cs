@@ -8,7 +8,9 @@ public class Katana : Sword
 {
 	[SerializeField] State curState;
 	[SerializeField] MMF_Player deathfaultFeedback;
+	[SerializeField] MMF_Player ultiFeedback;
 	[SerializeField] ChargeFeedback chargeFeedback;
+	[SerializeField] TargetFollower swordDummy;
 
 	[Serializable]
 	public enum State { Idle, Unarmed, QuickSheath, Equip, 
@@ -22,7 +24,6 @@ public class Katana : Sword
 		JumpCombo01, JumpCombo02, JumpCombo03, JumpCombo04, JumpCombo05, JumpCombo06, JumpCombo07,
 		DodgeAttack, 
 		AttackFail };
-	private GameObject swordDummy;
 	private StateMachine<State, Katana> stateMachine;
 
 	public bool Armed { get; set; }
@@ -79,7 +80,6 @@ public class Katana : Sword
 	protected override void Start()
 	{
 		base.Start();
-		swordDummy = playerAttack.SwordDummy;
 		stateMachine.SetUp(State.Idle);
 	}
 
@@ -101,11 +101,13 @@ public class Katana : Sword
 	{
 		if(value == true)
 		{
+			swordDummy.Update();
 			renderer.gameObject.SetActive(false);
 			swordDummy.gameObject.SetActive(true);
 		}
 		else
 		{
+			swordDummy.Update();
 			renderer.gameObject.SetActive(true);
 			swordDummy.gameObject.SetActive(false);
 		}
@@ -134,6 +136,11 @@ public class Katana : Sword
 				return;
 		}
 		chargeFeedback.SetChargeLevel(level);
+	}
+
+	public void PlayUltiFeedback()
+	{
+		ultiFeedback.PlayFeedbacks();
 	}
 
 	public override void ChangeStateToIdle(bool forceIdle = false)

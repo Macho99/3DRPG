@@ -59,6 +59,12 @@ public class KatanaQuickDraw6 : KatanaQuickDrawBase
 	{
 	}
 
+	public override void Enter()
+	{
+		base.Enter();
+		owner.PlayUltiFeedback();
+	}
+
 	protected override void VFXSetting(GameObject vfx)
 	{
 		base.VFXSetting(vfx);

@@ -3,11 +3,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 using UnityEngine.Events;
 
 public class Player : MonoBehaviour
 {
 	[SerializeField] State curState;
+	[SerializeField] Rig neckRig;
 
 	[Serializable]
 	public enum State { Idle, Walk, Run, Dodge, Jump, OnAir, Land,
@@ -153,4 +155,27 @@ public class Player : MonoBehaviour
 	{
 		OnDodgeAttackStart?.Invoke();
 	}
+
+	public void SetNeckRigWeight(float weight)
+	{
+		//if(neckRigCoroutine != null)
+		//	StopCoroutine(neckRigCoroutine);
+
+		//neckRigCoroutine = StartCoroutine(CoSetNeckRigWeight(weight, lerpSpeed));
+		neckRig.weight = weight;
+	}
+
+	//public IEnumerator CoSetNeckRigWeight(float weight, float lerpSpeed)
+	//{
+	//	while (true)
+	//	{
+	//		neckRig.weight = Mathf.Lerp(neckRig.weight, weight, Time.deltaTime * lerpSpeed);
+	//		if(Mathf.Abs(weight - neckRig.weight) < 0.1f)
+	//		{
+	//			neckRig.weight = weight;
+	//			break;
+	//		}
+	//		yield return null;
+	//	}
+	//}
 }

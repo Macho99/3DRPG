@@ -44,6 +44,7 @@ public class PlayerMove : MonoBehaviour
 	public bool DodgeInput { get; private set; }
 	public Vector2 MoveInput { get; private set; }
 	public bool SprintInput { get; private set; }
+	public bool SprintLock { get; set; }
 	public float GravityScale { get; set; } = 1f;
 	public float MoveMultiplier { private get; set; } = 1f;
 	public float VelY { get { return velY; } }
