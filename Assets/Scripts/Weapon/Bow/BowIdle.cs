@@ -64,7 +64,7 @@ public class BowIdle : StateBase<Bow.State, Bow>
 		{
 			case Player.State.Idle:
 			case Player.State.Walk:
-				stateMachine.ChangeState(Bow.State.Aim);
+				stateMachine.ChangeState(Bow.State.StartAim);
 				break;
 		}
 	}

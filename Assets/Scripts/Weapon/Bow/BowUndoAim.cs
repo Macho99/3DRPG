@@ -1,28 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class BowUndoAim : StateBase<Bow.State, Bow>
 {
+	Player player;
 	PlayerAttack playerAttack;
+
+	float rigWeight;
+
 	public BowUndoAim(Bow owner, StateMachine<Bow.State, Bow> stateMachine) : base(owner, stateMachine)
 	{
 	}
 
 	public override void Enter()
 	{
-		playerAttack.SetAnimFloat("Reverse", -1f);
+		rigWeight = player.GetBowAimRigWeight();
+		playerAttack.SetAnimFloat("Reverse", -2f);
 	}
 
 	public override void Exit()
 	{
+		player.SetBowAimRigWeight(0f);
 		playerAttack.SetAnimFloat("Reverse", 1f);
 	}
 
 	public override void Setup()
 	{
+		player = owner.Player;	
 		playerAttack = owner.PlayerAttack;
 	}
 
@@ -37,6 +41,7 @@ public class BowUndoAim : StateBase<Bow.State, Bow>
 
 	public override void Update()
 	{
-
+		rigWeight = Mathf.Lerp(rigWeight, 0f, Time.deltaTime * 4f);
+		player.SetBowAimRigWeight(rigWeight);
 	}
 }

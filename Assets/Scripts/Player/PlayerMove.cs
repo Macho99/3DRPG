@@ -49,7 +49,15 @@ public class PlayerMove : MonoBehaviour
 	public float MoveMultiplier { private get; set; } = 1f;
 	public float VelY { get { return velY; } }
 	public Vector3 MoveForward { get { return moveRoot.forward; } }
+	public bool AimLock { get; set; }
+	public Vector3 AimLockOffset { set {
+			reverseAimLockOffset = Quaternion.Euler(-value);
+			aimLockOffset = Quaternion.Euler(value);
+		} }
 
+
+	Quaternion reverseAimLockOffset = Quaternion.identity;
+	Quaternion aimLockOffset = Quaternion.identity;
 	Animator anim;
 	Transform animTrans;
 	CharacterController controller;
@@ -134,37 +142,42 @@ public class PlayerMove : MonoBehaviour
 		Vector3 targetMoveVec = new Vector3();
 		targetMoveVec += MoveInput.x * moveSpeed * moveRoot.right;
 		targetMoveVec += MoveInput.y * moveSpeed * moveRoot.forward;
-		Vector2 animSpeedVec = MoveInput;
-
-		//if (IsSprint)
-		//{
-		//	targetMoveVec *= 2f;
-		//	animSpeed *= 2f;
-		//}
 
 		targetMoveVec *= MoveMultiplier;
-
 		curMoveVec = Vector3.Lerp(curMoveVec, targetMoveVec, Time.deltaTime * moveLerpSpeed);
 
 		//에임 고정 아닐 때
-		if (true)
+		if (AimLock == false)
 		{
+			Vector2 animSpeedVec = MoveInput;
 			float animSpeed = animSpeedVec.sqrMagnitude * MoveMultiplier;
 			anim.SetFloat("Speed", animSpeed, 0.1f, Time.deltaTime);
+			anim.SetFloat("SpeedX", 0f, 0.1f, Time.deltaTime);
 			anim.SetFloat("SpeedY", animSpeed, 0.1f, Time.deltaTime);
 
 			if (MoveInput.sqrMagnitude * MoveMultiplier > 0.1f)
 			{
-				anim.transform.rotation = Quaternion.Lerp(
-					anim.transform.rotation,
+				transform.rotation = Quaternion.Lerp(
+					transform.rotation,
 					Quaternion.LookRotation(new Vector3(curMoveVec.x, 0f, curMoveVec.z)),
 					Time.deltaTime * rotationLerpSpeed);
 			}
 		}
-		//else
-		//{
+		else
+		{
+			Vector3 animVec3 = new Vector3(MoveInput.x, 0f, MoveInput.y);
+			animVec3 = reverseAimLockOffset * animVec3;
 
-		//}
+			Vector2 animVec = new Vector2(animVec3.x, animVec3.z);
+			anim.SetFloat("Speed", animVec.sqrMagnitude, 0.1f, Time.deltaTime);
+			anim.SetFloat("SpeedX", animVec.x, 0.1f, Time.deltaTime);
+			anim.SetFloat("SpeedY", animVec.y, 0.1f, Time.deltaTime);
+				
+			transform.rotation = Quaternion.Lerp(
+				transform.rotation,
+				Quaternion.LookRotation(moveRoot.forward) * aimLockOffset,
+				Time.deltaTime * rotationLerpSpeed);
+		}
 		curMoveVec.y = velY;
 
 		controller.Move(curMoveVec * Time.deltaTime);

@@ -10,6 +10,9 @@ public class Player : MonoBehaviour
 {
 	[SerializeField] State curState;
 	[SerializeField] Rig neckRig;
+	[SerializeField] Rig spineRig;
+	[SerializeField] Rig leftShoulderRig;
+	[SerializeField] Rig rightHandRig;
 
 	[Serializable]
 	public enum State { Idle, Walk, Run, Dodge, Jump, OnAir, Land,
@@ -178,4 +181,16 @@ public class Player : MonoBehaviour
 	//		yield return null;
 	//	}
 	//}
+
+	public float GetBowAimRigWeight()
+	{
+		return spineRig.weight;
+	}
+
+	public void SetBowAimRigWeight(float weight)
+	{
+		spineRig.weight = weight;
+		leftShoulderRig.weight = weight;
+		rightHandRig.weight = weight;
+	}
 }

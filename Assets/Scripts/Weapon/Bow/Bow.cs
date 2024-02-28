@@ -12,7 +12,7 @@ public class Bow : Weapon
 	[SerializeField] GameObject leftHandArrow;
 
 	[Serializable]
-	public enum State { Idle, Reload, Aim, UndoAim, Shot };
+	public enum State { Idle, Reload, StartAim, Aiming, UndoAim, Shot };
 
 	[SerializeField] State curState;
 
@@ -26,7 +26,8 @@ public class Bow : Weapon
 		stateMachine = new StateMachine<State, Bow>(this);
 		stateMachine.AddState(State.Idle, new BowIdle(this, stateMachine));
 		stateMachine.AddState(State.Reload, new BowReload(this, stateMachine));
-		stateMachine.AddState(State.Aim, new BowAim(this, stateMachine));
+		stateMachine.AddState(State.StartAim, new BowStartAim(this, stateMachine));
+		stateMachine.AddState(State.Aiming, new BowAiming(this, stateMachine));
 		stateMachine.AddState(State.UndoAim, new BowUndoAim(this, stateMachine));
 		stateMachine.AddState(State.Shot, new BowShot(this, stateMachine));
 	}
@@ -55,12 +56,14 @@ public class Bow : Weapon
 
 	private void OnEnable()
 	{
-		player.SetNeckRigWeight(0.5f);
+		player.SetNeckRigWeight(0.6f);
+		playerMove.AimLockOffset = new Vector3(0f, 45f, 0f);
 	}
 
 	private void OnDisable()
 	{
 		player.SetNeckRigWeight(0f);
+		playerMove.AimLockOffset = Vector3.zero;
 	}
 
 	public void SetOffArrow()
