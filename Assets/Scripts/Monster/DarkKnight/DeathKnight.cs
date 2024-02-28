@@ -91,7 +91,8 @@ public class DeathKnight : MonoBehaviour
 
     private void OnMoveForward(float moveSpeed)
     {
-        rb.velocity = moveSpeed * transform.forward;
+        Vector3 moveDir = new Vector3(transform.forward.x, 0, transform.forward.z);
+        rb.velocity = moveSpeed * moveDir;
     }
 
     private void OnMoveStop()
