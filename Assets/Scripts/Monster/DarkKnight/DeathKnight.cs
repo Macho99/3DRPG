@@ -23,7 +23,7 @@ public class DeathKnight : MonoBehaviour
     public float moveSpeed;
     public float rotationSpeed;
 
-    public int specialAttackRange;
+    private bool nearBy;
 
     public Transform target;
 
@@ -91,13 +91,29 @@ public class DeathKnight : MonoBehaviour
 
     private void OnMoveForward(float moveSpeed)
     {
-        Vector3 moveDir = new Vector3(transform.forward.x, 0, transform.forward.z);
-        rb.velocity = moveSpeed * moveDir;
+        if (Vector3.Distance(transform.position, target.position) > agent.stoppingDistance)
+        {
+            Vector3 moveDir = new Vector3(transform.forward.x, 0, transform.forward.z);
+            rb.velocity = moveSpeed * moveDir;
+        }
     }
 
     private void OnMoveStop()
     {
         rb.velocity = Vector3.zero;
+        if (!agent.enabled) { agent.enabled = true; }
+    }
+
+    private void OnOffAgent()
+    {
+        //agent.Stop();
+    }
+
+    private void OnMoveUp(float height)
+    {
+        agent.enabled = false;
+        //transform.position += Vector3.up * height;
+        rb.AddForce(Vector3.up * height, ForceMode.Impulse);
     }
 
     public void ChangeAvatar()
