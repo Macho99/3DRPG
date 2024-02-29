@@ -14757,6 +14757,7 @@ GameObject:
   - component: {fileID: 6104107113229620054}
   - component: {fileID: 6104107113229620049}
   - component: {fileID: 1475566632179465374}
+  - component: {fileID: 1057708287623414989}
   m_Layer: 0
   m_Name: Effect_28_Beam
   m_TagString: Untagged
@@ -18441,9 +18442,9 @@ ParticleSystem:
         m_NumAlphaKeys: 2
     range: {x: 0, y: 1}
   CollisionModule:
-    enabled: 0
+    enabled: 1
     serializedVersion: 4
-    type: 0
+    type: 1
     collisionMode: 0
     colliderForce: 0
     multiplyColliderForceByParticleSize: 0
@@ -18620,24 +18621,24 @@ ParticleSystem:
     radiusScale: 1
     collidesWith:
       serializedVersion: 2
-      m_Bits: 4294967295
+      m_Bits: 8
     maxCollisionShapes: 256
     quality: 0
     voxelSize: 0.5
-    collisionMessages: 0
+    collisionMessages: 1
     collidesWithDynamic: 1
     interiorCollisions: 0
   TriggerModule:
-    enabled: 0
+    enabled: 1
     serializedVersion: 2
-    inside: 1
+    inside: 2
     outside: 0
-    enter: 0
+    enter: 2
     exit: 0
     colliderQueryMode: 0
     radiusScale: 1
     primitives:
-    - {fileID: 0}
+    - {fileID: 6104107113229620055}
     - {fileID: 0}
     - {fileID: 0}
     - {fileID: 0}
@@ -19674,6 +19675,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3de6923c0c6c4164193436b82af45485, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1057708287623414989
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6104107113229620048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0b7ce95d2bc40144af858b6936915a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &6104107114445071217
