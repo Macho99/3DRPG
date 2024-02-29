@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 7d42bde18fb8efb429410ef630ba09ff
+guid: 6608a467bfbb4194b8d5133c416a0969
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable:
@@ -974,7 +974,7 @@ ModelImporter:
     second: Grru_Katana
   - first:
       74: 7400000
-    second: Attack_3Combo_1
+    second: Skill_F
   - first:
       95: 9500000
     second: //RootNode
@@ -1000,10 +1000,10 @@ ModelImporter:
     rigImportErrors: 
     rigImportWarnings: "Copied Avatar Rig Configuration mis-match. Bone length in
       copied configuration does not match position in animation file:\n\t'thigh_l'
-      : position error = 22.382748 mm\n\t'calf_l' : position error = 2.570160 mm\n\t'foot_l'
-      : position error = 11.989909 mm\n\t'ball_l' : position error = 10.411281 mm\n\t'thigh_r'
-      : position error = 22.425646 mm\n\t'calf_r' : position error = 22.777737 mm\n\t'foot_r'
-      : position error = 16.561296 mm\n\t'ball_r' : position error = 12.273024 mm\n"
+      : position error = 22.382702 mm\n\t'calf_l' : position error = 2.566325 mm\n\t'foot_l'
+      : position error = 11.984326 mm\n\t'ball_l' : position error = 10.411304 mm\n\t'thigh_r'
+      : position error = 22.425646 mm\n\t'calf_r' : position error = 23.060141 mm\n\t'foot_r'
+      : position error = 16.490778 mm\n\t'ball_r' : position error = 12.272961 mm\n"
     animationImportErrors: 
     animationImportWarnings: "\nClip 'Take 001' has import animation warnings that
       might lower retargeting quality:\nNote: Activate translation DOF on avatar
@@ -1023,11 +1023,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Attack_3Combo_1
+      name: Skill_F
       takeName: Take 001
       internalID: 0
       firstFrame: 0
-      lastFrame: 42
+      lastFrame: 55
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -1047,32 +1047,60 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0
+      - time: 0.048844613
+        functionName: agentCancel
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.07993615
+        functionName: OnMoveUp
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 10
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.15120028
         functionName: SetAttackSpeed
         data: 
         objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0.3
+        floatParameter: 0.2
         intParameter: 0
         messageOptions: 0
-      - time: 0.10502283
+      - time: 0.262254
         functionName: SetAttackSpeed
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 1
         intParameter: 0
         messageOptions: 0
-      - time: 0.27853882
-        functionName: SetAttackSpeed
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0.7
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.24657536
-        functionName: UseTwoHandedSkill_1
+      - time: 0.34083578
+        functionName: OnLanding
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.39432985
+        functionName: UseTwoHandedSkill_3
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.40108722
+        functionName: StopAttackTmp
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 5
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.5854376
+        functionName: SetAttackSpeed
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0.6
         intParameter: 0
         messageOptions: 0
       transformMask:
@@ -1581,6 +1609,14 @@ ModelImporter:
         value: {x: 0, y: 0, z: 0}
         length: 0
         modified: 0
+    - boneName: index_01_r
+      humanName: Right Index Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
     - boneName: index_02_r
       humanName: Right Index Intermediate
       limit:
@@ -1671,14 +1707,6 @@ ModelImporter:
         modified: 0
     - boneName: pelvis
       humanName: Hips
-      limit:
-        min: {x: 0, y: 0, z: 0}
-        max: {x: 0, y: 0, z: 0}
-        value: {x: 0, y: 0, z: 0}
-        length: 0
-        modified: 0
-    - boneName: index_01_r
-      humanName: Right Index Proximal
       limit:
         min: {x: 0, y: 0, z: 0}
         max: {x: 0, y: 0, z: 0}

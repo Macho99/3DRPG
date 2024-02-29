@@ -7,11 +7,9 @@ public class UpperAttackMotion : StateMachineBehaviour
 {
     Transform target;
     Transform myTf;
-    NavMeshAgent agent;
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        agent = animator.GetComponent<NavMeshAgent>();
         target = animator.GetComponent<DeathKnight>().target;
         myTf = animator.GetComponent<Transform>();
     }

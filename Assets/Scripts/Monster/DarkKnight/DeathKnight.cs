@@ -74,17 +74,7 @@ public class DeathKnight : MonoBehaviour
         Destroy(gameObject, 3f);
     }
 
-    private void OnAttackReady(float speedValue)
-    {
-        anim.SetFloat("AttackSpeed", speedValue);
-    }
-
-    private void OnAttackStart(float speedValue)
-    {
-        anim.SetFloat("AttackSpeed", speedValue);
-    }
-
-    private void OnAttackEnd(float speedValue)
+    private void SetAttackSpeed(float speedValue)
     {
         anim.SetFloat("AttackSpeed", speedValue);
     }
@@ -98,9 +88,41 @@ public class DeathKnight : MonoBehaviour
         }
     }
 
+    private void agentCancel()
+    {
+        agent.enabled = false;
+    }
+
+    private void OnMoveUp(float height)
+    {
+        rb.AddForce(transform.up * height, ForceMode.Impulse);
+    }
+
+    private void OnMoveDown(float height)
+    {
+        rb.AddForce(Vector3.down * height, ForceMode.Impulse);
+    }
+
+    private void OnLanding()
+    {
+        agent.enabled = true;
+    }
+
     private void OnMoveStop()
     {
         rb.velocity = Vector3.zero;
+    }
+
+    private void StopAttackTmp(float time)
+    {
+        anim.SetFloat("AttackSpeed", 0.1f);
+
+        Invoke("ReStartMotion", time);
+    }
+
+    private void ReStartMotion()
+    {
+        anim.SetFloat("AttackSpeed", 1f);
     }
 
     public void ChangeAvatar()

@@ -135,19 +135,19 @@ public class NormalAttackCDState : StateMachineBehaviour
                 break;
             case 3:
                 animator.SetTrigger("Skill1");
-                agent.stoppingDistance = knight.meleeAttackRange;
+                agent.stoppingDistance = knight.skillAttackRange;
                 break;
             case 4:
                 animator.SetTrigger("Skill2");
-                agent.stoppingDistance = knight.meleeAttackRange;
+                agent.stoppingDistance = knight.skillAttackRange;
                 break;
             case 5:
                 animator.SetTrigger("Skill3");
-                agent.stoppingDistance = knight.meleeAttackRange;
+                agent.stoppingDistance = knight.skillAttackRange;
                 break;
             case 6:
-                animator.SetTrigger("UpperAttack");
-                agent.stoppingDistance = knight.skillAttackRange;
+                animator.SetTrigger("Skill4");
+                agent.stoppingDistance = knight.meleeAttackRange;
                 break;
             default:
                 animator.SetTrigger("MeleeCombo1");
