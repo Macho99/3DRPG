@@ -115,7 +115,7 @@ public class DeathKnight : MonoBehaviour
 
     private void StopAttackTmp(float time)
     {
-        anim.SetFloat("AttackSpeed", 0.1f);
+        anim.SetFloat("AttackSpeed", 0.05f);
 
         Invoke("ReStartMotion", time);
     }
