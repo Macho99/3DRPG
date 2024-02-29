@@ -187,10 +187,10 @@ public class Player : MonoBehaviour
 		return spineRig.weight;
 	}
 
-	public void SetBowAimRigWeight(float weight)
+	public void SetBowAimRigWeight(float spine, float leftShoulder, float rightHand)
 	{
-		spineRig.weight = weight;
-		leftShoulderRig.weight = weight;
-		rightHandRig.weight = weight;
+		spineRig.weight = spine;
+		leftShoulderRig.weight = leftShoulder;
+		rightHandRig.weight = rightHand;
 	}
 }

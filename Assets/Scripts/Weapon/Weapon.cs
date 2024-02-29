@@ -13,6 +13,7 @@ public abstract class Weapon : MonoBehaviour
 	protected PlayerMove playerMove;
 	protected PlayerAttack playerAttack;
 	protected PlayerAnimEvent playerAnimEvent;
+	protected PlayerCamManager playerCamManager;
 	protected new MeshRenderer renderer;
 
 	public LayerMask HitMask { get { return hitMask; } }
@@ -21,6 +22,7 @@ public abstract class Weapon : MonoBehaviour
 	public PlayerMove PlayerMove { get { return playerMove; } }
 	public PlayerAttack PlayerAttack { get { return playerAttack; } }
 	public PlayerAnimEvent PlayerAnimEvent { get { return playerAnimEvent; } }
+	public PlayerCamManager PlayerCamManager { get { return playerCamManager; } }
 
 	protected virtual void Awake()
 	{
@@ -30,6 +32,7 @@ public abstract class Weapon : MonoBehaviour
 		player = FieldSFC.Player.GetComponent<Player>();
 		playerAttack = player.GetComponent<PlayerAttack>();
 		playerMove = player.GetComponent<PlayerMove>();
+		playerCamManager = player.GetComponent<PlayerCamManager>();
 	}
 
 	protected virtual void Start()

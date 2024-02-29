@@ -39,11 +39,14 @@ public class BowReload : StateBase<Bow.State, Bow>
 
 	public override void Transition()
 	{
-		if(playerAttack.IsAnimWait(1) == true)
+		if(arrowDraw == true)
 		{
-			owner.Reloaded = true;
-			playerAttack.SetAnimTrigger("UpperExit");
-			stateMachine.ChangeState(Bow.State.Idle);
+			if (playerAttack.IsAnimWait(1) == true)
+			{
+				owner.Reloaded = true;
+				playerAttack.SetAnimTrigger("UpperExit");
+				stateMachine.ChangeState(Bow.State.Idle);
+			}
 		}
 	}
 
@@ -56,12 +59,12 @@ public class BowReload : StateBase<Bow.State, Bow>
 	{
 		if(arrowDraw == false)
 		{
-			owner.RenderArrowToDraw();
+			owner.SetArrowHold(Bow.ArrowHoldMode.Draw);
 			arrowDraw = true;
 		}
 		else
 		{
-			owner.RenderArrowToHold();
+			owner.SetArrowHold(Bow.ArrowHoldMode.Hold);
 		}
 	}
 }

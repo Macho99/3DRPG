@@ -15,6 +15,7 @@ public class BowAiming : StateBase<Bow.State, Bow>
 	public override void Enter()
 	{
 		playerAttack.SetAnimFloat("Reverse", 0f);
+		playerAttack.OnAttack1Up.AddListener(Shot);
 		playerAttack.OnAttack2Down.AddListener(UndoAim);
 		playerMove.AimLock = true;
 		//playerAttack.on
@@ -23,8 +24,8 @@ public class BowAiming : StateBase<Bow.State, Bow>
 	public override void Exit()
 	{
 		playerAttack.SetAnimFloat("Reverse", 1f);
+		playerAttack.OnAttack1Up.RemoveListener(Shot);
 		playerAttack.OnAttack2Down.RemoveListener(UndoAim);
-		playerMove.AimLock = false;
 	}
 
 	public override void Setup()
@@ -45,5 +46,10 @@ public class BowAiming : StateBase<Bow.State, Bow>
 	private void UndoAim(Player.State state)
 	{
 		stateMachine.ChangeState(Bow.State.UndoAim);
+	}
+
+	private void Shot(Player.State state)
+	{
+		stateMachine.ChangeState(Bow.State.Shot);
 	}
 }

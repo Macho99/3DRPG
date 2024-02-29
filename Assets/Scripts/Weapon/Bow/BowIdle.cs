@@ -10,23 +10,23 @@ public class BowIdle : StateBase<Bow.State, Bow>
 	Player player;
 	PlayerMove playerMove;
 	PlayerAttack playerAttack;
+	PlayerCamManager playerCamManager;
+
+	bool aimLock = false;
+
 	public BowIdle(Bow owner, StateMachine<Bow.State, Bow> stateMachine) : base(owner, stateMachine)
 	{
 	}
 
 	public override void Enter()
 	{
-		if(owner.Reloaded == false)
-		{
-			stateMachine.ChangeState(Bow.State.Reload);
-			return;
-		}
-
+		player.WeaponIdle();
 		playerAttack.OnAttack1Down.AddListener(Aim);
 	}
 
 	public override void Exit()
 	{
+		playerAttack.OnAttack1Down.RemoveListener(Aim);
 	}
 
 	public override void Setup()
@@ -34,27 +34,55 @@ public class BowIdle : StateBase<Bow.State, Bow>
 		player = owner.Player;
 		playerMove = owner.PlayerMove;
 		playerAttack = owner.PlayerAttack;
+		playerCamManager = owner.PlayerCamManager;
 	}
 
 	public override void Transition()
 	{
+		if (playerAttack.IsAnimName(1, "Entry") == false) return;
 
+		if (owner.Reloaded == false)
+		{
+			stateMachine.ChangeState(Bow.State.Reload);
+			return;
+		}
+		else if (playerAttack.Attack1Pressed == true)
+		{
+			Aim(player.CurState);
+			return;
+		}
 	}
 
 	public override void Update()
 	{
-		playerAttack.SetAnimFloat("IdleAdapter", 0f, 0.1f, Time.deltaTime);
-
-		switch (player.CurState)
+		if(owner.Reloaded == true)
 		{
-			case Player.State.Idle:
-			case Player.State.Walk:
-			case Player.State.Run:
-				owner.RenderArrowToHold();
-				break;
-			default:
-				owner.RenderLeftHandArrow();
-				break;
+			switch (player.CurState)
+			{
+				case Player.State.Idle:
+				case Player.State.Walk:
+				case Player.State.Run:
+					owner.SetArrowHold(Bow.ArrowHoldMode.Hold);
+					break;
+				default:
+					owner.SetArrowHold(Bow.ArrowHoldMode.LeftHand);
+					break;
+			}
+		}
+
+		if(aimLock == true)
+		{
+			switch (player.CurState)
+			{
+				case Player.State.Idle:
+				case Player.State.Walk:
+					break;
+				default:
+					playerMove.AimLock = false;
+					playerCamManager.SetAimCam(false);
+					aimLock = false;
+					break;
+			}
 		}
 	}
 
@@ -64,6 +92,7 @@ public class BowIdle : StateBase<Bow.State, Bow>
 		{
 			case Player.State.Idle:
 			case Player.State.Walk:
+				aimLock = true;
 				stateMachine.ChangeState(Bow.State.StartAim);
 				break;
 		}
