@@ -117,7 +117,7 @@ public class NormalAttackCDState : StateMachineBehaviour
 
     void TwoHandedChooseNextMotion(Animator animator)
     {
-        int rand = Random.Range(0, 7);
+        int rand = Random.Range(0, 8);
 
         switch (rand)
         {
@@ -147,6 +147,10 @@ public class NormalAttackCDState : StateMachineBehaviour
                 break;
             case 6:
                 animator.SetTrigger("Skill4");
+                agent.stoppingDistance = knight.skillAttackRange;
+                break;
+            case 7:
+                animator.SetTrigger("Skill5");
                 agent.stoppingDistance = knight.meleeAttackRange;
                 break;
             default:
