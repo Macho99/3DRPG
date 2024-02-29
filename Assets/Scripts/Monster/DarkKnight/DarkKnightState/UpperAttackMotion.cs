@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class ApplyRootMotion : StateMachineBehaviour
+public class UpperAttackMotion : StateMachineBehaviour
 {
     Transform target;
     Transform myTf;

@@ -1054,7 +1054,7 @@ ModelImporter:
         floatParameter: 10
         intParameter: 0
         messageOptions: 0
-      - time: 0.43963552
+      - time: 1
         functionName: OnMoveStop
         data: 
         objectReferenceParameter: {instanceID: 0}

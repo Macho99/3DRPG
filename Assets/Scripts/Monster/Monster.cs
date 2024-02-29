@@ -15,11 +15,9 @@ public enum State
 
 public class Monster : MonoBehaviour
 {
-    [SerializeField] private float maxHp;
-    [SerializeField] private float currentHp;
-    [SerializeField] private float damage;
-    [SerializeField] private float maxStamina;
-    public float currentStamina;
+    [SerializeField] protected float maxHp;
+    [SerializeField] protected float currentHp;
+    [SerializeField] protected float damage;
     public float attackRange;
     public float attackDelay;
     public float moveSpeed;
@@ -27,26 +25,25 @@ public class Monster : MonoBehaviour
 
     public int specialAttackRange;
 
-    [SerializeField] private float viewRadius; // 탐지 범위
+    [SerializeField] protected float viewRadius; // 탐지 범위
     public float viewAngle; // 탐지 각도
-    public float originViewAngle;
+    [HideInInspector] public float originViewAngle;
 
-    public Vector3 spawnPosition; // 처음 스폰된 위치
+    [HideInInspector] public Vector3 spawnPosition; // 처음 스폰된 위치
     public float distanceFromOriginPos; // 처음 있던 위치로부터의 거리
-    public Vector3 spawnDir; // 처음 바라본 방향
+    [HideInInspector] public Vector3 spawnDir; // 처음 바라본 방향
     public Transform target;
 
-    public bool isReturning; // 돌아가는 상태 체크
+    [HideInInspector] public bool isReturning; // 돌아가는 상태 체크
 
-    [SerializeField] private LayerMask targetMask; // 타겟레이어
-    [SerializeField] private LayerMask obstacleMask; // 장애물레이어
+    [SerializeField] protected LayerMask targetMask; // 타겟레이어
+    [SerializeField] protected LayerMask obstacleMask; // 장애물레이어
 
-    NavMeshAgent agent;
-    Animator anim;
+    protected NavMeshAgent agent;
+    protected Animator anim;
 
-    public State state;
+    [HideInInspector] public State state;
 
-    [SerializeField] private float staminaRate; // 스태미너 재생성 수치
 
     private void Awake()
     {
@@ -54,10 +51,9 @@ public class Monster : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
     }
 
-    private void Start()
+    protected virtual void Start()
     {
         currentHp = maxHp;
-        currentStamina = maxStamina;
         originViewAngle = viewAngle;
         spawnPosition = transform.position;
         spawnDir = transform.forward;
@@ -67,15 +63,7 @@ public class Monster : MonoBehaviour
         StartCoroutine(FindTargetWithDelay(.2f));
     }
 
-    private void Update()
-    {
-        if (state == State.IDLE)
-        {
-            currentStamina = Mathf.Clamp(currentStamina + staminaRate * Time.deltaTime, 0, maxStamina);
-        }
-    }
-
-    IEnumerator FindTargetWithDelay(float delay)
+    protected IEnumerator FindTargetWithDelay(float delay)
     {
         while (true)
         {
@@ -84,7 +72,7 @@ public class Monster : MonoBehaviour
         }
     }
 
-    private void FindVisibleTargets()
+    protected void FindVisibleTargets()
     {
         if (isReturning) { return; }
 
@@ -114,7 +102,7 @@ public class Monster : MonoBehaviour
         }
     }
 
-    public void TakeDamage(float damage)
+    public virtual void TakeDamage(float damage)
     {
         if (state == State.DEAD) { return; }
 
@@ -132,7 +120,7 @@ public class Monster : MonoBehaviour
         }
     }
 
-    private void Die()
+    protected void Die()
     {
         anim.SetTrigger("Dead");
         StopAllCoroutines();

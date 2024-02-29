@@ -101,19 +101,6 @@ public class DeathKnight : MonoBehaviour
     private void OnMoveStop()
     {
         rb.velocity = Vector3.zero;
-        if (!agent.enabled) { agent.enabled = true; }
-    }
-
-    private void OnOffAgent()
-    {
-        //agent.Stop();
-    }
-
-    private void OnMoveUp(float height)
-    {
-        agent.enabled = false;
-        //transform.position += Vector3.up * height;
-        rb.AddForce(Vector3.up * height, ForceMode.Impulse);
     }
 
     public void ChangeAvatar()
