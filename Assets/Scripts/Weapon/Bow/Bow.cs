@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.LowLevel;
 using Random = UnityEngine.Random;
 
 public class Bow : Weapon
@@ -9,31 +10,40 @@ public class Bow : Weapon
 	[SerializeField] GameObject arrowToDraw;
 	[SerializeField] GameObject arrowToShoot;
 	[SerializeField] GameObject leftHandArrow;
-	[SerializeField] ParticleSystem iceParticle;
+	[SerializeField] ParticleSystem normalParticle;
+	[SerializeField] ParticleSystem windParticle;
+	[SerializeField] ParticleSystem fireParticle;
 	[SerializeField] float arrowSpeed = 60f;
 	public float arrowRigTime = 0.5f;
 	public float arrowRigLerpSpeed = 6f;
 
 	[Serializable]
-	public enum State { Idle, Reload, StartAim, Aiming, UndoAim, Shot };
+	public enum State { Idle, Reload, StartAim, Aiming, UndoAim, Shot, FastAim, FastShot };
+	[Serializable]
+	public enum ArrowState { None, Normal, Wind, Fire }
 	public enum ArrowHoldMode { None, Draw, Hold, LeftHand };
 
+	[SerializeField] ArrowState curArrowState;
 	[SerializeField] State curState;
 
-	ParticleSystem curParticle;
+	ParticleSystem curAimParticle;
 	StateMachine<State, Bow> stateMachine;
 	ArrowHoldMode curArrowHold;
 	LayerMask enemyMask;
 	Collider[] cols = new Collider[10];
 
+	Action<RaycastHit, Vector3, Vector3, int, Arrow> hitAction;
+	Action<Arrow> updateAction;
+
+	public int FastShotNum { get; set; } = 0;
 	public bool Reloaded { get; set; }
 	public float ArrowSpeed { get { return arrowSpeed; } }
 
 	protected override void Awake()
 	{
 		base.Awake();
+		ArrowSelect(ArrowState.Normal);
 		curArrowHold = ArrowHoldMode.None;
-		curParticle = iceParticle;
 
 		enemyMask = LayerMask.GetMask("Monster");
 
@@ -44,6 +54,8 @@ public class Bow : Weapon
 		stateMachine.AddState(State.Aiming, new BowAiming(this, stateMachine));
 		stateMachine.AddState(State.UndoAim, new BowUndoAim(this, stateMachine));
 		stateMachine.AddState(State.Shot, new BowShot(this, stateMachine));
+		stateMachine.AddState(State.FastAim, new BowFastAim(this, stateMachine));
+		stateMachine.AddState(State.FastShot, new BowFastShot(this, stateMachine));
 	}
 
 	protected override void Start()
@@ -60,11 +72,6 @@ public class Bow : Weapon
 	}
 
 	public override void ChangeStateToIdle(bool forceIdle = false)
-	{
-
-	}
-
-	public override void SetUnArmed()
 	{
 
 	}
@@ -127,6 +134,16 @@ public class Bow : Weapon
 		return arrowToShoot.transform.position;
 	}
 
+	public void Shot()
+	{
+		Vector3 arrowPos = GetArrowShootPos();
+		Vector3 aimPos = playerLook.AimPoint.position;
+		Vector3 velocity = (aimPos - arrowPos).normalized * ArrowSpeed;
+		Arrow arrow = GameManager.Resource.Instantiate<Arrow>("Prefab/Arrow", arrowPos, Quaternion.identity, true);
+
+		arrow.Init(velocity, curArrowState, updateAction, hitAction);
+	}
+
 	public void BounceHit(RaycastHit hitInfo, Vector3 pos, Vector3 velocity, int hitCnt, Arrow arrow)
 	{
 		Vector3 hitPoint = hitInfo.point;
@@ -145,26 +162,34 @@ public class Bow : Weapon
 			{
 				Arrow newArrow = GameManager.Resource.Instantiate<Arrow>("Prefab/Arrow", pos, Quaternion.identity, true);
 				velocity += Random.insideUnitSphere * 3f;
-				newArrow.Init(velocity, hitCnt, BounceHit);
+				newArrow.Init(velocity * 0.7f, ArrowState.Normal, null, BounceHit, hitCnt);
 			}
-			arrow.Init(velocity, hitCnt, BounceHit);
+			arrow.Init(velocity * 0.7f, ArrowState.Normal, null, BounceHit, hitCnt);
 		}
 		else
 		{
 			if (hitCnt > 5)
 			{
-				arrow.Init(velocity, hitCnt);
+				arrow.Init(velocity, ArrowState.Normal);
 			}
 			else
 			{
-				arrow.Init(velocity, hitCnt, BounceHit);
+				arrow.Init(velocity, ArrowState.Normal, null, BounceHit, hitCnt);
 			}
 		}
 	}
 
+	public void Explosion(RaycastHit hitInfo, Vector3 pos, Vector3 velocity, int hitCnt, Arrow arrow)
+	{
+		GameObject obj = GameManager.Resource.Instantiate<GameObject>("Prefab/FireArrowExplosion", 
+			hitInfo.point, Quaternion.identity, true);
+		obj.transform.localScale = Vector3.one * 2f;
+		arrow.BasicHit(hitInfo, pos, velocity, hitCnt, arrow);
+	}
+
 	public void TraceMonster(Arrow arrow)
 	{
-		int monsterNum = Physics.OverlapSphereNonAlloc(arrow.transform.position, 10f, cols, enemyMask);
+		int monsterNum = Physics.OverlapSphereNonAlloc(arrow.transform.position, 5f, cols, enemyMask);
 		float minSqrDist = 99999f;
 		Collider minCol = null;
 		for(int i = 0; i < monsterNum; i++)
@@ -178,25 +203,55 @@ public class Bow : Weapon
 			}
 		}
 		if (minCol == null) return;
-		Vector3 monsterPos = minCol.transform.position;
-		Vector3 monsterDir = monsterPos - arrow.transform.position;
+
+		Vector3 monsterDir = (minCol.transform.position - arrow.transform.position).normalized;
 		Vector3 vel = arrow.Velocity;
-
-		Vector3 targetDir = vel + monsterDir * 0.1f;
-
-		Quaternion rotation = Quaternion.FromToRotation(vel, targetDir);
-		arrow.Velocity = rotation * vel;
+		arrow.Velocity = Vector3.Lerp(vel, monsterDir * vel.magnitude, Time.deltaTime * 20f);
 	}
 
 	public void PlayAimVFX(bool value)
 	{
 		if(value == true)
 		{
-			curParticle?.Play();
+			curAimParticle?.Play();
 		}
 		else
 		{
-			curParticle?.Stop();
+			curAimParticle?.Stop();
+		}
+	}
+
+	public override void SetUnArmed()
+	{
+		ArrowSelect arrowSelect = GameManager.UI.ShowPopUpUI<ArrowSelect>("UI/PopUpUI/ArrowSelect");
+		arrowSelect.Init(ArrowSelect);
+	}
+
+	private void ArrowSelect(ArrowState arrowState)
+	{
+		if (arrowState == ArrowState.None) return;
+
+		curArrowState = arrowState;
+		updateAction = null;
+		hitAction = null;
+
+		switch(arrowState)
+		{
+			case ArrowState.Normal:
+				curAimParticle = null;
+				hitAction = BounceHit;
+				break;
+			case ArrowState.Fire:
+				curAimParticle = fireParticle;
+				hitAction = Explosion;
+				break;
+			case ArrowState.Wind:
+				curAimParticle = windParticle;
+				updateAction = TraceMonster;
+				break;
+			default:
+				print($"올바르지 않은 ArrowState : {arrowState}");
+				break;
 		}
 	}
 }

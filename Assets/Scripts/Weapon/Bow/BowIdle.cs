@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,11 +21,13 @@ public class BowIdle : StateBase<Bow.State, Bow>
 	{
 		player.WeaponIdle();
 		playerAttack.OnAttack1Down.AddListener(Aim);
+		playerAttack.OnQButtonDown.AddListener(FastAim);
 	}
 
 	public override void Exit()
 	{
 		playerAttack.OnAttack1Down.RemoveListener(Aim);
+		playerAttack.OnQButtonDown.RemoveListener(FastAim);
 	}
 
 	public override void Setup()
@@ -94,6 +95,18 @@ public class BowIdle : StateBase<Bow.State, Bow>
 			case Player.State.Walk:
 				aimLock = true;
 				stateMachine.ChangeState(Bow.State.StartAim);
+				break;
+		}
+	}
+
+	private void FastAim(Player.State state)
+	{
+		switch (state)
+		{
+			case Player.State.Idle:
+			case Player.State.Walk:
+				aimLock = true;
+				stateMachine.ChangeState(Bow.State.FastAim);
 				break;
 		}
 	}

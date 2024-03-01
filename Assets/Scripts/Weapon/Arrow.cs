@@ -6,8 +6,10 @@ using UnityEngine;
 
 public class Arrow : MonoBehaviour
 {
-	[SerializeField] ParticleSystem trailParticle;
-	[SerializeField] ParticleSystem hitParticlePrefab;
+	[SerializeField] ParticleSystem normalTrail;
+	[SerializeField] ParticleSystem windTrail;
+	[SerializeField] ParticleSystem fireTrail;
+	private ParticleSystem curTrail;
 	private LayerMask hitMask;
 	private float despawnTime;
 	private int hitCnt;
@@ -22,9 +24,18 @@ public class Arrow : MonoBehaviour
 		hitMask = LayerMask.GetMask("Environment", "Monster", "Tree");
 	}
 
-	public void Init(Vector3 velocity, int hitCnt = 0, 
-		Action<RaycastHit, Vector3, Vector3, int, Arrow> hitAction = null, 
-		Action<Arrow> updateAction = null)
+	private void OnDisable()
+	{
+		normalTrail.gameObject.SetActive(false);
+		windTrail.gameObject.SetActive(false);
+		fireTrail.gameObject.SetActive(false);
+	}
+
+	public void Init(Vector3 velocity, Bow.ArrowState arrowState, 
+		Action<Arrow> updateAction = null,
+		Action<RaycastHit, Vector3, Vector3, int, Arrow> hitAction = null,
+		int hitCnt = 0
+		)
 	{
 		this.hitCnt = hitCnt;
 		transform.forward = velocity;
@@ -40,8 +51,25 @@ public class Arrow : MonoBehaviour
 
 		despawnTime = Time.time + 10f;
 
+		switch (arrowState) {
+			case Bow.ArrowState.None:
+				curTrail = null;
+				break;
+			case Bow.ArrowState.Normal:
+				curTrail = normalTrail;
+				break;
+			case Bow.ArrowState.Wind:
+				curTrail = windTrail;
+				break;
+			case Bow.ArrowState.Fire:
+				curTrail = fireTrail;
+				break;
+		}
+
+
+		curTrail.gameObject.SetActive(true);
 		if (hitCnt == 0 || hitCnt == 1)
-			trailParticle.Play();
+			curTrail.Play();
 
 		_ = StartCoroutine(CoMove(velocity));
 	}
@@ -54,7 +82,10 @@ public class Arrow : MonoBehaviour
 		while (true)
 		{
 			if (Time.time > despawnTime)
+			{
+				_ = StartCoroutine(CoOff());
 				break;
+			}
 
 			Velocity += gravity * Time.deltaTime;
 			if (Physics.Raycast(transform.position, Velocity, out RaycastHit hitInfo,
@@ -71,7 +102,7 @@ public class Arrow : MonoBehaviour
 		}
 	}
 
-	private void BasicHit(RaycastHit hitInfo, Vector3 pos, Vector3 velocity, int hitCnt, Arrow arrow)
+	public void BasicHit(RaycastHit hitInfo, Vector3 pos, Vector3 velocity, int hitCnt, Arrow arrow)
 	{
 		transform.position = hitInfo.point;
 		_ = StartCoroutine(CoOff());
@@ -82,7 +113,8 @@ public class Arrow : MonoBehaviour
 		while (Time.time < despawnTime)
 			yield return null;
 
-		trailParticle.Stop();
+		curTrail.Stop();
+		curTrail.gameObject.SetActive(false);
 		GameManager.Resource.Destroy(gameObject);
 	}
 }

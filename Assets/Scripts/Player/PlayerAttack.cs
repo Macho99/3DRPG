@@ -18,6 +18,8 @@ public class PlayerAttack : MonoBehaviour
 	[HideInInspector] public UnityEvent<Player.State> OnAttack2Down;
 	[HideInInspector] public UnityEvent<Player.State> OnAttack2Up;
 	[HideInInspector] public UnityEvent<Player.State> OnAttack2Hold;
+	[HideInInspector] public UnityEvent<Player.State> OnQButtonDown;
+	[HideInInspector] public UnityEvent<Player.State> OnQButtonUp;
 
 	private Coroutine Attack1HoldCoroutine;
 	private Coroutine Attack2HoldCoroutine;
@@ -45,6 +47,8 @@ public class PlayerAttack : MonoBehaviour
 		OnAttack2Down = new UnityEvent<Player.State>();
 		OnAttack2Up = new UnityEvent<Player.State>();
 		OnAttack2Hold = new UnityEvent<Player.State>();
+		OnQButtonDown = new UnityEvent<Player.State>();
+		OnQButtonUp = new UnityEvent<Player.State>();
 
 		if(weapons.Length > 0)
 		{
@@ -95,6 +99,20 @@ public class PlayerAttack : MonoBehaviour
 			yield return null;
 		}
 		holdevent?.Invoke(player.CurState);
+	}
+
+	private void OnQButton(InputValue value)
+	{
+		bool pressed = value.Get<float>() > 0.9f ? true : false;
+
+		if (pressed)
+		{
+			OnQButtonDown?.Invoke(player.CurState);
+		}
+		else
+		{
+			OnQButtonUp?.Invoke(player.CurState);
+		}
 	}
 
 	public void ChangeStateToIdle(bool forceIdle = false)

@@ -21,7 +21,7 @@ public class BowShot : StateBase<Bow.State, Bow>
 		owner.SetArrowHold(Bow.ArrowHoldMode.None);
 		owner.SetBowWeight(0f);
 
-		Shot();
+		owner.Shot();
 	}
 
 	public override void Exit()
@@ -55,15 +55,5 @@ public class BowShot : StateBase<Bow.State, Bow>
 	private void ChangeToReload()
 	{
 		stateMachine.ChangeState(Bow.State.Reload);
-	}
-
-	private void Shot()
-	{
-		Vector3 arrowPos = owner.GetArrowShootPos();
-		Vector3 aimPos = playerLook.AimPoint.position;
-		Vector3 velocity = (aimPos - arrowPos).normalized * owner.ArrowSpeed;
-		Arrow arrow = GameManager.Resource.Instantiate<Arrow>("Prefab/Arrow", arrowPos, Quaternion.identity, true);
-		//arrow.Init(velocity, 0, owner.BounceHit);
-		arrow.Init(velocity, 0, null, owner.TraceMonster);
 	}
 }

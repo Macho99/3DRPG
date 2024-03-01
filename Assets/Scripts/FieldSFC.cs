@@ -6,13 +6,13 @@ using UnityEngine.InputSystem;
 public class FieldSFC : MonoBehaviour
 {
 	private static FieldSFC instance;
-	private static GameObject player;
-	public static GameObject Player
+	private static Player player;
+	public static Player Player
 	{
 		get
 		{
 			if (player == null)
-				player = GameObject.FindGameObjectWithTag("Player");
+				player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
 			return player;
 		}
 	}

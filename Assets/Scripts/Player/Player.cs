@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
@@ -28,6 +29,7 @@ public class Player : MonoBehaviour
 	private PlayerAttack playerAttack;
 	private PlayerAnimEvent playerAnimEvent;
 	private StateMachine<State, Player> stateMachine;
+	private PlayerInput playerInput;
 	private bool camFollowFixed;
 
 	[HideInInspector] public UnityEvent OnWeaponIdle;
@@ -48,6 +50,7 @@ public class Player : MonoBehaviour
 		playerMove = GetComponent<PlayerMove>();
 		playerAttack = GetComponent<PlayerAttack>();
 		playerAnimEvent = GetComponent<PlayerAnimEvent>();
+		playerInput = GetComponent<PlayerInput>();
 
 		camRootFollower = playerLook.CamRoot.GetComponent<MMFollowTarget>();
 		OnWeaponIdle = new UnityEvent();
@@ -192,5 +195,11 @@ public class Player : MonoBehaviour
 		spineRig.weight = spine;
 		leftShoulderRig.weight = leftShoulder;
 		rightHandRig.weight = rightHand;
+	}
+
+	public void IgnoreInput(bool value)
+	{
+		playerInput.enabled = !value;
+		playerLook.enabled = !value;
 	}
 }
