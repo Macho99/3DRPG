@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,7 @@ public class BowFastAim : StateBase<Bow.State, Bow>
 	PlayerCamManager playerCamManager;
 
 	bool shotReady;
+	bool waitAnim;
 
 	public BowFastAim(Bow owner, StateMachine<Bow.State, Bow> stateMachine) : base(owner, stateMachine)
 	{
@@ -21,25 +23,37 @@ public class BowFastAim : StateBase<Bow.State, Bow>
 
 	public override void Enter()
 	{
+		waitAnim = false;
 		shotReady = false;
+		owner.WindControllerPrepareAttack();
 		playerAttack.OnAttack1Down.AddListener(FastShot);
 		playerAnimEvent.OnEquipChange.AddListener(ShotReady);
 
 		if (owner.FastShotNum == 0)
 		{
+			owner.PlayFastShotVFX();
+			owner.SetFastShotArrowMat(true);
 			playerAttack.SetAnimTrigger("UpperHold2");
 			playerCamManager.SetAimCam(true);
 			player.ChangeState(Player.State.MoveAttack);
 			playerMove.AimLock = true;
 			player.SetBowAimRigWeight(1f, 1f, 1f);
+		}
+		else if(owner.FastShotNum > 4)
+		{
+			_ = owner.StartCoroutine(CoExit());
 			return;
 		}
-		else if(owner.FastShotNum > 5) {
-			playerAttack.SetAnimTrigger("UpperExit");
-			player.SetBowAimRigWeight(0f, 0f, 0f);
-			stateMachine.ChangeState(Bow.State.Idle);
-			return;
-		}
+	}
+
+	private IEnumerator CoExit()
+	{
+		waitAnim = true;
+		owner.SetFastShotArrowMat(false);
+		yield return new WaitUntil(() => playerAttack.IsAnimName(1, "UpperHold2") == true);
+		playerAttack.SetAnimTrigger("UpperExit");
+		owner.FastShotNum = 0;
+		stateMachine.ChangeState(Bow.State.Idle);
 	}
 
 	public override void Exit()
@@ -59,11 +73,18 @@ public class BowFastAim : StateBase<Bow.State, Bow>
 
 	public override void Transition()
 	{
+		if (waitAnim == true) return;
 
+		if (playerAttack.Attack1Pressed == true)
+		{
+			FastShot(player.CurState);
+		}
 	}
 
 	public override void Update()
 	{
+		if (waitAnim == true) return;
+
 		if(playerAttack.IsAnimName(1, "UpperHold2") == true)
 		{
 			owner.SetBowWeight(Mathf.Clamp(playerAttack.GetAnimNormalizedTime(1), 0f, 1f));
@@ -77,6 +98,8 @@ public class BowFastAim : StateBase<Bow.State, Bow>
 
 	private void FastShot(Player.State state)
 	{
+		if (waitAnim == true)return;
+
 		if(shotReady == true)
 		{
 			stateMachine.ChangeState(Bow.State.FastShot);

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,12 +23,14 @@ public class BowIdle : StateBase<Bow.State, Bow>
 		player.WeaponIdle();
 		playerAttack.OnAttack1Down.AddListener(Aim);
 		playerAttack.OnQButtonDown.AddListener(FastAim);
+		playerAttack.OnEButtonDown.AddListener(ESkill);
 	}
 
 	public override void Exit()
 	{
 		playerAttack.OnAttack1Down.RemoveListener(Aim);
 		playerAttack.OnQButtonDown.RemoveListener(FastAim);
+		playerAttack.OnEButtonDown.RemoveListener(ESkill);
 	}
 
 	public override void Setup()
@@ -56,13 +59,16 @@ public class BowIdle : StateBase<Bow.State, Bow>
 
 	public override void Update()
 	{
-		if(owner.Reloaded == true)
+		RigWeightSetting();
+
+		if (owner.Reloaded == true)
 		{
 			switch (player.CurState)
 			{
 				case Player.State.Idle:
 				case Player.State.Walk:
 				case Player.State.Run:
+				case Player.State.MoveAttack:
 					owner.SetArrowHold(Bow.ArrowHoldMode.Hold);
 					break;
 				default:
@@ -77,6 +83,7 @@ public class BowIdle : StateBase<Bow.State, Bow>
 			{
 				case Player.State.Idle:
 				case Player.State.Walk:
+				case Player.State.MoveAttack:
 					break;
 				default:
 					playerMove.AimLock = false;
@@ -87,26 +94,56 @@ public class BowIdle : StateBase<Bow.State, Bow>
 		}
 	}
 
-	private void Aim(Player.State state)
+	private void RigWeightSetting()
 	{
+		float weight = Mathf.Lerp(player.GetBowAimRigWeight(), 0f, Time.deltaTime * 3f);
+		player.SetBowAimRigWeight(weight, weight, weight);
+	}
+
+	private bool CheckAvailableState(Player.State state)
+	{
+		if (playerAttack.IsAnimName(1, "Entry") == false) return false;
+
 		switch (state)
 		{
 			case Player.State.Idle:
 			case Player.State.Walk:
-				aimLock = true;
-				stateMachine.ChangeState(Bow.State.StartAim);
-				break;
+				return true;
 		}
+
+		return false;
+	}
+
+	private void Aim(Player.State state)
+	{
+		if (CheckAvailableState(state) == false) return;
+
+		aimLock = true;
+		stateMachine.ChangeState(Bow.State.StartAim);
 	}
 
 	private void FastAim(Player.State state)
 	{
-		switch (state)
-		{
-			case Player.State.Idle:
-			case Player.State.Walk:
+		if (CheckAvailableState(state) == false) return;
+
+		aimLock = true;
+		stateMachine.ChangeState(Bow.State.FastAim);
+	}
+
+	private void ESkill(Player.State state)
+	{
+		if (CheckAvailableState(state) == false) return;
+
+		switch (owner.CurArrowProperty) {
+			case Bow.ArrowProperty.Ice:
+				owner.IceSkill();
+				break;
+			case Bow.ArrowProperty.Fire:
 				aimLock = true;
-				stateMachine.ChangeState(Bow.State.FastAim);
+				stateMachine.ChangeState(Bow.State.FireRain);
+				break;
+			case Bow.ArrowProperty.Wind:
+				owner.WindSkill();
 				break;
 		}
 	}

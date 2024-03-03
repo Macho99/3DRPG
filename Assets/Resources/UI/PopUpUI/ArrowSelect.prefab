@@ -78,7 +78,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "\uC77C\uBC18"
+  m_Text: "\uC5BC\uC74C"
 --- !u!1 &656601196250043282
 GameObject:
   m_ObjectHideFlags: 0
@@ -507,7 +507,7 @@ GameObject:
   - component: {fileID: 5697168352411420479}
   - component: {fileID: 913196857410537888}
   m_Layer: 5
-  m_Name: NormalArrow
+  m_Name: IceArrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -192,6 +192,7 @@ public class Player : MonoBehaviour
 
 	public void SetBowAimRigWeight(float spine, float leftShoulder, float rightHand)
 	{
+		//print(spine);
 		spineRig.weight = spine;
 		leftShoulderRig.weight = leftShoulder;
 		rightHandRig.weight = rightHand;

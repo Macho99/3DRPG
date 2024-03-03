@@ -14,13 +14,15 @@ public class Arrow : MonoBehaviour
 	private float despawnTime;
 	private int hitCnt;
 
+	public Vector3 Gravity { get; private set; }
 	public Vector3 Velocity { get; set; }
 
-	Action<RaycastHit, Vector3, Vector3, int, Arrow> hitAction;
+	Action<RaycastHit, int, Arrow> hitAction;
 	Action<Arrow> updateAction;
 
 	private void Awake()
 	{
+		Gravity = new Vector3(0, -9.81f, 0f);
 		hitMask = LayerMask.GetMask("Environment", "Monster", "Tree");
 	}
 
@@ -31,9 +33,9 @@ public class Arrow : MonoBehaviour
 		fireTrail.gameObject.SetActive(false);
 	}
 
-	public void Init(Vector3 velocity, Bow.ArrowState arrowState, 
+	public void Init(Vector3 velocity, Bow.ArrowProperty arrowState, 
 		Action<Arrow> updateAction = null,
-		Action<RaycastHit, Vector3, Vector3, int, Arrow> hitAction = null,
+		Action<RaycastHit, int, Arrow> hitAction = null,
 		int hitCnt = 0
 		)
 	{
@@ -45,27 +47,26 @@ public class Arrow : MonoBehaviour
 		}
 		else
 		{
-			this.hitAction = BasicHit;
+			this.hitAction = GroundHit;
 		}
 		this.updateAction = updateAction;
 
 		despawnTime = Time.time + 10f;
 
 		switch (arrowState) {
-			case Bow.ArrowState.None:
+			case Bow.ArrowProperty.None:
 				curTrail = null;
 				break;
-			case Bow.ArrowState.Normal:
+			case Bow.ArrowProperty.Ice:
 				curTrail = normalTrail;
 				break;
-			case Bow.ArrowState.Wind:
+			case Bow.ArrowProperty.Wind:
 				curTrail = windTrail;
 				break;
-			case Bow.ArrowState.Fire:
+			case Bow.ArrowProperty.Fire:
 				curTrail = fireTrail;
 				break;
 		}
-
 
 		curTrail.gameObject.SetActive(true);
 		if (hitCnt == 0 || hitCnt == 1)
@@ -77,7 +78,6 @@ public class Arrow : MonoBehaviour
 	private IEnumerator CoMove(Vector3 vel)
 	{
 		//Vector3 gravity = Physics.gravity;
-		Vector3 gravity = new Vector3(0f, -9.81f, 0f);
 		Velocity = vel;
 		while (true)
 		{
@@ -87,11 +87,11 @@ public class Arrow : MonoBehaviour
 				break;
 			}
 
-			Velocity += gravity * Time.deltaTime;
+			Velocity += Gravity * Time.deltaTime;
 			if (Physics.Raycast(transform.position, Velocity, out RaycastHit hitInfo,
 				this.Velocity.magnitude * Time.deltaTime, hitMask))
 			{
-				hitAction?.Invoke(hitInfo, transform.position, Velocity, hitCnt + 1, this);
+				hitAction?.Invoke(hitInfo, hitCnt + 1, this);
 				break;
 			}
 			transform.Translate(Velocity * Time.deltaTime, Space.World);
@@ -102,18 +102,25 @@ public class Arrow : MonoBehaviour
 		}
 	}
 
-	public void BasicHit(RaycastHit hitInfo, Vector3 pos, Vector3 velocity, int hitCnt, Arrow arrow)
+	public void GroundHit(RaycastHit hitInfo, int hitCnt, Arrow arrow)
 	{
 		transform.position = hitInfo.point;
+		AutoOff();
+	}
+
+	public void AutoOff()
+	{
 		_ = StartCoroutine(CoOff());
 	}
 
 	private IEnumerator CoOff()
 	{
+		yield return new WaitForSeconds(0.3f);
+		curTrail.Stop();
+
 		while (Time.time < despawnTime)
 			yield return null;
 
-		curTrail.Stop();
 		curTrail.gameObject.SetActive(false);
 		GameManager.Resource.Destroy(gameObject);
 	}

@@ -5,42 +5,42 @@ using UnityEngine;
 
 public class ArrowSelect : PopUpUI
 {
-	Action<Bow.ArrowState> resultFunc;
+	Action<Bow.ArrowProperty> resultFunc;
 	protected override void Awake()
 	{
 		base.Awake();
 		buttons["Blocker"].onClick.AddListener(NoneSelect);
-		buttons["NormalArrow"].onClick.AddListener(NormalSelect);
+		buttons["IceArrow"].onClick.AddListener(IceSelect);
 		buttons["WindArrow"].onClick.AddListener(WindSelect);
 		buttons["FireArrow"].onClick.AddListener(FireSelect);
 	}
 
-	public void Init(Action<Bow.ArrowState> resultFunc)
+	public void Init(Action<Bow.ArrowProperty> resultFunc)
 	{
 		this.resultFunc = resultFunc;
 	}
 
 	private void WindSelect()
 	{
-		resultFunc?.Invoke(Bow.ArrowState.Wind);
+		resultFunc?.Invoke(Bow.ArrowProperty.Wind);
 		CloseUI();
 	}
 
 	private void FireSelect()
 	{
-		resultFunc?.Invoke(Bow.ArrowState.Fire);
+		resultFunc?.Invoke(Bow.ArrowProperty.Fire);
 		CloseUI();
 	}
 
-	private void NormalSelect()
+	private void IceSelect()
 	{
-		resultFunc?.Invoke(Bow.ArrowState.Normal);
+		resultFunc?.Invoke(Bow.ArrowProperty.Ice);
 		CloseUI();
 	}
 
 	private void NoneSelect()
 	{
-		resultFunc?.Invoke(Bow.ArrowState.None);
+		resultFunc?.Invoke(Bow.ArrowProperty.None);
 		CloseUI();
 	}
 }

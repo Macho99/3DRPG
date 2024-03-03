@@ -20,6 +20,10 @@ public class PlayerAttack : MonoBehaviour
 	[HideInInspector] public UnityEvent<Player.State> OnAttack2Hold;
 	[HideInInspector] public UnityEvent<Player.State> OnQButtonDown;
 	[HideInInspector] public UnityEvent<Player.State> OnQButtonUp;
+	[HideInInspector] public UnityEvent<Player.State> OnEButtonDown;
+	[HideInInspector] public UnityEvent<Player.State> OnEButtonUp;
+	[HideInInspector] public UnityEvent<Player.State> OnRButtonDown;
+	[HideInInspector] public UnityEvent<Player.State> OnRButtonUp;
 
 	private Coroutine Attack1HoldCoroutine;
 	private Coroutine Attack2HoldCoroutine;
@@ -49,8 +53,12 @@ public class PlayerAttack : MonoBehaviour
 		OnAttack2Hold = new UnityEvent<Player.State>();
 		OnQButtonDown = new UnityEvent<Player.State>();
 		OnQButtonUp = new UnityEvent<Player.State>();
+		OnEButtonDown = new UnityEvent<Player.State>();
+		OnEButtonUp = new UnityEvent<Player.State>();
+		OnRButtonDown = new UnityEvent<Player.State>();
+		OnRButtonUp = new UnityEvent<Player.State>();
 
-		if(weapons.Length > 0)
+		if (weapons.Length > 0)
 		{
 			curWeapon = weapons[0];
 			anim.runtimeAnimatorController = curWeapon.GetAnimController();
@@ -112,6 +120,32 @@ public class PlayerAttack : MonoBehaviour
 		else
 		{
 			OnQButtonUp?.Invoke(player.CurState);
+		}
+	}
+	private void OnEButton(InputValue value)
+	{
+		bool pressed = value.Get<float>() > 0.9f ? true : false;
+
+		if (pressed)
+		{
+			OnEButtonDown?.Invoke(player.CurState);
+		}
+		else
+		{
+			OnEButtonUp?.Invoke(player.CurState);
+		}
+	}
+	private void OnRButton(InputValue value)
+	{
+		bool pressed = value.Get<float>() > 0.9f ? true : false;
+
+		if (pressed)
+		{
+			OnRButtonDown?.Invoke(player.CurState);
+		}
+		else
+		{
+			OnRButtonUp?.Invoke(player.CurState);
 		}
 	}
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.LowLevel;
@@ -8,22 +9,26 @@ public class Bow : Weapon
 {
 	[SerializeField] SkinnedMeshRenderer bowMesh;
 	[SerializeField] GameObject arrowToDraw;
-	[SerializeField] GameObject arrowToShoot;
+	[SerializeField] MeshRenderer arrowToShoot;
 	[SerializeField] GameObject leftHandArrow;
-	[SerializeField] ParticleSystem normalParticle;
+	[SerializeField] ParticleSystem iceParticle;
 	[SerializeField] ParticleSystem windParticle;
 	[SerializeField] ParticleSystem fireParticle;
+	[SerializeField] ParticleSystem fastShotVFX;
+	[SerializeField] ParticleSystem enhanceIceVFX;
+	[SerializeField] Material fastShotArrowMat;
 	[SerializeField] float arrowSpeed = 60f;
 	public float arrowRigTime = 0.5f;
 	public float arrowRigLerpSpeed = 6f;
 
 	[Serializable]
-	public enum State { Idle, Reload, StartAim, Aiming, UndoAim, Shot, FastAim, FastShot };
+	public enum State { Idle, Reload, StartAim, Aiming, UndoAim, Shot, FastAim, FastShot, 
+		FireRain, };
 	[Serializable]
-	public enum ArrowState { None, Normal, Wind, Fire }
+	public enum ArrowProperty { None, Ice, Wind, Fire }
 	public enum ArrowHoldMode { None, Draw, Hold, LeftHand };
 
-	[SerializeField] ArrowState curArrowState;
+	[SerializeField] ArrowProperty curArrowProperty;
 	[SerializeField] State curState;
 
 	ParticleSystem curAimParticle;
@@ -32,9 +37,18 @@ public class Bow : Weapon
 	LayerMask enemyMask;
 	Collider[] cols = new Collider[10];
 
-	Action<RaycastHit, Vector3, Vector3, int, Arrow> hitAction;
+	Action<RaycastHit, int, Arrow> hitAction;
 	Action<Arrow> updateAction;
+	Material initMat;
 
+	const float IceSkillCooltime = 20f;
+	float IceSkillUseableTime = -IceSkillCooltime;
+
+	const float windSkillCooltime = 30f;
+	float windSkillUseableTime = -windSkillCooltime;
+	WindSkillController windController;
+
+	public ArrowProperty CurArrowProperty { get { return curArrowProperty; } }
 	public int FastShotNum { get; set; } = 0;
 	public bool Reloaded { get; set; }
 	public float ArrowSpeed { get { return arrowSpeed; } }
@@ -42,8 +56,9 @@ public class Bow : Weapon
 	protected override void Awake()
 	{
 		base.Awake();
-		ArrowSelect(ArrowState.Normal);
+		ArrowSelect(ArrowProperty.Ice);
 		curArrowHold = ArrowHoldMode.None;
+		initMat = arrowToShoot.material;
 
 		enemyMask = LayerMask.GetMask("Monster");
 
@@ -56,6 +71,7 @@ public class Bow : Weapon
 		stateMachine.AddState(State.Shot, new BowShot(this, stateMachine));
 		stateMachine.AddState(State.FastAim, new BowFastAim(this, stateMachine));
 		stateMachine.AddState(State.FastShot, new BowFastShot(this, stateMachine));
+		stateMachine.AddState(State.FireRain, new BowSkillFireRain(this, stateMachine));
 	}
 
 	protected override void Start()
@@ -93,7 +109,7 @@ public class Bow : Weapon
 		if (mode == curArrowHold) return;
 
 		arrowToDraw.SetActive(false);
-		arrowToShoot.SetActive(false);
+		arrowToShoot.gameObject.SetActive(false);
 		leftHandArrow.SetActive(false);
 
 		curArrowHold = mode;
@@ -108,7 +124,7 @@ public class Bow : Weapon
 				arrowToDraw.SetActive(true);
 				break;
 			case ArrowHoldMode.Hold:
-				arrowToShoot.SetActive(true);
+				arrowToShoot.gameObject.SetActive(true);
 				break;
 		}
 	}
@@ -141,50 +157,92 @@ public class Bow : Weapon
 		Vector3 velocity = (aimPos - arrowPos).normalized * ArrowSpeed;
 		Arrow arrow = GameManager.Resource.Instantiate<Arrow>("Prefab/Arrow", arrowPos, Quaternion.identity, true);
 
-		arrow.Init(velocity, curArrowState, updateAction, hitAction);
+		arrow.Init(velocity, curArrowProperty, updateAction, hitAction);
 	}
 
-	public void BounceHit(RaycastHit hitInfo, Vector3 pos, Vector3 velocity, int hitCnt, Arrow arrow)
+	public Arrow ManualShot()
+	{
+		Arrow arrow = GameManager.Resource.Instantiate<Arrow>("Prefab/Arrow", GetArrowShootPos(), Quaternion.identity, true);
+		return arrow;
+	}
+
+	private void MonsterHit(RaycastHit hitInfo, int hitCnt, Arrow arrow)
+	{
+		int layer = hitInfo.collider.gameObject.layer;
+		if(IsMonsterLayer(layer) == true)
+		{
+			print("몬스터에게 데미지를 준다");
+			windController?.Attack(hitInfo.transform);
+			arrow.transform.parent = hitInfo.collider.transform;
+			arrow.AutoOff();
+		}
+		else
+		{
+			arrow.GroundHit(hitInfo, hitCnt, arrow);
+		}
+	}
+
+	private Vector3 GetBounceVelocity(RaycastHit hitInfo, Arrow arrow)
 	{
 		Vector3 hitPoint = hitInfo.point;
 		Vector3 normal = hitInfo.normal;
-		velocity = -velocity;
+		Vector3 velocity = -arrow.Velocity;
 
+		Vector3 pos = arrow.transform.position;
 		pos -= hitPoint;
 		Quaternion toNormalRotation = Quaternion.FromToRotation(pos, normal);
 		pos = toNormalRotation * toNormalRotation * pos;
 		pos += hitPoint;
 		velocity = toNormalRotation * toNormalRotation * velocity;
 
-		if (hitCnt == 1)
+		return velocity;
+	}
+
+	private void SplitBounceHit(RaycastHit hitInfo, int hitCnt, Arrow arrow)
+	{
+		if (IsMonsterLayer(hitInfo.collider.gameObject.layer))
 		{
-			for (int i = 0; i < 5; i++)
-			{
-				Arrow newArrow = GameManager.Resource.Instantiate<Arrow>("Prefab/Arrow", pos, Quaternion.identity, true);
-				velocity += Random.insideUnitSphere * 3f;
-				newArrow.Init(velocity * 0.7f, ArrowState.Normal, null, BounceHit, hitCnt);
-			}
-			arrow.Init(velocity * 0.7f, ArrowState.Normal, null, BounceHit, hitCnt);
+			MonsterHit(hitInfo, hitCnt, arrow);
+			//return;
+		}
+		Vector3 velocity = GetBounceVelocity(hitInfo, arrow);
+
+		for (int i = 0; i < 4; i++)
+		{
+			Arrow newArrow = GameManager.Resource.Instantiate<Arrow>("Prefab/Arrow", 
+				arrow.transform.position, Quaternion.identity, true);
+			velocity += Random.insideUnitSphere * 3f;
+			newArrow.Init(velocity * 0.7f, ArrowProperty.Ice, null, BounceHit, hitCnt);
+		}
+		arrow.Init(velocity * 0.7f, ArrowProperty.Ice, null, BounceHit, hitCnt);
+	}
+
+	private void BounceHit(RaycastHit hitInfo, int hitCnt, Arrow arrow)
+	{
+		if (IsMonsterLayer(hitInfo.collider.gameObject.layer))
+		{
+			MonsterHit(hitInfo, hitCnt, arrow);
+			return;
+		}
+
+		Vector3 velocity = GetBounceVelocity(hitInfo, arrow);
+
+		if (hitCnt > 5)
+		{
+			arrow.Init(velocity, ArrowProperty.Ice, null, MonsterHit);
 		}
 		else
 		{
-			if (hitCnt > 5)
-			{
-				arrow.Init(velocity, ArrowState.Normal);
-			}
-			else
-			{
-				arrow.Init(velocity, ArrowState.Normal, null, BounceHit, hitCnt);
-			}
+			arrow.Init(velocity, ArrowProperty.Ice, null, BounceHit, hitCnt);
 		}
 	}
 
-	public void Explosion(RaycastHit hitInfo, Vector3 pos, Vector3 velocity, int hitCnt, Arrow arrow)
+	public void Explosion(RaycastHit hitInfo, int hitCnt, Arrow arrow)
 	{
 		GameObject obj = GameManager.Resource.Instantiate<GameObject>("Prefab/FireArrowExplosion", 
 			hitInfo.point, Quaternion.identity, true);
 		obj.transform.localScale = Vector3.one * 2f;
-		arrow.BasicHit(hitInfo, pos, velocity, hitCnt, arrow);
+		arrow.GroundHit(hitInfo, hitCnt, arrow);
 	}
 
 	public void TraceMonster(Arrow arrow)
@@ -227,25 +285,25 @@ public class Bow : Weapon
 		arrowSelect.Init(ArrowSelect);
 	}
 
-	private void ArrowSelect(ArrowState arrowState)
+	private void ArrowSelect(ArrowProperty arrowState)
 	{
-		if (arrowState == ArrowState.None) return;
+		if (arrowState == ArrowProperty.None) return;
 
-		curArrowState = arrowState;
+		curArrowProperty = arrowState;
 		updateAction = null;
-		hitAction = null;
+		hitAction = MonsterHit;
 
 		switch(arrowState)
 		{
-			case ArrowState.Normal:
-				curAimParticle = null;
+			case ArrowProperty.Ice:
+				curAimParticle = iceParticle;
 				hitAction = BounceHit;
 				break;
-			case ArrowState.Fire:
+			case ArrowProperty.Fire:
 				curAimParticle = fireParticle;
 				hitAction = Explosion;
 				break;
-			case ArrowState.Wind:
+			case ArrowProperty.Wind:
 				curAimParticle = windParticle;
 				updateAction = TraceMonster;
 				break;
@@ -253,5 +311,80 @@ public class Bow : Weapon
 				print($"올바르지 않은 ArrowState : {arrowState}");
 				break;
 		}
+	}
+
+	public void SetFastShotArrowMat(bool value)
+	{
+		if(value == true)
+		{
+			arrowToShoot.material = fastShotArrowMat;
+		}
+		else
+		{
+			arrowToShoot.material = initMat;
+		}
+	}
+	
+	public void PlayFastShotVFX()
+	{
+		fastShotVFX.Play();
+	}
+
+	public void IceSkill()
+	{
+		if(Time.time > IceSkillUseableTime)
+		{
+			IceSkillUseableTime = Time.time + IceSkillCooltime;
+			_ = StartCoroutine(CoIceSkill());
+		}
+	}
+
+	private IEnumerator CoIceSkill()
+	{
+		float endTime = Time.time + 10f;
+		hitAction = SplitBounceHit;
+		enhanceIceVFX.Play();
+
+		while ((curArrowProperty == ArrowProperty.Ice) && (Time.time < endTime))
+		{
+			yield return null;
+		}
+
+		if(curArrowProperty == ArrowProperty.Ice)
+		{
+			hitAction = BounceHit;
+		}
+		enhanceIceVFX.Stop();
+	}
+
+	public void WindSkill()
+	{
+		if(Time.time > windSkillUseableTime)
+		{
+			windSkillUseableTime = Time.time + windSkillCooltime;
+			_ = StartCoroutine(CoWindSkill());
+		}
+	}
+
+	private IEnumerator CoWindSkill()
+	{
+		float endTime = Time.time + windSkillCooltime;
+		windController = GameManager.Resource.Instantiate<WindSkillController>(
+			"Prefab/WindSkillController", transform.position, Quaternion.identity, true);
+		windController.Init(5);
+
+		while((curArrowProperty == ArrowProperty.Wind) && (Time.time < endTime))
+		{
+			yield return null;
+		}
+
+		windController.Stop();
+		GameManager.Resource.Destroy(windController.gameObject);
+		windController = null;
+	}
+
+	public void WindControllerPrepareAttack()
+	{
+		windController?.PrepareAttack();
 	}
 }

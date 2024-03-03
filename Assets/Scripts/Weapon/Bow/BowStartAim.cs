@@ -18,6 +18,7 @@ public class BowStartAim : StateBase<Bow.State, Bow>
 	public override void Enter()
 	{
 		owner.PlayAimVFX(true);
+		owner.WindControllerPrepareAttack();
 		rigWeight = 0f;
 		arrowRigWeight = 0f;
 		playerCamManager.SetAimCam(true);

@@ -65,4 +65,13 @@ public abstract class Weapon : MonoBehaviour
 	public RuntimeAnimatorController GetAnimController() {
 		return controller; 
 	}
+
+	public bool IsMonsterLayer(int layer)
+	{
+		if((monsterMask.value & (1 << layer)) != 0)
+		{
+			return true;
+		}
+		return false;
+	}
 }
