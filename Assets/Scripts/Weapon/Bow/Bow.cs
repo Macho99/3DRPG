@@ -420,7 +420,7 @@ public class Bow : Weapon
 				+ transform.right * Random.Range(-0.1f, 0.1f);
 			position.y += yOffset + 0.5f * rowNum;
 			position += transform.forward * Random.Range(-0.15f, 0.1f);
-			position += transform.forward * Mathf.Abs(xPos) * 0.2f;
+			position += transform.forward * xPos * xPos * 0.05f;
 			Quaternion rotation = transform.rotation * 
 				Quaternion.Euler(
 				rowNum * 7f + Random.Range(-2f, 2f),

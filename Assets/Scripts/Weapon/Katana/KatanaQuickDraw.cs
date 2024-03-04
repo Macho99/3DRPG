@@ -47,8 +47,7 @@ public class KatanaQuickDraw5 : KatanaQuickDrawBase
 
 	protected override void Attack(bool clockwise)
 	{
-		//base.Attack(clockwise);
-		owner.PlayDeathfaultFeedback();
+		FieldSFC.Instance?.PlayDeathfault();
 	}
 }
 
@@ -62,7 +61,7 @@ public class KatanaQuickDraw6 : KatanaQuickDrawBase
 	public override void Enter()
 	{
 		base.Enter();
-		owner.PlayUltiFeedback();
+		FieldSFC.Instance?.PlayKatanaUlti();
 	}
 
 	protected override void VFXSetting(GameObject vfx)

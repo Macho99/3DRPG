@@ -1,3 +1,4 @@
+using MoreMountains.Feedbacks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,12 @@ using UnityEngine.InputSystem;
 
 public class FieldSFC : MonoBehaviour
 {
+	[SerializeField] MMF_Player deathfault;
+	[SerializeField] MMF_Player attackFail;
+	[SerializeField] ChargeFeedback charge;
+	[SerializeField] MMF_Player katanaUlti;
+	[SerializeField] MMF_Player bowUlti;
+
 	private static FieldSFC instance;
 	private static Player player;
 	public static Player Player
@@ -82,5 +89,38 @@ public class FieldSFC : MonoBehaviour
 			Debug.Log("ClearWindow");
 			GameManager.UI.ClearWindowUI();
 		}
+	}
+	
+	public void PlayDeathfault()
+	{
+		deathfault.PlayFeedbacks();
+	}
+
+	public void PlayAttackFail()
+	{
+		attackFail.PlayFeedbacks();
+	}
+
+	public void PlayCharge(bool value)
+	{
+		if (value == true)
+			charge.Play();
+		else
+			charge.Stop();
+	}
+
+	public void PlayCharge(int level)
+	{
+		charge.SetChargeLevel(level);
+	}
+
+	public void PlayKatanaUlti()
+	{
+		katanaUlti.PlayFeedbacks();
+	}
+
+	public void PlayBowUlti()
+	{
+		bowUlti.PlayFeedbacks();
 	}
 }

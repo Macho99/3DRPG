@@ -7,9 +7,6 @@ using UnityEngine;
 public class Katana : Sword
 {
 	[SerializeField] State curState;
-	[SerializeField] MMF_Player deathfaultFeedback;
-	[SerializeField] MMF_Player ultiFeedback;
-	[SerializeField] ChargeFeedback chargeFeedback;
 	[SerializeField] TargetFollower swordDummy;
 
 	[Serializable]
@@ -113,20 +110,15 @@ public class Katana : Sword
 		}
 	}
 
-	public void PlayDeathfaultFeedback()
-	{
-		deathfaultFeedback?.PlayFeedbacks();
-	}
-
 	public void PlayChargeFeedback(int level)
 	{
 		switch (level)
 		{
 			case 0:
-				chargeFeedback.Stop();
+				FieldSFC.Instance?.PlayCharge(false);
 				return;
 			case 1:
-				chargeFeedback.Play();
+				FieldSFC.Instance?.PlayCharge(true);
 				break;
 			case 2:
 			case 3:
@@ -135,12 +127,7 @@ public class Katana : Sword
 				print($"레벨은 0~3이어야 합니다 {level}");
 				return;
 		}
-		chargeFeedback.SetChargeLevel(level);
-	}
-
-	public void PlayUltiFeedback()
-	{
-		ultiFeedback.PlayFeedbacks();
+		FieldSFC.Instance?.PlayCharge(level);
 	}
 
 	public override void ChangeStateToIdle(bool forceIdle = false)

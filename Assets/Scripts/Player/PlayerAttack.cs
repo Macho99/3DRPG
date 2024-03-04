@@ -190,6 +190,11 @@ public class PlayerAttack : MonoBehaviour
 		anim.SetBool(str, value);
 	}
 
+	public void SetAnimUpdateMode(AnimatorUpdateMode mode)
+	{
+		anim.updateMode = mode;
+	}
+
 	private void OnUnarm(InputValue value)
 	{
 		if(value.isPressed == true)

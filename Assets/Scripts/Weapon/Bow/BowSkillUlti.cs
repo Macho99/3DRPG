@@ -47,11 +47,15 @@ public class BowSkillUlti : StateBase<Bow.State, Bow>
 		if (decal != null)
 			GameManager.Resource.Destroy(decal.gameObject);
 
+		Time.timeScale = 1f;
+		player.IgnoreInput(false);
 		playerMove.AimLock = false;
 		playerMove.MoveMultiplier = 1f;
 		playerMove.AimLockOffset = new Vector3(0f, 45f, 0f);
 		playerCamManager.SetAimCam(false);
 		playerCamManager.SetBowUltiCastCam(false);
+		playerCamManager.SetBowUltiTrackCam(false);
+		playerAttack.SetAnimUpdateMode(AnimatorUpdateMode.Normal);
 		playerAttack.OnAttack1Down.RemoveListener(SkillCast);
 		playerAttack.OnAttack2Down.RemoveListener(SkillUndo);
 		playerAttack.OnEButtonDown.RemoveListener(SkillUndo);
@@ -88,6 +92,7 @@ public class BowSkillUlti : StateBase<Bow.State, Bow>
 		if(waitAnim == true) return;
 		waitAnim = true;
 
+		player.IgnoreInput(true);
 		GameManager.Resource.Destroy(decal.gameObject);
 		decal = null;
 		_ = owner.StartCoroutine(CoSkillCast());
@@ -95,16 +100,53 @@ public class BowSkillUlti : StateBase<Bow.State, Bow>
 
 	private IEnumerator CoSkillCast()
 	{
+		playerCamManager.SetBowUltiTrackCam(true);
 		playerMove.MoveMultiplier = 0f;
 		playerAttack.SetAnimTrigger("Attack2");
+		FieldSFC.Instance?.PlayBowUlti();
+
 		yield return new WaitUntil(() => playerAttack.IsAnimName(0, "Attack2") == true || waitAnim == false);
-		player.GetComponent<PlayableDirector>().Play();
+
+		playerAttack.SetAnimUpdateMode(AnimatorUpdateMode.UnscaledTime);
+		Time.timeScale = 0.24f;
 		owner.UltiSkill();
-		yield return new WaitUntil(() => playerAttack.GetAnimNormalizedTime(0) > 0.8f || waitAnim == false);
-		if(waitAnim != false)
+		float normalizedTime = 0f;
+		do
 		{
-			playerAttack.SetAnimTrigger("BaseExit");
+			normalizedTime = playerAttack.GetAnimNormalizedTime(0);
+			if (waitAnim == false)
+			{
+				yield break;
+			}
+			playerCamManager.SetBowUltiTrackPos(normalizedTime / 0.8f);
+			yield return null;
+		} while (normalizedTime < 0.8f);
+
+		playerAttack.SetAnimUpdateMode(AnimatorUpdateMode.Normal);
+		playerAttack.SetAnimTrigger("BaseExit");
+
+		Time.timeScale = 0.3f;
+		float elapsed = 0f;
+		while (elapsed < 4f)
+		{
+			elapsed += Time.unscaledDeltaTime;
+			playerCamManager.SetBowUltiTrackPos(elapsed * 0.5f + 1f);
+
+			yield return null;
 		}
+
+		elapsed = 0f;
+		while (elapsed < 6f)
+		{
+			Time.timeScale = Mathf.Lerp(Time.timeScale, 1f, Time.unscaledDeltaTime);
+			elapsed += Time.deltaTime;
+			playerCamManager.SetBowUltiLookZPos(elapsed * 0.8f);
+			playerCamManager.SetBowUltiTrackPos(elapsed * 0.5f + 3f);
+
+			yield return null;
+		}
+
+		yield return new WaitForSeconds(2f);
 
 		stateMachine.ChangeState(Bow.State.Idle);
 	}
