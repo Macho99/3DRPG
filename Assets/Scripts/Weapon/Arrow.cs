@@ -33,7 +33,7 @@ public class Arrow : MonoBehaviour
 		fireTrail.gameObject.SetActive(false);
 	}
 
-	public void Init(Vector3 velocity, Bow.ArrowProperty arrowState, 
+	public void Init(Vector3 velocity, Bow.ArrowProperty arrowProperty, 
 		Action<Arrow> updateAction = null,
 		Action<RaycastHit, int, Arrow> hitAction = null,
 		int hitCnt = 0
@@ -53,7 +53,7 @@ public class Arrow : MonoBehaviour
 
 		despawnTime = Time.time + 10f;
 
-		switch (arrowState) {
+		switch (arrowProperty) {
 			case Bow.ArrowProperty.None:
 				curTrail = null;
 				break;

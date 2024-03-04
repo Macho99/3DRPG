@@ -6,7 +6,8 @@ public class PlayerCamManager : MonoBehaviour
 {
 	[SerializeField] CinemachineVirtualCamera aimCam;
 	[SerializeField] CinemachineVirtualCamera followCam;
-	[SerializeField] CinemachineVirtualCamera skillCastCam;
+	[SerializeField] CinemachineVirtualCamera fireRainCastCam;
+	[SerializeField] CinemachineVirtualCamera bowUltiCastCam;
 
 	public void SetAimCam(bool value)
 	{
@@ -20,15 +21,27 @@ public class PlayerCamManager : MonoBehaviour
 		}
 	}
 
-	public void SetSkillCastCam(bool value)
+	public void SetFireRainCastCam(bool value)
 	{
 		if(value == true)
 		{
-			skillCastCam.Priority = 20;
+			fireRainCastCam.Priority = 20;
 		}
 		else
 		{
-			skillCastCam.Priority = 0;
+			fireRainCastCam.Priority = 0;
+		}
+	}
+	public void SetBowUltiCastCam(bool value)
+	{
+		//print(value);
+		if (value == true)
+		{
+			bowUltiCastCam.Priority = 20;
+		}
+		else
+		{
+			bowUltiCastCam.Priority = 0;
 		}
 	}
 }

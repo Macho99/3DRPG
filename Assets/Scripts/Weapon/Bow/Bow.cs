@@ -1,8 +1,10 @@
-﻿using System;
+﻿using MoreMountains.Tools;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.LowLevel;
+using static UnityEngine.Rendering.DebugUI.Table;
 using Random = UnityEngine.Random;
 
 public class Bow : Weapon
@@ -23,7 +25,7 @@ public class Bow : Weapon
 
 	[Serializable]
 	public enum State { Idle, Reload, StartAim, Aiming, UndoAim, Shot, FastAim, FastShot, 
-		FireRain, };
+		FireRain, Ulti, };
 	[Serializable]
 	public enum ArrowProperty { None, Ice, Wind, Fire }
 	public enum ArrowHoldMode { None, Draw, Hold, LeftHand };
@@ -47,6 +49,9 @@ public class Bow : Weapon
 	const float windSkillCooltime = 30f;
 	float windSkillUseableTime = -windSkillCooltime;
 	WindSkillController windController;
+
+	const float ultiSkillCooltime = 1f;
+	float ultiSkillUseableTime = -ultiSkillCooltime;
 
 	public ArrowProperty CurArrowProperty { get { return curArrowProperty; } }
 	public int FastShotNum { get; set; } = 0;
@@ -72,6 +77,7 @@ public class Bow : Weapon
 		stateMachine.AddState(State.FastAim, new BowFastAim(this, stateMachine));
 		stateMachine.AddState(State.FastShot, new BowFastShot(this, stateMachine));
 		stateMachine.AddState(State.FireRain, new BowSkillFireRain(this, stateMachine));
+		stateMachine.AddState(State.Ulti, new BowSkillUlti(this, stateMachine));
 	}
 
 	protected override void Start()
@@ -166,7 +172,7 @@ public class Bow : Weapon
 		return arrow;
 	}
 
-	private void MonsterHit(RaycastHit hitInfo, int hitCnt, Arrow arrow)
+	public void MonsterHit(RaycastHit hitInfo, int hitCnt, Arrow arrow)
 	{
 		int layer = hitInfo.collider.gameObject.layer;
 		if(IsMonsterLayer(layer) == true)
@@ -217,7 +223,7 @@ public class Bow : Weapon
 		arrow.Init(velocity * 0.7f, ArrowProperty.Ice, null, BounceHit, hitCnt);
 	}
 
-	private void BounceHit(RaycastHit hitInfo, int hitCnt, Arrow arrow)
+	public void BounceHit(RaycastHit hitInfo, int hitCnt, Arrow arrow)
 	{
 		if (IsMonsterLayer(hitInfo.collider.gameObject.layer))
 		{
@@ -386,5 +392,44 @@ public class Bow : Weapon
 	public void WindControllerPrepareAttack()
 	{
 		windController?.PrepareAttack();
+	}
+
+	public void UltiSkill()
+	{
+		if (Time.time < ultiSkillUseableTime)
+		{
+			print($"궁극기 쿨타임: {ultiSkillUseableTime - Time.time}");
+			return;
+		}
+		
+		ultiSkillUseableTime = Time.time + ultiSkillCooltime;
+		SetUltiRow(0, 11);
+		SetUltiRow(1, 8);
+		SetUltiRow(2, 5);
+	}
+
+	private void SetUltiRow(int rowNum, int col)
+	{
+		float yOffset = 2f;
+		float xInterval = 0.7f;
+		for (int i = 0; i < col; i++)
+		{
+			int xPos = (i - col / 2);
+			Vector3 position = transform.position;
+			position -= transform.right * (xPos * xInterval)
+				+ transform.right * Random.Range(-0.1f, 0.1f);
+			position.y += yOffset + 0.5f * rowNum;
+			position += transform.forward * Random.Range(-0.15f, 0.1f);
+			position += transform.forward * Mathf.Abs(xPos) * 0.2f;
+			Quaternion rotation = transform.rotation * 
+				Quaternion.Euler(
+				rowNum * 7f + Random.Range(-2f, 2f),
+				xPos * 3f + Random.Range(-2f, 2f), 
+				0f);
+
+			BowUltiElem ultiElem = GameManager.Resource.Instantiate<BowUltiElem>("Prefab/BowUltiElem",
+				position, rotation, true);
+			ultiElem.Init(this, (ArrowProperty)Random.Range(1, 4));
+		}
 	}
 }

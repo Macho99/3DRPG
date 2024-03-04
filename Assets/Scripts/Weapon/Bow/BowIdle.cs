@@ -24,6 +24,7 @@ public class BowIdle : StateBase<Bow.State, Bow>
 		playerAttack.OnAttack1Down.AddListener(Aim);
 		playerAttack.OnQButtonDown.AddListener(FastAim);
 		playerAttack.OnEButtonDown.AddListener(ESkill);
+		playerAttack.OnRButtonDown.AddListener(RSkill);
 	}
 
 	public override void Exit()
@@ -31,6 +32,7 @@ public class BowIdle : StateBase<Bow.State, Bow>
 		playerAttack.OnAttack1Down.RemoveListener(Aim);
 		playerAttack.OnQButtonDown.RemoveListener(FastAim);
 		playerAttack.OnEButtonDown.RemoveListener(ESkill);
+		playerAttack.OnRButtonDown.RemoveListener(RSkill);
 	}
 
 	public override void Setup()
@@ -146,5 +148,13 @@ public class BowIdle : StateBase<Bow.State, Bow>
 				owner.WindSkill();
 				break;
 		}
+	}
+
+	private void RSkill(Player.State state)
+	{
+		if(CheckAvailableState(state) == false) { return; }
+
+		aimLock = false;
+		stateMachine.ChangeState(Bow.State.Ulti);
 	}
 }

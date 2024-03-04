@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class FloatingArrow : MonoBehaviour
 {
-	[SerializeField] float flipDuration = 2f;
+	//[SerializeField] float flipDuration = 2f;
 	[SerializeField] float dissolveSpeed = 5f;
 	[SerializeField] float flightArrowSpeed = 15f;
 	[SerializeField] List<Material> dissolveMatList;

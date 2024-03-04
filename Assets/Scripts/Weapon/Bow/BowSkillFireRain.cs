@@ -35,7 +35,7 @@ public class BowSkillFireRain : StateBase<Bow.State, Bow>
 		playerMove.AimLockOffset = Vector3.zero;
 		playerMove.AimLock = true;
 		playerMove.MoveMultiplier = 0f;
-		playerCamManager.SetSkillCastCam(true);
+		playerCamManager.SetFireRainCastCam(true);
 		playerAttack.SetAnimTrigger("Hold1");
 		playerAttack.OnAttack1Down.AddListener(SkillCast);
 		playerAttack.OnAttack2Down.AddListener(SkillUndo);
@@ -63,7 +63,7 @@ public class BowSkillFireRain : StateBase<Bow.State, Bow>
 
 		playerMove.MoveMultiplier = 1f;
 		playerMove.AimLockOffset = new Vector3(0f, 45f, 0f);
-		playerCamManager.SetSkillCastCam(false);
+		playerCamManager.SetFireRainCastCam(false);
 		playerAttack.OnAttack1Down.RemoveListener(SkillCast);
 		playerAttack.OnAttack2Down.RemoveListener(SkillUndo);
 		playerAttack.OnEButtonDown.RemoveListener(SkillUndo);
