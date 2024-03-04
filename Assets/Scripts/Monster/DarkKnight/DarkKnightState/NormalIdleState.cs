@@ -13,6 +13,8 @@ public class NormalIdleState : StateMachineBehaviour
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        target = animator.GetComponent<DeathKnight>().target;
+
         if (target != null)
         {
             animator.SetTrigger("isChasing");
