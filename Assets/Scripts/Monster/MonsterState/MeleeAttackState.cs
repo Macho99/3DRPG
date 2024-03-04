@@ -16,6 +16,8 @@ public class MeleeAttackState : StateMachineBehaviour
         target = animator.GetComponent<Monster>().target;
         animator.transform.LookAt(target.position);
         monster.state = State.IDLE;
+
+        monster.attackCol.enabled = true;
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -37,6 +39,6 @@ public class MeleeAttackState : StateMachineBehaviour
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-
+        monster.attackCol.enabled = false;
     }
 }

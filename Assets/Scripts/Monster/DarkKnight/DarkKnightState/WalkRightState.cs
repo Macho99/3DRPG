@@ -7,17 +7,19 @@ public class WalkRightState : StateMachineBehaviour
 {
     Rigidbody rb;
     NavMeshAgent agent;
+    Transform target;
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         rb = animator.GetComponent<Rigidbody>();
         agent = animator.GetComponent<NavMeshAgent>();
+        target = animator.GetComponent<DeathKnight>().target;
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        rb.velocity = animator.transform.right * 15f;
-        agent.SetDestination(animator.transform.position);
+        agent.Move(animator.transform.right * 2f * Time.deltaTime);
+        animator.transform.LookAt(target);
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

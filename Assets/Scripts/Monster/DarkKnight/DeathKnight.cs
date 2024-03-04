@@ -23,8 +23,6 @@ public class DeathKnight : MonoBehaviour
     public float moveSpeed;
     public float rotationSpeed;
 
-    private bool nearBy;
-
     public Transform target;
 
     public BoxCollider attackCol; // 어택 범위
@@ -35,7 +33,11 @@ public class DeathKnight : MonoBehaviour
 
     public BossState bossState;
 
-    public Avatar avatar;
+    [SerializeField] private Avatar avatar;
+
+    [SerializeField] private GameObject myWeapon;
+    [SerializeField] private Material mySwordMaterial;
+    [SerializeField] private GameObject swordEffect;
 
     private void Awake()
     {
@@ -46,6 +48,7 @@ public class DeathKnight : MonoBehaviour
 
     private void Start()
     {
+        swordEffect.SetActive(false);
         attackCol.enabled = false;
         currentHp = maxHp;
         agent.speed = moveSpeed;
@@ -59,8 +62,15 @@ public class DeathKnight : MonoBehaviour
 
         currentHp -= damage;
 
+        if (currentHp <= maxHp / 2)
+        {
+            // 페이지 전환 시점
+            //anim.SetTrigger("ChangeForm");
+        }
+
         if (currentHp > 0f)
         {
+            // 피격 애니메이션 ( 필요 없음 )
             //anim.SetTrigger("Hit");
         }
         else
@@ -101,11 +111,6 @@ public class DeathKnight : MonoBehaviour
         rb.AddForce(transform.up * height, ForceMode.Impulse);
     }
 
-    private void OnMoveDown(float height)
-    {
-        rb.AddForce(Vector3.down * height, ForceMode.Impulse);
-    }
-
     private void OnLanding()
     {
         agent.enabled = true;
@@ -131,6 +136,14 @@ public class DeathKnight : MonoBehaviour
     public void ChangeAvatar()
     {
         bossState = BossState.TWOHANDED;
+        ChangeWeaponSize();
         anim.avatar = this.avatar;
+    }
+
+    private void ChangeWeaponSize()
+    {
+        myWeapon.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+        myWeapon.transform.GetChild(0).GetComponent<MeshRenderer>().material = mySwordMaterial;
+        swordEffect.SetActive(true);
     }
 }

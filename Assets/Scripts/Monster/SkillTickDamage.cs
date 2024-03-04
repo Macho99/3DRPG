@@ -11,6 +11,7 @@ public class SkillTickDamage : MonoBehaviour
     {
         if (!isDelay && other.TryGetComponent(out Player player))
         {
+            // 플레이어 데미지 함수 실행
             print("Player Hit!!");
             StartCoroutine(TickDamage());
         }

@@ -547,8 +547,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1.5, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 2, z: 1}
+  m_Center: {x: 0, y: -0.5, z: 0}
 --- !u!114 &8563418745888782764
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -561,6 +561,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c92e25ba381c2b429f387d86ffa0584, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 0
 --- !u!1 &3824408238934397533
 GameObject:
   m_ObjectHideFlags: 0
@@ -814,7 +815,7 @@ MonoBehaviour:
   distanceFromOriginPos: 10
   spawnDir: {x: 0, y: 0, z: 0}
   target: {fileID: 0}
-  attackCol: {fileID: 0}
+  attackCol: {fileID: 731920754770030796}
   isReturning: 0
   targetMask:
     serializedVersion: 2

@@ -1528,7 +1528,7 @@ MonoBehaviour:
   maxHp: 100
   currentHp: 0
   damage: 10
-  attackRange: 3
+  attackRange: 2.5
   attackDelay: 2
   moveSpeed: 5
   rotationSpeed: 3
@@ -1922,6 +1922,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c92e25ba381c2b429f387d86ffa0584, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 0
 --- !u!1 &8036925626255721554
 GameObject:
   m_ObjectHideFlags: 0

@@ -12,7 +12,9 @@ public class NormalAttackCDState : StateMachineBehaviour
     Transform myTf;
     NavMeshAgent agent;
     DeathKnight knight;
-    //int random;
+    int random;
+
+    [SerializeField] float randomDelay;
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -33,7 +35,10 @@ public class NormalAttackCDState : StateMachineBehaviour
             TwoHandedChooseNextMotion(animator);
         }
 
-        //random = Random.Range(0, 2);
+        random = Random.Range(0, 2);
+        randomDelay = Random.Range(0.5f, 1f);
+
+        attackDelay = randomDelay;
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -59,15 +64,15 @@ public class NormalAttackCDState : StateMachineBehaviour
             animator.SetBool("AttackDelay", false);
         }
 
-        //switch (random)
-        //{
-        //    case 0:
-        //        animator.SetBool("isWalking", true);
-        //        break;
-        //    case 1:
-        //        animator.SetBool("isWalking", false);
-        //        break;
-        //}
+        switch (random)
+        {
+            case 0:
+                animator.SetBool("isWalking", true);
+                break;
+            case 1:
+                animator.SetBool("isWalking", false);
+                break;
+        }
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -130,7 +135,7 @@ public class NormalAttackCDState : StateMachineBehaviour
 
     void TwoHandedChooseNextMotion(Animator animator)
     {
-        int rand = Random.Range(0, 8);
+        int rand = Random.Range(0, 7);
 
         switch (rand)
         {
@@ -161,10 +166,6 @@ public class NormalAttackCDState : StateMachineBehaviour
             case 6:
                 animator.SetTrigger("Skill4");
                 agent.stoppingDistance = knight.skillAttackRange;
-                break;
-            case 7:
-                animator.SetTrigger("Skill5");
-                agent.stoppingDistance = knight.meleeAttackRange;
                 break;
             default:
                 animator.SetTrigger("MeleeCombo1");

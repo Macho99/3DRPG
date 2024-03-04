@@ -1,13 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class RandomWalkState : StateMachineBehaviour
 {
     int random;
+    Transform target;
+    NavMeshAgent agent;
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        target = animator.GetComponent<DeathKnight>().target;
+        agent = animator.GetComponent<NavMeshAgent>();
+
         random = Random.Range(0, 4);
         switch (random)
         {
@@ -24,8 +30,15 @@ public class RandomWalkState : StateMachineBehaviour
                 animator.SetTrigger("Walk_R");
                 break;
             default:
-                animator.SetTrigger("Walk_F");
+                animator.SetTrigger("Walk_L");
                 break;
+        }
+
+        if (random == 0 && Vector3.Distance(animator.transform.position, target.position) <= agent.stoppingDistance)
+        {
+            Debug.Log("reroll");
+            animator.ResetTrigger("Walk_F");
+            animator.SetTrigger("Walk_L");
         }
     }
 

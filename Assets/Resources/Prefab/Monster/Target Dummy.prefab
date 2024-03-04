@@ -316,7 +316,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b3a9a769670f08438ffdfede86d06fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  meleeDistance: 2
+  meleeDistance: 2.5
   bulletPrefab: {fileID: 4131973653040939668, guid: 89f70c83a1ae4694c96b2323534728b6, type: 3}
   shotPoint: {fileID: 1102918888996955172}
 --- !u!95 &6858313568254492820
@@ -731,6 +731,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c92e25ba381c2b429f387d86ffa0584, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 0
 --- !u!1 &7141516284381276908
 GameObject:
   m_ObjectHideFlags: 0
