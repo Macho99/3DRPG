@@ -1540,6 +1540,7 @@ MonoBehaviour:
   distanceFromOriginPos: 20
   spawnDir: {x: 0, y: 0, z: 0}
   target: {fileID: 0}
+  attackCol: {fileID: 2371491692856558618}
   isReturning: 0
   targetMask:
     serializedVersion: 2
@@ -1863,7 +1864,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6063092555047862967}
-  m_Layer: 8
+  - component: {fileID: 2371491692856558618}
+  - component: {fileID: 5795168553201261700}
+  m_Layer: 9
   m_Name: Weapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1886,6 +1889,39 @@ Transform:
   - {fileID: 7678370863992327746}
   m_Father: {fileID: 1594441948073181111}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &2371491692856558618
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7874658667150525586}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 2}
+  m_Center: {x: 0, y: 0, z: 1}
+--- !u!114 &5795168553201261700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7874658667150525586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c92e25ba381c2b429f387d86ffa0584, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8036925626255721554
 GameObject:
   m_ObjectHideFlags: 0

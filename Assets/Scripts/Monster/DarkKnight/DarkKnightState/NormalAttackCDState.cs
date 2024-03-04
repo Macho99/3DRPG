@@ -12,6 +12,7 @@ public class NormalAttackCDState : StateMachineBehaviour
     Transform myTf;
     NavMeshAgent agent;
     DeathKnight knight;
+    //int random;
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -31,6 +32,8 @@ public class NormalAttackCDState : StateMachineBehaviour
         {
             TwoHandedChooseNextMotion(animator);
         }
+
+        //random = Random.Range(0, 2);
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -55,11 +58,21 @@ public class NormalAttackCDState : StateMachineBehaviour
             }
             animator.SetBool("AttackDelay", false);
         }
+
+        //switch (random)
+        //{
+        //    case 0:
+        //        animator.SetBool("isWalking", true);
+        //        break;
+        //    case 1:
+        //        animator.SetBool("isWalking", false);
+        //        break;
+        //}
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        
+
     }
 
     private void Turn(Transform target, Transform myTf)

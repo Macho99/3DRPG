@@ -27,6 +27,8 @@ public class DeathKnight : MonoBehaviour
 
     public Transform target;
 
+    public BoxCollider attackCol; // 어택 범위
+
     NavMeshAgent agent;
     Animator anim;
     Rigidbody rb;
@@ -44,6 +46,7 @@ public class DeathKnight : MonoBehaviour
 
     private void Start()
     {
+        attackCol.enabled = false;
         currentHp = maxHp;
         agent.speed = moveSpeed;
         agent.stoppingDistance = skillAttackRange;

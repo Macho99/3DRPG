@@ -24588,7 +24588,9 @@ GameObject:
   - component: {fileID: 1871041086231115582}
   - component: {fileID: 1871041086231115577}
   - component: {fileID: 8636818028533629457}
-  m_Layer: 0
+  - component: {fileID: 2362460973429055}
+  - component: {fileID: 5994770695378299221}
+  m_Layer: 9
   m_Name: Effect_26_IceRing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24658,6 +24660,39 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!135 &2362460973429055
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1871041086231115576}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 14.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5994770695378299221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1871041086231115576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c92e25ba381c2b429f387d86ffa0584, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1871041086325624939
 GameObject:
   m_ObjectHideFlags: 0

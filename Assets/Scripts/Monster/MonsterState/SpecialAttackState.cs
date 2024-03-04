@@ -17,6 +17,8 @@ public class SpecialAttackState : StateMachineBehaviour
 
         animator.transform.LookAt(target.position);
         monster.state = State.IDLE;
+
+        monster.attackCol.enabled = true;
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -38,5 +40,6 @@ public class SpecialAttackState : StateMachineBehaviour
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         animator.SetBool("SpecialAttack", false);
+        monster.attackCol.enabled = false;
     }
 }

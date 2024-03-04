@@ -21,11 +21,7 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent(out Player player))
-        {
-            // 플레이어에게 데미지
-            print("player");
-        }
+        print("player hit");
 
         Destroy(gameObject);
     }

@@ -12,10 +12,12 @@ public class MotioningState : StateMachineBehaviour
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+
         agent = animator.GetComponent<NavMeshAgent>();
         rotationValue = animator.GetComponent<DeathKnight>().rotationSpeed;
         target = animator.GetComponent<DeathKnight>().target;
         myTf = animator.GetComponent<Transform>();
+        animator.GetComponent<DeathKnight>().attackCol.enabled = true;
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -32,6 +34,7 @@ public class MotioningState : StateMachineBehaviour
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         animator.SetBool("AttackDelay", true);
+        animator.GetComponent<DeathKnight>().attackCol.enabled = false;
     }
 
     private void Turn(Transform target, Transform myTf)

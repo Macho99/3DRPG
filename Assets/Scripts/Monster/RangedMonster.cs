@@ -25,4 +25,14 @@ public class RangedMonster : MonoBehaviour
         bullet.transform.forward = dir;
         Destroy(bullet, 3f);
     }
+
+    private void OnAttackStart()
+    {
+        monster.attackCol.enabled = true;
+    }
+
+    private void OnAttackEnd()
+    {
+        monster.attackCol.enabled = false;
+    }
 }

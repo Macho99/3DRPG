@@ -8,15 +8,12 @@ public class MeleeAttackState : StateMachineBehaviour
     Transform target;
     Monster monster;
     RangedMonster rangedMonster;
-    NavMeshAgent agent;
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         monster = animator.GetComponent<Monster>();
         rangedMonster = animator.GetComponent<RangedMonster>();
         target = animator.GetComponent<Monster>().target;
-        agent = animator.GetComponent<NavMeshAgent>();
-
         animator.transform.LookAt(target.position);
         monster.state = State.IDLE;
     }

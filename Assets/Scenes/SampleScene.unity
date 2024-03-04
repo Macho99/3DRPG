@@ -18395,7 +18395,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 40
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &571602917
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -33021,8 +33021,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.2048333, y: 0, z: 0, w: 0.9787969}
-  m_LocalPosition: {x: 0, y: 23.949999, z: -13.43}
+  m_LocalRotation: {x: 0.20483346, y: 0, z: 0, w: 0.97879684}
+  m_LocalPosition: {x: 0, y: 2.8000002, z: -2.97}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -50193,7 +50193,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5156501800486502184, guid: cd69b19c139e2df4695dad4a7efe7cd1, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5189557533681150504, guid: cd69b19c139e2df4695dad4a7efe7cd1, type: 3}
       propertyPath: m_LocalPosition.x
@@ -76623,7 +76623,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2521705709969385626}
-  m_Layer: 8
+  - component: {fileID: 2521705709969385628}
+  - component: {fileID: 2521705709969385627}
+  m_Layer: 9
   m_Name: Bone_Sword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -77452,6 +77454,40 @@ Transform:
   - {fileID: 2215676009449357686}
   m_Father: {fileID: 9068301400297294139}
   m_LocalEulerAnglesHint: {x: -57.774967, y: 122.59455, z: -97.41499}
+--- !u!114 &2521705709969385627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 586792979927313259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c92e25ba381c2b429f387d86ffa0584, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 0
+--- !u!65 &2521705709969385628
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 586792979927313259}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.2, y: 1.5, z: 0.2}
+  m_Center: {x: 0, y: -0.5, z: 0}
 --- !u!4 &2560140131176380577
 Transform:
   m_ObjectHideFlags: 0
@@ -77843,7 +77879,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3397395774343410726
 Transform:
   m_ObjectHideFlags: 0
@@ -79546,7 +79582,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5156501800486502184, guid: cd69b19c139e2df4695dad4a7efe7cd1, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -79786,6 +79822,7 @@ MonoBehaviour:
   moveSpeed: 10
   rotationSpeed: 3
   target: {fileID: 971935888}
+  attackCol: {fileID: 2521705709969385628}
   bossState: 0
   avatar: {fileID: 9000000, guid: 77d947c01609a804893ad7700498885f, type: 3}
 --- !u!195 &8347274690666931361

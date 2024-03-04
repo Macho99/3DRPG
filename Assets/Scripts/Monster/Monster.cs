@@ -34,6 +34,8 @@ public class Monster : MonoBehaviour
     [HideInInspector] public Vector3 spawnDir; // 처음 바라본 방향
     public Transform target;
 
+    public BoxCollider attackCol; // 어택 범위
+
     [HideInInspector] public bool isReturning; // 돌아가는 상태 체크
 
     [SerializeField] protected LayerMask targetMask; // 타겟레이어
@@ -53,6 +55,7 @@ public class Monster : MonoBehaviour
 
     protected virtual void Start()
     {
+        attackCol.enabled = false;
         currentHp = maxHp;
         originViewAngle = viewAngle;
         spawnPosition = transform.position;

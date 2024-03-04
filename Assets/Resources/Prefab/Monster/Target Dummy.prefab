@@ -283,8 +283,6 @@ MonoBehaviour:
   maxHp: 100
   currentHp: 0
   damage: 10
-  maxStamina: 100
-  currentStamina: 0
   attackRange: 10
   attackDelay: 3
   moveSpeed: 3
@@ -297,6 +295,7 @@ MonoBehaviour:
   distanceFromOriginPos: 10
   spawnDir: {x: 0, y: 0, z: 0}
   target: {fileID: 0}
+  attackCol: {fileID: 5690136044584520825}
   isReturning: 0
   targetMask:
     serializedVersion: 2
@@ -305,7 +304,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   state: 0
-  staminaRate: 10
 --- !u!114 &8998269095518103421
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -318,7 +316,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b3a9a769670f08438ffdfede86d06fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  meleeDistance: 3
+  meleeDistance: 2
   bulletPrefab: {fileID: 4131973653040939668, guid: 89f70c83a1ae4694c96b2323534728b6, type: 3}
   shotPoint: {fileID: 1102918888996955172}
 --- !u!95 &6858313568254492820
@@ -615,6 +613,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8058757639528634780}
   - component: {fileID: 49516834135588991}
+  - component: {fileID: 5690136044584520825}
+  - component: {fileID: 8339093343663018366}
   m_Layer: 0
   m_Name: Target Dummy
   m_TagString: Untagged
@@ -698,6 +698,39 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.23407197, y: 0.009147331, z: -0.0038362443}
     m_Extent: {x: 0.71592295, y: 0.41121167, z: 0.8807632}
   m_DirtyAABB: 0
+--- !u!65 &5690136044584520825
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6053664685756798050}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.24, y: 2, z: 0.62}
+  m_Center: {x: 0.0038362427, y: -1, z: 1.15}
+--- !u!114 &8339093343663018366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6053664685756798050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c92e25ba381c2b429f387d86ffa0584, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7141516284381276908
 GameObject:
   m_ObjectHideFlags: 0
