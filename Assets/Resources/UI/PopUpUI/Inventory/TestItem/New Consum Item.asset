@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c816c8e3ef610549984088185bd013b, type: 3}
   m_Name: New Consum Item
   m_EditorClassIdentifier: 
-  ID: 2
+  ID: Apple
   Type: 0
   Name: "\uC0AC\uACFC"
   Description: "\uBE68\uAC04 \uC5F4\uB9E4"

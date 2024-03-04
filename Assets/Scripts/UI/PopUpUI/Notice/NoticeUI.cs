@@ -13,8 +13,10 @@ public enum NoticeState
 
 public class NoticeUI : PopUpUI
 {
-    public TextMeshProUGUI buttonText;
-    public TextMeshProUGUI noticeText;
+    private TextMeshProUGUI buttonText;
+    private TextMeshProUGUI noticeText;
+
+    public NoticeState state;
 
     public string button = null;
     public string notice = null;

@@ -2,18 +2,19 @@ using JetBrains.Annotations;
 using System;
 using UnityEngine;
 
-[Serializable]
-public enum ItemID
-{
-    // 公扁
-    Katana,
+//[Serializable]
+//public enum ItemID
+//{
+//    // 公扁
+//    Katana,
+//    Bow,
 
-    // 规绢备
-    MetalArmor,
+//    // 规绢备
+//    MetalArmor,
 
-    // 家葛前
-    Apple,
-}
+//    // 家葛前
+//    Apple,
+//}
 
 [Serializable]
 public enum ItemType
@@ -26,7 +27,7 @@ public enum ItemType
 
 public abstract class SOItem : ScriptableObject
 {
-    public ItemID ID;
+    public string ID;
     public ItemType Type;
     public string Name;
     [TextArea(15, 20)]

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce2b9e47d8335ca469e3bb0e22236b1e, type: 3}
   m_Name: New Weapon Item
   m_EditorClassIdentifier: 
-  ID: 0
+  ID: Katana
   Type: 1
   Name: "\uCE74\uD0C0\uB098"
   Description: this is weapon

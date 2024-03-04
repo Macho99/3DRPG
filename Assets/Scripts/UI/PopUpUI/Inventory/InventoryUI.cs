@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -10,41 +11,39 @@ public class InventoryUI : PopUpUI
         get { return tabToggle.ActiveToggles().FirstOrDefault(); } }
     public Toggle defaultToggle;
 
-    public RectTransform showItemArea;
+    public RectTransform weaponDisplay;
+    public RectTransform armorDisplay;
+    public RectTransform consumDisplay;
+    public InventorySlot slot;
 
     public TextMeshProUGUI itemName;
     public TextMeshProUGUI itemExplain;
     public TextMeshProUGUI itemStatus;
     public Image itemIcon;
 
-    protected override void Awake()
-    {
-        GameManager.Inven.MakeSlotParent(this);
-    }
-
     private void Update()
     {
         switch (onToggle.gameObject.name)
         {
             case "ShowAll":
-                GameManager.Inven.weaponContent.gameObject.SetActive(true);
-                GameManager.Inven.armorContent.gameObject.SetActive(true);
-                GameManager.Inven.consumContent.gameObject.SetActive(true);
+                weaponDisplay.gameObject.SetActive(true);
+                armorDisplay.gameObject.SetActive(true);
+                consumDisplay.gameObject.SetActive(true);
                 break;
             case "ShowWeapon":
-                GameManager.Inven.weaponContent.gameObject.SetActive(true);
-                GameManager.Inven.armorContent.gameObject.SetActive(false);
-                GameManager.Inven.consumContent.gameObject.SetActive(false);
+                weaponDisplay.gameObject.SetActive(true);
+                armorDisplay.gameObject.SetActive(false);
+                consumDisplay.gameObject.SetActive(false);
                 break;
             case "ShowArmor":
-                GameManager.Inven.weaponContent.gameObject.SetActive(false);
-                GameManager.Inven.armorContent.gameObject.SetActive(true);
-                GameManager.Inven.consumContent.gameObject.SetActive(false);
+                weaponDisplay.gameObject.SetActive(false);
+                armorDisplay.gameObject.SetActive(true);
+                consumDisplay.gameObject.SetActive(false);
                 break;
             case "ShowConsum":
-                GameManager.Inven.weaponContent.gameObject.SetActive(false);
-                GameManager.Inven.armorContent.gameObject.SetActive(false);
-                GameManager.Inven.consumContent.gameObject.SetActive(true);
+                weaponDisplay.gameObject.SetActive(false);
+                armorDisplay.gameObject.SetActive(false);
+                consumDisplay.gameObject.SetActive(true);
                 break;
         }
 

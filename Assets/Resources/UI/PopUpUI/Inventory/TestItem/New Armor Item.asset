@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa802444717260344882b77ec98fd56c, type: 3}
   m_Name: New Armor Item
   m_EditorClassIdentifier: 
-  ID: 1
+  ID: MetalArmor
   Type: 2
   Name: "\uCCA0\uAC11\uC637"
   Description: "\uBC29\uC5B4\uAD6C"
