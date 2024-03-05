@@ -16,7 +16,15 @@ public class DeathKnight : MonoBehaviour
 
     [SerializeField] private float maxHp;
     [SerializeField] private float currentHp;
-    [SerializeField] private float damage;
+    [SerializeField] protected int damage;
+    [SerializeField] private bool hitFeedback;
+    [SerializeField] private float stunDuration;
+    [SerializeField] private Vector3 knockback;
+    public int Damage => damage;
+    public bool HitFeedBack => hitFeedback;
+    public float StunDuration => stunDuration;
+    public Vector3 KnockBack => knockback;
+
     public float meleeAttackRange;
     public float skillAttackRange;
     public float attackDelay;

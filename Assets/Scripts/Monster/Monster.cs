@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Android;
 
 public enum State
 {
@@ -17,13 +16,22 @@ public class Monster : MonoBehaviour
 {
     [SerializeField] protected float maxHp;
     [SerializeField] protected float currentHp;
-    [SerializeField] protected float damage;
+    [SerializeField] protected int damage;
+    [SerializeField] private bool hitFeedback;
+    [SerializeField] private float stunDuration;
+    [SerializeField] private Vector3 knockback;
+
+    public int Damage => damage;
+    public bool HitFeedBack => hitFeedback;
+    public float StunDuration => stunDuration;
+    public Vector3 KnockBack => knockback;
+
     public float attackRange;
     public float attackDelay;
     public float moveSpeed;
     public float rotationSpeed;
 
-    public int specialAttackRange;
+    public int specialAttackRandomRange;
 
     [SerializeField] protected float viewRadius; // Å½Áö ¹üÀ§
     public float viewAngle; // Å½Áö °¢µµ
@@ -45,6 +53,8 @@ public class Monster : MonoBehaviour
     protected Animator anim;
 
     [HideInInspector] public State state;
+
+
 
 
     private void Awake()
@@ -130,5 +140,28 @@ public class Monster : MonoBehaviour
         target = null;
         state = State.DEAD;
         Destroy(gameObject, 3f);
+    }
+
+    public void SetAttackTypeInfo(int damage, bool hitFeedback, float stunDuration, Vector3 knockback)
+    {
+        this.damage = damage;
+        this.hitFeedback = hitFeedback;
+        this.stunDuration = stunDuration;
+        this.knockback = knockback;
+    }
+
+    private void SetKnockback()
+    {
+        hitFeedback = false;
+
+        Vector3 knockbackDir = (target.position - transform.position).normalized;
+
+        knockback = knockbackDir;
+    }
+
+    private void ResetKnockback()
+    {
+        hitFeedback = true;
+        knockback = Vector3.zero;
     }
 }

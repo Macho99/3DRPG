@@ -35,11 +35,11 @@ public class SpecialAttackState : StateMachineBehaviour
         }
 
         animator.SetBool("AttackDelay", true);
+        animator.SetBool("SpecialAttack", false);
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        animator.SetBool("SpecialAttack", false);
         monster.attackCol.enabled = false;
     }
 }

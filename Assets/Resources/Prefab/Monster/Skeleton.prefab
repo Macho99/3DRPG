@@ -1528,11 +1528,14 @@ MonoBehaviour:
   maxHp: 100
   currentHp: 0
   damage: 10
+  hitFeedback: 1
+  stunDuration: 0
+  knockback: {x: 0, y: 0, z: 0}
   attackRange: 2.5
   attackDelay: 2
   moveSpeed: 5
   rotationSpeed: 3
-  specialAttackRange: 3
+  specialAttackRandomRange: 2
   viewRadius: 200
   viewAngle: 120
   originViewAngle: 0
@@ -1923,6 +1926,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 0
+  hitFeedback: 0
+  stunDuration: 0
+  knockback: {x: 0, y: 0, z: 0}
 --- !u!1 &8036925626255721554
 GameObject:
   m_ObjectHideFlags: 0

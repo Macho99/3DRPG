@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SkillTickDamage : MonoBehaviour
 {
-    public float damage;
+    public int damage;
     bool isDelay = false;
 
     private void OnTriggerStay(Collider other)

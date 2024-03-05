@@ -22,7 +22,7 @@ public class SpecialBattleIdleState : StateMachineBehaviour
         myTf = animator.GetComponent<Transform>();
         agent = animator.GetComponent<NavMeshAgent>();
 
-        random = Random.Range(0, animator.GetComponent<Monster>().specialAttackRange);
+        random = Random.Range(0, animator.GetComponent<Monster>().specialAttackRandomRange);
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
