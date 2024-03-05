@@ -7,7 +7,7 @@ public class MenuUI : PopUpUI
     public void OpenInventory()
     {
         GameManager.UI.ClosePopUpUI();
-        GameManager.UI.ShowPopUpUI<InventoryUI>("UI/PopUpUI/Inventory/Inventory");
+        GameManager.UI.ShowPopUpUI(GameManager.Inven.inventoryUI);
     }
 
     public void OpenEquip()

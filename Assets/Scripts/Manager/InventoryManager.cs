@@ -4,81 +4,36 @@ using System.Net;
 using System.Runtime.InteropServices.WindowsRuntime;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InventoryManager : MonoBehaviour
 {
-    public RectTransform weaponContent;
-    public RectTransform armorContent;
-    public RectTransform consumContent;
+    public GameObject slotPrefab;
 
-    private List<InventorySlot> weaponList = new List<InventorySlot>();
-    private List<InventorySlot> armorList = new List<InventorySlot>();
-    private List<InventorySlot> consumList = new List<InventorySlot>();
+    public InventoryUI inventoryUI;
+
+    public InventoryObject invenData;
 
     public InventorySlot focusSlot = null;
     public InventorySlot selectedSlot = null;
 
-    public void MakeSlotParent(InventoryUI inventory)
+    private void Awake()
     {
-        weaponContent =
-            GameManager.Resource.Instantiate<RectTransform>("UI/PopUpUI/Inventory/ItemList");
-        weaponContent.gameObject.name = "WeaponList";
-        MakeSlotsList(weaponList, weaponContent);
-        weaponContent.SetParent(inventory.showItemArea, false);
-
-        armorContent =
-            GameManager.Resource.Instantiate<RectTransform>("UI/PopUpUI/Inventory/ItemList");
-        armorContent.gameObject.name = "ArmorList";
-        MakeSlotsList(armorList, armorContent);
-        armorContent.SetParent(inventory.showItemArea, false);
-
-        consumContent =
-            GameManager.Resource.Instantiate<RectTransform>("UI/PopUpUI/Inventory/ItemList");
-        consumContent.gameObject.name = "ConsumList";
-        MakeSlotsList(consumList, consumContent);
-        consumContent.SetParent(inventory.showItemArea, false);
+        slotPrefab = GameManager.Resource.Load<GameObject>("UI/PopUpUI/Inventory/Slot");
+        inventoryUI = GameManager.Resource.Load<InventoryUI>("UI/PopUpUI/Inventory/InventoryDisplay");
+        invenData = GameManager.Resource.Load<InventoryObject>("UI/PopUpUI/Inventory/Player");
     }
 
-    private void MakeSlotsList(List<InventorySlot> parentList, RectTransform parentTrans)
+
+    private void Start()
     {
-        for (int i = 0; i < 10; i++)
-        {
-            var makeSlot = GameManager.Resource.Instantiate<InventorySlot>("UI/PopUpUI/Inventory/Slot", parentTrans.transform);
-            makeSlot.name = $"{parentTrans.gameObject.name}_{i}";
-            parentList.Add(makeSlot);
-            if(parentTrans.gameObject.name == "WeaponList")
-            {
-                makeSlot.GetComponentInChildren<TextMeshProUGUI>().enabled = false;
-            }
-            if (parentTrans.gameObject.name == "ArmorList")
-            {
-                makeSlot.GetComponentInChildren<TextMeshProUGUI>().enabled = false;
-            }
-        }
+
     }
 
-    public bool TryGainConsumItem(Consum item)
+    private void Update()
     {
-        var emptySlot = consumList.Find((x) => { return x.item == null; });
-
-        if(emptySlot == null)
-        {
-            return false;
-        }
-
-        return emptySlot.TrySetItem(item);
-    }
-
-    public bool TryGainArmorItem(Armor item)
-    {
-        var emptySlot = armorList.Find((x) => { return x.item == null; });
-
-        if (emptySlot == null)
-        {
-            return false;
-        }
-
-        return emptySlot.TrySetItem(item);
+        
     }
 }
