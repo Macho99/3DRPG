@@ -4,15 +4,20 @@ using UnityEngine;
 
 public class MenuUI : PopUpUI
 {
-    public void OpenInventory()
+	protected override void Awake()
+	{
+		base.Awake();
+
+
+	}
+
+	public void OpenInventory()
     {
-        GameManager.UI.ClosePopUpUI();
-        GameManager.UI.ShowPopUpUI(GameManager.Inven.inventoryUI);
+        //GameManager.UI.ShowPopUpUI<InventoryUI>("UI/PopUpUI/Inventory/InventoryDisplay");
     }
 
     public void OpenEquip()
     {
-        GameManager.UI.ClosePopUpUI();
-        GameManager.UI.ShowPopUpUI<EquipUI>("UI/PopUpUI/Equip/EquipUI");
+        //GameManager.UI.ShowPopUpUI<EquipUI>("UI/PopUpUI/Equip/EquipUI");
     }
 }

@@ -52,23 +52,23 @@ public class FieldSFC : MonoBehaviour
 
     private void OnOpenMenu(InputValue value)
     {
-        if (value.isPressed == true)
-        {
-            GameManager.UI.menuOpen = !GameManager.UI.menuOpen;
+    //    if (value.isPressed == true)
+    //    {
+    //        GameManager.UI.menuOpen = !GameManager.UI.menuOpen;
 
-            if (GameManager.UI.menuOpen == true)
-            {
-				GameManager.UI.ShowPopUpUI(GameManager.UI.menu);
-                Cursor.lockState = CursorLockMode.Confined;
-                player.GetComponent<PlayerInput>().enabled = false;
-            }
-            else
-            {
-                GameManager.UI.ClearPopUpUI();
-				Cursor.lockState = CursorLockMode.Locked;
-                player.GetComponent<PlayerInput>().enabled = true;
-            }
-        }
+    //        if (GameManager.UI.menuOpen == true)
+    //        {
+				//GameManager.UI.ShowPopUpUI(GameManager.UI.menu);
+    //            Cursor.lockState = CursorLockMode.Confined;
+    //            player.GetComponent<PlayerInput>().enabled = false;
+    //        }
+    //        else
+    //        {
+    //            GameManager.UI.ClearPopUpUI();
+				//Cursor.lockState = CursorLockMode.Locked;
+    //            player.GetComponent<PlayerInput>().enabled = true;
+    //        }
+    //    }
     }
 
 	private void OnInteraction(InputValue value)
