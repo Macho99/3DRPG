@@ -131,7 +131,8 @@ public class UIManager : MonoBehaviour
 	{
 		T ui = GameManager.Pool.GetUI(windowUI);
 		ui.transform.SetParent(windowCanvas.transform, false);
-		return ui;
+        _=StartCoroutine(FadeIn(ui.GetComponent<CanvasGroup>()));
+        return ui;
 	}
 
 	public T ShowWindowUI<T>(string path) where T : WindowUI
@@ -147,6 +148,7 @@ public class UIManager : MonoBehaviour
 
 	public void CloseWindowUI<T>(T windowUI) where T : WindowUI
 	{
+		_= StartCoroutine(FadeOut(windowUI.GetComponent<CanvasGroup>()));
 		GameManager.Pool.ReleaseUI(windowUI.gameObject);
 	}
 

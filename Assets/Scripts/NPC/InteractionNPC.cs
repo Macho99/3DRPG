@@ -3,57 +3,31 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Chat Text List", menuName = "NPC/ChatText")]
-public class ChatBox : ScriptableObject
+[CreateAssetMenu(fileName = "new DialogueContainer", menuName = "NPC/DialogueContainer")]
+public class DialogueContainer : ScriptableObject
 {
-    public List<string> stringList = new List<string>();
+    public List<string> stringList;
 }
 
 public class InteractionNPC : MonoBehaviour
 {
-    public ChatBox chatDetail;
-    public bool isInteraction;
-    public bool startTalk;
-
-    private void Awake()
-    {
-        isInteraction = false;
-        startTalk = false;
-    }
+    public DialogueContainer dialogue;
+    public bool isInteraction = false;
+    public NPCChatBox chatBox;
 
     private void Start()
     {
-        
+        isInteraction = false;
+        chatBox = GameManager.Resource.Load<NPCChatBox>("UI/WIndowUI/ChatBox");
+        chatBox.messages.Length.Equals(dialogue.stringList.Count);
+        chatBox.messages = dialogue.stringList.ToArray();
     }
 
-    private IEnumerator FadeOut(CanvasGroup cg)
+    private void OnTriggerEnter(Collider other)
     {
-        float fadeTime = 1f;
-        float accumTime = 0f;
-        while (accumTime < fadeTime)
+        if (other.tag == "Player")
         {
-            cg.alpha = Mathf.Lerp(1f, 0f, accumTime / fadeTime);
-            yield return 0;
-            accumTime += Time.deltaTime;
-        }
-        cg.alpha = 0f;
-        cg.gameObject.SetActive(false);
-    }
-
-    public void StartTalk()
-    {
-        if(gameObject.GetComponent<Baird>() != null)
-        {
-            gameObject.GetComponent<Baird>().curState = BairdState.Meet;
-            startTalk = true;
-        }
-    }
-
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.tag == "Player" && startTalk == true)
-        {
-            gameObject.GetComponent<Baird>().RotateAgent(other.transform.position);
+            isInteraction = false;
         }
     }
 
@@ -61,11 +35,7 @@ public class InteractionNPC : MonoBehaviour
     {
         if(other.tag == "Player")
         {
-            if(gameObject.GetComponent <Baird>() != null) 
-            {
-                gameObject.GetComponent<Baird>().curState = BairdState.Walk;
-                startTalk = false;
-            }
+            isInteraction = false;
         }
     }
 }

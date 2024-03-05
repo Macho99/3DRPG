@@ -13,7 +13,7 @@ public class PlayerInteraction : MonoBehaviour
 
     private void Awake()
     {
-        notice = GameManager.Resource.Load<NoticeUI>("UI/PopUpUI/Notice/NoticeUI");
+        notice = GameManager.Resource.Load<NoticeUI>("UI/WIndowUI/Notice/NoticeUI");
     }
 
     private void OnTriggerEnter(Collider other)
@@ -25,7 +25,7 @@ public class PlayerInteraction : MonoBehaviour
             notice.notice = "대화하기";
             if(notice.notice != null)
             {
-                GameManager.UI.ShowPopUpUI(notice);
+                GameManager.UI.ShowWindowUI(notice);
             }
         }
     }
@@ -36,7 +36,7 @@ public class PlayerInteraction : MonoBehaviour
         {
             nearbyNPC = null;
 
-            GameManager.UI.ClearPopUpUI();
+            GameManager.UI.ClearWindowUI();
         }
     }
 }

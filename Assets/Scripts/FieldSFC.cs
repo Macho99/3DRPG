@@ -1,47 +1,57 @@
+using MoreMountains.Feedbacks;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 public class FieldSFC : MonoBehaviour
 {
-	private static FieldSFC instance;
-	private static GameObject player;
+    [SerializeField] MMF_Player deathfault;
+    [SerializeField] MMF_Player attackFail;
+    [SerializeField] ChargeFeedback charge;
+    [SerializeField] MMF_Player katanaUlti;
+    [SerializeField] MMF_Player bowUlti;
+    [SerializeField] MMF_Player hit;
+    [SerializeField] MMF_Player stun;
 
-	public bool playerChating = false;
-	public static GameObject Player
-	{
-		get
-		{
-			if (player == null)
-				player = GameObject.FindGameObjectWithTag("Player");
-			return player;
-		}
-	}
+    private static FieldSFC instance;
+    private static Player player;
+    public static Player Player
+    {
+        get
+        {
+            if (player == null)
+                player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+            return player;
+        }
+    }
 
-	public static FieldSFC Instance
-	{
-		get { return instance; }
-	}
+    public static FieldSFC Instance
+    {
+        get { return instance; }
+    }
 
-	private void Awake()
-	{
-		if(instance != null)
-		{
-			Destroy(gameObject);
-			return;
-		}
-		instance = this;
-	}
+    private void Awake()
+    {
+        if (instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        instance = this;
+    }
 
-	private void OnDestroy()
-	{
-		if(instance == this)
-		{
-			instance = null;
-			player = null;
-		}
-	}
+    private void OnDestroy()
+    {
+        if (instance == this)
+        {
+            instance = null;
+            player = null;
+        }
+    }
 
     private void OnOpenMenu(InputValue value)
     {
@@ -52,37 +62,81 @@ public class FieldSFC : MonoBehaviour
             if (GameManager.UI.menuOpen == true)
             {
 				GameManager.UI.ShowPopUpUI(GameManager.UI.menu);
-                Cursor.lockState = CursorLockMode.Confined;
-                player.GetComponent<PlayerInput>().enabled = false;
+                player.IgnoreInput(true);
             }
             else
             {
                 GameManager.UI.ClearPopUpUI();
-				Cursor.lockState = CursorLockMode.Locked;
-                player.GetComponent<PlayerInput>().enabled = true;
+                player.IgnoreInput(false);
             }
         }
     }
 
-	private void OnInteraction(InputValue value)
-	{
-        var chatBox = GameManager.Resource.Load<NPCChatBox>("UI/WIndowUI/Chat Box");
-        if (player.GetComponent<PlayerInteraction>().nearbyNPC == null)
-        {
-            Debug.Log("가까운 NPC 없음");
-            return;
-        }
-        else if (player.GetComponent<PlayerInteraction>().nearbyNPC != null && playerChating == false)
-        {
-            player.GetComponent<PlayerInteraction>().nearbyNPC.StartTalk();
 
-			chatBox.messages = player.GetComponent<PlayerInteraction>().nearbyNPC.chatDetail.stringList;
-            GameManager.UI.ShowWindowUI(chatBox);
-			playerChating = true;
+    private void OnInteraction(InputValue value)
+	{
+        if(player.GetComponent<PlayerInteraction>().nearbyNPC != null)
+        {
+            //var newChatBox = player.GetComponent<PlayerInteraction>().nearbyNPC.chatBox;
+            if (GameManager.Pool.IsContain(player.GetComponent<PlayerInteraction>().nearbyNPC.chatBox) == true)
+            {
+                if(player.GetComponent<PlayerInteraction>().nearbyNPC.chatBox.currentTextIndex < player.GetComponent<PlayerInteraction>().nearbyNPC.chatBox.messages.Length)
+                {
+                    player.GetComponent<PlayerInteraction>().nearbyNPC.chatBox.currentTextIndex++;
+                }
+                else
+                {
+                    GameManager.UI.ClearWindowUI();
+                    player.GetComponent<PlayerInteraction>().nearbyNPC.chatBox.currentTextIndex = 0;
+                }
+            }
+            else
+            {
+                GameManager.UI.ShowWindowUI(player.GetComponent<PlayerInteraction>().nearbyNPC.chatBox);
+            }
         }
-		else if (player.GetComponent<PlayerInteraction>().nearbyNPC != null && playerChating == true)
-		{
-			chatBox.ChangedText();
-        }
+    }
+
+    public void PlayDeathfault()
+    {
+        deathfault.PlayFeedbacks();
+    }
+
+    public void PlayAttackFail()
+    {
+        attackFail.PlayFeedbacks();
+    }
+
+    public void PlayCharge(bool value)
+    {
+        if (value == true)
+            charge.Play();
+        else
+            charge.Stop();
+    }
+
+    public void PlayCharge(int level)
+    {
+        charge.SetChargeLevel(level);
+    }
+
+    public void PlayKatanaUlti()
+    {
+        katanaUlti.PlayFeedbacks();
+    }
+
+    public void PlayBowUlti()
+    {
+        bowUlti.PlayFeedbacks();
+    }
+
+    public void PlayHit()
+    {
+        hit.PlayFeedbacks();
+    }
+
+    public void PlayStun()
+    {
+        stun.PlayFeedbacks();
     }
 }

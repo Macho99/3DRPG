@@ -115,11 +115,27 @@ public class Baird : MonoBehaviour
         }
     }
 
-
     public void RotateAgent(Vector3 target)
     {
         Vector3 direction = (target - transform.position).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(direction);
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Player")
+        {
+            RotateAgent(other.transform.position);
+            curState = BairdState.Meet;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if(other.tag == "Player")
+        {
+            curState = BairdState.Walk;
+        }
     }
 }
