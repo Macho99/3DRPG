@@ -36,7 +36,7 @@ public class RangedBattleState : StateMachineBehaviour
 
         Turn(target, myTf);
 
-        if (timer > attackDelay)
+        if (timer > attackDelay || timer > 5f)
         {
             if (Vector3.Distance(animator.transform.position, target.position) > agent.stoppingDistance)
             {

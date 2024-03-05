@@ -12,7 +12,7 @@ public class NormalAttackCDState : StateMachineBehaviour
     Transform myTf;
     NavMeshAgent agent;
     DeathKnight knight;
-    int random;
+    int randomWalk;
 
     [SerializeField] float randomDelay;
 
@@ -35,7 +35,7 @@ public class NormalAttackCDState : StateMachineBehaviour
             TwoHandedChooseNextMotion(animator);
         }
 
-        random = Random.Range(0, 2);
+        randomWalk = Random.Range(0, 3);
         randomDelay = Random.Range(0.5f, 1f);
 
         attackDelay = randomDelay;
@@ -64,14 +64,13 @@ public class NormalAttackCDState : StateMachineBehaviour
             animator.SetBool("AttackDelay", false);
         }
 
-        switch (random)
+        if (randomWalk == 0)
         {
-            case 0:
-                animator.SetBool("isWalking", true);
-                break;
-            case 1:
-                animator.SetBool("isWalking", false);
-                break;
+            animator.SetBool("isWalking", true);
+        }
+        else
+        {
+            animator.SetBool("isWalking", false);
         }
     }
 

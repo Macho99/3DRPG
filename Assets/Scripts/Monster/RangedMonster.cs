@@ -18,8 +18,6 @@ public class RangedMonster : MonoBehaviour
 
     public void Shot()
     {
-        print("Shot!!!");
-
         GameObject bullet = Instantiate(bulletPrefab, shotPoint.position, Quaternion.identity);
         Vector3 dir = (monster.target.position - transform.position).normalized;
         bullet.transform.forward = dir;
