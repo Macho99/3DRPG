@@ -112,6 +112,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1761588340306672089, guid: c2ae8d95860915148bdf28559c527cbb, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2816651708423858305, guid: c2ae8d95860915148bdf28559c527cbb, type: 3}
       propertyPath: m_Materials.Array.size
       value: 1
@@ -217,6 +221,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c92e25ba381c2b429f387d86ffa0584, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 0
 --- !u!4 &2482217292691567047 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3160799996726113980, guid: c2ae8d95860915148bdf28559c527cbb, type: 3}
@@ -239,6 +244,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1761588339828286792, guid: c2ae8d95860915148bdf28559c527cbb, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1761588340306672089, guid: c2ae8d95860915148bdf28559c527cbb, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1761588340603386587, guid: c2ae8d95860915148bdf28559c527cbb, type: 3}
       propertyPath: m_Materials.Array.size
       value: 1
@@ -248,6 +261,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1761588341216552576, guid: c2ae8d95860915148bdf28559c527cbb, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1761588341453957568, guid: c2ae8d95860915148bdf28559c527cbb, type: 3}
       propertyPath: m_Materials.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -361,6 +378,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c92e25ba381c2b429f387d86ffa0584, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 0
 --- !u!1001 &8170752514225325220
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -372,6 +390,10 @@ PrefabInstance:
     - target: {fileID: 1697572148560643400, guid: c2ae8d95860915148bdf28559c527cbb, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1761588340306672089, guid: c2ae8d95860915148bdf28559c527cbb, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2816651708423858305, guid: c2ae8d95860915148bdf28559c527cbb, type: 3}
       propertyPath: m_Materials.Array.size
@@ -488,6 +510,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c92e25ba381c2b429f387d86ffa0584, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 0
 --- !u!1001 &8170752514790407412
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -499,6 +522,10 @@ PrefabInstance:
     - target: {fileID: 1697572148560643400, guid: c2ae8d95860915148bdf28559c527cbb, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1761588340306672089, guid: c2ae8d95860915148bdf28559c527cbb, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2816651708423858305, guid: c2ae8d95860915148bdf28559c527cbb, type: 3}
       propertyPath: m_Materials.Array.size
@@ -615,6 +642,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c92e25ba381c2b429f387d86ffa0584, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 0
 --- !u!1001 &8170752515313820296
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -629,6 +657,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1761588339828286792, guid: c2ae8d95860915148bdf28559c527cbb, type: 3}
       propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1761588340306672089, guid: c2ae8d95860915148bdf28559c527cbb, type: 3}
+      propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1761588340393008369, guid: c2ae8d95860915148bdf28559c527cbb, type: 3}
@@ -774,3 +806,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c92e25ba381c2b429f387d86ffa0584, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 0

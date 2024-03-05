@@ -36,7 +36,6 @@ public class RandomWalkState : StateMachineBehaviour
 
         if (random == 0 && Vector3.Distance(animator.transform.position, target.position) <= agent.stoppingDistance)
         {
-            Debug.Log("reroll");
             animator.ResetTrigger("Walk_F");
             animator.SetTrigger("Walk_L");
         }
@@ -44,7 +43,7 @@ public class RandomWalkState : StateMachineBehaviour
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        
+        animator.transform.LookAt(target);
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

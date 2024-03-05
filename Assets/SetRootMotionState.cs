@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class SetRootMotionState : StateMachineBehaviour
 {
-    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        animator.applyRootMotion = true;
+        animator.applyRootMotion = !animator.applyRootMotion;
+        animator.SetTrigger("isReady");
     }
 }

@@ -33,7 +33,7 @@ public class DeathKnight : MonoBehaviour
 
     public BossState bossState;
 
-    [SerializeField] private Avatar avatar;
+    //[SerializeField] private Avatar avatar;
 
     [SerializeField] private GameObject myWeapon;
     [SerializeField] private Material mySwordMaterial;
@@ -133,15 +133,16 @@ public class DeathKnight : MonoBehaviour
         anim.SetFloat("AttackSpeed", 1f);
     }
 
-    public void ChangeAvatar()
+    //public void ChangeAvatar()
+    //{
+    //    bossState = BossState.TWOHANDED;
+    //    //ChangeWeapon();
+    //    anim.avatar = this.avatar;
+    //}
+
+    public void ChangeWeapon()
     {
         bossState = BossState.TWOHANDED;
-        ChangeWeaponSize();
-        anim.avatar = this.avatar;
-    }
-
-    private void ChangeWeaponSize()
-    {
         myWeapon.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
         myWeapon.transform.GetChild(0).GetComponent<MeshRenderer>().material = mySwordMaterial;
         swordEffect.SetActive(true);
