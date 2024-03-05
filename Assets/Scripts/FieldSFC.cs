@@ -76,6 +76,7 @@ public class FieldSFC : MonoBehaviour
         {
             player.GetComponent<PlayerInteraction>().nearbyNPC.StartTalk();
 
+			chatBox.messages = player.GetComponent<PlayerInteraction>().nearbyNPC.chatDetail.stringList;
             GameManager.UI.ShowWindowUI(chatBox);
 			playerChating = true;
         }

@@ -8,14 +8,6 @@ public class NPCChatBox : WindowUI
 
     public List<string> messages;
 
-    private void OnEnable()
-    {
-        if (FieldSFC.Player.GetComponent<PlayerInteraction>().nearbyNPC != null)
-        {
-            messages = FieldSFC.Player.GetComponent<PlayerInteraction>().nearbyNPC.chatDetail.stringList;
-        }
-    }
-
     private void Update()
     {
         if (messages == null)
