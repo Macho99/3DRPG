@@ -11,10 +11,9 @@ public class TargetFollowHead : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
     }
 
-    private void Start()
+
+    private void Update()
     {
-        var head = player.transform.Find("PT_Head");
-        transform.parent = head;
-        transform.localPosition = head.position;
+        transform.position = new Vector3(player.transform.position.x, player.transform.position.y + 1.6f ,player.transform.position.z);
     }
 }

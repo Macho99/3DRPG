@@ -22,7 +22,11 @@ public class PlayerInteraction : MonoBehaviour
         {
             nearbyNPC = other.GetComponent<InteractionNPC>();
 
-            GameManager.UI.ShowPopUpUI(notice);
+            notice.notice = "대화하기";
+            if(notice.notice != null)
+            {
+                GameManager.UI.ShowPopUpUI(notice);
+            }
         }
     }
 

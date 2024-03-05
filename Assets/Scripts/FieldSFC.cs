@@ -7,6 +7,8 @@ public class FieldSFC : MonoBehaviour
 {
 	private static FieldSFC instance;
 	private static GameObject player;
+
+	public bool playerChating = false;
 	public static GameObject Player
 	{
 		get
@@ -64,17 +66,22 @@ public class FieldSFC : MonoBehaviour
 
 	private void OnInteraction(InputValue value)
 	{
-        if (player.GetComponent<PlayerInteraction>().nearbyNPC = null)
+        var chatBox = GameManager.Resource.Load<NPCChatBox>("UI/WIndowUI/Chat Box");
+        if (player.GetComponent<PlayerInteraction>().nearbyNPC == null)
         {
             Debug.Log("가까운 NPC 없음");
             return;
         }
-
-        if (player.GetComponent<PlayerInteraction>().nearbyNPC != null)
+        else if (player.GetComponent<PlayerInteraction>().nearbyNPC != null && playerChating == false)
         {
             player.GetComponent<PlayerInteraction>().nearbyNPC.StartTalk();
 
-            Debug.Log("대화 시작");
+            GameManager.UI.ShowWindowUI(chatBox);
+			playerChating = true;
+        }
+		else if (player.GetComponent<PlayerInteraction>().nearbyNPC != null && playerChating == true)
+		{
+			chatBox.ChangedText();
         }
     }
 }

@@ -2,13 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using static UnityEditor.Rendering.InspectorCurveEditor;
+
+[CreateAssetMenu(fileName = "New Chat Text List", menuName = "NPC/ChatText")]
+public class ChatBox : ScriptableObject
+{
+    public List<string> stringList = new List<string>();
+}
 
 public class InteractionNPC : MonoBehaviour
 {
-    public Transform chatPos;
-
-    public string chatDetail;
+    public ChatBox chatDetail;
     public bool isInteraction;
     public bool startTalk;
 
@@ -58,8 +61,11 @@ public class InteractionNPC : MonoBehaviour
     {
         if(other.tag == "Player")
         {
-            gameObject.GetComponent<Baird>().curState = BairdState.Walk;
-            startTalk = false;
+            if(gameObject.GetComponent <Baird>() != null) 
+            {
+                gameObject.GetComponent<Baird>().curState = BairdState.Walk;
+                startTalk = false;
+            }
         }
     }
 }
