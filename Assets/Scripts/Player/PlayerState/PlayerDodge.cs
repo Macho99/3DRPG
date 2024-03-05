@@ -40,6 +40,7 @@ public class PlayerDodge : StateBase<Player.State, Player>
 
 	public override void Exit()
 	{
+		playerMove.SetAnimFloat("IdleAdapter", -1f);
 		playerAnimEvent.OnLandEnd.RemoveListener(CheckDodgeAttack);
 		playerAttack.OnAttack1Down.RemoveListener(CheckAttackPressed);
 		Time.timeScale = 1f;

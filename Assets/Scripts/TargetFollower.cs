@@ -9,7 +9,7 @@ public class TargetFollower : MonoBehaviour
 	[SerializeField] bool followScale = false;
 	[SerializeField] Vector3 positionOffset;
 
-	private void Update()
+	public void Update()
 	{
 		if (target == null) return;
 

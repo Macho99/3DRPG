@@ -3,11 +3,17 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
 	[SerializeField] State curState;
+	[SerializeField] Rig neckRig;
+	[SerializeField] Rig spineRig;
+	[SerializeField] Rig leftShoulderRig;
+	[SerializeField] Rig rightHandRig;
 
 	[Serializable]
 	public enum State { Idle, Walk, Run, Dodge, Jump, OnAir, Land,
@@ -23,6 +29,7 @@ public class Player : MonoBehaviour
 	private PlayerAttack playerAttack;
 	private PlayerAnimEvent playerAnimEvent;
 	private StateMachine<State, Player> stateMachine;
+	private PlayerInput playerInput;
 	private bool camFollowFixed;
 
 	[HideInInspector] public UnityEvent OnWeaponIdle;
@@ -35,14 +42,26 @@ public class Player : MonoBehaviour
 	public PlayerMove PlayerMove { get {  return playerMove; } }
 	public PlayerAttack PlayerAttack { get {  return playerAttack; } }
 	public PlayerAnimEvent PlayerAnimEvent { get { return playerAnimEvent; } }
+	public float StunEndTime { get; private set; }
+
+	[SerializeField] private int curHP;
+	[SerializeField] private int maxHp = 100;
+	public int CurHp { get { return curHP; } set { curHP = value; } }
+	public int MaxHp { get { return maxHp; } set { maxHp = value; } }
+
+	[SerializeField] private float stunDuration;
+	[SerializeField] private Vector3 stunDir;
+	[SerializeField] private int damage;
 
 	private void Awake()
 	{
+		curHP = maxHp;
 		anim = GetComponent<Animator>();
 		playerLook = GetComponent<PlayerLook>();
 		playerMove = GetComponent<PlayerMove>();
 		playerAttack = GetComponent<PlayerAttack>();
 		playerAnimEvent = GetComponent<PlayerAnimEvent>();
+		playerInput = GetComponent<PlayerInput>();
 
 		camRootFollower = playerLook.CamRoot.GetComponent<MMFollowTarget>();
 		OnWeaponIdle = new UnityEvent();
@@ -65,7 +84,8 @@ public class Player : MonoBehaviour
 		stateMachine.AddState(State.MoveAttack, new PlayerAttackMove(this, stateMachine));
 		stateMachine.AddState(State.OnAirAttack, new PlayerAttackOnAir(this, stateMachine));
 
-		stateMachine.AddState(State.JumpTest, new PlayerJumpTest(this, stateMachine));
+		stateMachine.AddState(State.Stun, new PlayerStun(this, stateMachine));
+		stateMachine.AddState(State.Die, new PlayerDie(this, stateMachine));
 	}
 
 	private void Start()
@@ -152,5 +172,101 @@ public class Player : MonoBehaviour
 	public void DodgeAttackStart()
 	{
 		OnDodgeAttackStart?.Invoke();
+	}
+
+	public void SetNeckRigWeight(float weight)
+	{
+		//if(neckRigCoroutine != null)
+		//	StopCoroutine(neckRigCoroutine);
+
+		//neckRigCoroutine = StartCoroutine(CoSetNeckRigWeight(weight, lerpSpeed));
+		neckRig.weight = weight;
+	}
+
+	//public IEnumerator CoSetNeckRigWeight(float weight, float lerpSpeed)
+	//{
+	//	while (true)
+	//	{
+	//		neckRig.weight = Mathf.Lerp(neckRig.weight, weight, Time.deltaTime * lerpSpeed);
+	//		if(Mathf.Abs(weight - neckRig.weight) < 0.1f)
+	//		{
+	//			neckRig.weight = weight;
+	//			break;
+	//		}
+	//		yield return null;
+	//	}
+	//}
+
+	public float GetBowAimRigWeight()
+	{
+		return spineRig.weight;
+	}
+
+	public void SetBowAimRigWeight(float spine, float leftShoulder, float rightHand)
+	{
+		//print(spine);
+		spineRig.weight = spine;
+		leftShoulderRig.weight = leftShoulder;
+		rightHandRig.weight = rightHand;
+	}
+
+	public void IgnoreInput(bool value)
+	{
+		playerInput.enabled = !value;
+		playerLook.enabled = !value;
+	}
+
+	private void OnTestButton(InputValue value)
+	{
+		bool pressed = value.Get<float>() > 0.9f;
+		if (pressed == true)
+		{
+			TakeDamage(damage, true, stunDuration, stunDir);
+		}
+	}
+
+	public void TakeDamage(int damage, bool hitFeedback = true)
+	{
+		TakeDamage(damage, hitFeedback, 0f, Vector3.zero);
+	}
+
+	public void TakeDamage(int damage, bool hitFeedback, float stunDuration, Vector3 knockback)
+	{
+		if (curState == State.Die) return;
+
+		curHP -= damage;
+		if(curHP <= 0)
+		{
+			curHP = 0;
+			stateMachine.ChangeState(State.Die);
+			return;
+		}
+
+		if(stunDuration > 0.01f) 
+		{
+			if(knockback.sqrMagnitude > 0.1f)
+			{
+				knockback.y = 0f;
+				transform.forward = -knockback;
+			}
+			Stun(stunDuration);
+		}
+		else if(hitFeedback == true)
+		{
+			Hit();
+		}
+	}
+
+	private void Stun(float duration)
+	{
+		playerAttack.ChangeStateToIdle();
+		StunEndTime = Time.time + duration;
+		stateMachine.ChangeState(Player.State.Stun);
+	}
+
+	private void Hit()
+	{
+		playerAttack.SetAnimTrigger("Hit");
+		FieldSFC.Instance?.PlayHit();
 	}
 }

@@ -95,10 +95,12 @@ public class PlayerLook : MonoBehaviour
 
     private void Look()
     {
-        if (follow == false) return;
-        xAngle += lookInput.x * Time.deltaTime * sensivility;
-        yAngle += lookInput.y * Time.deltaTime * sensivility;
-        yAngle = Mathf.Clamp(yAngle, -50f, 50f);
+        if (follow == true)
+		{
+			xAngle += lookInput.x * Time.deltaTime * sensivility;
+			yAngle += lookInput.y * Time.deltaTime * sensivility;
+			yAngle = Mathf.Clamp(yAngle, -50f, 50f);
+		}
 
         moveRoot.rotation = Quaternion.Euler(new Vector3(0f, xAngle, 0f));
 		camRoot.rotation = Quaternion.Euler(new Vector3(-yAngle, xAngle, 0f));
@@ -107,5 +109,29 @@ public class PlayerLook : MonoBehaviour
     private void OnLook(InputValue value)
     {
         lookInput = value.Get<Vector2>();
+    }
+
+    public void AutoRotate(float duration, float deltaXAngle, float deltaYAngle)
+    {
+        _ = StartCoroutine(CoAutoRotate(duration, deltaXAngle, deltaYAngle));
+    }
+
+    private IEnumerator CoAutoRotate(float duration, float deltaXAngle, float deltaYAngle)
+    {
+        float elapsed = 0f;
+        float targetXAngle = xAngle + deltaXAngle;
+        float targetYAngle = yAngle + deltaYAngle;
+        follow = false;
+
+        while (elapsed < duration)
+        {
+            this.xAngle = Mathf.Lerp(this.xAngle, targetXAngle, Time.deltaTime / duration * 3);
+            this.yAngle = Mathf.Lerp(this.yAngle, targetYAngle, Time.deltaTime / duration * 3);
+
+            elapsed += Time.deltaTime;
+			yield return null;
+        }
+
+        follow = true;
     }
 }

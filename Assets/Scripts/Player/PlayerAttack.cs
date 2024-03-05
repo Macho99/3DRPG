@@ -9,7 +9,6 @@ using UnityEngine.Rendering.LookDev;
 public class PlayerAttack : MonoBehaviour
 {
 	[SerializeField] Transform weaponHolder;
-	[SerializeField] GameObject swordDummy;
 	[SerializeField] float attackHoldTime = 0.3f;
 	[SerializeField] MMF_Player attackFailFeedback;
 
@@ -19,13 +18,18 @@ public class PlayerAttack : MonoBehaviour
 	[HideInInspector] public UnityEvent<Player.State> OnAttack2Down;
 	[HideInInspector] public UnityEvent<Player.State> OnAttack2Up;
 	[HideInInspector] public UnityEvent<Player.State> OnAttack2Hold;
+	[HideInInspector] public UnityEvent<Player.State> OnQButtonDown;
+	[HideInInspector] public UnityEvent<Player.State> OnQButtonUp;
+	[HideInInspector] public UnityEvent<Player.State> OnEButtonDown;
+	[HideInInspector] public UnityEvent<Player.State> OnEButtonUp;
+	[HideInInspector] public UnityEvent<Player.State> OnRButtonDown;
+	[HideInInspector] public UnityEvent<Player.State> OnRButtonUp;
 
 	private Coroutine Attack1HoldCoroutine;
 	private Coroutine Attack2HoldCoroutine;
 
 	public bool Attack1Pressed { get; private set; }
 	public bool Attack2Pressed { get; private set; }
-	public GameObject SwordDummy { get => swordDummy; }
 	public PlayerAnimEvent AnimEvent { get => animEvent; }
 
 	private Player player;
@@ -47,10 +51,17 @@ public class PlayerAttack : MonoBehaviour
 		OnAttack2Down = new UnityEvent<Player.State>();
 		OnAttack2Up = new UnityEvent<Player.State>();
 		OnAttack2Hold = new UnityEvent<Player.State>();
+		OnQButtonDown = new UnityEvent<Player.State>();
+		OnQButtonUp = new UnityEvent<Player.State>();
+		OnEButtonDown = new UnityEvent<Player.State>();
+		OnEButtonUp = new UnityEvent<Player.State>();
+		OnRButtonDown = new UnityEvent<Player.State>();
+		OnRButtonUp = new UnityEvent<Player.State>();
 
-		if(weapons.Length > 0)
+		if (weapons.Length > 0)
 		{
 			curWeapon = weapons[0];
+			anim.runtimeAnimatorController = curWeapon.GetAnimController();
 		}
 	}
 
@@ -98,9 +109,49 @@ public class PlayerAttack : MonoBehaviour
 		holdevent?.Invoke(player.CurState);
 	}
 
+	private void OnQButton(InputValue value)
+	{
+		bool pressed = value.Get<float>() > 0.9f ? true : false;
+
+		if (pressed)
+		{
+			OnQButtonDown?.Invoke(player.CurState);
+		}
+		else
+		{
+			OnQButtonUp?.Invoke(player.CurState);
+		}
+	}
+	private void OnEButton(InputValue value)
+	{
+		bool pressed = value.Get<float>() > 0.9f ? true : false;
+
+		if (pressed)
+		{
+			OnEButtonDown?.Invoke(player.CurState);
+		}
+		else
+		{
+			OnEButtonUp?.Invoke(player.CurState);
+		}
+	}
+	private void OnRButton(InputValue value)
+	{
+		bool pressed = value.Get<float>() > 0.9f ? true : false;
+
+		if (pressed)
+		{
+			OnRButtonDown?.Invoke(player.CurState);
+		}
+		else
+		{
+			OnRButtonUp?.Invoke(player.CurState);
+		}
+	}
+
 	public void ChangeStateToIdle(bool forceIdle = false)
 	{
-		curWeapon.ChangeStateToIdle(forceIdle);
+		curWeapon?.ChangeStateToIdle(forceIdle);
 	}
 
 	public float GetAnimNormalizedTime(int layer)
@@ -134,6 +185,16 @@ public class PlayerAttack : MonoBehaviour
 		anim.SetFloat(str, value, dampTime, deltaTime);
 	}
 
+	public void SetAnimBool(string str, bool value)
+	{ 
+		anim.SetBool(str, value);
+	}
+
+	public void SetAnimUpdateMode(AnimatorUpdateMode mode)
+	{
+		anim.updateMode = mode;
+	}
+
 	private void OnUnarm(InputValue value)
 	{
 		if(value.isPressed == true)
@@ -142,7 +203,7 @@ public class PlayerAttack : MonoBehaviour
 
 	public void SetUnarmed()
 	{
-		curWeapon.SetUnArmed();
+		curWeapon?.SetUnArmed();
 	}
 
 	public void PlayAttackFailFeedback()

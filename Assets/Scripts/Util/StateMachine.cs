@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
 public class StateMachine<TState, TOwner>
@@ -40,6 +41,7 @@ public class StateMachine<TState, TOwner>
 
 	public void ChangeState(TState newState)
 	{
+		//Debug.Log(newState);
 		curState.Exit();
 		curStateEnum = newState;
 		curState = states[newState];

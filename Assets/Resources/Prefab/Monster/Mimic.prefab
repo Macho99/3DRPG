@@ -502,7 +502,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6233653611403053278}
-  m_Layer: 0
+  - component: {fileID: 731920754770030796}
+  - component: {fileID: 8563418745888782764}
+  m_Layer: 9
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -526,6 +528,40 @@ Transform:
   - {fileID: 1273546428972433348}
   m_Father: {fileID: 5363900939479094660}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &731920754770030796
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3697788749709946844}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 2, z: 1}
+  m_Center: {x: 0, y: -0.5, z: 0}
+--- !u!114 &8563418745888782764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3697788749709946844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c92e25ba381c2b429f387d86ffa0584, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 0
 --- !u!1 &3824408238934397533
 GameObject:
   m_ObjectHideFlags: 0
@@ -764,11 +800,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2673b790b827eec488fb2dddc1b44939, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 100
+  maxHp: 250
   currentHp: 0
-  damage: 10
-  maxStamina: 100
-  currentStamina: 0
+  damage: 12
   attackRange: 3
   attackDelay: 3
   moveSpeed: 3
@@ -781,6 +815,7 @@ MonoBehaviour:
   distanceFromOriginPos: 10
   spawnDir: {x: 0, y: 0, z: 0}
   target: {fileID: 0}
+  attackCol: {fileID: 731920754770030796}
   isReturning: 0
   targetMask:
     serializedVersion: 2
@@ -789,7 +824,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   state: 0
-  staminaRate: 10
 --- !u!95 &6097838292650694087
 Animator:
   serializedVersion: 5

@@ -7,11 +7,11 @@ using UnityEngine;
 public class Katana : Sword
 {
 	[SerializeField] State curState;
-	[SerializeField] MMF_Player deathfaultFeedback;
+	[SerializeField] TargetFollower swordDummy;
 
 	[Serializable]
 	public enum State { Idle, Unarmed, QuickSheath, Equip, 
-		QuickDrawEntry, QuickDrawIdle, QuickDraw1, QuickDraw2, QuickDraw3, QuickDraw4, QuickDraw5, QuickDraw6,
+		QuickDrawEntry, QuickDrawIdle, QuickDraw1, QuickDraw2, QuickDraw3, QuickDraw4, QuickDraw5, QuickDraw6, QuickDraw7,
 		DashAttackVerA, DashAttackVerB,
 		DashComboVerA01, DashComboVerA02, DashComboVerA03, DashComboVerA04,
 		DashComboVerB01, DashComboVerB02, DashComboVerB03,
@@ -21,7 +21,6 @@ public class Katana : Sword
 		JumpCombo01, JumpCombo02, JumpCombo03, JumpCombo04, JumpCombo05, JumpCombo06, JumpCombo07,
 		DodgeAttack, 
 		AttackFail };
-	private GameObject swordDummy;
 	private StateMachine<State, Katana> stateMachine;
 
 	public bool Armed { get; set; }
@@ -44,6 +43,7 @@ public class Katana : Sword
 		stateMachine.AddState(State.QuickDraw4, new KatanaQuickDraw4(this, stateMachine));
 		stateMachine.AddState(State.QuickDraw5, new KatanaQuickDraw5(this, stateMachine));
 		stateMachine.AddState(State.QuickDraw6, new KatanaQuickDraw6(this, stateMachine));
+		stateMachine.AddState(State.QuickDraw7, new KatanaQuickDraw7(this, stateMachine));
 		stateMachine.AddState(State.DashAttackVerA, new KatanaDashAttackVerA(this, stateMachine));
 		stateMachine.AddState(State.DashAttackVerB, new KatanaDashAttackVerB(this, stateMachine));
 		stateMachine.AddState(State.DashComboVerA01, new KatanaDashComboVerA01(this, stateMachine));
@@ -77,7 +77,6 @@ public class Katana : Sword
 	protected override void Start()
 	{
 		base.Start();
-		swordDummy = playerAttack.SwordDummy;
 		stateMachine.SetUp(State.Idle);
 	}
 
@@ -99,19 +98,36 @@ public class Katana : Sword
 	{
 		if(value == true)
 		{
+			swordDummy.Update();
 			renderer.gameObject.SetActive(false);
 			swordDummy.gameObject.SetActive(true);
 		}
 		else
 		{
+			swordDummy.Update();
 			renderer.gameObject.SetActive(true);
 			swordDummy.gameObject.SetActive(false);
 		}
 	}
 
-	public void PlayDeathfaultFeedback()
+	public void PlayChargeFeedback(int level)
 	{
-		deathfaultFeedback?.PlayFeedbacks();
+		switch (level)
+		{
+			case 0:
+				FieldSFC.Instance?.PlayCharge(false);
+				return;
+			case 1:
+				FieldSFC.Instance?.PlayCharge(true);
+				break;
+			case 2:
+			case 3:
+				break;
+			default:
+				print($"레벨은 0~3이어야 합니다 {level}");
+				return;
+		}
+		FieldSFC.Instance?.PlayCharge(level);
 	}
 
 	public override void ChangeStateToIdle(bool forceIdle = false)

@@ -85,6 +85,42 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "QButton",
+                    "type": "Value",
+                    "id": "a6a88a95-ac1d-48ca-91cb-c7f2b834693d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "EButton",
+                    "type": "Value",
+                    "id": "2dfa0661-aac9-4646-bece-bbc010fcf516",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "RButton",
+                    "type": "Value",
+                    "id": "8f4516e8-11f0-4ca7-b210-dc156fbe5bc8",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "TestButton",
+                    "type": "Value",
+                    "id": "3a7f3cbc-b0dd-451e-9840-d3846852b272",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -228,6 +264,50 @@
                     "processors": "",
                     "groups": "",
                     "action": "Unarm",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "914e8c3b-276c-4ae6-8c0a-d547009938c9",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "QButton",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a0871d9e-b276-43cb-9b0a-50b6a8de9445",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "EButton",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b722cc81-a33c-42fd-9ee3-a0cb9788712c",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RButton",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "16846b1a-585f-40a6-8bf9-d463cf11b770",
+                    "path": "<Keyboard>/leftAlt",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TestButton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

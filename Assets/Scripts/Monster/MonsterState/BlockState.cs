@@ -14,6 +14,7 @@ public class BlockState : StateMachineBehaviour
     NavMeshAgent agent;
     Monster monster;
     MonsterShield monsterShield;
+    int random;
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -25,6 +26,7 @@ public class BlockState : StateMachineBehaviour
         myTf = animator.GetComponent<Transform>();
         agent = animator.GetComponent<NavMeshAgent>();
         timer = monsterShield.guardHit ? monster.attackDelay - 1 : 0f;
+        random = Random.Range(0, animator.GetComponent<Monster>().specialAttackRange);
 
         monster.state = State.BLOCK;
     }
@@ -32,6 +34,11 @@ public class BlockState : StateMachineBehaviour
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         timer += Time.deltaTime;
+
+        if (random == 0)
+        {
+            animator.SetBool("SpecialAttack", true);
+        }
 
         if (target == null)
         {

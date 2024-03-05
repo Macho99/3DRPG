@@ -3,41 +3,41 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class MonsterShield : MonoBehaviour
+public class MonsterShield : Monster
 {
-    Monster monster;
-    Animator anim;
-
-    [SerializeField] private float viewRadius;
-    public float blockAngle; // 방어 가능 각도
+    [SerializeField] private float maxStamina;
+    [SerializeField] private float currentStamina;
+    [SerializeField] private float staminaRate; // 스태미너 재생성 수치
+    [SerializeField] private float blockAngle; // 방어 가능 각도
+    public bool guardHit; // 방패로 막았었는지 체크
 
     public Transform blockTarget;
 
-    [SerializeField] private LayerMask targetMask; // 타겟레이어
-
-    public bool guardHit; // 방패로 막았었는지 체크
-
-    private void Awake()
+    protected override void Start()
     {
-        monster = GetComponent<Monster>();
-        anim = GetComponent<Animator>();
+        base.Start();
+        currentStamina = maxStamina;
+        StartCoroutine(FindGuardTargetWithDelay(.2f));
     }
 
-    private void Start()
+    private void Update()
     {
-        StartCoroutine(FindTargetWithDelay(.2f));
+        if (state == State.IDLE)
+        {
+            currentStamina = Mathf.Clamp(currentStamina + staminaRate * Time.deltaTime, 0, maxStamina);
+        }
     }
 
-    IEnumerator FindTargetWithDelay(float delay)
+    IEnumerator FindGuardTargetWithDelay(float delay)
     {
         while (true)
         {
             yield return new WaitForSeconds(delay);
-            FindTargets();
+            FindGuardTargets();
         }
     }
 
-    private void FindTargets()
+    private void FindGuardTargets()
     {
         blockTarget = null;
 
@@ -55,19 +55,23 @@ public class MonsterShield : MonoBehaviour
         }
     }
 
-    public void TakeDamage(float damage)
+    public override void TakeDamage(float damage)
     {
-        if (blockTarget != null && monster.state == State.BLOCK)
+        if (state == State.DEAD) { return; }
+
+
+        if (blockTarget != null && state == State.BLOCK)
         {
             // 감소된 데미지 받음
-            monster.currentStamina -= 20;
+            currentStamina -= 20;
             guardHit = true;
             print("Reduce Damage or Guard Damage");
 
-            if (monster.currentStamina <= 0)
+            if (currentStamina <= 0)
             {
                 // 가드 브레이크
-                monster.state = State.GUARD_BREAK;
+                state = State.GUARD_BREAK;
+                currentStamina = maxStamina;
                 anim.SetTrigger("GuardBreak");
                 print("Guard Break");
             }
@@ -76,13 +80,34 @@ public class MonsterShield : MonoBehaviour
                 anim.SetTrigger("Guard");
             }
         }
-        else if (monster.state == State.GUARD_BREAK)
+        else if (state == State.GUARD_BREAK)
         {
-            monster.TakeDamage(damage * 1.5f);
+            if (currentHp > 0f)
+            {
+                currentHp -= damage * 1.5f;
+                anim.SetTrigger("Hit");
+                viewAngle = 360f;
+                obstacleMask = LayerMask.NameToLayer("Nothing");
+            }
+            else
+            {
+                Die();
+            }
+
         }
         else
         {
-            monster.TakeDamage(damage);
+            if (currentHp > 0f)
+            {
+                currentHp -= damage;
+                anim.SetTrigger("Hit");
+                viewAngle = 360f;
+                obstacleMask = LayerMask.NameToLayer("Nothing");
+            }
+            else
+            {
+                Die();
+            }
         }
     }
 }

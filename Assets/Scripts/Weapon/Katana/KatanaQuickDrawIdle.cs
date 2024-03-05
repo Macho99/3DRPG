@@ -3,15 +3,16 @@ using UnityEngine;
 
 public class KatanaQuickDrawIdle : StateBase<Katana.State, Katana>
 {
-	private const float charge1Time = 1f;
-	private const float charge2Time = 2f;
+	private const float charge1Time = 1.5f;
+	private const float charge2Time = 3f;
 	private const float minimumExitTime = 0.15f; 
-	//너무 빨리 전환하면 Animator 트리거가 못따라와서 최소 대기시간을 가짐 
+	//너무 빨리 전환하면 Animator 트리거가 못따라와서 최소 대기시간을 가짐
 
 	Player player;
 	PlayerAttack playerAttack;
 	PlayerMove playerMove;
 
+	int chargeLevel;
 	float enterTime;
 	float attack1DownTime;
 	bool attack1DownTriggered;
@@ -23,6 +24,7 @@ public class KatanaQuickDrawIdle : StateBase<Katana.State, Katana>
 
 	public override void Enter()
 	{
+		chargeLevel = 0;
 		enterTime = Time.time;
 		attack1DownTriggered = false;
 		attack1Up = false;
@@ -46,6 +48,8 @@ public class KatanaQuickDrawIdle : StateBase<Katana.State, Katana>
 	{
 		playerAttack.OnAttack1Down.RemoveListener(Attack1Down);
 		playerAttack.OnAttack1Up.RemoveListener(Attack1Up);
+		if(chargeLevel != 0)
+			owner.PlayChargeFeedback(0);
 	}
 
 	public override void Setup()
@@ -103,7 +107,28 @@ public class KatanaQuickDrawIdle : StateBase<Katana.State, Katana>
 
 	public override void Update()
 	{
-
+		if (attack1DownTriggered == false) return;
+		switch (chargeLevel)
+		{
+			case 0:
+				chargeLevel++;
+				owner.PlayChargeFeedback(1);
+				break;
+			case 1:
+				if (Time.time > attack1DownTime + charge1Time)
+				{
+					chargeLevel++;
+					owner.PlayChargeFeedback(chargeLevel);
+				}
+				break;
+			case 2:
+				if (Time.time > attack1DownTime + charge2Time)
+				{
+					chargeLevel++;
+					owner.PlayChargeFeedback(chargeLevel);
+				}
+				break;
+		}
 	}
 
 	private void Attack1Down(Player.State state)

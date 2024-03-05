@@ -50,16 +50,14 @@ public class UIManager : MonoBehaviour
 
     public T ShowPopUpUI<T>(T popUpUI) where T : PopUpUI
 	{
-        if (FieldSFC.Player.GetComponent<PlayerLook>().enabled == true &&
-			menuOpen == true)
-        {
-            FieldSFC.Player.GetComponent<PlayerLook>().enabled = false;
-        }
-        
-        if (popUpStack.Count > 0)
+		if (popUpStack.Count > 0)
 		{
 			PopUpUI prevUI = popUpStack.Peek();
 			prevUI.gameObject.SetActive(false);
+		}
+		else
+		{
+			FieldSFC.Player?.IgnoreInput(true);
 		}
 
 		T ui = GameManager.Pool.GetUI<T>(popUpUI);
@@ -71,10 +69,10 @@ public class UIManager : MonoBehaviour
 		return ui;
 	}
 
-    private IEnumerator FadeIn(CanvasGroup cg)
+	private IEnumerator FadeIn(CanvasGroup cg)
 	{
 		float fadeTime = 0.2f;
-        float accumTime = 0f;
+		float accumTime = 0f;
         while (accumTime < fadeTime)
         {
             cg.alpha = Mathf.Lerp(0f, 1f, accumTime / fadeTime);
@@ -90,7 +88,7 @@ public class UIManager : MonoBehaviour
 		return ShowPopUpUI(ui);
 	}
 
-    public void ClosePopUpUI()
+	public void ClosePopUpUI()
 	{
 		PopUpUI ui = popUpStack.Pop();
 		_= StartCoroutine(FadeOut(ui.gameObject.GetComponent<CanvasGroup>()));
@@ -101,12 +99,10 @@ public class UIManager : MonoBehaviour
 			PopUpUI curUI = popUpStack.Peek();
 			curUI.gameObject.SetActive(true);
 		}
-
-		if(FieldSFC.Player.GetComponent<PlayerLook>().enabled == false && 
-			menuOpen == false)
+		else
 		{
-            FieldSFC.Player.GetComponent<PlayerLook>().enabled = true;
-        }
+			FieldSFC.Player?.IgnoreInput(false);
+		}
 	}
 
     private IEnumerator FadeOut(CanvasGroup cg)
