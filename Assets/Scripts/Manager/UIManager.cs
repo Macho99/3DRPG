@@ -55,6 +55,10 @@ public class UIManager : MonoBehaviour
 			PopUpUI prevUI = popUpStack.Peek();
 			prevUI.gameObject.SetActive(false);
 		}
+		else
+		{
+			FieldSFC.Player?.IgnoreInput(true);
+		}
 
 		T ui = GameManager.Pool.GetUI<T>(popUpUI);
 		ui.transform.SetParent(popUpCanvas.transform, false);
@@ -94,6 +98,10 @@ public class UIManager : MonoBehaviour
 		{
 			PopUpUI curUI = popUpStack.Peek();
 			curUI.gameObject.SetActive(true);
+		}
+		else
+		{
+			FieldSFC.Player?.IgnoreInput(false);
 		}
 	}
 

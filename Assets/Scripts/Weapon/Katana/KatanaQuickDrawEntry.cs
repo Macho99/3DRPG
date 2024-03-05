@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 public class KatanaQuickDrawEntry : StateBase<Katana.State, Katana>
 {
+	Player player;
 	PlayerAttack playerAttack;
 	PlayerAnimEvent playerAnimEvent;
 
@@ -15,9 +16,11 @@ public class KatanaQuickDrawEntry : StateBase<Katana.State, Katana>
 
 	public override void Enter()
 	{
+		owner.QuickDrawCnt = 0;
 		playerAttack.SetAnimFloat("IdleAdapter", 0f);
 		playerAttack.SetAnimTrigger("Hold1");
 		playerAnimEvent.OnEquipChange.AddListener(EquipChange);
+		player.ChangeState(Player.State.StandAttack);
 	}
 
 	public override void Exit()
@@ -27,6 +30,7 @@ public class KatanaQuickDrawEntry : StateBase<Katana.State, Katana>
 
 	public override void Setup()
 	{
+		player = owner.Player;
 		playerAttack = owner.PlayerAttack;
 		playerAnimEvent = owner.PlayerAnimEvent;
 	}

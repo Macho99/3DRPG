@@ -40,7 +40,8 @@ public class PlayerWalk : StateBase<Player.State, Player>
 			stateMachine.ChangeState(Player.State.Idle);
 			return;
 		}
-		else if(playerMove.SprintInput == true)
+		else if(playerMove.SprintInput == true && 
+			playerMove.SprintLock == false)
 		{
 			stateMachine.ChangeState(Player.State.Run);
 		}

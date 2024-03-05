@@ -7,6 +7,7 @@ using UnityEngine;
 
 public class KatanaUnarmed : StateBase<Katana.State, Katana>
 {
+	Player player;
 	PlayerAttack playerAttack;
 	public KatanaUnarmed(Katana owner, StateMachine<Katana.State, Katana> stateMachine) : base(owner, stateMachine)
 	{
@@ -16,6 +17,7 @@ public class KatanaUnarmed : StateBase<Katana.State, Katana>
 	{
 		owner.Armed = false;
 		playerAttack.SetAnimFloat("Armed", 0f);
+		player.WeaponIdle();
 		owner.SetDummyRender(true);
 		playerAttack.OnAttack1Down.AddListener(Equip);
 	}
@@ -28,6 +30,7 @@ public class KatanaUnarmed : StateBase<Katana.State, Katana>
 	public override void Setup()
 	{
 		playerAttack = owner.PlayerAttack;
+		player = owner.Player;
 	}
 
 	public override void Transition()

@@ -14,7 +14,6 @@ public class KatanaIdle : StateBase<Katana.State, Katana>
 	public override void Enter()
 	{
 		owner.Armed = true;
-		owner.QuickDrawCnt = 0;
 		playerAttack.SetAnimFloat("Armed", 1f);
 		playerAttack.OnAttack1Down.AddListener(BtnDownTransition);
 		owner.SetDummyRender(false);

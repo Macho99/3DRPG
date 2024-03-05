@@ -5,18 +5,26 @@ using UnityEngine;
 public enum AttackProcess { BeforeAttack, Attacking, AfterAttack, End }
 public abstract class Weapon : MonoBehaviour
 {
+	[SerializeField] RuntimeAnimatorController controller;
+
 	protected LayerMask hitMask;
 	protected LayerMask monsterMask;
 	protected Player player;
+	protected PlayerMove playerMove;
 	protected PlayerAttack playerAttack;
 	protected PlayerAnimEvent playerAnimEvent;
+	protected PlayerLook playerLook;
+	protected PlayerCamManager playerCamManager;
 	protected new MeshRenderer renderer;
 
 	public LayerMask HitMask { get { return hitMask; } }
 	public LayerMask MonsterMask { get { return monsterMask; } }
 	public Player Player { get { return player; } }
+	public PlayerMove PlayerMove { get { return playerMove; } }
+	public PlayerLook PlayerLook { get { return playerLook; } }
 	public PlayerAttack PlayerAttack { get { return playerAttack; } }
 	public PlayerAnimEvent PlayerAnimEvent { get { return playerAnimEvent; } }
+	public PlayerCamManager PlayerCamManager { get { return playerCamManager; } }
 
 	protected virtual void Awake()
 	{
@@ -25,6 +33,9 @@ public abstract class Weapon : MonoBehaviour
 		renderer = GetComponentInChildren<MeshRenderer>();
 		player = FieldSFC.Player.GetComponent<Player>();
 		playerAttack = player.GetComponent<PlayerAttack>();
+		playerMove = player.GetComponent<PlayerMove>();
+		playerLook = player.GetComponent<PlayerLook>();
+		playerCamManager = player.GetComponent<PlayerCamManager>();
 	}
 
 	protected virtual void Start()
@@ -50,4 +61,17 @@ public abstract class Weapon : MonoBehaviour
 	}
 
 	public abstract void ChangeStateToIdle(bool forceIdle = false);
+
+	public RuntimeAnimatorController GetAnimController() {
+		return controller; 
+	}
+
+	public bool IsMonsterLayer(int layer)
+	{
+		if((monsterMask.value & (1 << layer)) != 0)
+		{
+			return true;
+		}
+		return false;
+	}
 }

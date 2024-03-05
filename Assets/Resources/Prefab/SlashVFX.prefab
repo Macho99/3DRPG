@@ -127,4 +127,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aec4c43bf9e0f1741b50d07a6cd64938, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OffTime: 1
+  offTime: 1

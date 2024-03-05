@@ -20,10 +20,10 @@ public abstract class Sword : Weapon
 		}
 	}
 
+	private BoxCollider col;
 	private GameObject[] hitList;
 	private int hitListCnt;
 	private RaycastHit[] hits;
-	private BoxCollider col;
 	private FrameInfo prev;
 	private FrameInfo cur;
 	private RaycastHitComparer comparer = new RaycastHitComparer();
