@@ -11,6 +11,8 @@ public class FieldSFC : MonoBehaviour
 	[SerializeField] ChargeFeedback charge;
 	[SerializeField] MMF_Player katanaUlti;
 	[SerializeField] MMF_Player bowUlti;
+	[SerializeField] MMF_Player hit;
+	[SerializeField] MMF_Player stun;
 
 	private static FieldSFC instance;
 	private static Player player;
@@ -122,5 +124,15 @@ public class FieldSFC : MonoBehaviour
 	public void PlayBowUlti()
 	{
 		bowUlti.PlayFeedbacks();
+	}
+
+	public void PlayHit()
+	{
+		hit.PlayFeedbacks();
+	}
+
+	public void PlayStun()
+	{
+		stun.PlayFeedbacks();
 	}
 }

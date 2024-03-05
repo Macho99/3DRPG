@@ -20,7 +20,9 @@ public class BowIdle : StateBase<Bow.State, Bow>
 
 	public override void Enter()
 	{
+		owner.FastShotNum = 0;
 		player.WeaponIdle();
+		owner.SetFastShotArrowMat(false);
 		playerAttack.OnAttack1Down.AddListener(Aim);
 		playerAttack.OnQButtonDown.AddListener(FastAim);
 		playerAttack.OnEButtonDown.AddListener(ESkill);
@@ -46,6 +48,7 @@ public class BowIdle : StateBase<Bow.State, Bow>
 	public override void Transition()
 	{
 		if (playerAttack.IsAnimName(1, "Entry") == false) return;
+		if (player.CurState == Player.State.Stun) return;
 
 		if (owner.Reloaded == false)
 		{

@@ -28,11 +28,11 @@ public class BowFastAim : StateBase<Bow.State, Bow>
 		owner.WindControllerPrepareAttack();
 		playerAttack.OnAttack1Down.AddListener(FastShot);
 		playerAnimEvent.OnEquipChange.AddListener(ShotReady);
+		owner.SetFastShotArrowMat(true);
 
 		if (owner.FastShotNum == 0)
 		{
 			owner.PlayFastShotVFX();
-			owner.SetFastShotArrowMat(true);
 			playerAttack.SetAnimTrigger("UpperHold2");
 			playerCamManager.SetAimCam(true);
 			player.ChangeState(Player.State.MoveAttack);
@@ -49,10 +49,8 @@ public class BowFastAim : StateBase<Bow.State, Bow>
 	private IEnumerator CoExit()
 	{
 		waitAnim = true;
-		owner.SetFastShotArrowMat(false);
 		yield return new WaitUntil(() => playerAttack.IsAnimName(1, "UpperHold2") == true);
 		playerAttack.SetAnimTrigger("UpperExit");
-		owner.FastShotNum = 0;
 		stateMachine.ChangeState(Bow.State.Idle);
 	}
 

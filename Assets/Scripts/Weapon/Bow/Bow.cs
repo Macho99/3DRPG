@@ -95,7 +95,10 @@ public class Bow : Weapon
 
 	public override void ChangeStateToIdle(bool forceIdle = false)
 	{
-
+		player.SetBowAimRigWeight(0f, 0f, 0f);
+		playerAttack.SetAnimTrigger("UpperEntry");
+		stateMachine.ChangeState(State.Idle);
+		return;
 	}
 
 	private void OnEnable()
