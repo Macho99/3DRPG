@@ -73,24 +73,24 @@ public class FieldSFC : MonoBehaviour
 
 	private void OnInteraction(InputValue value)
 	{
-		if(player.GetComponent<PlayerUseUI>().testCube == null)
-		{
-			Debug.Log("nonObj");
-			return;
-		}
-		else if (player.GetComponent<PlayerUseUI>().testCube != null &&
-			player.GetComponent<PlayerUseUI>().testCube.haveItem == true)
-		{
-			Debug.Log("getItem");
-			_ = StartCoroutine(player.GetComponent<PlayerUseUI>().testCube.ShowGainItem());
-            GameManager.Inven.TryGainConsumItem(player.GetComponent<PlayerUseUI>().testCube.testItem);
-            player.GetComponent<PlayerUseUI>().testCube.haveItem = false;
-        }
-		else if (player.GetComponent<PlayerUseUI>().testCube != null && player.GetComponent<PlayerUseUI>().testCube.haveItem == false)
-		{
-			Debug.Log("ClearWindow");
-			GameManager.UI.ClearWindowUI();
-		}
+		//if(player.GetComponent<PlayerUseUI>().testCube == null)
+		//{
+		//	Debug.Log("nonObj");
+		//	return;
+		//}
+		//else if (player.GetComponent<PlayerUseUI>().testCube != null &&
+		//	player.GetComponent<PlayerUseUI>().testCube.haveItem == true)
+		//{
+		//	Debug.Log("getItem");
+		//	_ = StartCoroutine(player.GetComponent<PlayerUseUI>().testCube.ShowGainItem());
+  //          GameManager.Inven.TryGainConsumItem(player.GetComponent<PlayerUseUI>().testCube.testItem);
+  //          player.GetComponent<PlayerUseUI>().testCube.haveItem = false;
+  //      }
+		//else if (player.GetComponent<PlayerUseUI>().testCube != null && player.GetComponent<PlayerUseUI>().testCube.haveItem == false)
+		//{
+		//	Debug.Log("ClearWindow");
+		//	GameManager.UI.ClearWindowUI();
+		//}
 	}
 	
 	public void PlayDeathfault()
