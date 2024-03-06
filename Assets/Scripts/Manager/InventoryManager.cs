@@ -23,7 +23,7 @@ public class InventoryManager : MonoBehaviour
     {
         slotPrefab = GameManager.Resource.Load<GameObject>("UI/PopUpUI/Inventory/Slot");
         inventoryUI = GameManager.Resource.Load<InventoryUI>("UI/PopUpUI/Inventory/InventoryDisplay");
-        invenData = GameManager.Resource.Load<InventoryObject>("UI/PopUpUI/Inventory/Player");
+        //invenData = GameManager.Resource.Load<InventoryObject>("UI/PopUpUI/Inventory/Player");
     }
 
 

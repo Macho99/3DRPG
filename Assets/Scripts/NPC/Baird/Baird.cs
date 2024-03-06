@@ -78,7 +78,7 @@ public class Baird : MonoBehaviour
 
                     theAgent.SetDestination(targetPos);
 
-                    if(Vector3.Distance(transform.position, targetPos) < 0.5)
+                    if(Vector3.Distance(transform.position, targetPos) < 2f)
                     {
                         curState = BairdState.Idle;
                         
@@ -126,7 +126,10 @@ public class Baird : MonoBehaviour
     {
         if(other.tag == "Player")
         {
-            RotateAgent(other.transform.position);
+            Vector3 targetDirection = other.transform.position - transform.position;
+            targetDirection.y = 0; // y축 회전 방지
+
+            Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
             curState = BairdState.Meet;
         }
     }

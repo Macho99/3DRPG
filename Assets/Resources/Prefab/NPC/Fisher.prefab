@@ -731,12 +731,13 @@ GameObject:
   - component: {fileID: 4842482367785862306}
   - component: {fileID: 5316524372872327225}
   - component: {fileID: 6921452272807454108}
+  - component: {fileID: 6042002126010262528}
   - component: {fileID: 4320817488949333218}
   - component: {fileID: 2242205897135788760}
   - component: {fileID: 3669360091191282924}
   m_Layer: 0
   m_Name: Fisher
-  m_TagString: Untagged
+  m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -809,6 +810,21 @@ MonoBehaviour:
   mProcedureAnimParent: {fileID: 8914832290540873814}
   mIsLookingTarget: 0
   IsEnableTargetLook: 1
+--- !u!114 &6042002126010262528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2470475643348824760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8123b7d03f2134946922b2ae42b00992, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sentence:
+  - "\uC548\uB155\uD558\uC138\uC694."
+  - "\uB0A0\uC528\uAC00 \uC88B\uB124\uC694~"
 --- !u!114 &4320817488949333218
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5634,7 +5650,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 6937
+  m_VersionIndex: 6940
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []

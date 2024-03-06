@@ -75,24 +75,17 @@ public class FieldSFC : MonoBehaviour
 
     private void OnInteraction(InputValue value)
 	{
-        if(player.GetComponent<PlayerInteraction>().nearbyNPC != null)
+        if (GameManager.Dialogue.canTalk == true)
         {
-            //var newChatBox = player.GetComponent<PlayerInteraction>().nearbyNPC.chatBox;
-            if (GameManager.Pool.IsContain(player.GetComponent<PlayerInteraction>().nearbyNPC.chatBox) == true)
-            {
-                if(player.GetComponent<PlayerInteraction>().nearbyNPC.chatBox.currentTextIndex < player.GetComponent<PlayerInteraction>().nearbyNPC.chatBox.messages.Length)
-                {
-                    player.GetComponent<PlayerInteraction>().nearbyNPC.chatBox.currentTextIndex++;
-                }
-                else
-                {
-                    GameManager.UI.ClearWindowUI();
-                    player.GetComponent<PlayerInteraction>().nearbyNPC.chatBox.currentTextIndex = 0;
-                }
-            }
+            if (GameManager.Dialogue.isTalking == false)
+                GameManager.Dialogue.ShowChatBox();
             else
             {
-                GameManager.UI.ShowWindowUI(player.GetComponent<PlayerInteraction>().nearbyNPC.chatBox);
+                if(FindObjectOfType<NPCChatBox>() &&
+                    FindObjectOfType<NPCChatBox>().isTyping == false)
+                {
+                    FindObjectOfType<NPCChatBox>().NextSentence();
+                }
             }
         }
     }
