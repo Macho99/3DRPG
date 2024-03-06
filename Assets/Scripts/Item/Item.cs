@@ -7,7 +7,7 @@ using UnityEngine;
 
 public abstract class Item
 {
-	public enum Type { Weapon, Armor, Other, Consump, }
+	public enum Type { Weapon, Armor, Other, HPConsump, MPConsump, }
 
 	protected ItemData itemData;
 

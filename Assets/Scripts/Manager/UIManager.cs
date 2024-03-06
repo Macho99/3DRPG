@@ -228,4 +228,9 @@ public class UIManager : MonoBehaviour
 		}
 		OnMenuToggle?.Invoke(menuOpened);
 	}
+
+	public void InvenFullAlarm()
+	{
+		throw new NotImplementedException();
+	}
 }

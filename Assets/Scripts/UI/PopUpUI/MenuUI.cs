@@ -7,7 +7,6 @@ public class MenuUI : PopUpUI
 	protected override void Awake()
 	{
 		base.Awake();
-        buttons["EquipButton"].onClick.AddListener(OpenEquip);
         buttons["InventoryButton"].onClick.AddListener(OpenInventory);
 	}
 

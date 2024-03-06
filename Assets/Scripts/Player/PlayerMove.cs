@@ -59,9 +59,7 @@ public class PlayerMove : MonoBehaviour
 	Quaternion reverseAimLockOffset = Quaternion.identity;
 	Quaternion aimLockOffset = Quaternion.identity;
 	Animator anim;
-	Transform animTrans;
 	CharacterController controller;
-	Transform characterTrans;
 	[SerializeField] float velY;
 	bool colResult;
 	RaycastHit hitInfo;
@@ -72,7 +70,6 @@ public class PlayerMove : MonoBehaviour
 		velY = 0f;
 		controller = GetComponentInChildren<CharacterController>();
 		anim = GetComponentInChildren<Animator>();
-		animTrans = anim.transform;
 		environmentMask = LayerMask.GetMask("Environment", "Tree", "Monster");
 		isGround = true;
 	}

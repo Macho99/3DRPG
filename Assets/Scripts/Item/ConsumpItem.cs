@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 public abstract class ConsumpItem : MultipleItem
 {
-	public ConsumpItem(ItemData itemData) : base(itemData)
+	public ConsumpItem(ItemData itemData, int amount) : base(itemData, amount)
 	{
 	}
 }

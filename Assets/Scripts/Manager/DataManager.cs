@@ -44,9 +44,14 @@ public class DataManager : MonoBehaviour
 			case Item.Type.Armor:
 				item = new ArmorItem(itemData);
 				break;
-			case Item.Type.Consump:
-				break;
 			case Item.Type.Other:
+				item = new OtherItem(itemData);
+				break;
+			case Item.Type.HPConsump:
+				item = new HPConsumpItem(itemData);
+				break;
+			default:
+				Debug.LogError($"{itemData.ItemType}에 해당하는 switch문이 빠져있습니다");
 				break;
 		}
 
