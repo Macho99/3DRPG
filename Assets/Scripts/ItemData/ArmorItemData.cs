@@ -1,0 +1,16 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using UnityEngine;
+
+[CreateAssetMenu(fileName = "Armor Item Data", menuName = "Scriptable Object/Armor Item Data", order = int.MaxValue)]
+public class ArmorItemData : ItemData
+{
+	[SerializeField] ArmorItem.ArmorType armorType;
+	[SerializeField] string armorSkinName;
+
+	public ArmorItem.ArmorType ArmorType { get { return armorType; } }
+	public string ArmorSkinName { get { return armorSkinName; } }
+}

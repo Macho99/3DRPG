@@ -7,25 +7,22 @@ using UnityEngine;
 
 public abstract class Item
 {
-	public enum Type { Weapon, Armor, Consump, Other, }
+	public enum Type { Weapon, Armor, Other, Consump, }
 
-	private string id;
-	private ItemData data;
-	private Type itemType;
+	protected ItemData itemData;
 
-	public Item(string id, Type itemType)
+	public Item(ItemData itemData)
 	{
-		this.itemType = itemType;
-		data = GameManager.Data.GetItemData(id);
+		this.itemData = itemData;
 	}
 
-	public Sprite Sprite { get { return data.Sprite; } }
-	public string ItemName { get { return data.ItemName; } }
-	public string Desc { get { return data.Desc; } }
-	public string DetailDesc { get { return data.DetailDesc; } }
-	public Type ItemType {  get { return itemType; } }
+	public string ID { get { return itemData.name; } }
+	public Sprite Sprite { get { return itemData.Sprite; } }
+	public string ItemName { get { return itemData.ItemName; } }
+	public string Summary { get { return itemData.Summary; } }
+	public string DetailDesc { get { return itemData.DetailDesc; } }
+	public Type ItemType {  get { return itemData.ItemType; } }
 
 	public abstract Item Clone();
-
 	public abstract void Use();
 }

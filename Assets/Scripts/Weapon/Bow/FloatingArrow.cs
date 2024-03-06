@@ -12,6 +12,7 @@ public class FloatingArrow : MonoBehaviour
 	[SerializeField] List<Material> originMatList;
 
 	GameObject flightArrow;
+	ParticleSystem flightParticle;
 
 	Quaternion upOffset = Quaternion.Euler(90f, 0f, 0f);
 	Player player;

@@ -9,9 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43bd38086d6289c4bbfe3eafaabdb56d, type: 3}
+  m_Script: {fileID: 11500000, guid: e907e023d104fb044aaf1374fa813ad7, type: 3}
   m_Name: BasicKatana
   m_EditorClassIdentifier: 
   itemName: "\uAE30\uBCF8 \uCE74\uD0C0\uB098"
+  itemType: 0
   sprite: {fileID: 21300000, guid: f64d18b178dd94f41a712675d58b23ee, type: 3}
-  desc: "\uAE30\uBCF8\uC801\uC778 \uAC80\uC774\uB2E4."
+  summary: "\uACF5\uACA9\uB825 : 10"
+  detailDesc: "\uAC00\uC7A5 \uAE30\uBCF8\uC801\uC778 \uD615\uD0DC\uC758 \uCE74\uD0C0\uB098\uC774\uB2E4.
+    \n\uAC80\uC220 \uC5F0\uC2B5\uC6A9\uC73C\uB85C \uC81C\uACA9\uC774\uB2E4."
+  weaponPrefab: {fileID: 7394610647787690726, guid: 316c36bcb898071449301bc1ed2dd910, type: 3}

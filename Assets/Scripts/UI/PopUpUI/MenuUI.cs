@@ -7,13 +7,13 @@ public class MenuUI : PopUpUI
 	protected override void Awake()
 	{
 		base.Awake();
-
-
+        buttons["EquipButton"].onClick.AddListener(OpenEquip);
+        buttons["InventoryButton"].onClick.AddListener(OpenInventory);
 	}
 
 	public void OpenInventory()
     {
-        //GameManager.UI.ShowPopUpUI<InventoryUI>("UI/PopUpUI/Inventory/InventoryDisplay");
+        GameManager.UI.ShowPopUpUI<InvenUI>("UI/PopUpUI/Inventory/Inventory");
     }
 
     public void OpenEquip()

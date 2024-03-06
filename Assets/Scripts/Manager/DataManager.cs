@@ -25,19 +25,31 @@ public class DataManager : MonoBehaviour
 
 	private void Start()
 	{
-		foreach(ItemData data in itemDataDict.Values)
-		{
-			print($"{data.ItemName}, { data.Desc }");
-		}
+		//foreach(ItemData data in itemDataDict.Values)
+		//{
+		//	print($"{data.ItemName}, { data.DetailDesc }");
+		//}
+		//print(GetItem("BasicKatana").Summary);
 	}
 
-	public ItemData GetItemData(string id)
+	public Item GetItem(string id)
 	{
-		if(itemDataDict.ContainsKey(id) == false)
+		ItemData itemData = itemDataDict[id];
+		Item item = null;
+		switch (itemData.ItemType)
 		{
-			print($"{id}에 해당하는 itemData가 없습니다");
-			return null;
+			case Item.Type.Weapon:
+				item = new WeaponItem(itemData);
+				break;
+			case Item.Type.Armor:
+				item = new ArmorItem(itemData);
+				break;
+			case Item.Type.Consump:
+				break;
+			case Item.Type.Other:
+				break;
 		}
-		return itemDataDict[id];
+
+		return item;
 	}
 }

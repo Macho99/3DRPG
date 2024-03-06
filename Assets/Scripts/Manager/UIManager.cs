@@ -2,18 +2,20 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 public class UIManager : MonoBehaviour
 {
 	private EventSystem eventSystem;
-
 	private Canvas popUpCanvas;
 	private Stack<PopUpUI> popUpStack;
-
 	private Canvas windowCanvas;
-
 	private Canvas inGameCanvas;
+	private Canvas sceneCanvas;
+
+	private bool menuOpened;
+	[HideInInspector] public UnityEvent<bool> OnMenuToggle = new();
 
     private void Awake()
 	{
@@ -29,7 +31,9 @@ public class UIManager : MonoBehaviour
 		windowCanvas.gameObject.name = "WindowCanvas";
 		windowCanvas.sortingOrder = 10;
 
-		// gameSceneCanvas.sortingOrder = 1;
+		sceneCanvas = GameManager.Resource.Instantiate<Canvas>("UI/Canvas");
+		sceneCanvas.gameObject.name = "SceneCanvas";
+		sceneCanvas.sortingOrder = 1;
 
 		inGameCanvas = GameManager.Resource.Instantiate<Canvas>("UI/Canvas");
 		inGameCanvas.gameObject.name = "InGameCanvas";
@@ -37,12 +41,6 @@ public class UIManager : MonoBehaviour
 
 		//menu = GameManager.Resource.Instantiate<MenuUI>("UI/PopUpUI/Menu");
 	}
-
-    private void Start()
-    {
-		ShowInGameUI<PlayerConditionUI>("UI/InGame/PlayerConditionUI");
-		ShowInGameUI<MountingItemsUI>("UI/InGame/MountingItemsUI");
-    }
 
     public T ShowPopUpUI<T>(T popUpUI) where T : PopUpUI
 	{
@@ -183,5 +181,51 @@ public class UIManager : MonoBehaviour
 		{
 			GameManager.Pool.ReleaseUI(inGameUI.gameObject);
 		}
+	}
+
+	public T ShowSceneUI<T>(T gameUi) where T : SceneUI
+	{
+		T ui = GameManager.Pool.GetUI(gameUi);
+		ui.transform.SetParent(sceneCanvas.transform, false);
+
+		return ui;
+	}
+
+	public T ShowSceneUI<T>(string path) where T : SceneUI
+	{
+		T ui = GameManager.Resource.Load<T>(path);
+		return ShowSceneUI(ui);
+	}
+
+	public void CloseSceneUI<T>(T inGameUI) where T : SceneUI
+	{
+		GameManager.Pool.ReleaseUI(inGameUI.gameObject);
+	}
+
+	public void ClearSceneUI()
+	{
+		if(inGameCanvas == null) return;
+
+		SceneUI[] inGames = inGameCanvas.GetComponentsInChildren<SceneUI>();
+
+		foreach (SceneUI inGameUI in inGames)
+		{
+			GameManager.Pool.ReleaseUI(inGameUI.gameObject);
+		}
+	}
+
+	public void MenuToggle()
+	{
+		menuOpened = !menuOpened;
+
+		if (menuOpened == true)
+		{
+			ShowPopUpUI<MenuUI>("UI/PopUpUI/Menu");
+		}
+		else
+		{
+			ClearPopUpUI();
+		}
+		OnMenuToggle?.Invoke(menuOpened);
 	}
 }

@@ -106,7 +106,7 @@ public class BowSkillUlti : StateBase<Bow.State, Bow>
 		FieldSFC.Instance?.PlayBowUlti();
 
 		yield return new WaitUntil(() => playerAttack.IsAnimName(0, "Attack2") == true || waitAnim == false);
-
+		owner.WindControllerPrepareAttack();
 		playerAttack.SetAnimUpdateMode(AnimatorUpdateMode.UnscaledTime);
 		Time.timeScale = 0.24f;
 		owner.UltiSkill();
