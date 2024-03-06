@@ -9,8 +9,10 @@ public class MonsterWeapon : MonoBehaviour
     [SerializeField] private float stunDuration;
     [SerializeField] private Vector3 knockback;
 
-    private Monster monster;
-    private DeathKnight knight;
+    [SerializeField] private Monster monster;
+    [SerializeField] private DeathKnight knight;
+
+    public Transform knightTf;
 
     private void Awake()
     {
@@ -27,6 +29,11 @@ public class MonsterWeapon : MonoBehaviour
     {
         if (other.TryGetComponent(out Player player))
         {
+            if (player.CurState == Player.State.Stun || player.CurState == Player.State.Dodge)
+            {
+                return;
+            }
+
             // 플레이어 데미지 함수 실행
             UpdateInfo();
 
@@ -36,6 +43,16 @@ public class MonsterWeapon : MonoBehaviour
             }
             else
             {
+                if (knightTf != null)
+                {
+                    Vector3 knockbackDir = (player.transform.position - knightTf.position).normalized;
+                    knockback = knockbackDir;
+                }
+                else if (monster == null && knight == null)
+                {
+                    CalcKnockbackDir(player.transform);
+                }
+
                 player.TakeDamage(damage, hitFeedback, stunDuration, knockback);
             }
         }
@@ -56,10 +73,21 @@ public class MonsterWeapon : MonoBehaviour
             hitFeedback = knight.HitFeedBack;
             stunDuration = knight.StunDuration;
             knockback = knight.KnockBack;
+            print("2");
         }
         else
         {
-            Debug.Log("No Script Error");
+            // Skill or Throwable Object
+            print("3");
+        }
+    }
+
+    private void CalcKnockbackDir(Transform target)
+    {
+        if (!hitFeedback)
+        {
+            Vector3 knockbackDir = (target.position - transform.position).normalized;
+            knockback = knockbackDir;
         }
     }
 }

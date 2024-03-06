@@ -24531,6 +24531,7 @@ GameObject:
   - component: {fileID: 1566274405334326637}
   - component: {fileID: 6011741602773256228}
   - component: {fileID: 3269409410831326025}
+  - component: {fileID: 4899674096526243509}
   m_Layer: 9
   m_Name: Effect_07_OneHandSmash
   m_TagString: Untagged
@@ -24566,7 +24567,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c92e25ba381c2b429f387d86ffa0584, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 0
+  damage: 15
+  hitFeedback: 0
+  stunDuration: 1
+  knockback: {x: 0, y: 0, z: 0}
+  monster: {fileID: 0}
+  knight: {fileID: 0}
 --- !u!135 &3269409410831326025
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -24588,6 +24594,27 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 10
   m_Center: {x: 0, y: 0, z: 9}
+--- !u!65 &4899674096526243509
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3946140628572098603}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 15, y: 15, z: 15}
+  m_Center: {x: 0, y: 0, z: -4}
 --- !u!1 &4713823582348061073
 GameObject:
   m_ObjectHideFlags: 0

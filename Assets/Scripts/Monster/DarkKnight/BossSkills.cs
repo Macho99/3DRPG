@@ -20,6 +20,7 @@ public class BossSkills : MonoBehaviour
     private void UseNormalMeleeAttack_3()
     {
         GameObject skill1Prefab = Instantiate(normalSKills[2], kickPoint.position, Quaternion.identity);
+        skill1Prefab.GetComponent<MonsterWeapon>().knightTf = transform;
         skill1Prefab.transform.forward = transform.forward;
         Destroy(skill1Prefab, 1f);
     }

@@ -17,9 +17,9 @@ public class Monster : MonoBehaviour
     [SerializeField] protected float maxHp;
     [SerializeField] protected float currentHp;
     [SerializeField] protected int damage;
-    [SerializeField] private bool hitFeedback;
-    [SerializeField] private float stunDuration;
-    [SerializeField] private Vector3 knockback;
+    private bool hitFeedback;
+    private float stunDuration;
+    private Vector3 knockback;
 
     public int Damage => damage;
     public bool HitFeedBack => hitFeedback;
@@ -28,6 +28,7 @@ public class Monster : MonoBehaviour
 
     public float attackRange;
     public float attackDelay;
+    public float walkSpeed;
     public float moveSpeed;
     public float rotationSpeed;
 
@@ -54,7 +55,7 @@ public class Monster : MonoBehaviour
 
     [HideInInspector] public State state;
 
-
+    public List<Transform> wayPoints;
 
 
     private void Awake()
@@ -65,13 +66,14 @@ public class Monster : MonoBehaviour
 
     protected virtual void Start()
     {
+        hitFeedback = true;
         attackCol.enabled = false;
         currentHp = maxHp;
         originViewAngle = viewAngle;
         spawnPosition = transform.position;
         spawnDir = transform.forward;
         agent.speed = moveSpeed;
-        agent.stoppingDistance = attackRange;
+        //agent.stoppingDistance = attackRange;
         state = State.IDLE;
         StartCoroutine(FindTargetWithDelay(.2f));
     }
@@ -82,6 +84,42 @@ public class Monster : MonoBehaviour
         {
             yield return new WaitForSeconds(delay);
             FindVisibleTargets();
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, viewRadius);
+
+        if (target != null)
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawLine(transform.position, target.position);
+        }
+
+        Gizmos.color = Color.red;
+
+        int segments = 36;
+        float step = viewAngle / segments;
+        for (int i = 0; i < segments; i++)
+        {
+            float angle = i * step - viewAngle / 2;
+            float x = Mathf.Sin(Mathf.Deg2Rad * angle) * viewRadius;
+            float z = Mathf.Cos(Mathf.Deg2Rad * angle) * viewRadius;
+            Vector3 start = transform.position + Vector3.up * 1f;
+            Vector3 dir = transform.TransformDirection(new Vector3(x, 0, z));
+            //Gizmos.DrawLine(transform.position, transform.position + dir);
+
+            RaycastHit hit;
+            if (Physics.Raycast(start, dir, out hit, viewRadius, obstacleMask))
+            {
+                Gizmos.DrawLine(start, hit.point);
+            }
+            else
+            {
+                Gizmos.DrawLine(start, transform.position + dir);
+            }
         }
     }
 
@@ -117,7 +155,7 @@ public class Monster : MonoBehaviour
 
     public virtual void TakeDamage(float damage)
     {
-        if (state == State.DEAD) { return; }
+        if (state == State.DEAD || isReturning) { return; }
 
         currentHp -= damage;
 
@@ -140,6 +178,11 @@ public class Monster : MonoBehaviour
         target = null;
         state = State.DEAD;
         Destroy(gameObject, 3f);
+    }
+
+    public void RecovereryHp()
+    {
+        currentHp = maxHp;
     }
 
     public void SetAttackTypeInfo(int damage, bool hitFeedback, float stunDuration, Vector3 knockback)

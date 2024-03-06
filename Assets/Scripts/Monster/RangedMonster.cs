@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class RangedMonster : MonoBehaviour
 {
@@ -9,11 +10,18 @@ public class RangedMonster : MonoBehaviour
     public GameObject bulletPrefab;
     public Transform shotPoint;
 
+    NavMeshAgent agent;
     Monster monster;
+
+    private void Awake()
+    {
+        agent = GetComponent<NavMeshAgent>();
+        monster = GetComponent<Monster>();
+    }
 
     private void Start()
     {
-        monster = GetComponent<Monster>();
+        agent.stoppingDistance = monster.attackRange;
     }
 
     public void Shot()

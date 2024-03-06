@@ -116,6 +116,10 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1761588340603386584, guid: c2ae8d95860915148bdf28559c527cbb, type: 3}
+      propertyPath: lengthInSec
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2816651708423858305, guid: c2ae8d95860915148bdf28559c527cbb, type: 3}
       propertyPath: m_Materials.Array.size
       value: 1
@@ -181,6 +185,9 @@ PrefabInstance:
       addedObject: {fileID: 2321874414809047818}
     - targetCorrespondingSourceObject: {fileID: 1761588340603386586, guid: c2ae8d95860915148bdf28559c527cbb, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 3426543669272717233}
+    - targetCorrespondingSourceObject: {fileID: 1761588340603386586, guid: c2ae8d95860915148bdf28559c527cbb, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 4424578801401623529}
   m_SourcePrefab: {fileID: 100100000, guid: c2ae8d95860915148bdf28559c527cbb, type: 3}
 --- !u!1 &1287355370175364513 stripped
@@ -209,6 +216,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 20, y: 20, z: 30}
   m_Center: {x: 0, y: -0.0000009536739, z: 15}
+--- !u!114 &3426543669272717233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1287355370175364513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f94973c936a920449446e9b89a36ff5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &4424578801401623529
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -221,7 +240,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c92e25ba381c2b429f387d86ffa0584, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 0
+  damage: 20
+  hitFeedback: 0
+  stunDuration: 2
+  knockback: {x: 0, y: 3, z: 0}
+  monster: {fileID: 0}
+  knight: {fileID: 0}
+  knightTf: {fileID: 0}
 --- !u!4 &2482217292691567047 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3160799996726113980, guid: c2ae8d95860915148bdf28559c527cbb, type: 3}
@@ -250,6 +275,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1761588340306672089, guid: c2ae8d95860915148bdf28559c527cbb, type: 3}
       propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1761588340603386584, guid: c2ae8d95860915148bdf28559c527cbb, type: 3}
+      propertyPath: lengthInSec
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1761588340603386587, guid: c2ae8d95860915148bdf28559c527cbb, type: 3}
@@ -333,6 +362,9 @@ PrefabInstance:
       addedObject: {fileID: 2746263433689118968}
     - targetCorrespondingSourceObject: {fileID: 1761588340603386586, guid: c2ae8d95860915148bdf28559c527cbb, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 6733031051153739783}
+    - targetCorrespondingSourceObject: {fileID: 1761588340603386586, guid: c2ae8d95860915148bdf28559c527cbb, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 2430292105176632979}
   m_SourcePrefab: {fileID: 100100000, guid: c2ae8d95860915148bdf28559c527cbb, type: 3}
 --- !u!4 &4813039057737646283 stripped
@@ -366,6 +398,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 20, y: 20, z: 30}
   m_Center: {x: 0, y: -0.0000009536739, z: 15}
+--- !u!114 &6733031051153739783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8170752515168570541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f94973c936a920449446e9b89a36ff5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &2430292105176632979
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -378,7 +422,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c92e25ba381c2b429f387d86ffa0584, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 0
+  damage: 20
+  hitFeedback: 0
+  stunDuration: 2
+  knockback: {x: 0, y: 3, z: 0}
+  monster: {fileID: 0}
+  knight: {fileID: 0}
+  knightTf: {fileID: 0}
 --- !u!1001 &8170752514225325220
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -393,6 +443,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1761588340306672089, guid: c2ae8d95860915148bdf28559c527cbb, type: 3}
       propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1761588340603386584, guid: c2ae8d95860915148bdf28559c527cbb, type: 3}
+      propertyPath: lengthInSec
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2816651708423858305, guid: c2ae8d95860915148bdf28559c527cbb, type: 3}
@@ -460,6 +514,9 @@ PrefabInstance:
       addedObject: {fileID: 4599097885247026544}
     - targetCorrespondingSourceObject: {fileID: 1761588340603386586, guid: c2ae8d95860915148bdf28559c527cbb, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 4580320065806182814}
+    - targetCorrespondingSourceObject: {fileID: 1761588340603386586, guid: c2ae8d95860915148bdf28559c527cbb, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 7760645763274266870}
   m_SourcePrefab: {fileID: 100100000, guid: c2ae8d95860915148bdf28559c527cbb, type: 3}
 --- !u!1 &472347431982965778 stripped
@@ -498,6 +555,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 20, y: 20, z: 30}
   m_Center: {x: 0, y: -0.0000009536739, z: 15}
+--- !u!114 &4580320065806182814
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7572296294574964350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f94973c936a920449446e9b89a36ff5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &7760645763274266870
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -510,7 +579,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c92e25ba381c2b429f387d86ffa0584, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 0
+  damage: 20
+  hitFeedback: 0
+  stunDuration: 2
+  knockback: {x: 0, y: 3, z: 0}
+  monster: {fileID: 0}
+  knight: {fileID: 0}
+  knightTf: {fileID: 0}
 --- !u!1001 &8170752514790407412
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -525,6 +600,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1761588340306672089, guid: c2ae8d95860915148bdf28559c527cbb, type: 3}
       propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1761588340603386584, guid: c2ae8d95860915148bdf28559c527cbb, type: 3}
+      propertyPath: lengthInSec
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2816651708423858305, guid: c2ae8d95860915148bdf28559c527cbb, type: 3}
@@ -592,6 +671,9 @@ PrefabInstance:
       addedObject: {fileID: 8159000891997608530}
     - targetCorrespondingSourceObject: {fileID: 1761588340603386586, guid: c2ae8d95860915148bdf28559c527cbb, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 4450579850878463196}
+    - targetCorrespondingSourceObject: {fileID: 1761588340603386586, guid: c2ae8d95860915148bdf28559c527cbb, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 6560528705346955837}
   m_SourcePrefab: {fileID: 100100000, guid: c2ae8d95860915148bdf28559c527cbb, type: 3}
 --- !u!1 &472347432493538370 stripped
@@ -630,6 +712,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 20, y: 20, z: 30}
   m_Center: {x: 0, y: -0.0000009536739, z: 15}
+--- !u!114 &4450579850878463196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7572296294062114350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f94973c936a920449446e9b89a36ff5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &6560528705346955837
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -642,7 +736,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c92e25ba381c2b429f387d86ffa0584, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 0
+  damage: 20
+  hitFeedback: 0
+  stunDuration: 2
+  knockback: {x: 0, y: 3, z: 0}
+  monster: {fileID: 0}
+  knight: {fileID: 0}
+  knightTf: {fileID: 0}
 --- !u!1001 &8170752515313820296
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -665,6 +765,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1761588340393008369, guid: c2ae8d95860915148bdf28559c527cbb, type: 3}
       propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1761588340603386584, guid: c2ae8d95860915148bdf28559c527cbb, type: 3}
+      propertyPath: lengthInSec
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1761588340603386587, guid: c2ae8d95860915148bdf28559c527cbb, type: 3}
@@ -756,6 +860,9 @@ PrefabInstance:
       addedObject: {fileID: 7079214865049471880}
     - targetCorrespondingSourceObject: {fileID: 1761588340603386586, guid: c2ae8d95860915148bdf28559c527cbb, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 6833709806938394191}
+    - targetCorrespondingSourceObject: {fileID: 1761588340603386586, guid: c2ae8d95860915148bdf28559c527cbb, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 7378071168857630402}
   m_SourcePrefab: {fileID: 100100000, guid: c2ae8d95860915148bdf28559c527cbb, type: 3}
 --- !u!1 &472347433041822270 stripped
@@ -794,6 +901,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 20, y: 20, z: 30}
   m_Center: {x: 0, y: -0.0000009536739, z: 15}
+--- !u!114 &6833709806938394191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7572296295659509842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f94973c936a920449446e9b89a36ff5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &7378071168857630402
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -806,4 +925,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c92e25ba381c2b429f387d86ffa0584, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 0
+  damage: 20
+  hitFeedback: 0
+  stunDuration: 2
+  knockback: {x: 0, y: 3, z: 0}
+  monster: {fileID: 0}
+  knight: {fileID: 0}
+  knightTf: {fileID: 0}

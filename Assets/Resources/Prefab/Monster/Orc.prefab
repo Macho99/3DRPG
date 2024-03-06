@@ -488,7 +488,7 @@ GameObject:
   - component: {fileID: 7774376112676149745}
   - component: {fileID: 4484363404704880072}
   - component: {fileID: 3428316551094648879}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Orc
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -527,15 +527,13 @@ MonoBehaviour:
   maxHp: 300
   currentHp: 0
   damage: 15
-  hitFeedback: 0
-  stunDuration: 0
-  knockback: {x: 0, y: 0, z: 0}
   attackRange: 3
   attackDelay: 2
+  walkSpeed: 2
   moveSpeed: 5
   rotationSpeed: 3
   specialAttackRandomRange: 5
-  viewRadius: 100
+  viewRadius: 15
   viewAngle: 120
   originViewAngle: 0
   spawnPosition: {x: 0, y: 0, z: 0}
@@ -551,6 +549,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   state: 0
+  wayPoints: []
 --- !u!95 &7774376112676149745
 Animator:
   serializedVersion: 5
@@ -2331,6 +2330,9 @@ MonoBehaviour:
   hitFeedback: 0
   stunDuration: 0
   knockback: {x: 0, y: 0, z: 0}
+  monster: {fileID: 0}
+  knight: {fileID: 0}
+  knightTf: {fileID: 0}
 --- !u!1 &9168946665814366587
 GameObject:
   m_ObjectHideFlags: 0

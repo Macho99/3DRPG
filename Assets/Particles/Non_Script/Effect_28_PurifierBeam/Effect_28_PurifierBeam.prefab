@@ -19713,6 +19713,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c92e25ba381c2b429f387d86ffa0584, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 20
+  hitFeedback: 0
+  stunDuration: 2
+  knockback: {x: 0, y: 0, z: 0}
+  knockbackPower: 10
+  monster: {fileID: 0}
+  knight: {fileID: 0}
 --- !u!1 &6104107114445071217
 GameObject:
   m_ObjectHideFlags: 0

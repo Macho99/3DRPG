@@ -15,6 +15,7 @@ public class ChasingState : StateMachineBehaviour
         monster = animator.GetComponent<Monster>();
         agent = animator.GetComponent<NavMeshAgent>();
         agent.speed = animator.GetComponent<Monster>().moveSpeed;
+        agent.stoppingDistance = animator.GetComponent<Monster>().attackRange;
         target = animator.GetComponent<Monster>().target;
 
         monster.state = State.IDLE;
@@ -25,10 +26,11 @@ public class ChasingState : StateMachineBehaviour
         if (target == null && Vector3.Distance(animator.transform.position, monster.spawnPosition) <= agent.stoppingDistance + .5f)
         {
             animator.transform.forward = monster.spawnDir;
-            agent.stoppingDistance = monster.attackRange;
+            //agent.stoppingDistance = monster.attackRange;
             animator.SetBool("isChasing", false);
             monster.isReturning = false;
             monster.viewAngle = monster.originViewAngle;
+            monster.RecovereryHp();
             return;
         }
 

@@ -11,7 +11,7 @@ public class IdleChestState : StateMachineBehaviour
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (Input.GetKeyDown(KeyCode.Tab))
+        if (Input.GetKeyDown(KeyCode.F))
         {
             animator.SetTrigger("Trapped");
         }

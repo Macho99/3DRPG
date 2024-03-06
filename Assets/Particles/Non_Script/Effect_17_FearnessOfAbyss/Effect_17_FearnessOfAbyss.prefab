@@ -19677,6 +19677,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 854f8088ab80d7b4ebbd608fde6b41c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 5
 --- !u!1 &3782076372627721088
 GameObject:
   m_ObjectHideFlags: 0
@@ -34389,6 +34390,7 @@ GameObject:
   - component: {fileID: 5460717116263113616}
   - component: {fileID: 55884425619599646}
   - component: {fileID: 6216855616724403950}
+  - component: {fileID: 6043686034995421541}
   - component: {fileID: 8348301190640947501}
   m_Layer: 0
   m_Name: Effect_17_BigRing
@@ -39298,6 +39300,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c92e25ba381c2b429f387d86ffa0584, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 30
+  hitFeedback: 0
+  stunDuration: 2
+  knockback: {x: 0, y: 0, z: 0}
+  monster: {fileID: 0}
+  knight: {fileID: 0}
+  knightTf: {fileID: 0}
+--- !u!114 &6043686034995421541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7392802594745719658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f94973c936a920449446e9b89a36ff5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!135 &8348301190640947501
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -39317,5 +39338,5 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 14
+  m_Radius: 22
   m_Center: {x: 0, y: 0, z: 0}

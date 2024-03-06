@@ -565,6 +565,9 @@ MonoBehaviour:
   hitFeedback: 0
   stunDuration: 0
   knockback: {x: 0, y: 0, z: 0}
+  monster: {fileID: 0}
+  knight: {fileID: 0}
+  knightTf: {fileID: 0}
 --- !u!1 &3824408238934397533
 GameObject:
   m_ObjectHideFlags: 0
@@ -767,7 +770,8 @@ GameObject:
   - component: {fileID: 2137972930084487340}
   - component: {fileID: 6097838292650694087}
   - component: {fileID: 5947715098063060611}
-  m_Layer: 0
+  - component: {fileID: 6539804878892810450}
+  m_Layer: 8
   m_Name: Mimic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -806,15 +810,13 @@ MonoBehaviour:
   maxHp: 250
   currentHp: 0
   damage: 12
-  hitFeedback: 1
-  stunDuration: 2
-  knockback: {x: 0, y: 0, z: 0}
   attackRange: 3
-  attackDelay: 3
+  attackDelay: 1.5
+  walkSpeed: 0
   moveSpeed: 3
   rotationSpeed: 3
   specialAttackRandomRange: 3
-  viewRadius: 50
+  viewRadius: 15
   viewAngle: 120
   originViewAngle: 0
   spawnPosition: {x: 0, y: 0, z: 0}
@@ -828,8 +830,9 @@ MonoBehaviour:
     m_Bits: 8
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 192
   state: 0
+  wayPoints: []
 --- !u!95 &6097838292650694087
 Animator:
   serializedVersion: 5
@@ -873,6 +876,27 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!65 &6539804878892810450
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8026906603185835409}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1.2, z: 1}
+  m_Center: {x: 0, y: 0.8, z: 0}
 --- !u!1 &8749663909765886931
 GameObject:
   m_ObjectHideFlags: 0

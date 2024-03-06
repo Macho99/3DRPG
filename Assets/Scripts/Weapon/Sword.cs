@@ -113,6 +113,15 @@ public abstract class Sword : Weapon
 				hitList[hitListCnt] = hit.collider.gameObject;
 				hitListCnt++;
 				print(hit.collider.gameObject);
+				if (hit.collider.TryGetComponent(out Monster monster))
+				{
+					monster.TakeDamage(10f);
+				}
+
+				if (hit.collider.TryGetComponent(out DeathKnight knight))
+				{
+					knight.TakeDamage(100f);
+				}
 			}
 		}
 		//print("End;");

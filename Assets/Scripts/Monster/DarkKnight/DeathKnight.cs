@@ -52,6 +52,7 @@ public class DeathKnight : MonoBehaviour
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         rb = GetComponent<Rigidbody>();
+        hitFeedback = true;
     }
 
     private void Start()
@@ -73,7 +74,7 @@ public class DeathKnight : MonoBehaviour
         if (currentHp <= maxHp / 2)
         {
             // 페이지 전환 시점
-            //anim.SetTrigger("ChangeForm");
+            anim.SetBool("ChangePhase", true);
         }
 
         if (currentHp > 0f)
