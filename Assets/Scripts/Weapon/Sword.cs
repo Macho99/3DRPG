@@ -112,8 +112,8 @@ public abstract class Sword : Weapon
 				}
 				hitList[hitListCnt] = hit.collider.gameObject;
 				hitListCnt++;
-				print(hit.collider.gameObject);
-				if (hit.collider.TryGetComponent(out Monster monster))
+                // TODO: 검 데미지 임시부여 (데미지 수치 변경 필요)
+                if (hit.collider.TryGetComponent(out Monster monster))
 				{
 					monster.TakeDamage(10f);
 				}

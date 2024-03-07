@@ -6,12 +6,12 @@ public class SkillTickDamage : MonoBehaviour
 {
     public int damage;
     bool isDelay = false;
+    public float tickDelay;
 
     private void OnTriggerStay(Collider other)
     {
         if (!isDelay && other.TryGetComponent(out Player player))
         {
-            // 플레이어 데미지 함수 실행
             player.TakeDamage(damage, true);
             StartCoroutine(TickDamage());
         }
@@ -20,7 +20,7 @@ public class SkillTickDamage : MonoBehaviour
     IEnumerator TickDamage()
     {
         isDelay = true;
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(tickDelay);
         isDelay = false;
     }
 }

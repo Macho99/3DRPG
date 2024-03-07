@@ -73,12 +73,10 @@ public class MonsterWeapon : MonoBehaviour
             hitFeedback = knight.HitFeedBack;
             stunDuration = knight.StunDuration;
             knockback = knight.KnockBack;
-            print("2");
         }
         else
         {
             // Skill or Throwable Object
-            print("3");
         }
     }
 

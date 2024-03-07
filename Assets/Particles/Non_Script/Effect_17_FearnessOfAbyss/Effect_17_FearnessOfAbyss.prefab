@@ -19678,6 +19678,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 5
+  tickDelay: 1
 --- !u!1 &3782076372627721088
 GameObject:
   m_ObjectHideFlags: 0

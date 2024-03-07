@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -35,6 +36,10 @@ public class DeathKnight : MonoBehaviour
 
     public BoxCollider attackCol; // 어택 범위
 
+    [SerializeField] List<GameObject> hitEffects = new();
+    [SerializeField] List<AudioClip> hitSounds = new();
+
+    AudioSource audioSource;
     NavMeshAgent agent;
     Animator anim;
     Rigidbody rb;
@@ -47,12 +52,18 @@ public class DeathKnight : MonoBehaviour
     [SerializeField] private Material mySwordMaterial;
     [SerializeField] private GameObject swordEffect;
 
+    public bool skillCD;
+    public float skillCoolDown;
+    private float skillTimer;
+
     private void Awake()
     {
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         rb = GetComponent<Rigidbody>();
+        audioSource = GetComponent<AudioSource>();
         hitFeedback = true;
+        skillCoolDown = 0f;
     }
 
     private void Start()
@@ -63,6 +74,24 @@ public class DeathKnight : MonoBehaviour
         agent.speed = moveSpeed;
         agent.stoppingDistance = skillAttackRange;
         bossState = BossState.NORMAL;
+    }
+
+    private void Update()
+    {
+        CheckSkillCD();
+    }
+
+    private void CheckSkillCD()
+    {
+        if (skillCoolDown > 0f)
+        {
+            skillCoolDown -= Time.deltaTime;
+        }
+
+        if (skillCoolDown <= 0f)
+        {
+            skillCD = false;
+        }
     }
 
     public void TakeDamage(float damage)
@@ -79,8 +108,11 @@ public class DeathKnight : MonoBehaviour
 
         if (currentHp > 0f)
         {
-            // 피격 애니메이션 ( 필요 없음 )
-            //anim.SetTrigger("Hit");
+            // 피격 시
+            //audioSource?.PlayOneShot(hitSounds[0]);
+            //Quaternion effectRot = Quaternion.Euler(0f, Random.Range(0f, 360f), 0f);
+            //GameObject hitEffectPrefab = Instantiate(hitEffects[0], transform.position, effectRot);
+            //Destroy(hitEffectPrefab, 1f);
         }
         else
         {
@@ -90,6 +122,8 @@ public class DeathKnight : MonoBehaviour
 
     private void Die()
     {
+        //audioSource?.PlayOneShot(hitSounds[1]);
+        anim.applyRootMotion = true;
         anim.SetTrigger("Dead");
         target = null;
         bossState = BossState.DEAD;
@@ -155,5 +189,22 @@ public class DeathKnight : MonoBehaviour
         myWeapon.transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
         myWeapon.transform.GetChild(0).GetComponent<MeshRenderer>().material = mySwordMaterial;
         swordEffect.SetActive(true);
+    }
+
+    private void OnOffWeaponColl()
+    {
+        attackCol.enabled = !attackCol.enabled;
+    }
+
+    private void SetRootMotion()
+    {
+        anim.applyRootMotion = true;
+        anim.SetTrigger("isReady");
+    }
+
+    private void DeSetRootMotion()
+    {
+        anim.applyRootMotion = false;
+        anim.SetTrigger("isReady");
     }
 }

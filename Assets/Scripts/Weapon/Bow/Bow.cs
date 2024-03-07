@@ -180,8 +180,16 @@ public class Bow : Weapon
 		int layer = hitInfo.collider.gameObject.layer;
 		if(IsMonsterLayer(layer) == true)
 		{
-			print("몬스터에게 데미지를 준다");
-			windController?.Attack(hitInfo.transform);
+			// TODO: 활 데미지 임시부여 (데미지 수치 변경 필요)
+			if (hitInfo.collider.TryGetComponent(out Monster monster))
+			{
+				monster.TakeDamage(10f);
+			}
+            if (hitInfo.collider.TryGetComponent(out DeathKnight knight))
+            {
+                knight.TakeDamage(100f);
+            }
+            windController?.Attack(hitInfo.transform);
 			arrow.transform.parent = hitInfo.collider.transform;
 			arrow.AutoOff();
 		}

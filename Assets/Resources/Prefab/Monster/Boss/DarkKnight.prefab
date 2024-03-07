@@ -1857,6 +1857,7 @@ MonoBehaviour:
   knockback: {x: 0, y: 0, z: 0}
   monster: {fileID: 0}
   knight: {fileID: 0}
+  knightTf: {fileID: 0}
 --- !u!1 &4603041717324807589
 GameObject:
   m_ObjectHideFlags: 0
@@ -3130,7 +3131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3482cd555297a449b13c15d5bdb2e5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 3000
+  maxHp: 1000
   currentHp: 0
   damage: 20
   hitFeedback: 0
@@ -3143,6 +3144,8 @@ MonoBehaviour:
   rotationSpeed: 3
   target: {fileID: 0}
   attackCol: {fileID: 8568836106398410194}
+  hitEffects: []
+  hitSounds: []
   bossState: 0
   myWeapon: {fileID: 4586367775572318018}
   mySwordMaterial: {fileID: 2100000, guid: d61c52a6f338b064390d37e3c4218d7f, type: 2}
@@ -3187,12 +3190,7 @@ Animator:
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
-  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
-    are already bound by a Humanoid avatar. These transforms can only be changed
-    by Humanoid clips.\n\tTransform 'lowerarm_l'\n\tTransform 'neck_01'\n\tTransform
-    'spine_02'\n\tTransform 'upperarm_r'\n\tTransform 'upperarm_l'\n\tTransform 'calf_l'\n\tTransform
-    'pelvis'\n\tTransform 'spine_01'\n\tTransform 'calf_r'\n\tTransform 'lowerarm_r'\n\tand
-    more ...\n\tFrom animation clip 'death2'"
+  m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0

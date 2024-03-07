@@ -31,6 +31,7 @@ public class Monster : MonoBehaviour
     public float walkSpeed;
     public float moveSpeed;
     public float rotationSpeed;
+    [SerializeField] private float eyeHeight; 
 
     public int specialAttackRandomRange;
 
@@ -50,6 +51,10 @@ public class Monster : MonoBehaviour
     [SerializeField] protected LayerMask targetMask; // 타겟레이어
     [SerializeField] protected LayerMask obstacleMask; // 장애물레이어
 
+    [SerializeField] List<GameObject> hitEffects = new List<GameObject>();
+    [SerializeField] List<AudioClip> hitSounds = new();
+
+    AudioSource audioSource;
     protected NavMeshAgent agent;
     protected Animator anim;
 
@@ -60,6 +65,7 @@ public class Monster : MonoBehaviour
 
     private void Awake()
     {
+        audioSource = GetComponent<AudioSource>();
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
     }
@@ -107,7 +113,7 @@ public class Monster : MonoBehaviour
             float angle = i * step - viewAngle / 2;
             float x = Mathf.Sin(Mathf.Deg2Rad * angle) * viewRadius;
             float z = Mathf.Cos(Mathf.Deg2Rad * angle) * viewRadius;
-            Vector3 start = transform.position + Vector3.up * 1f;
+            Vector3 start = transform.position + Vector3.up * eyeHeight;
             Vector3 dir = transform.TransformDirection(new Vector3(x, 0, z));
             //Gizmos.DrawLine(transform.position, transform.position + dir);
 
@@ -145,7 +151,7 @@ public class Monster : MonoBehaviour
             {
                 float distToTarget = Vector3.Distance(transform.position, target.transform.position);
 
-                if (!Physics.Raycast(transform.position, dirToTarget, distToTarget, obstacleMask))
+                if (!Physics.Raycast(transform.position + Vector3.up * eyeHeight, dirToTarget, distToTarget, obstacleMask))
                 {
                     this.target = target;
                 }
@@ -164,6 +170,11 @@ public class Monster : MonoBehaviour
             anim.SetTrigger("Hit");
             viewAngle = 360f;
             obstacleMask = LayerMask.NameToLayer("Nothing");
+
+            //audioSource?.PlayOneShot(hitSounds[0]);
+            //Quaternion effectRot = Quaternion.Euler(0f, Random.Range(0f, 360f), 0f);
+            //GameObject hitEffectPrefab = Instantiate(hitEffects[0], transform.position, effectRot);
+            //Destroy(hitEffectPrefab, 1f);
         }
         else
         {
@@ -177,6 +188,7 @@ public class Monster : MonoBehaviour
         StopAllCoroutines();
         target = null;
         state = State.DEAD;
+        //audioSource?.PlayOneShot(hitSounds[1]);
         Destroy(gameObject, 3f);
     }
 

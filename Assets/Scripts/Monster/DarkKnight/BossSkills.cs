@@ -56,7 +56,7 @@ public class BossSkills : MonoBehaviour
     {
         GameObject skill1Prefab = Instantiate(twoHandedSkills[0], transform.position, Quaternion.identity);
         Rigidbody rb = skill1Prefab.GetComponent<Rigidbody>();
-        skill1Prefab.transform.forward = transform.forward;
+        skill1Prefab.transform.forward = transform.forward + transform.right * .2f;
         rb.velocity = skill1Prefab.transform.forward * 20f;
         Destroy(skill1Prefab, 5f);
     }
@@ -77,9 +77,10 @@ public class BossSkills : MonoBehaviour
 
     private void UseTwoHandedSkill_4()
     {
+        knight.skillCoolDown = 15f;
         Vector3 spawnPosition = transform.position + 1f * transform.up;
         GameObject skill1Prefab = Instantiate(twoHandedSkills[3], spawnPosition, Quaternion.identity);
         skill1Prefab.transform.forward = transform.forward;
-        Destroy(skill1Prefab, 6f);
+        Destroy(skill1Prefab, 5.5f);
     }
 }

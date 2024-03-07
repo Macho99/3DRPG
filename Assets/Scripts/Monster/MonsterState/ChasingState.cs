@@ -9,6 +9,7 @@ public class ChasingState : StateMachineBehaviour
     NavMeshAgent agent;
     [SerializeField] Transform target;
     Monster monster;
+    float timer;
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -52,6 +53,27 @@ public class ChasingState : StateMachineBehaviour
         }
 
         agent.SetDestination(target.position);
+
+        NavMeshPath path = new NavMeshPath();
+        agent.CalculatePath(target.position, path);
+
+        if (path.status == NavMeshPathStatus.PathPartial || path.status == NavMeshPathStatus.PathInvalid)
+        {
+            timer += Time.deltaTime;
+
+            if (timer > 3f)
+            {
+                agent.stoppingDistance = 0f;
+                agent.SetDestination(monster.spawnPosition);
+                monster.target = null;
+                target = null;
+                monster.isReturning = true;
+                timer = 0f;
+            }
+            return;
+        }
+
+        timer = 0f;
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
