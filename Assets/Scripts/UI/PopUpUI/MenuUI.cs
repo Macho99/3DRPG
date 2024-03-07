@@ -8,6 +8,7 @@ public class MenuUI : PopUpUI
 	{
 		base.Awake();
         buttons["InventoryButton"].onClick.AddListener(OpenInventory);
+        buttons["Blocker"].onClick.AddListener(GameManager.UI.MenuToggle);
 	}
 
 	public void OpenInventory()

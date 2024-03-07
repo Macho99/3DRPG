@@ -25,7 +25,7 @@ public abstract class BaseUI : MonoBehaviour
 		texts = new Dictionary<string, TextMeshProUGUI>();
 		images = new Dictionary<string, Image>();
 
-		RectTransform[] children = GetComponentsInChildren<RectTransform>();
+		RectTransform[] children = GetComponentsInChildren<RectTransform>(true);
 		foreach (RectTransform child in children)
 		{
 			string key = child.gameObject.name;

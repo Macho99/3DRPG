@@ -9,7 +9,7 @@ using UnityEngine;
 public class ItemData : ScriptableObject
 {
 	[SerializeField] string itemName;
-	[SerializeField] Item.Type itemType;
+	protected Item.Type itemType = Item.Type.Other;
 	[SerializeField] Sprite sprite;
 	[Multiline]
 	[SerializeField] string summary;

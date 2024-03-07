@@ -33,6 +33,8 @@ public class InventoryManager : MonoBehaviour
 
 	private void Start()
 	{
+		AddItem(GameManager.Data.GetItem("KnightHelmet"));
+		AddItem(GameManager.Data.GetItem("BasicKatana"));
 		AddItem(GameManager.Data.GetItem("BasicKatana"));
 		AddItem(GameManager.Data.GetItem("RedApple"));
 	}
@@ -50,7 +52,7 @@ public class InventoryManager : MonoBehaviour
 	private Item[] GetInv(Item item)
 	{
 		Item[] inv;
-		switch (item.ItemType) 
+		switch (item.ItemType)
 		{
 			case Item.Type.Weapon:
 			case Item.Type.Armor:
@@ -257,9 +259,7 @@ public class InventoryManager : MonoBehaviour
 
 	public void DeleteItem(Item item)
 	{
-		int idx;
-		Item[] inv = GetInv(item);
-		FindItem(item, out idx);
+		FindItem(item, out Item[] inv, out int idx);
 
 		inv[idx] = null;
 		OnItemDelete?.Invoke(item);
@@ -286,9 +286,9 @@ public class InventoryManager : MonoBehaviour
 	//	onItemAmountChanged?.Invoke(item);
 	//}
 
-	private void FindItem(Item item, out int idx)
+	private void FindItem(Item item, out Item[] inv, out int idx)
 	{
-		Item[] inv = GetInv(item);
+		inv = GetInv(item);
 		idx = -1;
 		for (int i = 0; i < inv.Length; i++)
 		{
@@ -298,5 +298,32 @@ public class InventoryManager : MonoBehaviour
 				return;
 			}
 		}
+		return;
+	}
+
+	public void SwapItem(Item item1, Item item2)
+	{
+		FindItem(item1, out Item[] inv1, out int idx1);
+		FindItem(item2, out Item[] inv2, out int idx2);
+
+		if(inv1 != inv2)
+		{
+			Debug.LogError($"둘이 다른 인벤토리인데 스왑하려고합니다");
+			return;
+		}
+
+		inv1[idx1] = item2;
+		inv1[idx2] = item1;
+		ItemChange();
+	}
+
+	public void SwapItem(InvenType invenType, int idx1, int idx2)
+	{
+		Item[] inv = GetInv(invenType);
+
+		Item temp = inv[idx1];
+		inv[idx1] = inv[idx2];
+		inv[idx2] = temp;
+		ItemChange();
 	}
 }

@@ -42,12 +42,15 @@ public class UIManager : MonoBehaviour
 		//menu = GameManager.Resource.Instantiate<MenuUI>("UI/PopUpUI/Menu");
 	}
 
-    public T ShowPopUpUI<T>(T popUpUI) where T : PopUpUI
+    public T ShowPopUpUI<T>(T popUpUI, bool setInactivePrev = true) where T : PopUpUI
 	{
 		if (popUpStack.Count > 0)
 		{
-			PopUpUI prevUI = popUpStack.Peek();
-			prevUI.gameObject.SetActive(false);
+			if(setInactivePrev == true)
+			{
+				PopUpUI prevUI = popUpStack.Peek();
+				prevUI.gameObject.SetActive(false);
+			}
 		}
 		else
 		{
@@ -58,7 +61,11 @@ public class UIManager : MonoBehaviour
 		ui.transform.SetParent(popUpCanvas.transform, false);
 		popUpStack.Push(ui);
 
-		_ = StartCoroutine(FadeIn(ui.GetComponent<CanvasGroup>()));
+		CanvasGroup canvasGroup = ui.GetComponent<CanvasGroup>();
+		if(canvasGroup != null)
+		{
+			_ = StartCoroutine(FadeIn(canvasGroup));
+		}
 		
 		return ui;
 	}
@@ -76,17 +83,24 @@ public class UIManager : MonoBehaviour
         cg.alpha = 1f;
     }
 
-    public T ShowPopUpUI<T>(string path) where T : PopUpUI
+    public T ShowPopUpUI<T>(string path, bool setInactivePrev = true) where T : PopUpUI
 	{
 		T ui = GameManager.Resource.Load<T>(path);
-		return ShowPopUpUI(ui);
+		return ShowPopUpUI(ui, setInactivePrev);
 	}
 
 	public void ClosePopUpUI()
 	{
 		PopUpUI ui = popUpStack.Pop();
-		_= StartCoroutine(FadeOut(ui.GetComponent<CanvasGroup>()));
-		//GameManager.Pool.ReleaseUI(ui.gameObject);
+		CanvasGroup canvasGroup = ui.GetComponent<CanvasGroup>();
+		if(canvasGroup != null)
+		{
+			_ = StartCoroutine(FadeOut(ui.GetComponent<CanvasGroup>()));
+		}
+		else
+		{
+			GameManager.Pool.ReleaseUI(ui.gameObject);
+		}
 
 		if (popUpStack.Count > 0)
 		{

@@ -11,6 +11,11 @@ public class ArmorItemData : ItemData
 	[SerializeField] ArmorItem.ArmorType armorType;
 	[SerializeField] string armorSkinName;
 
+	private void Awake()
+	{
+		itemType = Item.Type.Armor;
+	}
+
 	public ArmorItem.ArmorType ArmorType { get { return armorType; } }
 	public string ArmorSkinName { get { return armorSkinName; } }
 }

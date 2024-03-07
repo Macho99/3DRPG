@@ -10,5 +10,10 @@ public class WeaponItemData : ItemData
 {
 	[SerializeField] private Weapon weaponPrefab;
 
+	private void Awake()
+	{
+		itemType = Item.Type.Weapon;
+	}
+
 	public Weapon WeaponPrefab { get { return weaponPrefab; } }
 }

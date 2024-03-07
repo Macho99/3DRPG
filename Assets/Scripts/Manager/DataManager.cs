@@ -25,9 +25,9 @@ public class DataManager : MonoBehaviour
 
 	private void Start()
 	{
-		//foreach(ItemData data in itemDataDict.Values)
+		//foreach (ItemData data in itemDataDict.Values)
 		//{
-		//	print($"{data.ItemName}, { data.DetailDesc }");
+		//	print($"{data.ItemName}, {data.DetailDesc}");
 		//}
 		//print(GetItem("BasicKatana").Summary);
 	}
