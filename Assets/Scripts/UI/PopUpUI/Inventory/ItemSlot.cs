@@ -16,6 +16,8 @@ public class ItemSlot : MonoBehaviour, /*IPointerEnterHandler, IPointerExitHandl
 	Item curItem;
 	int slotIdx;
 	RectTransform rectTransform;
+	float lastLeftClickTime = 0f;
+	float doubleClickTime = 0.3f;
 
 
 	public Item CurItem { get { return curItem; } }
@@ -117,10 +119,27 @@ public class ItemSlot : MonoBehaviour, /*IPointerEnterHandler, IPointerExitHandl
 
 	public void OnPointerClick(PointerEventData eventData)
 	{
-		if(eventData.button == PointerEventData.InputButton.Right)
+		if (curItem == null) return;
+		if (eventData.button == PointerEventData.InputButton.Right)
 		{
 			GameManager.UI.ShowPopUpUI<ItemOptionUI>("UI/PopUpUI/Inventory/ItemOption"
-				, false).Init(curItem, rectTransform.position);
+				, false).Init(invenUI, curItem, rectTransform.position);
+		}
+		else if(eventData.button == PointerEventData.InputButton.Left)
+		{
+			if(Time.time - lastLeftClickTime < doubleClickTime)
+			{
+				switch (curItem.ItemType)
+				{
+					case Item.Type.Armor:
+						invenUI.Equip((ArmorItem)curItem);
+						break;
+					case Item.Type.Weapon:
+						invenUI.Equip((WeaponItem)curItem);
+						break;
+				}
+			}
+			lastLeftClickTime = Time.time;
 		}
 	}
 }

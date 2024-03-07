@@ -9,6 +9,32 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
+	[Serializable]
+	public enum FollowTransform { 
+		KatanaHolder, SwordCase, SwordDummy, 
+		LeftHandWeaponSlot, Spine3, RightHand, 
+		Size
+	}
+
+	[Serializable]
+	struct SkinMapping
+	{
+		public ArmorType armorType;
+		public GameObject gameObject;
+		[HideInInspector] public SkinnedMeshRenderer initialSkin;
+	}
+
+	[Serializable]
+	struct TransformMapping
+	{
+		public FollowTransform followTransform;
+		public Transform transform;
+	}
+
+	[Header("Enum 순서에 맞게 할당하세요!")]
+	[SerializeField] SkinMapping[] skins;
+	[Header("Enum 순서에 맞게 할당하세요!")]
+	[SerializeField] TransformMapping[] followTransforms;
 	[SerializeField] State curState;
 	[SerializeField] Rig neckRig;
 	[SerializeField] Rig spineRig;
@@ -86,6 +112,17 @@ public class Player : MonoBehaviour
 
 		stateMachine.AddState(State.Stun, new PlayerStun(this, stateMachine));
 		stateMachine.AddState(State.Die, new PlayerDie(this, stateMachine));
+
+		BindSkin();
+	}
+
+	private void BindSkin()
+	{
+		for(int i=0;i<skins.Length;i++)
+		{
+			SkinMapping skinMapping = skins[i];
+			skinMapping.initialSkin = skinMapping.gameObject.GetComponentInChildren<SkinnedMeshRenderer>();
+		}
 	}
 
 	private void Start()
@@ -268,5 +305,39 @@ public class Player : MonoBehaviour
 	{
 		playerAttack.SetAnimTrigger("Hit");
 		FieldSFC.Instance?.PlayHit();
+	}
+
+	public void SetArmor(ArmorItem armorItem)
+	{
+		ArmorType armorType = armorItem.ArmorType;
+		skins[(int)armorType].gameObject.transform.
+			Find(armorItem.ArmorSkinName).gameObject.SetActive(true);
+
+		SkinnedMeshRenderer initalSkin = skins[(int)armorType].initialSkin;
+
+		if(initalSkin != null)
+			initalSkin.gameObject.SetActive(false);
+	}
+
+	public void InitArmor(ArmorType armorType)
+	{
+		string armorName = GameManager.Inven.GetArmorSlot(armorType).ArmorSkinName;
+		skins[(int)armorType].gameObject.transform.
+			Find(armorName).gameObject.SetActive(false);
+		SkinnedMeshRenderer initalSkin = skins[(int)armorType].initialSkin;
+
+		if (initalSkin != null)
+			initalSkin.gameObject.SetActive(true);
+	}
+
+	public Transform GetTransform(FollowTransform followType)
+	{
+		return followTransforms[(int)followType].transform;
+	}
+
+
+	public void RefreshWeapon()
+	{
+		playerAttack.RefreshWeapon();
 	}
 }

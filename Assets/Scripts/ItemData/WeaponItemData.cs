@@ -9,6 +9,7 @@ using UnityEngine;
 public class WeaponItemData : ItemData
 {
 	[SerializeField] private Weapon weaponPrefab;
+	[SerializeField] private WeaponType weaponType;
 
 	private void Awake()
 	{
@@ -16,4 +17,5 @@ public class WeaponItemData : ItemData
 	}
 
 	public Weapon WeaponPrefab { get { return weaponPrefab; } }
+	public WeaponType WeaponType { get {  return weaponType; } }
 }

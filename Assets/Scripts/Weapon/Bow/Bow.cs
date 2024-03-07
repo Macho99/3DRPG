@@ -9,6 +9,9 @@ using Random = UnityEngine.Random;
 
 public class Bow : Weapon
 {
+	[SerializeField] TargetFollower leftHandWeaponSlotFollower;
+	[SerializeField] TargetFollower spine3Follower;
+	[SerializeField] TargetFollower rightHandFollower;
 	[SerializeField] SkinnedMeshRenderer bowMesh;
 	[SerializeField] GameObject arrowToDraw;
 	[SerializeField] MeshRenderer arrowToShoot;
@@ -53,6 +56,7 @@ public class Bow : Weapon
 	const float ultiSkillCooltime = 1f;
 	float ultiSkillUseableTime = -ultiSkillCooltime;
 
+	public bool AimLock { get; set; }
 	public ArrowProperty CurArrowProperty { get { return curArrowProperty; } }
 	public int FastShotNum { get; set; } = 0;
 	public bool Reloaded { get; set; }
@@ -80,10 +84,19 @@ public class Bow : Weapon
 		stateMachine.AddState(State.Ulti, new BowSkillUlti(this, stateMachine));
 	}
 
+	public override void Init(WeaponItem weaponItem)
+	{
+		base.Init(weaponItem);
+		leftHandWeaponSlotFollower.SetTarget(player.GetTransform(Player.FollowTransform.LeftHandWeaponSlot));
+		spine3Follower.SetTarget(player.GetTransform(Player.FollowTransform.Spine3));
+		rightHandFollower.SetTarget(player.GetTransform(Player.FollowTransform.RightHand));
+	}
+
 	protected override void Start()
 	{
 		base.Start();
-		stateMachine.SetUp(State.Idle);
+		print("Start");
+		stateMachine.SetUp(State.Reload);
 	}
 
 	private void Update()
@@ -96,7 +109,7 @@ public class Bow : Weapon
 	public override void ChangeStateToIdle(bool forceIdle = false)
 	{
 		player.SetBowAimRigWeight(0f, 0f, 0f);
-		playerAttack.SetAnimTrigger("UpperEntry");
+		playerAttack.SetAnimTrigger("Init");
 		stateMachine.ChangeState(State.Idle);
 		return;
 	}
@@ -434,5 +447,17 @@ public class Bow : Weapon
 				position, rotation, true);
 			ultiElem.Init(this, (ArrowProperty)Random.Range(1, 4));
 		}
+	}
+
+	public override void ForceExit()
+	{
+		stateMachine.ForceExit();
+		AimLock = false;
+		playerCamManager.SetAimCam(false);
+	}
+
+	public override void ForceEnter()
+	{
+		stateMachine.ForceEnter();
 	}
 }

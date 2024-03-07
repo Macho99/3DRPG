@@ -15,6 +15,7 @@ public class KatanaEquip : StateBase<Katana.State, Katana>
 
 	public override void Enter()
 	{
+		owner.SetDummyRender(true);
 		playerAttack.SetAnimTrigger("Upper2");
 		playerAnimEvent.OnEquipChange.AddListener(Equip);
 	}

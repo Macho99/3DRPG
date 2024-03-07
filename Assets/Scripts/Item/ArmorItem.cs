@@ -5,12 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
+[Serializable]
+public enum ArmorType { Helmet, Body, Legs, Boots, Cape, Gauntlets, Size }
 public class ArmorItem : EquipItem
 {
 	ArmorItemData armorItemData;
 
-	[Serializable]
-	public enum ArmorType { Helmet, Body, Leg, Boots, Cape, Gauntlets }
 	public ArmorItem(ItemData itemData) : base(itemData)
 	{
 		armorItemData = itemData as ArmorItemData;
@@ -25,4 +25,7 @@ public class ArmorItem : EquipItem
 	{
 		return new ArmorItem(itemData);
 	}
+
+	public ArmorType ArmorType { get { return armorItemData.ArmorType; } }
+	public string ArmorSkinName { get { return armorItemData.ArmorSkinName; } }
 }

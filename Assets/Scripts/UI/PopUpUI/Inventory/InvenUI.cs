@@ -25,6 +25,9 @@ public class InvenUI : PopUpUI
 	ItemSlot curDragingSlot;
 	Image dragInfo;
 
+	ArmorSlot[] armorSlots;
+	WeaponSlot[] weaponSlots;
+
 	public InvenType CurInvenType { get { return curInvenType; } }
 
 	protected override void Awake()
@@ -44,6 +47,19 @@ public class InvenUI : PopUpUI
 		itemDetailDescText = texts["ItemDetailDesc"];
 		itemImage = images["ItemImage"];
 		itemInfoTrans.gameObject.SetActive(false);
+
+		armorSlots = new ArmorSlot[(int)ArmorType.Size];
+		armorSlots[(int)ArmorType.Helmet] = transforms["HelmetSlot"].GetComponent<ArmorSlot>();
+		armorSlots[(int)ArmorType.Body] = transforms["BodySlot"].GetComponent<ArmorSlot>();
+		armorSlots[(int)ArmorType.Legs] = transforms["LegsSlot"].GetComponent<ArmorSlot>();
+		armorSlots[(int)ArmorType.Boots] = transforms["BootsSlot"].GetComponent<ArmorSlot>();
+		armorSlots[(int)ArmorType.Cape] = transforms["CapeSlot"].GetComponent<ArmorSlot>();
+		armorSlots[(int)ArmorType.Gauntlets] = transforms["GauntletsSlot"].GetComponent<ArmorSlot>();
+
+		weaponSlots = new WeaponSlot[(int)WeaponType.Size];
+		weaponSlots[(int)WeaponType.Melee] = transforms["MeleeSlot"].GetComponent<WeaponSlot>();
+		weaponSlots[(int)WeaponType.Ranged] = transforms["RangedSlot"].GetComponent <WeaponSlot>();
+
 
 		dragInfo = images["DragInfo"];
 		dragInfo.gameObject.SetActive(false);
@@ -160,5 +176,15 @@ public class InvenUI : PopUpUI
 	public void SlotDragEnd(ItemSlot slot)
 	{
 		dragInfo.gameObject.SetActive(false);
+	}
+
+	public void Equip(ArmorItem armorItem)
+	{
+		armorSlots[(int) armorItem.ArmorType].Equip(armorItem);
+	}
+
+	public void Equip(WeaponItem weaponItem)
+	{
+		weaponSlots[(int) weaponItem.WeaponType].Equip(weaponItem);
 	}
 }

@@ -231,7 +231,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2688058310184000660
 Transform:
   m_ObjectHideFlags: 0
@@ -264,10 +264,9 @@ MonoBehaviour:
   controller: {fileID: 22100000, guid: de61b878d4656864eb5ffa2fa653a77c, type: 2}
   trailTrans: {fileID: 4559134427209240810}
   curState: 0
-  deathfaultFeedback: {fileID: 0}
-  ultiFeedback: {fileID: 0}
-  chargeFeedback: {fileID: 0}
-  swordDummy: {fileID: 2910581067956921983}
+  katanaHolderFollower: {fileID: 5355134624905011652}
+  swordCaseFollower: {fileID: 8652374610025570414}
+  swordDummyFollower: {fileID: 2910581067956921983}
 --- !u!1 &7171764679006488606
 GameObject:
   m_ObjectHideFlags: 0

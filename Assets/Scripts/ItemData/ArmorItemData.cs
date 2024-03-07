@@ -8,7 +8,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Armor Item Data", menuName = "Scriptable Object/Armor Item Data", order = int.MaxValue)]
 public class ArmorItemData : ItemData
 {
-	[SerializeField] ArmorItem.ArmorType armorType;
+	[SerializeField] ArmorType armorType;
 	[SerializeField] string armorSkinName;
 
 	private void Awake()
@@ -16,6 +16,6 @@ public class ArmorItemData : ItemData
 		itemType = Item.Type.Armor;
 	}
 
-	public ArmorItem.ArmorType ArmorType { get { return armorType; } }
+	public ArmorType ArmorType { get { return armorType; } }
 	public string ArmorSkinName { get { return armorSkinName; } }
 }

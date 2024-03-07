@@ -7,6 +7,7 @@ public abstract class Weapon : MonoBehaviour
 {
 	[SerializeField] RuntimeAnimatorController controller;
 
+	protected WeaponItem weaponItem;
 	protected LayerMask hitMask;
 	protected LayerMask monsterMask;
 	protected Player player;
@@ -17,6 +18,7 @@ public abstract class Weapon : MonoBehaviour
 	protected PlayerCamManager playerCamManager;
 	protected new MeshRenderer renderer;
 
+	public WeaponItem WeaponItem { get { return weaponItem; } }
 	public LayerMask HitMask { get { return hitMask; } }
 	public LayerMask MonsterMask { get { return monsterMask; } }
 	public Player Player { get { return player; } }
@@ -44,6 +46,13 @@ public abstract class Weapon : MonoBehaviour
 	}
 
 	public abstract void SetUnArmed();
+	public abstract void ForceExit();
+	public abstract void ForceEnter();
+
+	public virtual void Init(WeaponItem weaponItem)
+	{
+		this.weaponItem = weaponItem;
+	}
 
 	public void ChangePlayerState(Player.State state)
 	{
@@ -62,7 +71,8 @@ public abstract class Weapon : MonoBehaviour
 
 	public abstract void ChangeStateToIdle(bool forceIdle = false);
 
-	public RuntimeAnimatorController GetAnimController() {
+	public RuntimeAnimatorController GetAnimController() 
+	{
 		return controller; 
 	}
 

@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e826af98786d8e648863094595755617, type: 3}
+  m_Name: KnightBoots
+  m_EditorClassIdentifier: 
+  itemName: "\uAE30\uC0AC \uC2E0\uBC1C"
+  sprite: {fileID: 21300000, guid: 691754dc1e501794594f35a00c251112, type: 3}
+  summary: "\uB2E8\uB2E8\uD55C \uAE30\uC0AC \uAC11\uC637 \uC2E0\uBC1C\uC774\uB2E4."
+  detailDesc: "\uC801\uC758 \uACF5\uACA9\uC5D0 \uD53C\uD574\uB97C \uB35C\uBC1B\uC744\uC9C0\uB3C4?"
+  armorType: 3
+  armorSkinName: PT_Female_Armor_01_A_boots

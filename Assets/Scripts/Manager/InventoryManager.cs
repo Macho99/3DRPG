@@ -6,6 +6,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEditor;
+using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -16,6 +17,10 @@ public class InventoryManager : MonoBehaviour
 	EquipItem[] equipInv;
 	ConsumpItem[] consumpInv;
 	OtherItem[] otherInv;
+
+	ArmorItem[] armorSlots;
+	WeaponItem[] weaponSlots;
+
 	const int invSize = 20;
 	public int InvSize {  get { return invSize; } }
 	[HideInInspector] public UnityEvent<Item> OnItemGet = new UnityEvent<Item>();
@@ -29,13 +34,20 @@ public class InventoryManager : MonoBehaviour
 		equipInv = new EquipItem[invSize];
 		consumpInv = new ConsumpItem[invSize];
 		otherInv = new OtherItem[invSize];
+		armorSlots = new ArmorItem[(int) ArmorType.Size];
+		weaponSlots = new WeaponItem[(int)WeaponType.Size];
 	}
 
 	private void Start()
 	{
 		AddItem(GameManager.Data.GetItem("KnightHelmet"));
+		AddItem(GameManager.Data.GetItem("KnightBody"));
+		AddItem(GameManager.Data.GetItem("KnightBoots"));
+		AddItem(GameManager.Data.GetItem("KnightCape"));
+		AddItem(GameManager.Data.GetItem("KnightGauntlets"));
+		AddItem(GameManager.Data.GetItem("KnightLegs"));
 		AddItem(GameManager.Data.GetItem("BasicKatana"));
-		AddItem(GameManager.Data.GetItem("BasicKatana"));
+		AddItem(GameManager.Data.GetItem("BasicBow"));
 		AddItem(GameManager.Data.GetItem("RedApple"));
 	}
 
@@ -116,7 +128,7 @@ public class InventoryManager : MonoBehaviour
 		return otherInv;
 	}
 
-	private bool AddItem(Item item)
+	private bool AddItem(Item item, bool refresh = true)
 	{
 		Item[] inv;
 		switch (item.ItemType)
@@ -137,6 +149,8 @@ public class InventoryManager : MonoBehaviour
 		}
 
 		inv[idx] = item;
+		if(refresh == true)
+			OnItemGet?.Invoke(item);
 		return true;
 	}
 
@@ -257,12 +271,13 @@ public class InventoryManager : MonoBehaviour
 		ItemChange();
 	}
 
-	public void DeleteItem(Item item)
+	public void DeleteItem(Item item, bool refresh = true)
 	{
 		FindItem(item, out Item[] inv, out int idx);
 
 		inv[idx] = null;
-		OnItemDelete?.Invoke(item);
+		if(refresh == true)
+			OnItemDelete?.Invoke(item);
 	}
 
 	//public void ItemAmountChanged(Item item)
@@ -325,5 +340,76 @@ public class InventoryManager : MonoBehaviour
 		inv[idx1] = inv[idx2];
 		inv[idx2] = temp;
 		ItemChange();
+	}
+
+	public ArmorItem GetArmorSlot(ArmorType armorType)
+	{
+		return armorSlots[(int)armorType];
+	}
+
+	public void SetArmorSlot(ArmorItem armorItem)
+	{
+		DeleteItem(armorItem, false);
+		bool result = InitArmorSlot(armorItem.ArmorType, false);
+		armorSlots[(int)armorItem.ArmorType] = armorItem;
+		FieldSFC.Player?.SetArmor(armorItem);
+		ItemChange();
+	}
+
+	public bool InitArmorSlot(ArmorType armorType, bool refresh = true)
+	{
+		int idx = (int)armorType;
+		ArmorItem armorItem = armorSlots[idx];
+        if (armorItem == null)
+        {
+			return true;
+        }
+
+        bool result = AddItem(armorItem, false);
+		if(result == false)
+		{
+			return false;
+		}
+
+		FieldSFC.Player?.InitArmor(armorType);
+		armorSlots[idx] = null;
+		if(refresh == true)
+			ItemChange();
+		return true;
+	}
+	public WeaponItem GetWeaponSlot(WeaponType weaponType)
+	{
+		return weaponSlots[(int)weaponType];
+	}
+
+	public void SetWeaponSlot(WeaponItem weaponItem)
+	{
+		DeleteItem(weaponItem, false);
+		bool result = InitWeaponSlot(weaponItem.WeaponType, false);
+		weaponSlots[(int)weaponItem.WeaponType] = weaponItem;
+		FieldSFC.Player?.RefreshWeapon();
+		ItemChange();
+	}
+
+	public bool InitWeaponSlot(WeaponType weaponType, bool refresh = true)
+	{
+		int idx = (int)weaponType;
+		WeaponItem weaponItem = weaponSlots[idx];
+		if (weaponItem == null)
+		{
+			return true;
+		}
+
+		bool result = AddItem(weaponItem, false);
+		if (result == false)
+		{
+			return false;
+		}
+
+		weaponSlots[idx] = null;
+		if (refresh == true)
+			ItemChange();
+		FieldSFC.Player?.RefreshWeapon();
+		return true;
 	}
 }

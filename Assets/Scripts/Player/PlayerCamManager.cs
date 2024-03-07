@@ -11,8 +11,10 @@ public class PlayerCamManager : MonoBehaviour
 	[SerializeField] CinemachineVirtualCamera bowUltiCastCam;
 	[SerializeField] CinemachineVirtualCamera bowUltiTrackCam;
 	[SerializeField] Transform bowUltiTrackLookPoint;
+	[SerializeField] Transform equipInvenCamPivot;
 
 	private CinemachineTrackedDolly bowUltiTrackedDolly;
+	private bool equipInvCamRotating;
 
 	private void Awake()
 	{
@@ -78,5 +80,34 @@ public class PlayerCamManager : MonoBehaviour
 		Vector3 lookPos = bowUltiTrackLookPoint.localPosition;
 		lookPos.z = zPos;
 		bowUltiTrackLookPoint.localPosition = lookPos;
+	}
+
+	public void RotateEquipInvPivot(float xRotateValue)
+	{
+		equipInvCamRotating = true;
+		Quaternion quaternion = Quaternion.Euler(0f, xRotateValue * Time.deltaTime, 0f);
+		equipInvenCamPivot.localRotation = equipInvenCamPivot.localRotation * quaternion;
+	}
+
+	public void RotateEquipInvPivot()
+	{
+		equipInvCamRotating = false;
+		_ = StartCoroutine(CoRotate());
+	}
+
+	private IEnumerator CoRotate()
+	{
+		while (equipInvCamRotating == false)
+		{
+			equipInvenCamPivot.localRotation = Quaternion.Lerp(equipInvenCamPivot.localRotation, 
+				Quaternion.identity, Time.deltaTime * 10f);
+			if(Mathf.Abs(equipInvenCamPivot.localRotation.eulerAngles.y) < 0.5f)
+			{
+				equipInvenCamPivot.localRotation = Quaternion.identity;
+				break;
+			}
+				
+			yield return null;
+		}
 	}
 }

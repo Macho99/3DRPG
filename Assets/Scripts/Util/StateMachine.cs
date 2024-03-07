@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
@@ -9,7 +10,7 @@ public class StateMachine<TState, TOwner>
 	private TState curStateEnum;
 	private Dictionary<TState, StateBase<TState, TOwner>> states;
 	private StateBase<TState, TOwner> curState;
-
+	private TState startState;
 	public StateMachine(TOwner owner)
 	{
 		this.owner = owner;
@@ -28,6 +29,7 @@ public class StateMachine<TState, TOwner>
 			state.Setup();
 		}
 
+		this.startState = startState;
 		curStateEnum = startState;
 		curState = states[startState];
 		curState.Enter();
@@ -35,8 +37,8 @@ public class StateMachine<TState, TOwner>
 
 	public void Update()
 	{
-		curState.Update();
-		curState.Transition();
+		curState?.Update();
+		curState?.Transition();
 	}
 
 	public void ChangeState(TState newState)
@@ -48,9 +50,18 @@ public class StateMachine<TState, TOwner>
 		curState.Enter();
 	}
 
+	public void ForceEnter()
+	{
+		if (startState == null)
+			return;
+		curState = states[startState];
+		curState?.Enter();
+	}
+
 	public void ForceExit()
 	{
 		curState?.Exit();
+		curState = null;
 	}
 
 	public TState GetCurState()
