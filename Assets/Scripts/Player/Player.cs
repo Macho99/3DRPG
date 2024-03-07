@@ -122,6 +122,7 @@ public class Player : MonoBehaviour
 		{
 			SkinMapping skinMapping = skins[i];
 			skinMapping.initialSkin = skinMapping.gameObject.GetComponentInChildren<SkinnedMeshRenderer>();
+			skins[i] = skinMapping;
 		}
 	}
 
@@ -247,10 +248,14 @@ public class Player : MonoBehaviour
 		rightHandRig.weight = rightHand;
 	}
 
-	public void IgnoreInput(bool value)
+	public void IgnoreInput(bool value, bool pointerFree = true)
 	{
 		playerInput.enabled = !value;
-		playerLook.enabled = !value;
+		playerLook.InitLookInput();
+		if (pointerFree == true)
+		{
+			playerLook.enabled = !value;
+		}
 	}
 
 	private void OnTestButton(InputValue value)

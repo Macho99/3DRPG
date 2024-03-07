@@ -11,6 +11,7 @@ public class ItemSlot : MonoBehaviour, /*IPointerEnterHandler, IPointerExitHandl
 	InvenUI invenUI;
 	[SerializeField] Image itemImage;
 	[SerializeField] TextMeshProUGUI amountText;
+	Image image;
 	Toggle toggle;
 
 	Item curItem;
@@ -28,6 +29,7 @@ public class ItemSlot : MonoBehaviour, /*IPointerEnterHandler, IPointerExitHandl
 	{
 		toggle = GetComponent<Toggle>();
 		rectTransform = GetComponent<RectTransform>();
+		image = GetComponent<Image>();
 	}
 
 	public void Init(InvenUI invenUI, int slotIdx)
@@ -45,17 +47,26 @@ public class ItemSlot : MonoBehaviour, /*IPointerEnterHandler, IPointerExitHandl
 
 	public void SetItem(Item item)
 	{
+		Color color;
 		this.curItem = item;
 		if(item == null)
 		{
 			itemImage.sprite = null;
+			color = itemImage.color;
+			color.a = 0f;
+			itemImage.color = color;
+			image.color = invenUI.GetRateColor(Item.Rate.Normal);
 			amountText.gameObject.SetActive(false);
 			toggle.interactable = false;
 			return;
 		}
 
 		itemImage.sprite = item.Sprite;
-		if(item.ItemType == Item.Type.Other || item.ItemType == Item.Type.HPConsump)
+		color = itemImage.color;
+		color.a = 1f;
+		itemImage.color = color;
+		image.color = invenUI.GetRateColor(item.ItemRate);
+		if (item.ItemType == Item.Type.Other || item.ItemType == Item.Type.HPConsump)
 		{
 			MultipleItem multiple = (MultipleItem) item;
 			amountText.text = multiple.Amount.ToString();

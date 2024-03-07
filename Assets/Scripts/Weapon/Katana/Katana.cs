@@ -12,7 +12,7 @@ public class Katana : Sword
 	[SerializeField] TargetFollower swordDummyFollower;
 
 	[Serializable]
-	public enum State { Idle, Unarmed, QuickSheath, Equip, 
+	public enum State { Inactive, Idle, Unarmed, QuickSheath, Equip, 
 		QuickDrawEntry, QuickDrawIdle, QuickDraw1, QuickDraw2, QuickDraw3, QuickDraw4, QuickDraw5, QuickDraw6, QuickDraw7,
 		DashAttackVerA, DashAttackVerB,
 		DashComboVerA01, DashComboVerA02, DashComboVerA03, DashComboVerA04,
@@ -33,6 +33,7 @@ public class Katana : Sword
 		base.Awake();
 
 		stateMachine = new StateMachine<State, Katana>(this);
+		stateMachine.AddState(State.Inactive, new KatanaInactive(this, stateMachine));
 		stateMachine.AddState(State.Idle, new KatanaIdle(this, stateMachine));
 		stateMachine.AddState(State.Unarmed, new KatanaUnarmed(this, stateMachine));
 		stateMachine.AddState(State.QuickSheath, new KatanaQuickSheath(this, stateMachine));
@@ -87,7 +88,7 @@ public class Katana : Sword
 	protected override void Start()
 	{
 		base.Start();
-		stateMachine.SetUp(State.Equip);
+		stateMachine.SetUp(State.Inactive);
 	}
 
 	private void Update()
@@ -158,13 +159,8 @@ public class Katana : Sword
 		}
 	}
 
-	public override void ForceExit()
+	public override void ForceInactive()
 	{
-		stateMachine.ForceExit();
-	}
-
-	public override void ForceEnter()
-	{
-		stateMachine.ForceEnter();
+		stateMachine.ChangeState(State.Inactive);
 	}
 }

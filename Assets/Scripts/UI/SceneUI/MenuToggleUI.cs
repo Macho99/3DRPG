@@ -11,15 +11,16 @@ public class MenuToggleUI : SceneUI
 
 	protected override void Awake()
 	{
+		base.Awake();
 		canvasGroup = GetComponent<CanvasGroup>();
 	}
 
-	private void OnEnable()
+	protected virtual void OnEnable()
 	{
 		GameManager.UI.OnMenuToggle.AddListener(SetAlpha);
 	}
 
-	private void OnDisable()
+	protected virtual void OnDisable()
 	{
 		GameManager.UI.OnMenuToggle.RemoveListener(SetAlpha);
 	}
@@ -27,5 +28,6 @@ public class MenuToggleUI : SceneUI
 	private void SetAlpha(bool value)
 	{
 		canvasGroup.alpha = value ? 0f : 1f;
+		print(gameObject.name);
 	}
 }

@@ -32,6 +32,11 @@ public class PlayerLook : MonoBehaviour
         //GameManager.Instance.OnFocus.AddListener(AutoEnable);
     }
 
+    public void InitLookInput()
+    {
+        lookInput = Vector2.zero;
+    }
+
 	private void OnDestroy()
 	{
 		//GameManager.Instance.OnFocus.RemoveListener(AutoEnable);

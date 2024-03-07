@@ -534,7 +534,7 @@ GameObject:
   - component: {fileID: 1955339546816798555}
   - component: {fileID: 35228022096879403}
   m_Layer: 5
-  m_Name: EmtpyImage
+  m_Name: EmptyImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2170,7 +2170,7 @@ GameObject:
   - component: {fileID: 6514868471216226259}
   - component: {fileID: 5033783837382425451}
   m_Layer: 5
-  m_Name: EmtpyImage
+  m_Name: EmptyImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2324,7 +2324,7 @@ GameObject:
   - component: {fileID: 6117797028424231449}
   - component: {fileID: 5428005346035543713}
   m_Layer: 5
-  m_Name: EmtpyImage
+  m_Name: EmptyImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3281,7 +3281,7 @@ GameObject:
   - component: {fileID: 5115129508465794671}
   - component: {fileID: 6435211546611997399}
   m_Layer: 5
-  m_Name: EmtpyImage
+  m_Name: EmptyImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3938,7 +3938,7 @@ GameObject:
   - component: {fileID: 4149877116001090032}
   - component: {fileID: 2748799554935618888}
   m_Layer: 5
-  m_Name: EmtpyImage
+  m_Name: EmptyImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4134,6 +4134,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e69dfde059803f43a4ae25b0836cc42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rateColors:
+  - {r: 0, g: 0, b: 0, a: 0.05882353}
+  - {r: 0.4745098, g: 0.7490196, b: 1, a: 0.5254902}
+  - {r: 0.7176471, g: 0.5803922, b: 1, a: 0.5254902}
+  - {r: 0.62352943, g: 1, b: 0.5058824, a: 0.5372549}
 --- !u!222 &5778748480716979240
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5371,7 +5376,7 @@ GameObject:
   - component: {fileID: 2612386202533692034}
   - component: {fileID: 4320058738218305082}
   m_Layer: 5
-  m_Name: EmtpyImage
+  m_Name: EmptyImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6334,7 +6339,7 @@ GameObject:
   - component: {fileID: 1669140972992713898}
   - component: {fileID: 620119329768460306}
   m_Layer: 5
-  m_Name: EmtpyImage
+  m_Name: EmptyImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7009,7 +7014,7 @@ MonoBehaviour:
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 1
+  m_ScrollSensitivity: 50
   m_Viewport: {fileID: 7162031186808763733}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 3137186703297071506}
@@ -7192,7 +7197,7 @@ GameObject:
   - component: {fileID: 699482854014572583}
   - component: {fileID: 1587499157004213407}
   m_Layer: 5
-  m_Name: EmtpyImage
+  m_Name: EmptyImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

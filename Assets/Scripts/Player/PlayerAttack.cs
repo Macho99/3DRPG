@@ -25,6 +25,8 @@ public class PlayerAttack : MonoBehaviour
 	[HideInInspector] public UnityEvent<Player.State> OnRButtonDown;
 	[HideInInspector] public UnityEvent<Player.State> OnRButtonUp;
 
+	[HideInInspector] public UnityEvent<WeaponType> OnCurHoldWeaponTypeChange;
+
 	private Coroutine Attack1HoldCoroutine;
 	private Coroutine Attack2HoldCoroutine;
 
@@ -60,6 +62,8 @@ public class PlayerAttack : MonoBehaviour
 		OnRButtonDown = new UnityEvent<Player.State>();
 		OnRButtonUp = new UnityEvent<Player.State>();
 
+		OnCurHoldWeaponTypeChange = new UnityEvent<WeaponType>();
+
 		//if (weapons.Length > 0)
 		//{
 		//	curWeapon = weapons[0];
@@ -94,7 +98,7 @@ public class PlayerAttack : MonoBehaviour
 		{
 			if (idx == (int)curHoldWeaponType)
 			{
-				weapons[idx].ForceExit();
+				weapons[idx].ForceInactive();
 				SetAnimFloat("Armed", 0f);
 			}
 
@@ -107,11 +111,19 @@ public class PlayerAttack : MonoBehaviour
 			weapons[idx] = GameManager.Resource.Instantiate(newWeaponItem.WeaponPrefab, weaponHolder, false);
 			weapons[idx].transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
 			weapons[idx].Init(newWeaponItem);
-			if(idx != (int)curHoldWeaponType)
+			if (idx != (int)curHoldWeaponType)
 			{
-				weapons[idx].ForceExit();
+				weapons[idx].ForceInactive();
 				weapons[idx].gameObject.SetActive(false);
 			}
+			else
+			{
+				anim.runtimeAnimatorController = weapons[idx].GetAnimController();
+			}
+		}
+		else if(idx == (int)curHoldWeaponType)
+		{
+			anim.runtimeAnimatorController = initController;
 		}
 	}
 
@@ -124,9 +136,9 @@ public class PlayerAttack : MonoBehaviour
 
 		if (weapons[curIdx] != null)
 		{
-			anim.SetTrigger("Init");
+			anim.SetTrigger("BaseExit");
 			weapons[curIdx].ChangeStateToIdle(false);
-			weapons[curIdx].ForceExit();
+			weapons[curIdx].ForceInactive();
 			weapons[curIdx].gameObject.SetActive(false);
 		}
 
@@ -134,7 +146,6 @@ public class PlayerAttack : MonoBehaviour
 		{
 			anim.runtimeAnimatorController = weapons[newIdx].GetAnimController();
 			weapons[newIdx].gameObject.SetActive(true);
-			weapons[newIdx].ForceEnter();
 		}
 		else
 		{

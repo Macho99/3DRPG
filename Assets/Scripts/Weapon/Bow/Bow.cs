@@ -27,7 +27,7 @@ public class Bow : Weapon
 	public float arrowRigLerpSpeed = 6f;
 
 	[Serializable]
-	public enum State { Idle, Reload, StartAim, Aiming, UndoAim, Shot, FastAim, FastShot, 
+	public enum State { Inactive, Idle, Reload, StartAim, Aiming, UndoAim, Shot, FastAim, FastShot, 
 		FireRain, Ulti, };
 	[Serializable]
 	public enum ArrowProperty { None, Ice, Wind, Fire }
@@ -72,6 +72,7 @@ public class Bow : Weapon
 		enemyMask = LayerMask.GetMask("Monster");
 
 		stateMachine = new StateMachine<State, Bow>(this);
+		stateMachine.AddState(State.Inactive, new BowInactive(this, stateMachine));
 		stateMachine.AddState(State.Idle, new BowIdle(this, stateMachine));
 		stateMachine.AddState(State.Reload, new BowReload(this, stateMachine));
 		stateMachine.AddState(State.StartAim, new BowStartAim(this, stateMachine));
@@ -95,8 +96,7 @@ public class Bow : Weapon
 	protected override void Start()
 	{
 		base.Start();
-		print("Start");
-		stateMachine.SetUp(State.Reload);
+		stateMachine.SetUp(State.Inactive);
 	}
 
 	private void Update()
@@ -448,16 +448,12 @@ public class Bow : Weapon
 			ultiElem.Init(this, (ArrowProperty)Random.Range(1, 4));
 		}
 	}
-
-	public override void ForceExit()
+	
+	public override void ForceInactive()
 	{
-		stateMachine.ForceExit();
 		AimLock = false;
 		playerCamManager.SetAimCam(false);
-	}
-
-	public override void ForceEnter()
-	{
-		stateMachine.ForceEnter();
+		playerMove.AimLock = false;
+		stateMachine.ChangeState(State.Inactive);
 	}
 }

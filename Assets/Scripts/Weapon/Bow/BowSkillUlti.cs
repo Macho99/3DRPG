@@ -92,7 +92,7 @@ public class BowSkillUlti : StateBase<Bow.State, Bow>
 		if(waitAnim == true) return;
 		waitAnim = true;
 
-		player.IgnoreInput(true);
+		player.IgnoreInput(true, false);
 		GameManager.Resource.Destroy(decal.gameObject);
 		decal = null;
 		_ = owner.StartCoroutine(CoSkillCast());

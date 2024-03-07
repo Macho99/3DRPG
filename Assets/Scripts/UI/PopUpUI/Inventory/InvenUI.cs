@@ -9,6 +9,8 @@ using UnityEngine.UI;
 
 public class InvenUI : PopUpUI
 {
+	[SerializeField] private Color[] rateColors;
+
 	InvenType curInvenType;
 	ToggleGroup itemSlotGroup;
 
@@ -186,5 +188,13 @@ public class InvenUI : PopUpUI
 	public void Equip(WeaponItem weaponItem)
 	{
 		weaponSlots[(int) weaponItem.WeaponType].Equip(weaponItem);
+	}
+
+	public Color GetRateColor(Item.Rate rate)
+	{
+		int idx = (int)rate;
+		if (idx >= rateColors.Length)
+			idx = rateColors.Length - 1;
+		return rateColors[idx];
 	}
 }

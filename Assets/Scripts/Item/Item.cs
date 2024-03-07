@@ -8,6 +8,8 @@ using UnityEngine;
 public abstract class Item
 {
 	public enum Type { Weapon, Armor, Other, HPConsump, MPConsump, }
+	[Serializable]
+	public enum Rate { Normal, Rare, Epic, Legend}
 
 	protected ItemData itemData;
 
@@ -22,6 +24,7 @@ public abstract class Item
 	public string Summary { get { return itemData.Summary; } }
 	public string DetailDesc { get { return itemData.DetailDesc; } }
 	public Type ItemType {  get { return itemData.ItemType; } }
+	public Rate ItemRate { get { return itemData.Rate; } }
 
 	public abstract Item Clone();
 	public abstract void Use();

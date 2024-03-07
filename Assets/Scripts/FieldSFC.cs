@@ -44,7 +44,7 @@ public class FieldSFC : MonoBehaviour
 	private void Start()
 	{
 		GameManager.UI.ShowSceneUI<PlayerConditionUI>("UI/SceneUI/PlayerConditionUI");
-		GameManager.UI.ShowSceneUI<MountingItemsUI>("UI/SceneUI/MountingItemsUI");
+		GameManager.UI.ShowSceneUI<QuickSlotsUI>("UI/SceneUI/MountingItemsUI");
 	}
 
 	private void OnDestroy()

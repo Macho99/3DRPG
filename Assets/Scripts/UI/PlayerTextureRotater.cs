@@ -10,6 +10,16 @@ public class PlayerTextureRotater : MonoBehaviour, IDragHandler, IBeginDragHandl
 
 	float prevXPos;
 
+	private void OnEnable()
+	{
+		playerCamManager.SetActiveEquipInvCam(true);
+	}
+
+	private void OnDisable()
+	{
+		playerCamManager.SetActiveEquipInvCam(false);
+	}
+
 	public void OnBeginDrag(PointerEventData eventData)
 	{
 		if(playerCamManager == null)

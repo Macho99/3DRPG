@@ -10,6 +10,7 @@ public class ItemData : ScriptableObject
 {
 	[SerializeField] string itemName;
 	protected Item.Type itemType = Item.Type.Other;
+	[SerializeField] Item.Rate rate = Item.Rate.Normal;
 	[SerializeField] Sprite sprite;
 	[Multiline]
 	[SerializeField] string summary;
@@ -21,4 +22,5 @@ public class ItemData : ScriptableObject
 	public Sprite Sprite { get { return sprite; } }
 	public string Summary { get { return summary; } }
 	public string DetailDesc { get { return detailDesc; } }
+	public Item.Rate Rate { get { return rate; } }
 }

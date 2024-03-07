@@ -82,6 +82,12 @@ public class PlayerCamManager : MonoBehaviour
 		bowUltiTrackLookPoint.localPosition = lookPos;
 	}
 
+	public void SetActiveEquipInvCam(bool value)
+	{
+		if(equipInvenCamPivot != null)
+			equipInvenCamPivot.gameObject.SetActive(value);
+	}
+
 	public void RotateEquipInvPivot(float xRotateValue)
 	{
 		equipInvCamRotating = true;

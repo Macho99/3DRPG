@@ -46,6 +46,16 @@ public class InventoryManager : MonoBehaviour
 		AddItem(GameManager.Data.GetItem("KnightCape"));
 		AddItem(GameManager.Data.GetItem("KnightGauntlets"));
 		AddItem(GameManager.Data.GetItem("KnightLegs"));
+		AddItem(GameManager.Data.GetItem("AssasinHelmet"));
+		AddItem(GameManager.Data.GetItem("AssasinBody"));
+		AddItem(GameManager.Data.GetItem("AssasinBoots"));
+		AddItem(GameManager.Data.GetItem("AssasinCape"));
+		AddItem(GameManager.Data.GetItem("AssasinGauntlets"));
+		AddItem(GameManager.Data.GetItem("AssasinLegs"));
+		AddItem(GameManager.Data.GetItem("BasicBody"));
+		AddItem(GameManager.Data.GetItem("BasicBoots"));
+		AddItem(GameManager.Data.GetItem("BasicGauntlets"));
+		AddItem(GameManager.Data.GetItem("BasicLegs"));
 		AddItem(GameManager.Data.GetItem("BasicKatana"));
 		AddItem(GameManager.Data.GetItem("BasicBow"));
 		AddItem(GameManager.Data.GetItem("RedApple"));

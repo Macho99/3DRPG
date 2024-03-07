@@ -10,7 +10,6 @@ public class StateMachine<TState, TOwner>
 	private TState curStateEnum;
 	private Dictionary<TState, StateBase<TState, TOwner>> states;
 	private StateBase<TState, TOwner> curState;
-	private TState startState;
 	public StateMachine(TOwner owner)
 	{
 		this.owner = owner;
@@ -29,7 +28,6 @@ public class StateMachine<TState, TOwner>
 			state.Setup();
 		}
 
-		this.startState = startState;
 		curStateEnum = startState;
 		curState = states[startState];
 		curState.Enter();
@@ -44,24 +42,10 @@ public class StateMachine<TState, TOwner>
 	public void ChangeState(TState newState)
 	{
 		//Debug.Log(newState);
-		curState.Exit();
+		curState?.Exit();
 		curStateEnum = newState;
 		curState = states[newState];
 		curState.Enter();
-	}
-
-	public void ForceEnter()
-	{
-		if (startState == null)
-			return;
-		curState = states[startState];
-		curState?.Enter();
-	}
-
-	public void ForceExit()
-	{
-		curState?.Exit();
-		curState = null;
 	}
 
 	public TState GetCurState()

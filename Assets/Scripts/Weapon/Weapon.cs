@@ -46,8 +46,7 @@ public abstract class Weapon : MonoBehaviour
 	}
 
 	public abstract void SetUnArmed();
-	public abstract void ForceExit();
-	public abstract void ForceEnter();
+	public abstract void ForceInactive();
 
 	public virtual void Init(WeaponItem weaponItem)
 	{
