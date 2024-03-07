@@ -1173,11 +1173,13 @@ GameObject:
   - component: {fileID: 6637610892491672061}
   - component: {fileID: 6311481450306925538}
   - component: {fileID: 5481119984625091787}
+  - component: {fileID: 3418837422213415380}
   - component: {fileID: 1638880915764020564}
   - component: {fileID: 3989810048895128805}
+  - component: {fileID: 2063899353763147541}
   m_Layer: 0
   m_Name: IdleFemale
-  m_TagString: Untagged
+  m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1237,6 +1239,23 @@ MonoBehaviour:
   - m_Rig: {fileID: 9081322276123053710}
     m_Active: 1
   m_Effectors: []
+--- !u!114 &3418837422213415380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5250749921033552964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8123b7d03f2134946922b2ae42b00992, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sentence:
+  - "\uC5B4\uC11C\uC624\uC138\uC694."
+  - "\uC5B4\uCA4C\uAD6C\uC800\uCA4C\uAD6C"
+  - "\uBE14\uB77C\uBE14\uB77C"
+  savePos: {x: 0, y: 0, z: 0, w: 0}
 --- !u!114 &1638880915764020564
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1274,6 +1293,29 @@ CapsuleCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Height: 2.3
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.7, z: 0}
+--- !u!136 &2063899353763147541
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5250749921033552964}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 3
+  m_Height: 2.7
   m_Direction: 1
   m_Center: {x: 0, y: 0.7, z: 0}
 --- !u!1 &5526677811464321506

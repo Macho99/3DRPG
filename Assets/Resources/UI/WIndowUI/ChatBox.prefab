@@ -413,6 +413,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogueText: {fileID: 8208992186094639140}
   nextText: {fileID: 7461422346639621180}
+  isTyping: 0
 --- !u!222 &2587514876656818412
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -441,7 +442,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 387f941f669721d48908fb0c54372723, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

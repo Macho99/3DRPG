@@ -148,7 +148,6 @@ public class UIManager : MonoBehaviour
 
 	public void CloseWindowUI<T>(T windowUI) where T : WindowUI
 	{
-		_= StartCoroutine(FadeOut(windowUI.GetComponent<CanvasGroup>()));
 		GameManager.Pool.ReleaseUI(windowUI.gameObject);
 	}
 

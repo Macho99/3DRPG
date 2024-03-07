@@ -10,35 +10,14 @@ using UnityEngine.UIElements;
 // https://www.youtube.com/watch?v=tKagnP91T6c 참고용 자료 1번
 // https://www.youtube.com/watch?v=WBaQ7cRiMjM 2번
 
-public enum BairdState
-{
-    Idle,
-    Walk,
-    Meet
-}
-
-enum TargetState
-{
-    First,
-    Second,
-    Third
-}
-
 public class Baird : MonoBehaviour
 {
     public Animator animator;
-    public BairdState curState;
-    private TargetState targetState;
 
-    private Vector3 targetPos;
-    public Vector3 firstPos;
-    public Vector3 secondPos;
-    public Vector3 thirdPos;
+    public GameObject targetPos;
 
     NavMeshAgent theAgent;
     private HeadAiming headAiming;
-
-    InteractionNPC interaction;
 
     private void Awake()
     {
@@ -49,88 +28,34 @@ public class Baird : MonoBehaviour
 
     private void Start()
     {
-        curState = BairdState.Walk;
-        targetState = TargetState.First;
-
-        StartCoroutine(BairdCoroutine());
-    }
-
-    private IEnumerator BairdCoroutine()
-    {
-        while(true)
-        {
-            while (headAiming.mIsLookingTarget)
-            {
-                yield return null;
-            }
-
-            switch (curState)
-            {
-                case BairdState.Idle:
-                    animator.SetBool("IsWalk", false);
-                    theAgent.isStopped = true;
-                    yield return new WaitForSeconds(4f);
-                    curState = BairdState.Walk;
-                    break;
-                case BairdState.Walk:
-                    RotateAgent(targetPos);
-                    animator.SetBool("IsWalk", true);
-
-                    theAgent.SetDestination(targetPos);
-
-                    if(Vector3.Distance(transform.position, targetPos) < 2f)
-                    {
-                        curState = BairdState.Idle;
-                        
-                        if(targetState == TargetState.First)
-                            targetState = TargetState.Second;
-                        else if(targetState == TargetState.Second)
-                            targetState = TargetState.Third;
-                        else if (targetState == TargetState.Third)
-                            targetState = TargetState.First;
-                    }
-                    break;
-                case BairdState.Meet:
-                    animator.SetBool("IsWalk", false);
-                    theAgent.isStopped = true;
-                    break;
-            }
-            yield return null;
-        }
+        NextTargeting();
     }
 
     private void Update()
     {
-        switch (targetState)
+        if (theAgent.remainingDistance < 0.2f)
         {
-            case TargetState.First:
-                targetPos = firstPos;
-                break;
-            case TargetState.Second:
-                targetPos = secondPos;
-                break;
-            case TargetState.Third:
-                targetPos = thirdPos;
-                break;
+            theAgent.isStopped = true;
+            animator.SetBool("IsWalk", false);
+            Invoke("NextTargeting", 4.5f);
         }
     }
 
-    public void RotateAgent(Vector3 target)
+    void NextTargeting()
     {
-        Vector3 direction = (target - transform.position).normalized;
-        Quaternion lookRotation = Quaternion.LookRotation(direction);
-        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
+        theAgent.isStopped = false;
+        theAgent.SetDestination(targetPos.transform.position);
+        animator.SetBool("IsWalk", true);
     }
 
-    private void OnTriggerEnter(Collider other)
+    
+
+    private void OnTriggerStay(Collider other)
     {
         if(other.tag == "Player")
         {
-            Vector3 targetDirection = other.transform.position - transform.position;
-            targetDirection.y = 0; // y축 회전 방지
-
-            Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
-            curState = BairdState.Meet;
+            theAgent.isStopped = true;
+            animator.SetBool("IsWalk", false);
         }
     }
 
@@ -138,7 +63,7 @@ public class Baird : MonoBehaviour
     {
         if(other.tag == "Player")
         {
-            curState = BairdState.Walk;
+            NextTargeting();
         }
     }
 }

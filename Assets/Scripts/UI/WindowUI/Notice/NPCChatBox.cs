@@ -33,6 +33,7 @@ public class NPCChatBox : WindowUI
     {
         if (sentenceLines.Count != 0)
         {
+            GameManager.Dialogue.InteractionNPC.GetComponent<Animator>().SetTrigger("IsTalk");
             currentText = sentenceLines.Dequeue();
             nextText.SetActive(false);
             isTyping = true;
@@ -44,6 +45,10 @@ public class NPCChatBox : WindowUI
         else
         {
             GameManager.UI.ClearWindowUI();
+            if(GameManager.Dialogue.InteractionNPC.GetComponent<IsTradeAble>() == true)
+            {
+                GameManager.Dialogue.InteractionNPC.GetComponent<IsTradeAble>().OpenShopUI();
+            }
         }
     }
 
