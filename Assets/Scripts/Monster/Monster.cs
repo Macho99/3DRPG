@@ -12,6 +12,14 @@ public enum State
     DEAD
 }
 
+public enum MonsterRace
+{
+    Orc,
+    Skeleton,
+    TargetDummy,
+    Mimic
+}
+
 public class Monster : MonoBehaviour
 {
     [SerializeField] protected float maxHp;
@@ -51,14 +59,12 @@ public class Monster : MonoBehaviour
     [SerializeField] protected LayerMask targetMask; // 타겟레이어
     [SerializeField] protected LayerMask obstacleMask; // 장애물레이어
 
-    [SerializeField] List<GameObject> hitEffects = new List<GameObject>();
-    [SerializeField] List<AudioClip> hitSounds = new();
-
-    AudioSource audioSource;
+    protected AudioSource audioSource;
     protected NavMeshAgent agent;
     protected Animator anim;
 
-    [HideInInspector] public State state;
+    public State state;
+    public MonsterRace race;
 
     public List<Transform> wayPoints;
 
@@ -171,10 +177,26 @@ public class Monster : MonoBehaviour
             viewAngle = 360f;
             obstacleMask = LayerMask.NameToLayer("Nothing");
 
-            //audioSource?.PlayOneShot(hitSounds[0]);
+            audioSource?.PlayOneShot(SetSound(race, "Hit"));
             //Quaternion effectRot = Quaternion.Euler(0f, Random.Range(0f, 360f), 0f);
-            //GameObject hitEffectPrefab = Instantiate(hitEffects[0], transform.position, effectRot);
+            //GameObject hitEffectPrefab = Instantiate(SetEffect(race, "Hit"), transform.position, effectRot);
             //Destroy(hitEffectPrefab, 1f);
+
+            if (target == null)
+            {
+                Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, targetMask);
+
+                for (int i = 0; i < targetsInViewRadius.Length; i++)
+                {
+                    Transform target = targetsInViewRadius[i].transform;
+
+                    if (target.TryGetComponent(out Player player))
+                    {
+                        this.target = target;
+                    }
+                    
+                }
+            }
         }
         else
         {
@@ -188,8 +210,19 @@ public class Monster : MonoBehaviour
         StopAllCoroutines();
         target = null;
         state = State.DEAD;
-        //audioSource?.PlayOneShot(hitSounds[1]);
+        audioSource?.PlayOneShot(SetSound(race, "Hit"));
+        audioSource?.PlayOneShot(SetSound(race, "Dead"));
         Destroy(gameObject, 3f);
+    }
+
+    protected AudioClip SetSound(MonsterRace race, string soundName)
+    {
+        return GameManager.Monster.GetMonsterSound(race, soundName);
+    }
+
+    protected GameObject SetEffect(MonsterRace race, string soundName)
+    {
+        return GameManager.Monster.GetMonsterEffect(race, soundName);
     }
 
     public void RecovereryHp()
@@ -218,5 +251,24 @@ public class Monster : MonoBehaviour
     {
         hitFeedback = true;
         knockback = Vector3.zero;
+    }
+
+    protected void PlayAttackSound()
+    {
+        audioSource?.PlayOneShot(SetSound(race, "Attack"));
+    }
+
+    //protected void PlaySecondAttackSound()
+    //{
+    //    audioSource?.PlayOneShot(SetSound(race, "Attack"));
+    //}
+    private void PlayOpenSound()
+    {
+        audioSource?.PlayOneShot(SetSound(race, "Open"));
+    }
+
+    private void PlayShotSound()
+    {
+        audioSource?.PlayOneShot(SetSound(race, "RangedAttack"));
     }
 }

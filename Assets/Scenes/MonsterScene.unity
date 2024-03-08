@@ -87437,7 +87437,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2673b790b827eec488fb2dddc1b44939, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 300
+  maxHp: 100
   currentHp: 0
   damage: 15
   attackRange: 3
@@ -89688,7 +89688,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2673b790b827eec488fb2dddc1b44939, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 300
+  maxHp: 100
   currentHp: 0
   damage: 15
   attackRange: 3
@@ -89871,7 +89871,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2673b790b827eec488fb2dddc1b44939, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 250
+  maxHp: 80
   currentHp: 0
   damage: 12
   attackRange: 3
@@ -91119,7 +91119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2673b790b827eec488fb2dddc1b44939, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 250
+  maxHp: 80
   currentHp: 0
   damage: 12
   attackRange: 3
@@ -91372,7 +91372,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c6c50630c006bb41b6d56baa011a7a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 100
+  maxHp: 50
   currentHp: 0
   damage: 10
   attackRange: 2.5
@@ -97330,7 +97330,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c6c50630c006bb41b6d56baa011a7a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 100
+  maxHp: 50
   currentHp: 0
   damage: 10
   attackRange: 2.5
@@ -101091,7 +101091,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2673b790b827eec488fb2dddc1b44939, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 120
+  maxHp: 40
   currentHp: 0
   damage: 20
   attackRange: 10
@@ -101407,7 +101407,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2673b790b827eec488fb2dddc1b44939, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 250
+  maxHp: 80
   currentHp: 0
   damage: 12
   attackRange: 3
@@ -101588,7 +101588,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2673b790b827eec488fb2dddc1b44939, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 120
+  maxHp: 40
   currentHp: 0
   damage: 20
   attackRange: 10

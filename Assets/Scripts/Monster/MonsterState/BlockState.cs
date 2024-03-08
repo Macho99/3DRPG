@@ -46,6 +46,11 @@ public class BlockState : StateMachineBehaviour
             return;
         }
 
+        if (monsterShield.currentStamina <= 0)
+        {
+            monster.state = State.GUARD_BREAK;
+        }
+
         Turn(target, myTf);
 
         if (timer > attackDelay)

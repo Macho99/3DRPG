@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class MonsterShield : Monster
 {
     [SerializeField] private float maxStamina;
-    [SerializeField] private float currentStamina;
+    public float currentStamina;
     [SerializeField] private float staminaRate; // 스태미너 재생성 수치
     [SerializeField] private float blockAngle; // 방어 가능 각도
     public bool guardHit; // 방패로 막았었는지 체크
@@ -62,21 +62,19 @@ public class MonsterShield : Monster
 
         if (blockTarget != null && state == State.BLOCK)
         {
-            // 감소된 데미지 받음
             currentStamina -= 20;
             guardHit = true;
-            print("Reduce Damage or Guard Damage");
 
             if (currentStamina <= 0)
             {
-                // 가드 브레이크
                 state = State.GUARD_BREAK;
                 currentStamina = maxStamina;
                 anim.SetTrigger("GuardBreak");
-                print("Guard Break");
+                audioSource?.PlayOneShot(SetSound(race, "GuardBreak"));
             }
             else
             {
+                audioSource?.PlayOneShot(SetSound(race, "Block"));
                 anim.SetTrigger("Guard");
             }
         }
@@ -86,8 +84,10 @@ public class MonsterShield : Monster
             {
                 currentHp -= damage * 1.5f;
                 anim.SetTrigger("Hit");
-                viewAngle = 360f;
-                obstacleMask = LayerMask.NameToLayer("Nothing");
+                audioSource?.PlayOneShot(SetSound(race, "Hit"));
+                //Quaternion effectRot = Quaternion.Euler(0f, Random.Range(0f, 360f), 0f);
+                //GameObject hitEffectPrefab = Instantiate(SetEffect(race, "Hit"), transform.position, effectRot);
+                //Destroy(hitEffectPrefab, 1f);
             }
             else
             {
@@ -103,6 +103,27 @@ public class MonsterShield : Monster
                 anim.SetTrigger("Hit");
                 viewAngle = 360f;
                 obstacleMask = LayerMask.NameToLayer("Nothing");
+
+                audioSource?.PlayOneShot(SetSound(race, "Hit"));
+                //Quaternion effectRot = Quaternion.Euler(0f, Random.Range(0f, 360f), 0f);
+                //GameObject hitEffectPrefab = Instantiate(SetEffect(race, "Hit"), transform.position, effectRot);
+                //Destroy(hitEffectPrefab, 1f);
+
+                if (target == null)
+                {
+                    Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, targetMask);
+
+                    for (int i = 0; i < targetsInViewRadius.Length; i++)
+                    {
+                        Transform target = targetsInViewRadius[i].transform;
+
+                        if (target.TryGetComponent(out Player player))
+                        {
+                            this.target = target;
+                        }
+
+                    }
+                }
             }
             else
             {

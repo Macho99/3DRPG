@@ -9,11 +9,12 @@ public class Bullet : MonoBehaviour
     [SerializeField] private int damage;
 
     Rigidbody rb;
+    AudioSource audioSource;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -23,6 +24,10 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        GameObject prefab = Instantiate(GameManager.Monster.GetMonsterEffect(MonsterRace.TargetDummy, "ExplosionCannon"), transform.position, Quaternion.identity);
+        audioSource?.PlayOneShot(GameManager.Monster.GetMonsterSound(MonsterRace.TargetDummy, "ExplosionCannon"));
+        Destroy(prefab, 2f);
+
         if (other.TryGetComponent(out Player player))
         {
             // 플레이어 데미지 함수 실행
@@ -37,7 +42,9 @@ public class Bullet : MonoBehaviour
                 Debug.LogError("Error in TakeDamage: " + ex.Message);
             }
         }
+        gameObject.GetComponent<SphereCollider>().enabled = false;
+        gameObject.GetComponent<MeshRenderer>().enabled = false;
 
-        Destroy(gameObject);
+        Destroy(gameObject, 3f);
     }
 }

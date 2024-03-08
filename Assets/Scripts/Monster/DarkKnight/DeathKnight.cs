@@ -103,10 +103,10 @@ public class DeathKnight : MonoBehaviour
         if (currentHp > 0f)
         {
             // ÇÇ°Ý ½Ã
-            //audioSource?.PlayOneShot(hitSounds[0]);
-            //Quaternion effectRot = Quaternion.Euler(0f, Random.Range(0f, 360f), 0f);
-            //GameObject hitEffectPrefab = Instantiate(hitEffects[0], transform.position, effectRot);
-            //Destroy(hitEffectPrefab, 1f);
+            audioSource?.PlayOneShot(SetSound("Hit"));
+            Quaternion effectRot = Quaternion.Euler(0f, UnityEngine.Random.Range(0f, 360f), 0f);
+            GameObject hitEffectPrefab = Instantiate(SetEffect("Hit"), transform.position, effectRot);
+            Destroy(hitEffectPrefab, 1f);
         }
         else
         {
@@ -116,12 +116,22 @@ public class DeathKnight : MonoBehaviour
 
     private void Die()
     {
-        //audioSource?.PlayOneShot(hitSounds[1]);
+        //audioSource?.PlayOneShot(SetSound("Dead"));
         anim.applyRootMotion = true;
         anim.SetTrigger("Dead");
         target = null;
         bossState = BossState.DEAD;
         Destroy(gameObject, 3f);
+    }
+
+    private AudioClip SetSound(string soundName)
+    {
+        return GameManager.Monster.GetBossSound(soundName);
+    }
+
+    private GameObject SetEffect(string soundName)
+    {
+        return GameManager.Monster.GetBossEffect(soundName);
     }
 
     private void SetAttackSpeed(float speedValue)
@@ -195,8 +205,23 @@ public class DeathKnight : MonoBehaviour
         anim.SetTrigger("isReady");
     }
 
-    private void SwingSound()
+    private void NormalSwingSound()
     {
+        audioSource?.PlayOneShot(SetSound("Attack"));
+    }
 
+    private void TwoHandedSwingSound()
+    {
+        audioSource?.PlayOneShot(SetSound("TwoHandedAttack"));
+    }
+
+    private void TwoHandedSkill2Sound()
+    {
+        audioSource?.PlayOneShot(GameManager.Monster.GetBossSkillSound("TwoHandedSkill2"));
+    }
+
+    private void TwoHandedSkill4_2Sound()
+    {
+        audioSource?.PlayOneShot(GameManager.Monster.GetBossSkillSound("TwoHandedSkill4_2"));
     }
 }

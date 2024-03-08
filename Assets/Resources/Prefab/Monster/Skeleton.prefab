@@ -1526,7 +1526,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c6c50630c006bb41b6d56baa011a7a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 100
+  maxHp: 50
   currentHp: 0
   damage: 10
   attackRange: 2.5
@@ -1551,9 +1551,8 @@ MonoBehaviour:
   obstacleMask:
     serializedVersion: 2
     m_Bits: 192
-  hitEffects: []
-  hitSounds: []
   state: 0
+  race: 1
   wayPoints: []
   maxStamina: 100
   currentStamina: 0
