@@ -36,9 +36,6 @@ public class DeathKnight : MonoBehaviour
 
     public BoxCollider attackCol; // 어택 범위
 
-    [SerializeField] List<GameObject> hitEffects = new();
-    [SerializeField] List<AudioClip> hitSounds = new();
-
     AudioSource audioSource;
     NavMeshAgent agent;
     Animator anim;
@@ -46,15 +43,12 @@ public class DeathKnight : MonoBehaviour
 
     public BossState bossState;
 
-    //[SerializeField] private Avatar avatar;
-
     [SerializeField] private GameObject myWeapon;
     [SerializeField] private Material mySwordMaterial;
     [SerializeField] private GameObject swordEffect;
 
-    public bool skillCD;
-    public float skillCoolDown;
-    private float skillTimer;
+    [HideInInspector] public bool skillCD;
+    [HideInInspector] public float skillCoolDown;
 
     private void Awake()
     {
@@ -176,13 +170,6 @@ public class DeathKnight : MonoBehaviour
         anim.SetFloat("AttackSpeed", 1f);
     }
 
-    //public void ChangeAvatar()
-    //{
-    //    bossState = BossState.TWOHANDED;
-    //    //ChangeWeapon();
-    //    anim.avatar = this.avatar;
-    //}
-
     public void ChangeWeapon()
     {
         bossState = BossState.TWOHANDED;
@@ -206,5 +193,10 @@ public class DeathKnight : MonoBehaviour
     {
         anim.applyRootMotion = false;
         anim.SetTrigger("isReady");
+    }
+
+    private void SwingSound()
+    {
+
     }
 }

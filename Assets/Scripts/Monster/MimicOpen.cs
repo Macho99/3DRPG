@@ -12,9 +12,8 @@ public class MimicOpen : MonoBehaviour
     private void Start()
     {
         targetMask = LayerMask.GetMask("Player");
-        viewAngle = 45;
+        viewAngle = 60;
         viewRadius = 2;
-        //_ = StartCoroutine(FindTargetWithDelay(.2f));
     }
     protected IEnumerator FindTargetWithDelay(float delay)
     {
@@ -24,31 +23,31 @@ public class MimicOpen : MonoBehaviour
             FindVisibleTargets();
         }
     }
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, viewRadius);
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.color = Color.blue;
+    //    Gizmos.DrawWireSphere(transform.position, viewRadius);
 
-        if (target != null)
-        {
-            Gizmos.color = Color.green;
-            Gizmos.DrawLine(transform.position, target.position);
-        }
+    //    if (target != null)
+    //    {
+    //        Gizmos.color = Color.green;
+    //        Gizmos.DrawLine(transform.position, target.position);
+    //    }
 
-        Gizmos.color = Color.red;
+    //    Gizmos.color = Color.red;
 
-        int segments = 36;
-        float step = viewAngle / segments;
-        for (int i = 0; i < segments; i++)
-        {
-            float angle = i * step - viewAngle / 2;
-            float x = Mathf.Sin(Mathf.Deg2Rad * angle) * viewRadius;
-            float z = Mathf.Cos(Mathf.Deg2Rad * angle) * viewRadius;
-            Vector3 start = transform.position + Vector3.up * 1.5f;
-            Vector3 dir = transform.TransformDirection(new Vector3(x, 0, z));
-            Gizmos.DrawLine(transform.position, transform.position + dir);
-        }
-    }
+    //    int segments = 36;
+    //    float step = viewAngle / segments;
+    //    for (int i = 0; i < segments; i++)
+    //    {
+    //        float angle = i * step - viewAngle / 2;
+    //        float x = Mathf.Sin(Mathf.Deg2Rad * angle) * viewRadius;
+    //        float z = Mathf.Cos(Mathf.Deg2Rad * angle) * viewRadius;
+    //        Vector3 start = transform.position + Vector3.up * 1f;
+    //        Vector3 dir = transform.TransformDirection(new Vector3(x, 0, z));
+    //        Gizmos.DrawLine(start, transform.position + dir);
+    //    }
+    //}
 
     private void FindVisibleTargets()
     {
@@ -65,10 +64,9 @@ public class MimicOpen : MonoBehaviour
             {
                 float distToTarget = Vector3.Distance(transform.position, target.transform.position);
 
-                if (!Physics.Raycast(transform.position + Vector3.up * 1.5f, dirToTarget, distToTarget))
+                if (Physics.Raycast(transform.position + Vector3.up * 1f, dirToTarget, distToTarget, targetMask))
                 {
                     //this.target = target;
-                    print(target.name);
                     if (target.TryGetComponent(out Player player))
                     {
                         this.target = target;

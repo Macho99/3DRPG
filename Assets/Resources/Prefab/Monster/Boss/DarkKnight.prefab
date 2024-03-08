@@ -3087,6 +3087,7 @@ GameObject:
   - component: {fileID: 6911064505988638617}
   - component: {fileID: 907431373968800751}
   - component: {fileID: 5210293048313476307}
+  - component: {fileID: 1392128640533057562}
   m_Layer: 8
   m_Name: DarkKnight
   m_TagString: Untagged
@@ -3144,12 +3145,12 @@ MonoBehaviour:
   rotationSpeed: 3
   target: {fileID: 0}
   attackCol: {fileID: 8568836106398410194}
-  hitEffects: []
-  hitSounds: []
   bossState: 0
   myWeapon: {fileID: 4586367775572318018}
   mySwordMaterial: {fileID: 2100000, guid: d61c52a6f338b064390d37e3c4218d7f, type: 2}
   swordEffect: {fileID: 5934796224209841345}
+  skillCD: 0
+  skillCoolDown: 0
 --- !u!114 &1639463214672714411
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3162,11 +3163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1a1048fa52320b4e9492f1d8f5f0579, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  normalSKills:
-  - {fileID: 1871041086231115576, guid: 2deb22a80675da14386faa797e6425c6, type: 3}
-  - {fileID: 1992029900475280859, guid: 3f143c63be59f1341a0960e47d101b36, type: 3}
-  - {fileID: 3946140628572098603, guid: 130426332735bf74a97566eea600f876, type: 3}
-  - {fileID: 8170752514618103492, guid: 3f68106e94df7a546a0345024228a871, type: 3}
+  normalSkills: []
   twoHandedSkills:
   - {fileID: 7082525810440381746, guid: 89497e8f1d77ce64b9665f59fc9d25ad, type: 3}
   - {fileID: 6104107114863222821, guid: cc5c1070bd409284a95aafa65e3c6e68, type: 3}
@@ -3267,6 +3264,102 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!82 &1392128640533057562
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7936492772524832728}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &7974199404454912162
 GameObject:
   m_ObjectHideFlags: 0

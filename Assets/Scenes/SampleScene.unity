@@ -19547,7 +19547,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7284171768113499561, guid: 226cc6d6437976d4882b950e82e7e55a, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8253369138868653703, guid: 226cc6d6437976d4882b950e82e7e55a, type: 3}
       propertyPath: m_IsActive
@@ -37471,8 +37471,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.52093446, y: -0.47552857, z: 0.45746788, w: 0.54150075}
-  m_LocalPosition: {x: 33.59762, y: 2.2791271, z: 15.616402}
+  m_LocalRotation: {x: 0.1564703, y: 0, z: 0, w: 0.9876827}
+  m_LocalPosition: {x: 1.5870323, y: 23.929998, z: -21.990059}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -37756,7 +37756,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7284171768113499561, guid: 226cc6d6437976d4882b950e82e7e55a, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8253369138868653703, guid: 226cc6d6437976d4882b950e82e7e55a, type: 3}
       propertyPath: m_IsActive
@@ -64388,6 +64388,52 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
+--- !u!1 &1586916444
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1586916446}
+  - component: {fileID: 1586916445}
+  m_Layer: 0
+  m_Name: MonsterManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1586916445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1586916444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a03f39584fc58c644be1d114eaef904d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bossSkillData: {fileID: 11400000, guid: f6a3632469a98074f8fbb2591666cad7, type: 2}
+  monsterDataList: {fileID: 11400000, guid: 8f099f935c9a6d54492bc111c074e0b9, type: 2}
+--- !u!4 &1586916446
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1586916444}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.8398583, y: 4.84953, z: -4.5864043}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1587556935
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -89323,7 +89369,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8625473614872082785, guid: 00a3bfaa48d35d84282f4c73a7d901bf, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -94215,14 +94261,6 @@ PrefabInstance:
     - target: {fileID: 7936492772524832728, guid: 53e254f6d83e36b4a921398e35a58570, type: 3}
       propertyPath: m_Name
       value: DarkKnight
-      objectReference: {fileID: 0}
-    - target: {fileID: 7936492772524832728, guid: 53e254f6d83e36b4a921398e35a58570, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8557243496936945579, guid: 53e254f6d83e36b4a921398e35a58570, type: 3}
-      propertyPath: m_Enabled
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -101909,3 +101947,4 @@ SceneRoots:
   - {fileID: 966111585}
   - {fileID: 424097963}
   - {fileID: 246996034}
+  - {fileID: 1586916446}

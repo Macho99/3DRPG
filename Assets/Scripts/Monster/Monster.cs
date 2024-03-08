@@ -93,41 +93,41 @@ public class Monster : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, viewRadius);
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.color = Color.blue;
+    //    Gizmos.DrawWireSphere(transform.position, viewRadius);
 
-        if (target != null)
-        {
-            Gizmos.color = Color.green;
-            Gizmos.DrawLine(transform.position, target.position);
-        }
+    //    if (target != null)
+    //    {
+    //        Gizmos.color = Color.green;
+    //        Gizmos.DrawLine(transform.position, target.position);
+    //    }
 
-        Gizmos.color = Color.red;
+    //    Gizmos.color = Color.red;
 
-        int segments = 36;
-        float step = viewAngle / segments;
-        for (int i = 0; i < segments; i++)
-        {
-            float angle = i * step - viewAngle / 2;
-            float x = Mathf.Sin(Mathf.Deg2Rad * angle) * viewRadius;
-            float z = Mathf.Cos(Mathf.Deg2Rad * angle) * viewRadius;
-            Vector3 start = transform.position + Vector3.up * eyeHeight;
-            Vector3 dir = transform.TransformDirection(new Vector3(x, 0, z));
-            //Gizmos.DrawLine(transform.position, transform.position + dir);
+    //    int segments = 36;
+    //    float step = viewAngle / segments;
+    //    for (int i = 0; i < segments; i++)
+    //    {
+    //        float angle = i * step - viewAngle / 2;
+    //        float x = Mathf.Sin(Mathf.Deg2Rad * angle) * viewRadius;
+    //        float z = Mathf.Cos(Mathf.Deg2Rad * angle) * viewRadius;
+    //        Vector3 start = transform.position + Vector3.up * eyeHeight;
+    //        Vector3 dir = transform.TransformDirection(new Vector3(x, 0, z));
+    //        //Gizmos.DrawLine(transform.position, transform.position + dir);
 
-            RaycastHit hit;
-            if (Physics.Raycast(start, dir, out hit, viewRadius, obstacleMask))
-            {
-                Gizmos.DrawLine(start, hit.point);
-            }
-            else
-            {
-                Gizmos.DrawLine(start, transform.position + dir);
-            }
-        }
-    }
+    //        RaycastHit hit;
+    //        if (Physics.Raycast(start, dir, out hit, viewRadius, obstacleMask))
+    //        {
+    //            Gizmos.DrawLine(start, hit.point);
+    //        }
+    //        else
+    //        {
+    //            Gizmos.DrawLine(start, transform.position + dir);
+    //        }
+    //    }
+    //}
 
     protected void FindVisibleTargets()
     {
