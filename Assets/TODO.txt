@@ -1,4 +1,8 @@
 TODO:
 
 - boss screen effect, camerashaking, skill3
-- Effect, Sound
+- drop item, pickup item, put in inventory
+- boss ui (Hp, name, clear UI)
+- monster Hp ui
+
+- when hit monster increase the viewRadius temperary
