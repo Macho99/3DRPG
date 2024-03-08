@@ -11,7 +11,7 @@ public class InteractionNPC : MonoBehaviour
     private void Start()
     {
         Vector3 direction = (transform.forward - transform.position).normalized;
-        savePos = Quaternion.LookRotation(direction);
+        savePos = transform.rotation;
     }
 
 
@@ -19,7 +19,7 @@ public class InteractionNPC : MonoBehaviour
     {
         Vector3 direction = (target - transform.position).normalized;
         Quaternion lookRotation = Quaternion.LookRotation(direction);
-        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f);
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -27,7 +27,16 @@ public class InteractionNPC : MonoBehaviour
         if(other.tag == "Player")
         {
             GameManager.Dialogue.InteractionNPC = this;
-            RotateAgent(other.transform.position);
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if(other.tag == "Player")
+        {
+            Vector3 direction = (other.transform.position - transform.position).normalized;
+            Quaternion lookRotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 2f);
         }
     }
 
@@ -36,7 +45,23 @@ public class InteractionNPC : MonoBehaviour
         if (other.tag == "Player")
         {
             GameManager.Dialogue.InteractionNPC = null;
-            transform.rotation = Quaternion.Slerp(transform.rotation, savePos, Time.deltaTime * 5f);
+            if (gameObject.GetComponent<Baird>())
+            {
+                return;
+            }
+            else
+            {
+                StartCoroutine(RotateTowards(savePos));
+            }
+        }
+    }
+
+    IEnumerator RotateTowards(Quaternion targetRotation)
+    {
+        while (transform.rotation != targetRotation)
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 3f);
+            yield return null;
         }
     }
 }

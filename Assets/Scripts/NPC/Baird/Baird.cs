@@ -7,9 +7,6 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UIElements;
 
-// https://www.youtube.com/watch?v=tKagnP91T6c 참고용 자료 1번
-// https://www.youtube.com/watch?v=WBaQ7cRiMjM 2번
-
 public class Baird : MonoBehaviour
 {
     public Animator animator;
