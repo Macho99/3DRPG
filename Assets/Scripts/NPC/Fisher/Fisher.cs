@@ -31,7 +31,6 @@ public class Fisher : MonoBehaviour
         StartCoroutine(StateTransition());
     }
 
-
     private IEnumerator StateTransition()
     {
         while (true)

@@ -1,71 +1,67 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.Mail;
 using TMPro;
 using UnityEngine;
-
-[CreateAssetMenu(fileName = "New Chat Text List", menuName = "NPC/ChatText")]
-public class ChatBox : ScriptableObject
-{
-    public List<string> stringList = new List<string>();
-}
-
 public class InteractionNPC : MonoBehaviour
 {
-    public ChatBox chatDetail;
-    public bool isInteraction;
-    public bool startTalk;
-
-    private void Awake()
-    {
-        isInteraction = false;
-        startTalk = false;
-    }
+    public string[] sentence;
+    public Quaternion savePos;
 
     private void Start()
     {
-        
+        Vector3 direction = (transform.forward - transform.position).normalized;
+        savePos = transform.rotation;
     }
 
-    private IEnumerator FadeOut(CanvasGroup cg)
+
+    public void RotateAgent(Vector3 target)
     {
-        float fadeTime = 1f;
-        float accumTime = 0f;
-        while (accumTime < fadeTime)
-        {
-            cg.alpha = Mathf.Lerp(1f, 0f, accumTime / fadeTime);
-            yield return 0;
-            accumTime += Time.deltaTime;
-        }
-        cg.alpha = 0f;
-        cg.gameObject.SetActive(false);
+        Vector3 direction = (target - transform.position).normalized;
+        Quaternion lookRotation = Quaternion.LookRotation(direction);
+        transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime);
     }
 
-    public void StartTalk()
+    private void OnTriggerEnter(Collider other)
     {
-        if(gameObject.GetComponent<Baird>() != null)
+        if(other.tag == "Player")
         {
-            gameObject.GetComponent<Baird>().curState = BairdState.Meet;
-            startTalk = true;
+            GameManager.Dialogue.InteractionNPC = this;
         }
     }
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.tag == "Player" && startTalk == true)
+        if(other.tag == "Player")
         {
-            gameObject.GetComponent<Baird>().RotateAgent(other.transform.position);
+            Vector3 direction = (other.transform.position - transform.position).normalized;
+            Quaternion lookRotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 2f);
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if(other.tag == "Player")
+        if (other.tag == "Player")
         {
-            if(gameObject.GetComponent <Baird>() != null) 
+            GameManager.Dialogue.InteractionNPC = null;
+            if (gameObject.GetComponent<Baird>())
             {
-                gameObject.GetComponent<Baird>().curState = BairdState.Walk;
-                startTalk = false;
+                return;
             }
+            else
+            {
+                StartCoroutine(RotateTowards(savePos));
+            }
+        }
+    }
+
+    IEnumerator RotateTowards(Quaternion targetRotation)
+    {
+        while (transform.rotation != targetRotation)
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 3f);
+            yield return null;
         }
     }
 }

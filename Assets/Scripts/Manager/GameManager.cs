@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
 	private static DataManager dataManager;
 	private static StatManager statManager;
     private static MonsterManager monsterManager;
+	private static DialogueManager dialogueManager;
 
     public static GameManager Instance { get { return instance; } }
 	public static PoolManager Pool { get { return poolManager; } }
@@ -22,6 +23,7 @@ public class GameManager : MonoBehaviour
 	public static DataManager Data { get { return dataManager; } }
 	public static StatManager Stat { get { return statManager; } }
     public static MonsterManager Monster { get { return monsterManager; } }
+	public static DialogueManager Dialogue {  get { return dialogueManager; } }
 
     private void Awake()
 	{
@@ -79,5 +81,9 @@ public class GameManager : MonoBehaviour
         monsterObj.transform.parent = transform;
         monsterManager = monsterObj.AddComponent<MonsterManager>();
 
+        GameObject dialogueObj = new GameObject();
+        dialogueObj.name = "DialogueManager";
+        dialogueObj.transform.parent = transform;
+        dialogueManager = dialogueObj.AddComponent<DialogueManager>();
     }
 }
