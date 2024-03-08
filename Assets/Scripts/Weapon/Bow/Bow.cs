@@ -9,6 +9,9 @@ using Random = UnityEngine.Random;
 
 public class Bow : Weapon
 {
+	[SerializeField] TargetFollower leftHandWeaponSlotFollower;
+	[SerializeField] TargetFollower spine3Follower;
+	[SerializeField] TargetFollower rightHandFollower;
 	[SerializeField] SkinnedMeshRenderer bowMesh;
 	[SerializeField] GameObject arrowToDraw;
 	[SerializeField] MeshRenderer arrowToShoot;
@@ -24,7 +27,7 @@ public class Bow : Weapon
 	public float arrowRigLerpSpeed = 6f;
 
 	[Serializable]
-	public enum State { Idle, Reload, StartAim, Aiming, UndoAim, Shot, FastAim, FastShot, 
+	public enum State { Inactive, Idle, Reload, StartAim, Aiming, UndoAim, Shot, FastAim, FastShot, 
 		FireRain, Ulti, };
 	[Serializable]
 	public enum ArrowProperty { None, Ice, Wind, Fire }
@@ -38,6 +41,7 @@ public class Bow : Weapon
 	ArrowHoldMode curArrowHold;
 	LayerMask enemyMask;
 	Collider[] cols = new Collider[10];
+	BowAimPoint bowAimPoint;
 
 	Action<RaycastHit, int, Arrow> hitAction;
 	Action<Arrow> updateAction;
@@ -53,6 +57,19 @@ public class Bow : Weapon
 	const float ultiSkillCooltime = 1f;
 	float ultiSkillUseableTime = -ultiSkillCooltime;
 
+	bool aimLock;
+
+	public bool AimLock { get { return aimLock; } set {
+			aimLock = value;
+			if(aimLock == true)
+			{
+				HideAimPoint(false);
+			}
+			else
+			{
+				HideAimPoint(true);
+			}
+		} }
 	public ArrowProperty CurArrowProperty { get { return curArrowProperty; } }
 	public int FastShotNum { get; set; } = 0;
 	public bool Reloaded { get; set; }
@@ -68,6 +85,7 @@ public class Bow : Weapon
 		enemyMask = LayerMask.GetMask("Monster");
 
 		stateMachine = new StateMachine<State, Bow>(this);
+		stateMachine.AddState(State.Inactive, new BowInactive(this, stateMachine));
 		stateMachine.AddState(State.Idle, new BowIdle(this, stateMachine));
 		stateMachine.AddState(State.Reload, new BowReload(this, stateMachine));
 		stateMachine.AddState(State.StartAim, new BowStartAim(this, stateMachine));
@@ -80,10 +98,18 @@ public class Bow : Weapon
 		stateMachine.AddState(State.Ulti, new BowSkillUlti(this, stateMachine));
 	}
 
+	public override void Init(WeaponItem weaponItem)
+	{
+		base.Init(weaponItem);
+		leftHandWeaponSlotFollower.SetTarget(player.GetTransform(Player.FollowTransform.LeftHandWeaponSlot));
+		spine3Follower.SetTarget(player.GetTransform(Player.FollowTransform.Spine3));
+		rightHandFollower.SetTarget(player.GetTransform(Player.FollowTransform.RightHand));
+	}
+
 	protected override void Start()
 	{
 		base.Start();
-		stateMachine.SetUp(State.Idle);
+		stateMachine.SetUp(State.Inactive);
 	}
 
 	private void Update()
@@ -96,19 +122,22 @@ public class Bow : Weapon
 	public override void ChangeStateToIdle(bool forceIdle = false)
 	{
 		player.SetBowAimRigWeight(0f, 0f, 0f);
-		playerAttack.SetAnimTrigger("UpperEntry");
+		playerAttack.SetAnimTrigger("Init");
 		stateMachine.ChangeState(State.Idle);
 		return;
 	}
 
 	private void OnEnable()
 	{
+		bowAimPoint = GameManager.UI.ShowSceneUI<BowAimPoint>("UI/SceneUI/BowAimPoint");
 		player.SetNeckRigWeight(0.6f);
 		playerMove.AimLockOffset = new Vector3(0f, 45f, 0f);
 	}
 
 	private void OnDisable()
 	{
+		bowAimPoint.CloseUI();
+		bowAimPoint = null;
 		player.SetNeckRigWeight(0f);
 		playerMove.AimLockOffset = Vector3.zero;
 	}
@@ -442,5 +471,23 @@ public class Bow : Weapon
 				position, rotation, true);
 			ultiElem.Init(this, (ArrowProperty)Random.Range(1, 4));
 		}
+	}
+	
+	public override void ForceInactive()
+	{
+		AimLock = false;
+		playerCamManager.SetAimCam(false);
+		playerMove.AimLock = false;
+		stateMachine.ChangeState(State.Inactive);
+	}
+
+	public void SetAimPointSize(float weight)
+	{
+		bowAimPoint.SetOutCircleScale(weight);
+	}
+
+	public void HideAimPoint(bool value)
+	{
+		bowAimPoint.AimPointHide(value);
 	}
 }

@@ -11,7 +11,8 @@ public class FloatingArrow : MonoBehaviour
 	[SerializeField] List<Material> dissolveMatList;
 	[SerializeField] List<Material> originMatList;
 
-	GameObject flightArrow;
+	FlightArrow flightArrow;
+	ParticleSystem flightParticle;
 
 	Quaternion upOffset = Quaternion.Euler(90f, 0f, 0f);
 	Player player;
@@ -37,7 +38,7 @@ public class FloatingArrow : MonoBehaviour
 	{
 		if(flightArrow != null)
 		{
-			GameManager.Resource.Destroy(flightArrow);
+			GameManager.Resource.Destroy(flightArrow.gameObject);
 		}
 		renderer.enabled = true;
 		transform.rotation = Quaternion.identity;
@@ -137,7 +138,9 @@ public class FloatingArrow : MonoBehaviour
 		}
 
 		renderer.enabled = false;
-		flightArrow = GameManager.Resource.Instantiate<GameObject>("Prefab/FlightArrow", transform.position, transform.rotation, true);
+		flightArrow = GameManager.Resource.Instantiate<FlightArrow>("Prefab/FlightArrow", 
+			transform.position, transform.rotation, true);
+		flightArrow.ParticlePlay();
 
 		Vector3 curVel = transform.up;
 		Vector3 xOffset = transform.right;
@@ -149,13 +152,13 @@ public class FloatingArrow : MonoBehaviour
 		float speed = flightArrowSpeed + Random.Range(-5f, 5f);
 		curVel *= speed;
 
-
+		float halfSqrMag = (transform.position - target.position).sqrMagnitude * (0.4f * 0.4f);
 		while (true)
 		{
 			flightArrow.transform.position += curVel * Time.deltaTime;
 			flightArrow.transform.up = curVel;
 
-			if ((transform.position - flightArrow.transform.position).sqrMagnitude > 25f)
+			if ((transform.position - flightArrow.transform.position).sqrMagnitude > halfSqrMag)
 			{
 				break;
 			}
@@ -174,7 +177,7 @@ public class FloatingArrow : MonoBehaviour
 			yield return null;
 		} while (sqrMag > 0.1f);
 
-		GameManager.Resource.Destroy(flightArrow);
+		GameManager.Resource.Destroy(flightArrow.gameObject);
 		flightArrow = null;
 
 		renderer.enabled = true;

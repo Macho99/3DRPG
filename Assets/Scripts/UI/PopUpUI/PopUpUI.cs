@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
-public class PopUpUI : BaseUI
+public abstract class PopUpUI : BaseUI
 {
     public override void CloseUI()
 	{

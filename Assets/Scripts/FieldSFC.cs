@@ -41,10 +41,17 @@ public class FieldSFC : MonoBehaviour
 		instance = this;
 	}
 
+	private void Start()
+	{
+		GameManager.UI.ShowSceneUI<PlayerConditionUI>("UI/SceneUI/PlayerConditionUI");
+		GameManager.UI.ShowSceneUI<QuickSlotUI>("UI/SceneUI/QuickSlotUI");
+	}
+
 	private void OnDestroy()
 	{
 		if(instance == this)
 		{
+			GameManager.UI.ClearSceneUI();
 			instance = null;
 			player = null;
 		}
@@ -52,24 +59,11 @@ public class FieldSFC : MonoBehaviour
 
     private void OnOpenMenu(InputValue value)
     {
-        if (value.isPressed == true)
-        {
-            GameManager.UI.menuOpen = !GameManager.UI.menuOpen;
-
-            if (GameManager.UI.menuOpen == true)
-            {
-				GameManager.UI.ShowPopUpUI(GameManager.UI.menu);
-                Cursor.lockState = CursorLockMode.Confined;
-                player.GetComponent<PlayerInput>().enabled = false;
-            }
-            else
-            {
-                GameManager.UI.ClearPopUpUI();
-				Cursor.lockState = CursorLockMode.Locked;
-                player.GetComponent<PlayerInput>().enabled = true;
-            }
-        }
-    }
+		if (value.isPressed == true)
+		{
+			GameManager.UI.MenuToggle();
+		}
+	}
 
 	private void OnInteraction(InputValue value)
 	{

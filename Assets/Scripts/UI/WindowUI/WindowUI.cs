@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class WindowUI : BaseUI, IDragHandler, IPointerDownHandler
+public abstract class WindowUI : BaseUI, IDragHandler, IPointerDownHandler
 {
 	protected override void Awake()
 	{

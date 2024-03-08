@@ -22,6 +22,7 @@ public class BowReload : StateBase<Bow.State, Bow>
 		playerMove.SprintLock = true;
 		playerAttack.SetAnimTrigger("Upper4");
 		playerAnimEvent.OnEquipChange.AddListener(EquipChange);
+		owner.SetArrowHold(Bow.ArrowHoldMode.None);
 	}
 
 	public override void Exit()

@@ -12,7 +12,6 @@ public class BowIdle : StateBase<Bow.State, Bow>
 	PlayerAttack playerAttack;
 	PlayerCamManager playerCamManager;
 
-	bool aimLock = false;
 
 	public BowIdle(Bow owner, StateMachine<Bow.State, Bow> stateMachine) : base(owner, stateMachine)
 	{
@@ -22,6 +21,7 @@ public class BowIdle : StateBase<Bow.State, Bow>
 	{
 		owner.FastShotNum = 0;
 		player.WeaponIdle();
+		owner.SetAimPointSize(1f);
 		owner.SetFastShotArrowMat(false);
 		playerAttack.OnAttack1Down.AddListener(Aim);
 		playerAttack.OnQButtonDown.AddListener(FastAim);
@@ -82,7 +82,7 @@ public class BowIdle : StateBase<Bow.State, Bow>
 			}
 		}
 
-		if(aimLock == true)
+		if(owner.AimLock == true)
 		{
 			switch (player.CurState)
 			{
@@ -93,7 +93,7 @@ public class BowIdle : StateBase<Bow.State, Bow>
 				default:
 					playerMove.AimLock = false;
 					playerCamManager.SetAimCam(false);
-					aimLock = false;
+					owner.AimLock = false;
 					break;
 			}
 		}
@@ -123,7 +123,7 @@ public class BowIdle : StateBase<Bow.State, Bow>
 	{
 		if (CheckAvailableState(state) == false) return;
 
-		aimLock = true;
+		owner.AimLock = true;
 		stateMachine.ChangeState(Bow.State.StartAim);
 	}
 
@@ -131,7 +131,7 @@ public class BowIdle : StateBase<Bow.State, Bow>
 	{
 		if (CheckAvailableState(state) == false) return;
 
-		aimLock = true;
+		owner.AimLock = true;
 		stateMachine.ChangeState(Bow.State.FastAim);
 	}
 
@@ -144,7 +144,7 @@ public class BowIdle : StateBase<Bow.State, Bow>
 				owner.IceSkill();
 				break;
 			case Bow.ArrowProperty.Fire:
-				aimLock = true;
+				owner.AimLock = true;
 				stateMachine.ChangeState(Bow.State.FireRain);
 				break;
 			case Bow.ArrowProperty.Wind:
@@ -157,7 +157,7 @@ public class BowIdle : StateBase<Bow.State, Bow>
 	{
 		if(CheckAvailableState(state) == false) { return; }
 
-		aimLock = false;
+		owner.AimLock = false;
 		stateMachine.ChangeState(Bow.State.Ulti);
 	}
 }

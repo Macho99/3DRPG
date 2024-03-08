@@ -2,22 +2,20 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 public class UIManager : MonoBehaviour
 {
 	private EventSystem eventSystem;
-
 	private Canvas popUpCanvas;
 	private Stack<PopUpUI> popUpStack;
-
 	private Canvas windowCanvas;
-
 	private Canvas inGameCanvas;
+	private Canvas sceneCanvas;
 
-	public MenuUI menu;
-
-	public bool menuOpen = false;
+	private bool menuOpened;
+	[HideInInspector] public UnityEvent<bool> OnMenuToggle = new();
 
     private void Awake()
 	{
@@ -33,27 +31,26 @@ public class UIManager : MonoBehaviour
 		windowCanvas.gameObject.name = "WindowCanvas";
 		windowCanvas.sortingOrder = 10;
 
-		// gameSceneCanvas.sortingOrder = 1;
+		sceneCanvas = GameManager.Resource.Instantiate<Canvas>("UI/Canvas");
+		sceneCanvas.gameObject.name = "SceneCanvas";
+		sceneCanvas.sortingOrder = 1;
 
 		inGameCanvas = GameManager.Resource.Instantiate<Canvas>("UI/Canvas");
 		inGameCanvas.gameObject.name = "InGameCanvas";
 		inGameCanvas.sortingOrder = 0;
 
-		menu = GameManager.Resource.Instantiate<MenuUI>("UI/PopUpUI/Menu");
+		//menu = GameManager.Resource.Instantiate<MenuUI>("UI/PopUpUI/Menu");
 	}
 
-    private void Start()
-    {
-		ShowInGameUI<PlayerConditionUI>("UI/InGame/PlayerConditionUI");
-		ShowInGameUI<MountingItemsUI>("UI/InGame/MountingItemsUI");
-    }
-
-    public T ShowPopUpUI<T>(T popUpUI) where T : PopUpUI
+    public T ShowPopUpUI<T>(T popUpUI, bool setInactivePrev = true) where T : PopUpUI
 	{
 		if (popUpStack.Count > 0)
 		{
-			PopUpUI prevUI = popUpStack.Peek();
-			prevUI.gameObject.SetActive(false);
+			if(setInactivePrev == true)
+			{
+				PopUpUI prevUI = popUpStack.Peek();
+				prevUI.gameObject.SetActive(false);
+			}
 		}
 		else
 		{
@@ -64,7 +61,11 @@ public class UIManager : MonoBehaviour
 		ui.transform.SetParent(popUpCanvas.transform, false);
 		popUpStack.Push(ui);
 
-		_ = StartCoroutine(FadeIn(ui.GetComponent<CanvasGroup>()));
+		CanvasGroup canvasGroup = ui.GetComponent<CanvasGroup>();
+		if(canvasGroup != null)
+		{
+			_ = StartCoroutine(FadeIn(canvasGroup));
+		}
 		
 		return ui;
 	}
@@ -82,17 +83,24 @@ public class UIManager : MonoBehaviour
         cg.alpha = 1f;
     }
 
-    public T ShowPopUpUI<T>(string path) where T : PopUpUI
+    public T ShowPopUpUI<T>(string path, bool setInactivePrev = true) where T : PopUpUI
 	{
 		T ui = GameManager.Resource.Load<T>(path);
-		return ShowPopUpUI(ui);
+		return ShowPopUpUI(ui, setInactivePrev);
 	}
 
 	public void ClosePopUpUI()
 	{
 		PopUpUI ui = popUpStack.Pop();
-		_= StartCoroutine(FadeOut(ui.gameObject.GetComponent<CanvasGroup>()));
-		//GameManager.Pool.ReleaseUI(ui.gameObject);
+		CanvasGroup canvasGroup = ui.GetComponent<CanvasGroup>();
+		if(canvasGroup != null)
+		{
+			_ = StartCoroutine(FadeOut(ui.GetComponent<CanvasGroup>()));
+		}
+		else
+		{
+			GameManager.Pool.ReleaseUI(ui.gameObject);
+		}
 
 		if (popUpStack.Count > 0)
 		{
@@ -187,5 +195,56 @@ public class UIManager : MonoBehaviour
 		{
 			GameManager.Pool.ReleaseUI(inGameUI.gameObject);
 		}
+	}
+
+	public T ShowSceneUI<T>(T gameUi) where T : SceneUI
+	{
+		T ui = GameManager.Pool.GetUI(gameUi);
+		ui.transform.SetParent(sceneCanvas.transform, false);
+
+		return ui;
+	}
+
+	public T ShowSceneUI<T>(string path) where T : SceneUI
+	{
+		T ui = GameManager.Resource.Load<T>(path);
+		return ShowSceneUI(ui);
+	}
+
+	public void CloseSceneUI<T>(T inGameUI) where T : SceneUI
+	{
+		GameManager.Pool.ReleaseUI(inGameUI.gameObject);
+	}
+
+	public void ClearSceneUI()
+	{
+		if(inGameCanvas == null) return;
+
+		SceneUI[] inGames = inGameCanvas.GetComponentsInChildren<SceneUI>();
+
+		foreach (SceneUI inGameUI in inGames)
+		{
+			GameManager.Pool.ReleaseUI(inGameUI.gameObject);
+		}
+	}
+
+	public void MenuToggle()
+	{
+		menuOpened = !menuOpened;
+
+		if (menuOpened == true)
+		{
+			ShowPopUpUI<MenuUI>("UI/PopUpUI/Menu");
+		}
+		else
+		{
+			ClearPopUpUI();
+		}
+		OnMenuToggle?.Invoke(menuOpened);
+	}
+
+	public void InvenFullAlarm()
+	{
+		throw new NotImplementedException();
 	}
 }

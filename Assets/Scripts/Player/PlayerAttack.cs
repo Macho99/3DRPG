@@ -25,6 +25,8 @@ public class PlayerAttack : MonoBehaviour
 	[HideInInspector] public UnityEvent<Player.State> OnRButtonDown;
 	[HideInInspector] public UnityEvent<Player.State> OnRButtonUp;
 
+	[HideInInspector] public UnityEvent<WeaponType> OnCurHoldWeaponTypeChange;
+
 	private Coroutine Attack1HoldCoroutine;
 	private Coroutine Attack2HoldCoroutine;
 
@@ -32,10 +34,11 @@ public class PlayerAttack : MonoBehaviour
 	public bool Attack2Pressed { get; private set; }
 	public PlayerAnimEvent AnimEvent { get => animEvent; }
 
+	private RuntimeAnimatorController initController;
 	private Player player;
 	private PlayerAnimEvent animEvent;
 	private Weapon[] weapons;
-	private Weapon curWeapon;
+	private WeaponType curHoldWeaponType = WeaponType.Melee;
 	private Animator anim;
 
 	private void Awake()
@@ -43,7 +46,8 @@ public class PlayerAttack : MonoBehaviour
 		player = GetComponent<Player>();
 		animEvent = GetComponent<PlayerAnimEvent>();
 		anim = GetComponent<Animator>();
-		weapons = weaponHolder.GetComponentsInChildren<Weapon>();
+		initController = anim.runtimeAnimatorController;
+		weapons = new Weapon[(int)WeaponType.Size];
 
 		OnAttack1Down = new UnityEvent<Player.State>();
 		OnAttack1Up = new UnityEvent<Player.State>();
@@ -58,12 +62,135 @@ public class PlayerAttack : MonoBehaviour
 		OnRButtonDown = new UnityEvent<Player.State>();
 		OnRButtonUp = new UnityEvent<Player.State>();
 
-		if (weapons.Length > 0)
+		OnCurHoldWeaponTypeChange = new UnityEvent<WeaponType>();
+
+		//if (weapons.Length > 0)
+		//{
+		//	curWeapon = weapons[0];
+		//	anim.runtimeAnimatorController = curWeapon.GetAnimController();
+		//}
+	}
+
+	public void RefreshWeapon()
+	{
+		WeaponItem InvMeleeItem = GameManager.Inven.GetWeaponSlot(WeaponType.Melee);
+		WeaponItem InvRangedItem = GameManager.Inven.GetWeaponSlot(WeaponType.Ranged);
+
+		int meleeIdx = (int) WeaponType.Melee;
+		int rangedIdx = (int) WeaponType.Ranged;
+
+		WeaponItem curMeleeItem = weapons[meleeIdx]?.WeaponItem;
+		WeaponItem curRangedItem = weapons[rangedIdx]?.WeaponItem;
+		if (curMeleeItem != InvMeleeItem)
 		{
-			curWeapon = weapons[0];
-			anim.runtimeAnimatorController = curWeapon.GetAnimController();
+			ChangeWeapon(meleeIdx, InvMeleeItem);
+		}
+
+		if (curRangedItem != InvRangedItem)
+		{
+			ChangeWeapon(rangedIdx, InvRangedItem);
 		}
 	}
+
+	private void ChangeWeapon(int idx, WeaponItem newWeaponItem)
+	{
+		if (weapons[idx] != null)
+		{
+			if (idx == (int)curHoldWeaponType)
+			{
+				weapons[idx].ForceInactive();
+				SetAnimFloat("Armed", 0f);
+			}
+
+			GameManager.Resource.Destroy(weapons[idx].gameObject);
+			weapons[idx] = null;
+		}
+
+		if(newWeaponItem != null)
+		{
+			weapons[idx] = GameManager.Resource.Instantiate(newWeaponItem.WeaponPrefab, weaponHolder, false);
+			weapons[idx].transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+			weapons[idx].Init(newWeaponItem);
+			if (idx != (int)curHoldWeaponType)
+			{
+				weapons[idx].ForceInactive();
+				weapons[idx].gameObject.SetActive(false);
+			}
+			else
+			{
+				anim.runtimeAnimatorController = weapons[idx].GetAnimController();
+			}
+		}
+		else if(idx == (int)curHoldWeaponType)
+		{
+			anim.runtimeAnimatorController = initController;
+		}
+	}
+
+	private void WeaponSwap(WeaponType newWeaponType)
+	{
+		if (curHoldWeaponType == newWeaponType) return;
+		switch (player.CurState)
+		{
+			case Player.State.Idle:
+			case Player.State.Walk:
+			case Player.State.Run:
+				break;
+			default:
+				return;
+		}
+
+		int curIdx = (int) curHoldWeaponType;
+		int newIdx = (int) newWeaponType;
+
+		if (weapons[curIdx] != null)
+		{
+			anim.SetTrigger("BaseExit");
+			weapons[curIdx].ChangeStateToIdle(false);
+			weapons[curIdx].ForceInactive();
+			weapons[curIdx].gameObject.SetActive(false);
+		}
+
+		if (weapons[newIdx] != null)
+		{
+			anim.runtimeAnimatorController = weapons[newIdx].GetAnimController();
+			weapons[newIdx].gameObject.SetActive(true);
+		}
+		else
+		{
+			anim.runtimeAnimatorController = initController;
+		}
+
+		curHoldWeaponType = newWeaponType;
+	}
+
+	private void OnNum1Button(InputValue value)
+	{
+		if (value.isPressed == false) return;
+
+		WeaponSwap(WeaponType.Melee);
+	}
+
+	private void OnNum2Button(InputValue value)
+	{
+		if (value.isPressed == false) return;
+
+		WeaponSwap(WeaponType.Ranged);
+	}
+
+	private void OnNum3Button(InputValue value)
+	{
+		if (value.isPressed == false) return;
+
+		GameManager.Inven.GetConsumpSlot(ConsumpSlotType.Slot1)?.Use();
+	}
+	private void OnNum4Button(InputValue value)
+	{
+		if (value.isPressed == false) return;
+
+		GameManager.Inven.GetConsumpSlot(ConsumpSlotType.Slot2)?.Use();
+	}
+
 
 	private void OnAttack1(InputValue value)
 	{
@@ -151,7 +278,7 @@ public class PlayerAttack : MonoBehaviour
 
 	public void ChangeStateToIdle(bool forceIdle = false)
 	{
-		curWeapon?.ChangeStateToIdle(forceIdle);
+		weapons[(int)curHoldWeaponType]?.ChangeStateToIdle(forceIdle);
 	}
 
 	public float GetAnimNormalizedTime(int layer)
@@ -203,7 +330,7 @@ public class PlayerAttack : MonoBehaviour
 
 	public void SetUnarmed()
 	{
-		curWeapon?.SetUnArmed();
+		weapons[(int) curHoldWeaponType]?.SetUnArmed();
 	}
 
 	public void PlayAttackFailFeedback()

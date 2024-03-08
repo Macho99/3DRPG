@@ -9,6 +9,32 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
+	[Serializable]
+	public enum FollowTransform { 
+		KatanaHolder, SwordCase, SwordDummy, 
+		LeftHandWeaponSlot, Spine3, RightHand, 
+		Size
+	}
+
+	[Serializable]
+	struct SkinMapping
+	{
+		public ArmorType armorType;
+		public GameObject gameObject;
+		[HideInInspector] public SkinnedMeshRenderer initialSkin;
+	}
+
+	[Serializable]
+	struct TransformMapping
+	{
+		public FollowTransform followTransform;
+		public Transform transform;
+	}
+
+	[Header("Enum 순서에 맞게 할당하세요!")]
+	[SerializeField] SkinMapping[] skins;
+	[Header("Enum 순서에 맞게 할당하세요!")]
+	[SerializeField] TransformMapping[] followTransforms;
 	[SerializeField] State curState;
 	[SerializeField] Rig neckRig;
 	[SerializeField] Rig spineRig;
@@ -44,10 +70,10 @@ public class Player : MonoBehaviour
 	public PlayerAnimEvent PlayerAnimEvent { get { return playerAnimEvent; } }
 	public float StunEndTime { get; private set; }
 
-	[SerializeField] private int curHP;
-	[SerializeField] private int maxHp = 100;
-	public int CurHp { get { return curHP; } set { curHP = value; } }
-	public int MaxHp { get { return maxHp; } set { maxHp = value; } }
+	//[SerializeField] private int curHP;
+	//[SerializeField] private int maxHp = 100;
+	//public int CurHp { get { return curHP; } set { curHP = value; } }
+	//public int MaxHp { get { return maxHp; } set { maxHp = value; } }
 
 	[SerializeField] private float stunDuration;
 	[SerializeField] private Vector3 stunDir;
@@ -55,7 +81,6 @@ public class Player : MonoBehaviour
 
 	private void Awake()
 	{
-		curHP = maxHp;
 		anim = GetComponent<Animator>();
 		playerLook = GetComponent<PlayerLook>();
 		playerMove = GetComponent<PlayerMove>();
@@ -86,6 +111,18 @@ public class Player : MonoBehaviour
 
 		stateMachine.AddState(State.Stun, new PlayerStun(this, stateMachine));
 		stateMachine.AddState(State.Die, new PlayerDie(this, stateMachine));
+
+		BindSkin();
+	}
+
+	private void BindSkin()
+	{
+		for(int i=0;i<skins.Length;i++)
+		{
+			SkinMapping skinMapping = skins[i];
+			skinMapping.initialSkin = skinMapping.gameObject.GetComponentInChildren<SkinnedMeshRenderer>();
+			skins[i] = skinMapping;
+		}
 	}
 
 	private void Start()
@@ -210,10 +247,14 @@ public class Player : MonoBehaviour
 		rightHandRig.weight = rightHand;
 	}
 
-	public void IgnoreInput(bool value)
+	public void IgnoreInput(bool value, bool pointerFree = true)
 	{
 		playerInput.enabled = !value;
-		playerLook.enabled = !value;
+		playerLook.InitLookInput();
+		if (pointerFree == true)
+		{
+			playerLook.enabled = !value;
+		}
 	}
 
 	private void OnTestButton(InputValue value)
@@ -234,10 +275,10 @@ public class Player : MonoBehaviour
 	{
 		if (curState == State.Die) return;
 
-		curHP -= damage;
-		if(curHP <= 0)
+		StatManager stat = GameManager.Stat;
+		stat.SubCurHP(damage);
+		if(stat.CurHP <= 0)
 		{
-			curHP = 0;
 			stateMachine.ChangeState(State.Die);
 			return;
 		}
@@ -268,5 +309,39 @@ public class Player : MonoBehaviour
 	{
 		playerAttack.SetAnimTrigger("Hit");
 		FieldSFC.Instance?.PlayHit();
+	}
+
+	public void SetArmor(ArmorItem armorItem)
+	{
+		ArmorType armorType = armorItem.ArmorType;
+		skins[(int)armorType].gameObject.transform.
+			Find(armorItem.ArmorSkinName).gameObject.SetActive(true);
+
+		SkinnedMeshRenderer initalSkin = skins[(int)armorType].initialSkin;
+
+		if(initalSkin != null)
+			initalSkin.gameObject.SetActive(false);
+	}
+
+	public void InitArmor(ArmorType armorType)
+	{
+		string armorName = GameManager.Inven.GetArmorSlot(armorType).ArmorSkinName;
+		skins[(int)armorType].gameObject.transform.
+			Find(armorName).gameObject.SetActive(false);
+		SkinnedMeshRenderer initalSkin = skins[(int)armorType].initialSkin;
+
+		if (initalSkin != null)
+			initalSkin.gameObject.SetActive(true);
+	}
+
+	public Transform GetTransform(FollowTransform followType)
+	{
+		return followTransforms[(int)followType].transform;
+	}
+
+
+	public void RefreshWeapon()
+	{
+		playerAttack.RefreshWeapon();
 	}
 }

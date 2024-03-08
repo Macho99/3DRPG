@@ -7,10 +7,12 @@ using UnityEngine;
 public class Katana : Sword
 {
 	[SerializeField] State curState;
-	[SerializeField] TargetFollower swordDummy;
+	[SerializeField] TargetFollower katanaHolderFollower;
+	[SerializeField] TargetFollower swordCaseFollower;
+	[SerializeField] TargetFollower swordDummyFollower;
 
 	[Serializable]
-	public enum State { Idle, Unarmed, QuickSheath, Equip, 
+	public enum State { Inactive, Idle, Unarmed, QuickSheath, Equip, 
 		QuickDrawEntry, QuickDrawIdle, QuickDraw1, QuickDraw2, QuickDraw3, QuickDraw4, QuickDraw5, QuickDraw6, QuickDraw7,
 		DashAttackVerA, DashAttackVerB,
 		DashComboVerA01, DashComboVerA02, DashComboVerA03, DashComboVerA04,
@@ -31,6 +33,7 @@ public class Katana : Sword
 		base.Awake();
 
 		stateMachine = new StateMachine<State, Katana>(this);
+		stateMachine.AddState(State.Inactive, new KatanaInactive(this, stateMachine));
 		stateMachine.AddState(State.Idle, new KatanaIdle(this, stateMachine));
 		stateMachine.AddState(State.Unarmed, new KatanaUnarmed(this, stateMachine));
 		stateMachine.AddState(State.QuickSheath, new KatanaQuickSheath(this, stateMachine));
@@ -74,10 +77,18 @@ public class Katana : Sword
 		stateMachine.AddState(State.AttackFail, new KatanaAttackFail(this, stateMachine));
 	}
 
+	public override void Init(WeaponItem weaponItem)
+	{
+		base.Init(weaponItem);
+		katanaHolderFollower.SetTarget(player.GetTransform(Player.FollowTransform.KatanaHolder));
+		swordCaseFollower.SetTarget(player.GetTransform(Player.FollowTransform.SwordCase));
+		swordDummyFollower.SetTarget(player.GetTransform(Player.FollowTransform.SwordDummy));
+	}
+
 	protected override void Start()
 	{
 		base.Start();
-		stateMachine.SetUp(State.Idle);
+		stateMachine.SetUp(State.Inactive);
 	}
 
 	private void Update()
@@ -98,15 +109,15 @@ public class Katana : Sword
 	{
 		if(value == true)
 		{
-			swordDummy.Update();
+			swordDummyFollower.Update();
 			renderer.gameObject.SetActive(false);
-			swordDummy.gameObject.SetActive(true);
+			swordDummyFollower.gameObject.SetActive(true);
 		}
 		else
 		{
-			swordDummy.Update();
+			swordDummyFollower.Update();
 			renderer.gameObject.SetActive(true);
-			swordDummy.gameObject.SetActive(false);
+			swordDummyFollower.gameObject.SetActive(false);
 		}
 	}
 
@@ -146,5 +157,10 @@ public class Katana : Sword
 		{
 			stateMachine.ChangeState(State.Unarmed);
 		}
+	}
+
+	public override void ForceInactive()
+	{
+		stateMachine.ChangeState(State.Inactive);
 	}
 }

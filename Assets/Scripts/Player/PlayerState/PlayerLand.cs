@@ -31,7 +31,7 @@ public class PlayerLand : StateBase<Player.State, Player>
 
 	public override void Transition()
 	{
-		if(playerMove.IsAnimName(0, "Jump_End"))
+		if(playerMove.IsAnimName(0, "Jump_End") || playerMove.IsAnimName(0, "Move"))
 		{
 			stateMachine.ChangeState(Player.State.Idle);
 		}
