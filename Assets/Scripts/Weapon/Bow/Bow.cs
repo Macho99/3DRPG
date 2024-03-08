@@ -59,6 +59,8 @@ public class Bow : Weapon
 
 	bool aimLock;
 
+	int damage;
+
 	public bool AimLock { get { return aimLock; } set {
 			aimLock = value;
 			if(aimLock == true)
@@ -206,17 +208,19 @@ public class Bow : Weapon
 
 	public void MonsterHit(RaycastHit hitInfo, int hitCnt, Arrow arrow)
 	{
+		damage = Damage;
+
 		int layer = hitInfo.collider.gameObject.layer;
 		if(IsMonsterLayer(layer) == true)
 		{
 			// TODO: 활 데미지 임시부여 (데미지 수치 변경 필요)
 			if (hitInfo.collider.TryGetComponent(out Monster monster))
 			{
-				monster.TakeDamage(10f);
+				monster.TakeDamage(damage);
 			}
             if (hitInfo.collider.TryGetComponent(out DeathKnight knight))
             {
-                knight.TakeDamage(100f);
+                knight.TakeDamage(damage);
             }
             windController?.Attack(hitInfo.transform);
 			arrow.transform.parent = hitInfo.collider.transform;
