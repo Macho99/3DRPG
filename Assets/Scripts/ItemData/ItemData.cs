@@ -16,6 +16,7 @@ public class ItemData : ScriptableObject
 	[SerializeField] string summary;
 	[Multiline]
 	[SerializeField] string detailDesc;
+	[SerializeField] int price;
 
 	public Item.Type ItemType {  get { return itemType; } }
 	public string ItemName { get { return itemName; } }
@@ -23,4 +24,5 @@ public class ItemData : ScriptableObject
 	public string Summary { get { return summary; } }
 	public string DetailDesc { get { return detailDesc; } }
 	public Item.Rate Rate { get { return rate; } }
+	public int Price { get { return price; } }
 }

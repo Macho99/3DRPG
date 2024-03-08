@@ -34,8 +34,11 @@ public class RecoveryConsumpItem : ConsumpItem
 
 	public override void Use()
 	{
-		GameManager.Resource.Instantiate(ParticlePrefab, FieldSFC.Player.transform.position,
-			Quaternion.identity, FieldSFC.Player.transform, true);
+		if (ParticlePrefab != null)
+		{
+			GameManager.Resource.Instantiate(ParticlePrefab, FieldSFC.Player.transform.position,
+				Quaternion.identity, FieldSFC.Player.transform, true);
+		}
 		switch (this.RecoveryType)
 		{
 			case RecoveryType.HP:

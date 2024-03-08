@@ -64,7 +64,8 @@ public class InventoryManager : MonoBehaviour
 		AddItem(GameManager.Data.GetItem("RedApple", 25));
 		AddItem(GameManager.Data.GetItem("RedPotion", 30));
 		AddItem(GameManager.Data.GetItem("BluePotion", 20));
-		_ = StartCoroutine(CoTestItemAdd());
+
+		_ = StartCoroutine(CoTestItemAdd());	
 	}
 
 	private IEnumerator CoTestItemAdd()

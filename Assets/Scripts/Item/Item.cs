@@ -25,6 +25,7 @@ public abstract class Item
 	public string DetailDesc { get { return itemData.DetailDesc; } }
 	public Type ItemType {  get { return itemData.ItemType; } }
 	public Rate ItemRate { get { return itemData.Rate; } }
+	public int Price { get { return itemData.Price; } }
 
 	public abstract Item Clone();
 	public abstract void Use();
