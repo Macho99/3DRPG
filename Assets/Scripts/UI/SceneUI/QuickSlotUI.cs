@@ -4,12 +4,12 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class QuickSlotsUI : MenuToggleUI
+public class QuickSlotUI : MenuToggleUI
 {
 	Image meleeImage;
 	Image rangedImage;
-	Image consump3Image;
-	Image consump4Image;
+	Image consump1Image;
+	Image consump2Image;
 	TextMeshProUGUI curWeaponNameText;
 
 	PlayerAttack playerAttack;
@@ -19,8 +19,8 @@ public class QuickSlotsUI : MenuToggleUI
 		base.Awake();
 		meleeImage = images["MeleeImage"];
 		rangedImage = images["RangedImage"];
-		consump3Image = images["Consump3Image"];
-		consump4Image = images["Consump4Image"];
+		consump1Image = images["Consump3Image"];
+		consump2Image = images["Consump4Image"];
 		curWeaponNameText = texts["CurWeaponName"];
 		playerAttack = FieldSFC.Player.PlayerAttack;
 	}
@@ -44,10 +44,35 @@ public class QuickSlotsUI : MenuToggleUI
 		playerAttack.OnCurHoldWeaponTypeChange.RemoveListener(CurHoldWeaponTypeChange);
 	}
 
+	private void SetItem(Image image, Item item)
+	{
+		Color color;
+		if (item == null)
+		{
+			color = image.color;
+			color.a = 0f;
+			image.color = color;
+		}
+		else
+		{
+			image.sprite = item.Sprite;
+			color = image.color;
+			color.a = 1f;
+			image.color = color;
+		}
+	}
+
 	private void RefreshSlot()
 	{
-		meleeImage.sprite = GameManager.Inven.GetWeaponSlot(WeaponType.Melee)?.Sprite;
-		rangedImage.sprite = GameManager.Inven.GetWeaponSlot(WeaponType.Ranged)?.Sprite;
+		WeaponItem melee = GameManager.Inven.GetWeaponSlot(WeaponType.Melee);
+		WeaponItem ranged = GameManager.Inven.GetWeaponSlot(WeaponType.Ranged);
+		ConsumpItem consump1 = GameManager.Inven.GetConsumpSlot(ConsumpSlotType.Slot1);
+		ConsumpItem consump2 = GameManager.Inven.GetConsumpSlot(ConsumpSlotType.Slot2);
+
+		SetItem(meleeImage, melee);
+		SetItem(rangedImage, ranged);
+		SetItem(consump1Image, consump1);
+		SetItem(consump2Image, consump2);
 	}
 
 	private void CurHoldWeaponTypeChange(WeaponType newHold)

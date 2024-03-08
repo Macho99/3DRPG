@@ -130,6 +130,15 @@ public class PlayerAttack : MonoBehaviour
 	private void WeaponSwap(WeaponType newWeaponType)
 	{
 		if (curHoldWeaponType == newWeaponType) return;
+		switch (player.CurState)
+		{
+			case Player.State.Idle:
+			case Player.State.Walk:
+			case Player.State.Run:
+				break;
+			default:
+				return;
+		}
 
 		int curIdx = (int) curHoldWeaponType;
 		int newIdx = (int) newWeaponType;
@@ -168,6 +177,20 @@ public class PlayerAttack : MonoBehaviour
 
 		WeaponSwap(WeaponType.Ranged);
 	}
+
+	private void OnNum3Button(InputValue value)
+	{
+		if (value.isPressed == false) return;
+
+		GameManager.Inven.GetConsumpSlot(ConsumpSlotType.Slot1)?.Use();
+	}
+	private void OnNum4Button(InputValue value)
+	{
+		if (value.isPressed == false) return;
+
+		GameManager.Inven.GetConsumpSlot(ConsumpSlotType.Slot2)?.Use();
+	}
+
 
 	private void OnAttack1(InputValue value)
 	{
@@ -255,7 +278,7 @@ public class PlayerAttack : MonoBehaviour
 
 	public void ChangeStateToIdle(bool forceIdle = false)
 	{
-		weapons[(int)curHoldWeaponType].ChangeStateToIdle(forceIdle);
+		weapons[(int)curHoldWeaponType]?.ChangeStateToIdle(forceIdle);
 	}
 
 	public float GetAnimNormalizedTime(int layer)

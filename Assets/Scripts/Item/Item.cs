@@ -7,7 +7,7 @@ using UnityEngine;
 
 public abstract class Item
 {
-	public enum Type { Weapon, Armor, Other, HPConsump, MPConsump, }
+	public enum Type { Weapon, Armor, Other, RecoveryConsump, }
 	[Serializable]
 	public enum Rate { Normal, Rare, Epic, Legend}
 

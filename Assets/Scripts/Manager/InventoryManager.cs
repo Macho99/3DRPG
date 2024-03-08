@@ -12,6 +12,7 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 
 public enum InvenType { Equip, Consump, Other }
+public enum ConsumpSlotType { Slot1, Slot2, Size }
 public class InventoryManager : MonoBehaviour
 {
 	EquipItem[] equipInv;
@@ -20,6 +21,7 @@ public class InventoryManager : MonoBehaviour
 
 	ArmorItem[] armorSlots;
 	WeaponItem[] weaponSlots;
+	ConsumpItem[] consumpSlots;
 
 	const int invSize = 20;
 	public int InvSize {  get { return invSize; } }
@@ -35,7 +37,8 @@ public class InventoryManager : MonoBehaviour
 		consumpInv = new ConsumpItem[invSize];
 		otherInv = new OtherItem[invSize];
 		armorSlots = new ArmorItem[(int) ArmorType.Size];
-		weaponSlots = new WeaponItem[(int)WeaponType.Size];
+		weaponSlots = new WeaponItem[(int) WeaponType.Size];
+		consumpSlots = new ConsumpItem[(int)ConsumpSlotType.Size];
 	}
 
 	private void Start()
@@ -58,7 +61,19 @@ public class InventoryManager : MonoBehaviour
 		AddItem(GameManager.Data.GetItem("BasicLegs"));
 		AddItem(GameManager.Data.GetItem("BasicKatana"));
 		AddItem(GameManager.Data.GetItem("BasicBow"));
-		AddItem(GameManager.Data.GetItem("RedApple"));
+		AddItem(GameManager.Data.GetItem("RedApple", 25));
+		AddItem(GameManager.Data.GetItem("RedPotion", 30));
+		AddItem(GameManager.Data.GetItem("BluePotion", 20));
+		_ = StartCoroutine(CoTestItemAdd());
+	}
+
+	private IEnumerator CoTestItemAdd()
+	{
+		while (true)
+		{
+			//AddItem(GameManager.Data.GetItem());
+			yield return new WaitForSeconds(1f);
+		}
 	}
 
 	private void ItemChange()
@@ -83,7 +98,7 @@ public class InventoryManager : MonoBehaviour
 			case Item.Type.Other:
 				inv = otherInv;
 				break;
-			case Item.Type.HPConsump:
+			case Item.Type.RecoveryConsump:
 			default:
 				inv = consumpInv;
 				break;
@@ -164,6 +179,19 @@ public class InventoryManager : MonoBehaviour
 		return true;
 	}
 
+	public bool SubItem(MultipleItem item, int amount)
+	{
+		if (item.Amount < amount)
+			return false;
+
+		item.SubAmount(amount);
+		if(item.Amount == 0)
+		{
+			DeleteItem(item);
+		}
+		return true;
+	}
+
 	private int GetEmptySlot(Item[] inv)
 	{
 		int idx = -1;
@@ -186,7 +214,7 @@ public class InventoryManager : MonoBehaviour
 			case Item.Type.Other:
 				inv = otherInv;
 				break;
-			case Item.Type.HPConsump:
+			case Item.Type.RecoveryConsump:
 			default:
 				inv = consumpInv;
 				break;
@@ -206,6 +234,19 @@ public class InventoryManager : MonoBehaviour
 			}
 		}
 
+		if(false == find && inv == consumpInv)
+		{
+			for (int i = 0; i < consumpSlots.Length; i++)
+			{
+				if(consumpSlots[i]?.ID == newItem.ID)
+				{
+					find = true;
+					consumpSlots[i].AddAmount(newItem.Amount);
+					break;
+				}
+			}
+		}
+
 		if (false == find)
 		{
 			if (inv.Length == emptyIdx)
@@ -216,6 +257,7 @@ public class InventoryManager : MonoBehaviour
 
 			inv[emptyIdx] = newItem;
 		}
+
 		OnItemGet?.Invoke(newItem);
 		return true;
 	}
@@ -284,32 +326,45 @@ public class InventoryManager : MonoBehaviour
 	public void DeleteItem(Item item, bool refresh = true)
 	{
 		FindItem(item, out Item[] inv, out int idx);
+		if(idx == -1)
+		{
+			inv = weaponSlots;
+			FindSlotItem(item, inv, out idx);
+			if(idx == -1)
+			{
+				inv = armorSlots;
+				FindSlotItem(item, inv, out idx);
+				if(idx == -1)
+				{
+					inv = consumpSlots;
+					FindSlotItem(item, inv, out idx);
+					if(idx == -1)
+					{
+						Debug.LogError("인벤토리에 존재하지 않는 아이템을 삭제하려고 합니다.");
+						return;
+					}
+				}
+			}
+		}
 
 		inv[idx] = null;
-		if(refresh == true)
+		if (refresh == true)
 			OnItemDelete?.Invoke(item);
 	}
 
-	//public void ItemAmountChanged(Item item)
-	//{
-	//	if (item is MultipleItem multi)
-	//	{
-	//		if (0 == multi.Amount)
-	//		{
-	//			int idx;
-	//			FindItem(item, out idx);
-	//			if (-1 == idx)
-	//			{
-	//				Debug.LogError($"�κ��丮�� {item.Name}�� �����ϴ�!");
-	//				return;
-	//			}
-	//			DeleteItem(item.Type, idx);
-	//			return;
-	//		}
-	//	}
-
-	//	onItemAmountChanged?.Invoke(item);
-	//}
+	private void FindSlotItem(Item item, Item[] inv, out int idx)
+	{
+		idx = -1;
+		for (int i = 0; i < inv.Length; i++)
+		{
+			if (inv[i] == item)
+			{
+				idx = i;
+				return;
+			}
+		}
+		return;
+	}
 
 	private void FindItem(Item item, out Item[] inv, out int idx)
 	{
@@ -420,6 +475,41 @@ public class InventoryManager : MonoBehaviour
 		if (refresh == true)
 			ItemChange();
 		FieldSFC.Player?.RefreshWeapon();
+		return true;
+	}
+
+	public ConsumpItem GetConsumpSlot(ConsumpSlotType type)
+	{
+		return consumpSlots[(int)type];
+	}
+
+	public void SetConsumpSlot(ConsumpSlotType type, ConsumpItem consumpItem)
+	{
+		DeleteItem(consumpItem, false);
+		bool result = InitConsumpSlot(type, false);
+		consumpSlots[(int)type] = consumpItem;
+		ItemChange();
+	}
+
+	public bool InitConsumpSlot(ConsumpSlotType type, bool refresh = true)
+	{
+		int idx = (int)type;
+		ConsumpItem consumpItem = consumpSlots[idx];
+		if (consumpItem == null)
+		{
+			return true;
+		}
+
+		consumpSlots[idx] = null;
+		bool result = AddItem(consumpItem, false);
+		if (result == false)
+		{
+			consumpSlots[idx] = consumpItem;
+			return false;
+		}
+
+		if (refresh == true)
+			ItemChange();
 		return true;
 	}
 }

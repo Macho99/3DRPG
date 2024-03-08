@@ -28,6 +28,5 @@ public class MenuToggleUI : SceneUI
 	private void SetAlpha(bool value)
 	{
 		canvasGroup.alpha = value ? 0f : 1f;
-		print(gameObject.name);
 	}
 }

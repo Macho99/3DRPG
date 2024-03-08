@@ -41,6 +41,7 @@ public class Bow : Weapon
 	ArrowHoldMode curArrowHold;
 	LayerMask enemyMask;
 	Collider[] cols = new Collider[10];
+	BowAimPoint bowAimPoint;
 
 	Action<RaycastHit, int, Arrow> hitAction;
 	Action<Arrow> updateAction;
@@ -56,7 +57,19 @@ public class Bow : Weapon
 	const float ultiSkillCooltime = 1f;
 	float ultiSkillUseableTime = -ultiSkillCooltime;
 
-	public bool AimLock { get; set; }
+	bool aimLock;
+
+	public bool AimLock { get { return aimLock; } set {
+			aimLock = value;
+			if(aimLock == true)
+			{
+				HideAimPoint(false);
+			}
+			else
+			{
+				HideAimPoint(true);
+			}
+		} }
 	public ArrowProperty CurArrowProperty { get { return curArrowProperty; } }
 	public int FastShotNum { get; set; } = 0;
 	public bool Reloaded { get; set; }
@@ -116,12 +129,15 @@ public class Bow : Weapon
 
 	private void OnEnable()
 	{
+		bowAimPoint = GameManager.UI.ShowSceneUI<BowAimPoint>("UI/SceneUI/BowAimPoint");
 		player.SetNeckRigWeight(0.6f);
 		playerMove.AimLockOffset = new Vector3(0f, 45f, 0f);
 	}
 
 	private void OnDisable()
 	{
+		bowAimPoint.CloseUI();
+		bowAimPoint = null;
 		player.SetNeckRigWeight(0f);
 		playerMove.AimLockOffset = Vector3.zero;
 	}
@@ -455,5 +471,15 @@ public class Bow : Weapon
 		playerCamManager.SetAimCam(false);
 		playerMove.AimLock = false;
 		stateMachine.ChangeState(State.Inactive);
+	}
+
+	public void SetAimPointSize(float weight)
+	{
+		bowAimPoint.SetOutCircleScale(weight);
+	}
+
+	public void HideAimPoint(bool value)
+	{
+		bowAimPoint.AimPointHide(value);
 	}
 }

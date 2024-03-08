@@ -21,6 +21,7 @@ public class BowIdle : StateBase<Bow.State, Bow>
 	{
 		owner.FastShotNum = 0;
 		player.WeaponIdle();
+		owner.SetAimPointSize(1f);
 		owner.SetFastShotArrowMat(false);
 		playerAttack.OnAttack1Down.AddListener(Aim);
 		playerAttack.OnQButtonDown.AddListener(FastAim);

@@ -70,10 +70,10 @@ public class Player : MonoBehaviour
 	public PlayerAnimEvent PlayerAnimEvent { get { return playerAnimEvent; } }
 	public float StunEndTime { get; private set; }
 
-	[SerializeField] private int curHP;
-	[SerializeField] private int maxHp = 100;
-	public int CurHp { get { return curHP; } set { curHP = value; } }
-	public int MaxHp { get { return maxHp; } set { maxHp = value; } }
+	//[SerializeField] private int curHP;
+	//[SerializeField] private int maxHp = 100;
+	//public int CurHp { get { return curHP; } set { curHP = value; } }
+	//public int MaxHp { get { return maxHp; } set { maxHp = value; } }
 
 	[SerializeField] private float stunDuration;
 	[SerializeField] private Vector3 stunDir;
@@ -81,7 +81,6 @@ public class Player : MonoBehaviour
 
 	private void Awake()
 	{
-		curHP = maxHp;
 		anim = GetComponent<Animator>();
 		playerLook = GetComponent<PlayerLook>();
 		playerMove = GetComponent<PlayerMove>();
@@ -276,10 +275,10 @@ public class Player : MonoBehaviour
 	{
 		if (curState == State.Die) return;
 
-		curHP -= damage;
-		if(curHP <= 0)
+		StatManager stat = GameManager.Stat;
+		stat.SubCurHP(damage);
+		if(stat.CurHP <= 0)
 		{
-			curHP = 0;
 			stateMachine.ChangeState(State.Die);
 			return;
 		}

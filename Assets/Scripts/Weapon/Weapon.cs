@@ -7,6 +7,7 @@ public abstract class Weapon : MonoBehaviour
 {
 	[SerializeField] RuntimeAnimatorController controller;
 
+
 	protected WeaponItem weaponItem;
 	protected LayerMask hitMask;
 	protected LayerMask monsterMask;
@@ -18,6 +19,7 @@ public abstract class Weapon : MonoBehaviour
 	protected PlayerCamManager playerCamManager;
 	protected new MeshRenderer renderer;
 
+	public int Damage { get; private set; }
 	public WeaponItem WeaponItem { get { return weaponItem; } }
 	public LayerMask HitMask { get { return hitMask; } }
 	public LayerMask MonsterMask { get { return monsterMask; } }
@@ -51,6 +53,7 @@ public abstract class Weapon : MonoBehaviour
 	public virtual void Init(WeaponItem weaponItem)
 	{
 		this.weaponItem = weaponItem;
+		Damage = weaponItem.Damage;
 	}
 
 	public void ChangePlayerState(Player.State state)

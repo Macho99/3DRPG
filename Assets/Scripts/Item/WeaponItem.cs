@@ -27,4 +27,5 @@ public class WeaponItem : EquipItem
 	}
 	public WeaponType WeaponType { get { return weaponItemData.WeaponType; } }
 	public Weapon WeaponPrefab { get { return weaponItemData.WeaponPrefab; } }
+	public int Damage { get { return weaponItemData.Damage; } }
 }

@@ -222,7 +222,7 @@ GameObject:
   - component: {fileID: 5475591165525893307}
   - component: {fileID: 6822718817972920587}
   m_Layer: 5
-  m_Name: Consump4BackGround
+  m_Name: Consump2BackGround
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -647,7 +647,7 @@ GameObject:
   - component: {fileID: 8244247175649210156}
   - component: {fileID: 349661944126388654}
   m_Layer: 5
-  m_Name: MountingItemsUI
+  m_Name: QuickSlotUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -715,7 +715,7 @@ GameObject:
   - component: {fileID: 5740159734940945278}
   - component: {fileID: 8825872244018703528}
   m_Layer: 5
-  m_Name: Consump3BackGround
+  m_Name: Consump1BackGround
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

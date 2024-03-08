@@ -50,9 +50,14 @@ public class BowStartAim : StateBase<Bow.State, Bow>
 	{
 		if(playerAttack.IsAnimName(1, "UpperHold1") == true)
 		{
-			if (playerAttack.GetAnimNormalizedTime(1) > 0.99f)
+			float animTime = playerAttack.GetAnimNormalizedTime(1);
+			if (animTime > 0.99f)
 			{
 				stateMachine.ChangeState(Bow.State.Aiming);
+			}
+			else
+			{
+				owner.SetAimPointSize(1.3f - animTime);
 			}
 		}
 	}

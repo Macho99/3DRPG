@@ -23,6 +23,7 @@ public class BowFastAim : StateBase<Bow.State, Bow>
 
 	public override void Enter()
 	{
+		owner.SetAimPointSize(0f);
 		waitAnim = false;
 		shotReady = false;
 		owner.WindControllerPrepareAttack();

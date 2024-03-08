@@ -12,6 +12,7 @@ public abstract class MultipleItem : Item
 	{
 		this.amount = amount;
 	}
+
 	public void AddAmount (int value)
 	{
 		amount += value;

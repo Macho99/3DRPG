@@ -29,6 +29,9 @@ public class InvenUI : PopUpUI
 
 	ArmorSlot[] armorSlots;
 	WeaponSlot[] weaponSlots;
+	ConsumpSlot[] consumpSlots;
+
+	bool started;
 
 	public InvenType CurInvenType { get { return curInvenType; } }
 
@@ -62,6 +65,9 @@ public class InvenUI : PopUpUI
 		weaponSlots[(int)WeaponType.Melee] = transforms["MeleeSlot"].GetComponent<WeaponSlot>();
 		weaponSlots[(int)WeaponType.Ranged] = transforms["RangedSlot"].GetComponent <WeaponSlot>();
 
+		consumpSlots = new ConsumpSlot[(int)ConsumpSlotType.Size];
+		consumpSlots[(int)ConsumpSlotType.Slot1] = transforms["ConsumpSlot1"].GetComponent<ConsumpSlot>();
+		consumpSlots[(int)ConsumpSlotType.Slot2] = transforms["ConsumpSlot2"].GetComponent<ConsumpSlot>();
 
 		dragInfo = images["DragInfo"];
 		dragInfo.gameObject.SetActive(false);
@@ -82,12 +88,19 @@ public class InvenUI : PopUpUI
 	private void OnEnable()
 	{
 		GameManager.Inven.OnItemChange.AddListener(RefreshInven);
-		RefreshInven();
+		if(started == false)
+			RefreshInven();
 	}
 
 	private void OnDisable()
 	{
 		GameManager.Inven.OnItemChange.RemoveListener(RefreshInven);
+	}
+
+	private void Start()
+	{
+		started = true;
+		RefreshInven();
 	}
 
 	private void RefreshInven()
@@ -109,6 +122,12 @@ public class InvenUI : PopUpUI
 		{
 			itemSlots[i].SetItem(inv[i]);
 		}
+
+		for(int i = 0; i < consumpSlots.Length; i++)
+		{
+			consumpSlots[i].Refresh();
+		}
+
 		itemSlotGroup.SetAllTogglesOff();
 	}
 
@@ -188,6 +207,24 @@ public class InvenUI : PopUpUI
 	public void Equip(WeaponItem weaponItem)
 	{
 		weaponSlots[(int) weaponItem.WeaponType].Equip(weaponItem);
+	}
+
+	public void Equip(ConsumpItem consumpItem)
+	{
+		int emptySlotIdx = -1;
+		for(int i = 0; i < (int) ConsumpSlotType.Size; i++)
+		{
+			if(GameManager.Inven.GetConsumpSlot((ConsumpSlotType)i) == null)
+			{
+				emptySlotIdx = i;
+				break;
+			}
+		}
+		if(emptySlotIdx == -1)
+		{
+			emptySlotIdx = 0;
+		}
+		consumpSlots[emptySlotIdx].Equip(consumpItem);
 	}
 
 	public Color GetRateColor(Item.Rate rate)

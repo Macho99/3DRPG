@@ -30,14 +30,17 @@ public class ItemOptionUI : PopUpUI
 
 		switch(target.ItemType) 
 		{
-			//case Item.Type.Weapon:
-			//	break;
-			//case Item.Type.Armor:
-			//	break;
+			case Item.Type.Weapon:
+				equipButton.gameObject.SetActive(true);
+				break;
+			case Item.Type.Armor:
+				equipButton.gameObject.SetActive(true);
+				break;
 			case Item.Type.Other:
 				equipButton.gameObject.SetActive(false);
 				break;
 			default:
+				equipButton.gameObject.SetActive(true);
 				break;
 		}
 	}
@@ -50,6 +53,11 @@ public class ItemOptionUI : PopUpUI
 				break;
 			case Item.Type.Weapon:
 				invenUI?.Equip((WeaponItem)target);
+				break;
+			case Item.Type.Other:
+				break;
+			default:
+				invenUI?.Equip((ConsumpItem)target);
 				break;
 		}
 		CloseUI();

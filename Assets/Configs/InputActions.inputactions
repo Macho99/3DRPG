@@ -87,6 +87,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "TestButton",
+                    "type": "Button",
+                    "id": "b7e16a74-09c6-43cb-970c-33cb8630cb5d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "QButton",
                     "type": "Value",
                     "id": "a6a88a95-ac1d-48ca-91cb-c7f2b834693d",
@@ -126,6 +135,24 @@
                     "name": "Num2Button",
                     "type": "Button",
                     "id": "921b6806-fde8-4468-805a-3d28ccbda7bb",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Num3Button",
+                    "type": "Button",
+                    "id": "18fbcdf8-a077-421c-946f-e9b2b2fa106f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Num4Button",
+                    "type": "Button",
+                    "id": "46cb10d1-55e7-4450-b7fb-c23cb613bbcf",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -328,6 +355,39 @@
                     "processors": "",
                     "groups": "",
                     "action": "Num2Button",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "149e692f-4242-4cb8-93ec-56f521fef9e1",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Num3Button",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c83fd251-49c3-4d44-8797-f11f00c67970",
+                    "path": "<Keyboard>/4",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Num4Button",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fe9cfbbe-e034-4d9f-b2fb-07c9163820ec",
+                    "path": "<Keyboard>/leftAlt",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TestButton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

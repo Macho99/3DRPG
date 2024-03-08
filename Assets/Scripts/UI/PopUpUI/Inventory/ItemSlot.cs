@@ -66,7 +66,7 @@ public class ItemSlot : MonoBehaviour, /*IPointerEnterHandler, IPointerExitHandl
 		color.a = 1f;
 		itemImage.color = color;
 		image.color = invenUI.GetRateColor(item.ItemRate);
-		if (item.ItemType == Item.Type.Other || item.ItemType == Item.Type.HPConsump)
+		if (item.ItemType == Item.Type.Other || item.ItemType == Item.Type.RecoveryConsump)
 		{
 			MultipleItem multiple = (MultipleItem) item;
 			amountText.text = multiple.Amount.ToString();
@@ -147,6 +147,11 @@ public class ItemSlot : MonoBehaviour, /*IPointerEnterHandler, IPointerExitHandl
 						break;
 					case Item.Type.Weapon:
 						invenUI.Equip((WeaponItem)curItem);
+						break;
+					case Item.Type.Other:
+						break;
+					default:
+						invenUI.Equip((ConsumpItem)curItem);
 						break;
 				}
 			}

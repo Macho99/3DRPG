@@ -23,32 +23,24 @@ public class DataManager : MonoBehaviour
 		}
 	}
 
-	private void Start()
-	{
-		//foreach (ItemData data in itemDataDict.Values)
-		//{
-		//	print($"{data.ItemName}, {data.DetailDesc}");
-		//}
-		//print(GetItem("BasicKatana").Summary);
-	}
-
-	public Item GetItem(string id)
+	public Item GetItem(string id, int amount = 1)
 	{
 		ItemData itemData = itemDataDict[id];
 		Item item = null;
+
 		switch (itemData.ItemType)
 		{
 			case Item.Type.Weapon:
 				item = new WeaponItem(itemData);
-				break;
+				return item;
 			case Item.Type.Armor:
 				item = new ArmorItem(itemData);
-				break;
+				return item;
 			case Item.Type.Other:
-				item = new OtherItem(itemData);
+				item = new OtherItem(itemData, amount);
 				break;
-			case Item.Type.HPConsump:
-				item = new HPConsumpItem(itemData);
+			case Item.Type.RecoveryConsump:
+				item = new RecoveryConsumpItem(itemData, amount);
 				break;
 			default:
 				Debug.LogError($"{itemData.ItemType}에 해당하는 switch문이 빠져있습니다");

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public abstract class MountingSlot : BaseUI, IDropHandler, IPointerClickHandler
 {
-	InvenUI invenUI;
+	protected InvenUI invenUI;
 	protected Item curItem;
 	Image backgroundImage;
 	Image emptyImage;
@@ -28,10 +28,10 @@ public abstract class MountingSlot : BaseUI, IDropHandler, IPointerClickHandler
 		invenUI = GetComponentInParent<InvenUI>();
 	}
 
-	protected void SetItem(Item item)
+	protected virtual void SetItem(Item item)
 	{
 		curItem = item;
-		if(item == null )
+		if(item == null)
 		{
 			backgroundImage.color = invenUI.GetRateColor(Item.Rate.Normal);
 			//emptyImage.enabled = true;
