@@ -11,6 +11,17 @@ public class KatanaS2Combo02_01 : KatanaStandSwingBase
 	{
 	}
 
+	public override void Enter()
+	{
+
+		if (GameManager.Stat.TrySubCurMP(40) == false)
+		{
+			stateMachine.ChangeState(Katana.State.Idle);
+			return;
+		}
+		base.Enter();
+	}
+
 	protected override bool CheckTransition()
 	{
 		if(attack1Pressed == true)

@@ -125,6 +125,7 @@ public class PlayerAttack : MonoBehaviour
 		{
 			anim.runtimeAnimatorController = initController;
 		}
+		OnCurHoldWeaponTypeChange?.Invoke(curHoldWeaponType);
 	}
 
 	private void WeaponSwap(WeaponType newWeaponType)
@@ -162,6 +163,7 @@ public class PlayerAttack : MonoBehaviour
 		}
 
 		curHoldWeaponType = newWeaponType;
+		OnCurHoldWeaponTypeChange?.Invoke(curHoldWeaponType);
 	}
 
 	private void OnNum1Button(InputValue value)

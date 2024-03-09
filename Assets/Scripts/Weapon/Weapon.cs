@@ -1,16 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public enum AttackProcess { BeforeAttack, Attacking, AfterAttack, End }
 public abstract class Weapon : MonoBehaviour
 {
 	[SerializeField] RuntimeAnimatorController controller;
 
-
 	protected WeaponItem weaponItem;
 	protected LayerMask hitMask;
 	protected LayerMask monsterMask;
+	protected LayerMask groundMask;
 	protected Player player;
 	protected PlayerMove playerMove;
 	protected PlayerAttack playerAttack;
@@ -19,10 +20,13 @@ public abstract class Weapon : MonoBehaviour
 	protected PlayerCamManager playerCamManager;
 	protected new MeshRenderer renderer;
 
+	private Collider[] sphereCols = new Collider[10];
+
 	public int Damage { get; private set; }
 	public WeaponItem WeaponItem { get { return weaponItem; } }
 	public LayerMask HitMask { get { return hitMask; } }
 	public LayerMask MonsterMask { get { return monsterMask; } }
+	public LayerMask GroundMask { get { return groundMask; } }
 	public Player Player { get { return player; } }
 	public PlayerMove PlayerMove { get { return playerMove; } }
 	public PlayerLook PlayerLook { get { return playerLook; } }
@@ -30,10 +34,13 @@ public abstract class Weapon : MonoBehaviour
 	public PlayerAnimEvent PlayerAnimEvent { get { return playerAnimEvent; } }
 	public PlayerCamManager PlayerCamManager { get { return playerCamManager; } }
 
+	public UnityEvent OnMonsterAttack = new();
+
 	protected virtual void Awake()
 	{
 		hitMask = LayerMask.GetMask("Monster", "Environment", "Tree");
 		monsterMask = LayerMask.GetMask("Monster");
+		groundMask = LayerMask.GetMask("Environment", "Tree");
 		renderer = GetComponentInChildren<MeshRenderer>();
 		player = FieldSFC.Player.GetComponent<Player>();
 		playerAttack = player.GetComponent<PlayerAttack>();
@@ -85,5 +92,35 @@ public abstract class Weapon : MonoBehaviour
 			return true;
 		}
 		return false;
+	}
+
+	public void SphereCastAttack(Vector3 center, float radius, int damage)
+	{
+		int hit = Physics.OverlapSphereNonAlloc(center, radius, sphereCols, monsterMask);
+
+		if(hit >= sphereCols.Length)
+		{
+			hit = sphereCols.Length - 1;
+		}
+
+		for (int i = 0; i < hit; i++)
+		{
+			Collider col = sphereCols[i];
+			MonsterAttack(col.gameObject, damage);
+		}
+	}
+
+	public void MonsterAttack(GameObject gameObject, int damage)
+	{
+		if (gameObject.TryGetComponent(out Monster monster))
+		{
+			monster.TakeDamage(damage);
+			OnMonsterAttack?.Invoke();
+		}
+		else if (gameObject.TryGetComponent(out DeathKnight deathKnight))
+		{
+			deathKnight.TakeDamage(damage);
+			OnMonsterAttack?.Invoke();
+		}
 	}
 }

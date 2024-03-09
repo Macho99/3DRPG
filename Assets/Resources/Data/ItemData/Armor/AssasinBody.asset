@@ -21,3 +21,10 @@ MonoBehaviour:
   price: 100
   armorType: 1
   armorSkinName: PT_Female_Armor_05_C_body
+  armorStat:
+    maxHP: 20
+    maxMP: 0
+    recoveryHP: 1
+    recoveryMP: 0
+    defence: 20
+    stunResistance: 0

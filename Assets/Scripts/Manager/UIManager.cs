@@ -15,7 +15,7 @@ public class UIManager : MonoBehaviour
 	private Canvas sceneCanvas;
 
 	private bool menuOpened;
-	[HideInInspector] public UnityEvent<bool> OnMenuToggle = new();
+	[HideInInspector] public UnityEvent<bool> OnHideSceneUI = new();
 
     private void Awake()
 	{
@@ -241,11 +241,17 @@ public class UIManager : MonoBehaviour
 		{
 			ClearPopUpUI();
 		}
-		OnMenuToggle?.Invoke(menuOpened);
+		HideSceneUI(menuOpened);
 	}
 
-	public void InvenFullAlarm()
+	public void HideSceneUI(bool hide)
 	{
-		throw new NotImplementedException();
+		OnHideSceneUI?.Invoke(hide);
+	}
+
+	public void MakeAlarm(string upperStr, string lowerStr = null, Sprite sprite = null)
+	{
+		Alarm alarm = GameManager.UI.ShowSceneUI<Alarm>("UI/SceneUI/Alarm");
+		alarm.Init(upperStr, lowerStr, sprite);
 	}
 }

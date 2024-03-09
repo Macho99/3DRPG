@@ -18,6 +18,7 @@ MonoBehaviour:
   summary: "\uCCB4\uB825\uC744 30 \uD68C\uBCF5\uC2DC\uCF1C\uC900\uB2E4."
   detailDesc: "\uBD89\uC740 \uAF43\uC744 \uC774\uC6A9\uD574 \uB9CC\uB4E4\uC5B4\uC11C
     \uBE68\uAC04 \uC0C9\uC744 \uB764\uB2E4."
+  price: 0
   recoveryType: 0
   recoveryAmount: 30
-  paritclePrefab: {fileID: 198587703769245278, guid: c7f93a0255162fd47bbe40874f339bf4, type: 3}
+  paritclePrefab: {fileID: 198587703769245278, guid: a75d986a64b13394aa88c1ce2071491b, type: 3}

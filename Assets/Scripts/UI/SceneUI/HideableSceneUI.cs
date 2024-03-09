@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class MenuToggleUI : SceneUI
+public class HideableSceneUI : SceneUI
 {
-	CanvasGroup canvasGroup;
+	protected CanvasGroup canvasGroup;
 
 	protected override void Awake()
 	{
@@ -17,12 +17,12 @@ public class MenuToggleUI : SceneUI
 
 	protected virtual void OnEnable()
 	{
-		GameManager.UI.OnMenuToggle.AddListener(SetAlpha);
+		GameManager.UI.OnHideSceneUI.AddListener(SetAlpha);
 	}
 
 	protected virtual void OnDisable()
 	{
-		GameManager.UI.OnMenuToggle.RemoveListener(SetAlpha);
+		GameManager.UI.OnHideSceneUI.RemoveListener(SetAlpha);
 	}
 
 	private void SetAlpha(bool value)

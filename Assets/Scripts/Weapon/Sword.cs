@@ -7,7 +7,6 @@ using UnityEngine;
 public abstract class Sword : Weapon
 {
 	[SerializeField] Transform trailTrans;
-	int damage;
 
 	private struct FrameInfo
 	{
@@ -114,18 +113,8 @@ public abstract class Sword : Weapon
 				hitList[hitListCnt] = hit.collider.gameObject;
 				hitListCnt++;
 
-				damage = Damage;
-
-                // TODO: 검 데미지 임시부여 (데미지 수치 변경 필요)
-                if (hit.collider.TryGetComponent(out Monster monster))
-				{
-					monster.TakeDamage(damage);
-				}
-
-				if (hit.collider.TryGetComponent(out DeathKnight knight))
-				{
-					knight.TakeDamage(damage);
-				}
+				// TODO: 검 데미지 임시부여 (데미지 수치 변경 필요)
+				MonsterAttack(hit.collider.gameObject, Damage);
 			}
 		}
 		//print("End;");

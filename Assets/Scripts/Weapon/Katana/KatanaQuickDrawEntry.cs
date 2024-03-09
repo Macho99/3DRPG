@@ -17,10 +17,16 @@ public class KatanaQuickDrawEntry : StateBase<Katana.State, Katana>
 	public override void Enter()
 	{
 		owner.QuickDrawCnt = 0;
-		playerAttack.SetAnimFloat("IdleAdapter", 0f);
-		playerAttack.SetAnimTrigger("Hold1");
 		playerAnimEvent.OnEquipChange.AddListener(EquipChange);
 		player.ChangeState(Player.State.StandAttack);
+		if (GameManager.Stat.TrySubCurMP(40) == false)
+		{
+			playerAttack.SetAnimTrigger("BaseExit");
+			stateMachine.ChangeState(Katana.State.Idle);
+			return;
+		}
+		playerAttack.SetAnimFloat("IdleAdapter", 0f);
+		playerAttack.SetAnimTrigger("Hold1");
 	}
 
 	public override void Exit()

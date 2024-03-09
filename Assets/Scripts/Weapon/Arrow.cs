@@ -54,9 +54,6 @@ public class Arrow : MonoBehaviour
 		despawnTime = Time.time + 10f;
 
 		switch (arrowProperty) {
-			case Bow.ArrowProperty.None:
-				curTrail = null;
-				break;
 			case Bow.ArrowProperty.Ice:
 				curTrail = normalTrail;
 				break;
@@ -115,7 +112,7 @@ public class Arrow : MonoBehaviour
 
 	private IEnumerator CoOff()
 	{
-		yield return new WaitForSeconds(0.3f);
+		yield return new WaitForSeconds(0.2f);
 		curTrail.Stop();
 
 		while (Time.time < despawnTime)

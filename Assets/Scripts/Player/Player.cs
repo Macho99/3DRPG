@@ -128,6 +128,19 @@ public class Player : MonoBehaviour
 	private void Start()
 	{
 		stateMachine.SetUp(State.Idle);
+		_ = StartCoroutine(CoRecovery());
+	}
+
+	private IEnumerator CoRecovery()
+	{
+		StatManager stat = GameManager.Stat;
+		while (true)
+		{
+			yield return new WaitUntil(() => curState != State.Die);
+			stat.AddCurHP(stat.RecoveryHP * 5);
+			stat.AddCurMP(stat.RecoveryMP * 5);
+			yield return new WaitForSeconds(5f);
+		}
 	}
 
 	private void Update()

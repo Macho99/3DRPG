@@ -13,6 +13,7 @@ public class FieldSFC : MonoBehaviour
 	[SerializeField] MMF_Player bowUlti;
 	[SerializeField] MMF_Player hit;
 	[SerializeField] MMF_Player stun;
+	[SerializeField] MMF_Player MPLack;
 
 	private static FieldSFC instance;
 	private static Player player;
@@ -43,7 +44,6 @@ public class FieldSFC : MonoBehaviour
 
 	private void Start()
 	{
-		GameManager.UI.ShowSceneUI<PlayerConditionUI>("UI/SceneUI/PlayerConditionUI");
 		GameManager.UI.ShowSceneUI<QuickSlotUI>("UI/SceneUI/QuickSlotUI");
 	}
 
@@ -128,5 +128,10 @@ public class FieldSFC : MonoBehaviour
 	public void PlayStun()
 	{
 		stun.PlayFeedbacks();
+	}
+
+	public void PlayMPLack()
+	{
+		MPLack.PlayFeedbacks();
 	}
 }

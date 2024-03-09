@@ -23,7 +23,7 @@ public class InventoryManager : MonoBehaviour
 	WeaponItem[] weaponSlots;
 	ConsumpItem[] consumpSlots;
 
-	const int invSize = 20;
+	const int invSize = 28;
 	public int InvSize {  get { return invSize; } }
 	[HideInInspector] public UnityEvent<Item> OnItemGet = new UnityEvent<Item>();
 	[HideInInspector] public UnityEvent<Item> OnItemDelete = new UnityEvent<Item>();
@@ -63,6 +63,7 @@ public class InventoryManager : MonoBehaviour
 		AddItem(GameManager.Data.GetItem("BasicBow"));
 		AddItem(GameManager.Data.GetItem("RedApple", 25));
 		AddItem(GameManager.Data.GetItem("RedPotion", 30));
+		AddItem(GameManager.Data.GetItem("BluePotion", 20));
 		AddItem(GameManager.Data.GetItem("BluePotion", 20));
 
 		_ = StartCoroutine(CoTestItemAdd());	
@@ -190,6 +191,7 @@ public class InventoryManager : MonoBehaviour
 		{
 			DeleteItem(item);
 		}
+		OnItemChange?.Invoke();
 		return true;
 	}
 
@@ -252,7 +254,7 @@ public class InventoryManager : MonoBehaviour
 		{
 			if (inv.Length == emptyIdx)
 			{
-				GameManager.UI.InvenFullAlarm();
+				InvenFullAlarm();
 				return false;
 			}
 
@@ -418,6 +420,7 @@ public class InventoryManager : MonoBehaviour
 		DeleteItem(armorItem, false);
 		bool result = InitArmorSlot(armorItem.ArmorType, false);
 		armorSlots[(int)armorItem.ArmorType] = armorItem;
+		GameManager.Stat.EquipArmor(armorItem);
 		FieldSFC.Player?.SetArmor(armorItem);
 		ItemChange();
 	}
@@ -438,6 +441,7 @@ public class InventoryManager : MonoBehaviour
 		}
 
 		FieldSFC.Player?.InitArmor(armorType);
+		GameManager.Stat.UnequipArmor(armorItem);
 		armorSlots[idx] = null;
 		if(refresh == true)
 			ItemChange();
@@ -512,5 +516,10 @@ public class InventoryManager : MonoBehaviour
 		if (refresh == true)
 			ItemChange();
 		return true;
+	}
+
+	private void InvenFullAlarm()
+	{
+		GameManager.UI.MakeAlarm("경고!", "인벤토리 공간이 부족합니다.");
 	}
 }

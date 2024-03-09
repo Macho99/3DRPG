@@ -21,6 +21,7 @@ public class KatanaQuickDraw2 : KatanaQuickDrawBase
 
 	}
 }
+
 public class KatanaQuickDraw3 : KatanaQuickDrawBase
 {
 	public KatanaQuickDraw3(Katana owner, StateMachine<Katana.State, Katana> stateMachine)
@@ -32,7 +33,7 @@ public class KatanaQuickDraw3 : KatanaQuickDrawBase
 public class KatanaQuickDraw4 : KatanaQuickDrawBase
 {
 	public KatanaQuickDraw4(Katana owner, StateMachine<Katana.State, Katana> stateMachine)
-		: base(owner, stateMachine, "Attack6", true, "Prefab/CrackSlashVFX", 1f)
+		: base(owner, stateMachine, "Attack6", true, "Prefab/CrackSlashVFX", 1f, 3f, (int) (owner.Damage * 1.5))
 	{
 	}
 }
@@ -41,7 +42,7 @@ public class KatanaQuickDraw4 : KatanaQuickDrawBase
 public class KatanaQuickDraw5 : KatanaQuickDrawBase
 {
 	public KatanaQuickDraw5(Katana owner, StateMachine<Katana.State, Katana> stateMachine)
-		: base(owner, stateMachine, "Attack17", true)
+		: base(owner, stateMachine, "Attack17", true, "Prefab/SlashVFX", 10f, owner.Damage * 5)
 	{
 	}
 
@@ -62,6 +63,13 @@ public class KatanaQuickDraw6 : KatanaQuickDrawBase
 	{
 		base.Enter();
 		FieldSFC.Instance?.PlayKatanaUlti();
+		GameManager.UI.HideSceneUI(true);
+	}
+
+	public override void Exit()
+	{
+		base.Exit();
+		GameManager.UI.HideSceneUI(false);
 	}
 
 	protected override void VFXSetting(GameObject vfx)
@@ -86,6 +94,8 @@ public class KatanaQuickDraw7 : StateBase<Katana.State, Katana>
 	PlayerLook playerLook;
 	PlayerAnimEvent playerAnimEvent;
 
+	Vector3 explosionPos;
+
 	bool attacked;
 	public KatanaQuickDraw7(Katana owner, StateMachine<Katana.State, Katana> stateMachine) : base(owner, stateMachine)
 	{
@@ -97,17 +107,20 @@ public class KatanaQuickDraw7 : StateBase<Katana.State, Katana>
 		Time.timeScale = 0.5f;
 		playerAnimEvent.OnEquipChange.AddListener(EquipChange);
 		playerAnimEvent.OnClockWiseAttack.AddListener(Attack);
+		explosionPos = playerMove.transform.position + playerMove.transform.forward * (moveDist * 0.5f);
 
 		playerMove.ManualMove(playerMove.transform.forward * moveDist, 1f);
 		GameManager.Resource.Instantiate<GameObject>("Prefab/RushVFX", 
 			playerMove.transform.position, playerMove.transform.rotation, true);
 		playerAttack.SetAnimTrigger("Attack34");
 		playerLook.AutoRotate(0.5f, 150f, 0f);
+		GameManager.UI.HideSceneUI(true);
 	}
 
 	public override void Exit()
 	{
 		Time.timeScale = 1f;
+		GameManager.UI.HideSceneUI(false);
 		playerAnimEvent.OnEquipChange.RemoveListener(EquipChange);
 		playerAnimEvent.OnClockWiseAttack.RemoveListener(Attack);
 	}
@@ -145,7 +158,8 @@ public class KatanaQuickDraw7 : StateBase<Katana.State, Katana>
 	{
 		attacked = true;
 		GameManager.Resource.Instantiate<GameObject>("Prefab/FX_splash_explosion_air", 
-			playerMove.transform.position - (playerMove.transform.forward * moveDist * 0.5f) + Vector3.up * 2f, 
-			Quaternion.identity, true);
+			explosionPos + Vector3.up * 2f, Quaternion.identity, true);
+		owner.SphereCastAttack(explosionPos, 5f, owner.Damage * 5);
+		GameManager.UI.HideSceneUI(false);
 	}
 }

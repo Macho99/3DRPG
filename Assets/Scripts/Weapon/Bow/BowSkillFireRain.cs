@@ -11,7 +11,7 @@ using Random = UnityEngine.Random;
 
 public class BowSkillFireRain : StateBase<Bow.State, Bow>
 {
-	const float maxDist = 70f;
+	const float maxDist = 150f;
 	const float arriveTime = 3f;
 	Player player;
 	PlayerLook playerLook;
@@ -103,8 +103,11 @@ public class BowSkillFireRain : StateBase<Bow.State, Bow>
 	{
 		if (waitAnim == true) return;
 
-		waitAnim = true;
-		_ = owner.StartCoroutine(CoSkillCast());
+		if(owner.FireESkill() == true)
+		{
+			waitAnim = true;
+			_ = owner.StartCoroutine(CoSkillCast());
+		}
 	}
 
 	private IEnumerator CoSkillCast()

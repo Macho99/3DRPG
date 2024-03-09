@@ -31,7 +31,7 @@ public class Katana : Sword
 	protected override void Awake()
 	{
 		base.Awake();
-
+		OnMonsterAttack.AddListener(StealMP);
 		stateMachine = new StateMachine<State, Katana>(this);
 		stateMachine.AddState(State.Inactive, new KatanaInactive(this, stateMachine));
 		stateMachine.AddState(State.Idle, new KatanaIdle(this, stateMachine));
@@ -162,5 +162,10 @@ public class Katana : Sword
 	public override void ForceInactive()
 	{
 		stateMachine.ChangeState(State.Inactive);
+	}
+
+	private void StealMP()
+	{
+		GameManager.Stat.AddCurMP(5);
 	}
 }
