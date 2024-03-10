@@ -13,6 +13,9 @@ public class FieldSFC : MonoBehaviour
 	[SerializeField] MMF_Player bowUlti;
 	[SerializeField] MMF_Player hit;
 	[SerializeField] MMF_Player stun;
+	[SerializeField] MMF_Player MPLack;
+
+	private PlayerInput playerInput;
 
 	private static FieldSFC instance;
 	private static Player player;
@@ -39,13 +42,25 @@ public class FieldSFC : MonoBehaviour
 			return;
 		}
 		instance = this;
+		playerInput = GetComponent<PlayerInput>();
 	}
 
 	private void Start()
 	{
-		GameManager.UI.ShowSceneUI<PlayerConditionUI>("UI/SceneUI/PlayerConditionUI");
 		GameManager.UI.ShowSceneUI<QuickSlotUI>("UI/SceneUI/QuickSlotUI");
 		GameManager.UI.ShowSceneUI<LeftMoneyUI>("UI/SceneUI/Money");
+	}
+
+	public void IgnoreInput(bool ignore)
+	{
+		if(ignore == true)
+		{
+			playerInput.enabled = false;
+		}
+		else
+		{
+			playerInput.enabled = true;
+		}
 	}
 
 	private void OnDestroy()
@@ -125,5 +140,10 @@ public class FieldSFC : MonoBehaviour
 	public void PlayStun()
 	{
 		stun.PlayFeedbacks();
+	}
+
+	public void PlayMPLack()
+	{
+		MPLack.PlayFeedbacks();
 	}
 }

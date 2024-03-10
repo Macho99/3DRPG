@@ -13,6 +13,7 @@ public class WindSkillController : MonoBehaviour
 	List<FloatingArrow> floatingArrowList = new();
 	Player player;
 
+	int damage;
 	bool stop;
 
 	private void Awake()
@@ -21,8 +22,9 @@ public class WindSkillController : MonoBehaviour
 		player = FieldSFC.Player;
 	}
 
-	public void Init(int arrowNum)
+	public void Init(int arrowNum, int damage)
 	{
+		this.damage = damage;
 		stop = false;
 		InitArrows(arrowNum);
 		_ = StartCoroutine(CoUpdate());
@@ -61,7 +63,7 @@ public class WindSkillController : MonoBehaviour
 			arrow.transform.localPosition = pos;
 
 			idx++;
-			arrow.Init();
+			arrow.Init(damage);
 		}
 	}
 

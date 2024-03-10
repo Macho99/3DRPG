@@ -17,5 +17,13 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: 691754dc1e501794594f35a00c251112, type: 3}
   summary: "\uB2E8\uB2E8\uD55C \uAE30\uC0AC \uAC11\uC637 \uC2E0\uBC1C\uC774\uB2E4."
   detailDesc: "\uC801\uC758 \uACF5\uACA9\uC5D0 \uD53C\uD574\uB97C \uB35C\uBC1B\uC744\uC9C0\uB3C4?"
+  price: 0
   armorType: 3
   armorSkinName: PT_Female_Armor_01_A_boots
+  armorStat:
+    maxHP: 2
+    maxMP: 8
+    recoveryHP: 0
+    recoveryMP: 1
+    defence: 10
+    stunResistance: 0

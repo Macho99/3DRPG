@@ -17,5 +17,13 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: 9601d1280671fb543a46197b3fe45281, type: 3}
   summary: 
   detailDesc: "\uAC00\uACA9\uB300\uBE44 \uD488\uC9C8\uC774 \uC88B\uC740\uAC70\uAC19\uB2E4"
+  price: 0
   armorType: 5
   armorSkinName: PT_Female_Armor_cloth_00_gauntlets
+  armorStat:
+    maxHP: 1
+    maxMP: 4
+    recoveryHP: 0
+    recoveryMP: 0
+    defence: 5
+    stunResistance: 0

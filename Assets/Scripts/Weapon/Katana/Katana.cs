@@ -31,7 +31,7 @@ public class Katana : Sword
 	protected override void Awake()
 	{
 		base.Awake();
-
+		OnMonsterAttack.AddListener(StealMP);
 		stateMachine = new StateMachine<State, Katana>(this);
 		stateMachine.AddState(State.Inactive, new KatanaInactive(this, stateMachine));
 		stateMachine.AddState(State.Idle, new KatanaIdle(this, stateMachine));
@@ -44,9 +44,9 @@ public class Katana : Sword
 		stateMachine.AddState(State.QuickDraw2, new KatanaQuickDraw2(this, stateMachine));
 		stateMachine.AddState(State.QuickDraw3, new KatanaQuickDraw3(this, stateMachine));
 		stateMachine.AddState(State.QuickDraw4, new KatanaQuickDraw4(this, stateMachine));
-		stateMachine.AddState(State.QuickDraw5, new KatanaQuickDraw5(this, stateMachine));
-		stateMachine.AddState(State.QuickDraw6, new KatanaQuickDraw6(this, stateMachine));
-		stateMachine.AddState(State.QuickDraw7, new KatanaQuickDraw7(this, stateMachine));
+		stateMachine.AddState(State.QuickDraw5, new KatanaDeathfault(this, stateMachine));
+		stateMachine.AddState(State.QuickDraw6, new KatanaUlti1_1(this, stateMachine));
+		stateMachine.AddState(State.QuickDraw7, new KatanaUlti1_2(this, stateMachine));
 		stateMachine.AddState(State.DashAttackVerA, new KatanaDashAttackVerA(this, stateMachine));
 		stateMachine.AddState(State.DashAttackVerB, new KatanaDashAttackVerB(this, stateMachine));
 		stateMachine.AddState(State.DashComboVerA01, new KatanaDashComboVerA01(this, stateMachine));
@@ -162,5 +162,10 @@ public class Katana : Sword
 	public override void ForceInactive()
 	{
 		stateMachine.ChangeState(State.Inactive);
+	}
+
+	private void StealMP()
+	{
+		GameManager.Stat.AddCurMP(5);
 	}
 }

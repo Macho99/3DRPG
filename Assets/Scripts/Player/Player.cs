@@ -128,6 +128,19 @@ public class Player : MonoBehaviour
 	private void Start()
 	{
 		stateMachine.SetUp(State.Idle);
+		_ = StartCoroutine(CoRecovery());
+	}
+
+	private IEnumerator CoRecovery()
+	{
+		StatManager stat = GameManager.Stat;
+		while (true)
+		{
+			yield return new WaitUntil(() => curState != State.Die);
+			stat.AddCurHP(stat.RecoveryHP * 5);
+			stat.AddCurMP(stat.RecoveryMP * 5);
+			yield return new WaitForSeconds(5f);
+		}
 	}
 
 	private void Update()
@@ -276,6 +289,7 @@ public class Player : MonoBehaviour
 		if (curState == State.Die) return;
 
 		StatManager stat = GameManager.Stat;
+		damage = (int)((float)100 / (100 + stat.Defence) * damage);
 		stat.SubCurHP(damage);
 		if(stat.CurHP <= 0)
 		{
@@ -290,6 +304,7 @@ public class Player : MonoBehaviour
 				knockback.y = 0f;
 				transform.forward = -knockback;
 			}
+			stunDuration = (float)100 / (100 + stat.StunResistance) * stunDuration;
 			Stun(stunDuration);
 		}
 		else if(hitFeedback == true)

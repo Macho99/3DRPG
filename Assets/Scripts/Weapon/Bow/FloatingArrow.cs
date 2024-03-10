@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class FloatingArrow : MonoBehaviour
 {
-	//[SerializeField] float flipDuration = 2f;
 	[SerializeField] float dissolveSpeed = 5f;
 	[SerializeField] float flightArrowSpeed = 15f;
 	[SerializeField] List<Material> dissolveMatList;
@@ -18,6 +17,7 @@ public class FloatingArrow : MonoBehaviour
 	Player player;
 	Transform aimPoint;
 
+	int damage;
 	Transform target;
 	new MeshRenderer renderer;
 	MeshFilter meshFilter;
@@ -36,7 +36,7 @@ public class FloatingArrow : MonoBehaviour
 
 	private void OnDisable()
 	{
-		if(flightArrow != null)
+		if (flightArrow != null)
 		{
 			GameManager.Resource.Destroy(flightArrow.gameObject);
 		}
@@ -44,8 +44,9 @@ public class FloatingArrow : MonoBehaviour
 		transform.rotation = Quaternion.identity;
 	}
 
-	public void Init()
+	public void Init(int damage)
 	{
+		this.damage = damage;
 		_ = StartCoroutine(CoDissolve());
 	}
 
@@ -106,7 +107,6 @@ public class FloatingArrow : MonoBehaviour
 
 	private IEnumerator CoAlign()
 	{
-		//Quaternion randomOffset = Quaternion.Euler(Random.Range(-45f, 0f), 0f, Random.Range(-45f, 45f));
 		while (true)
 		{
 			Quaternion quaternion = Quaternion.LookRotation(aimPoint.position - player.transform.position, Vector3.up);
@@ -130,7 +130,7 @@ public class FloatingArrow : MonoBehaviour
 	{
 		float waitTime = Time.time + Random.Range(0f, 0.5f);
 
-		while(Time.time < waitTime)
+		while (Time.time < waitTime)
 		{
 			Quaternion quaternion = Quaternion.LookRotation(aimPoint.position - player.transform.position, Vector3.up);
 			transform.rotation = Quaternion.Lerp(transform.rotation, quaternion * upOffset, Time.deltaTime * 5f);
@@ -138,9 +138,15 @@ public class FloatingArrow : MonoBehaviour
 		}
 
 		renderer.enabled = false;
-		flightArrow = GameManager.Resource.Instantiate<FlightArrow>("Prefab/FlightArrow", 
+		flightArrow = GameManager.Resource.Instantiate<FlightArrow>("Prefab/FlightArrow",
 			transform.position, transform.rotation, true);
 		flightArrow.ParticlePlay();
+
+		if(target == null)
+		{
+			Finish();
+			yield break;
+		}
 
 		Vector3 curVel = transform.up;
 		Vector3 xOffset = transform.right;
@@ -152,7 +158,9 @@ public class FloatingArrow : MonoBehaviour
 		float speed = flightArrowSpeed + Random.Range(-5f, 5f);
 		curVel *= speed;
 
-		float halfSqrMag = (transform.position - target.position).sqrMagnitude * (0.4f * 0.4f);
+		Vector3 targetPosition = target.position + Vector3.up * 1f;
+
+		float halfSqrMag = (transform.position - targetPosition).sqrMagnitude * (0.4f * 0.4f);
 		while (true)
 		{
 			flightArrow.transform.position += curVel * Time.deltaTime;
@@ -169,14 +177,34 @@ public class FloatingArrow : MonoBehaviour
 		float sqrMag;
 		do
 		{
-			Vector3 targetVelocity = (target.position - flightArrow.transform.position).normalized * speed;
+			yield return null;
+			if (target == null)
+			{
+				Finish();
+				yield break;
+			}
+			targetPosition = target.position + Vector3.up * 1f;
+			Vector3 targetVelocity = (targetPosition - flightArrow.transform.position).normalized * speed;
 			curVel = Vector3.Lerp(curVel, targetVelocity, Time.deltaTime * 5f);
 			flightArrow.transform.position = flightArrow.transform.position + curVel * Time.deltaTime;
 			flightArrow.transform.up = curVel;
-			sqrMag = (target.position - flightArrow.transform.position).sqrMagnitude;
-			yield return null;
+			sqrMag = (targetPosition - flightArrow.transform.position).sqrMagnitude;
 		} while (sqrMag > 0.1f);
 
+		if (target.TryGetComponent(out Monster monster) == true)
+		{
+			monster.TakeDamage(damage);
+		}
+		else if (target.TryGetComponent(out DeathKnight deathKnight) == true)
+		{
+			deathKnight.TakeDamage(damage);
+		}
+
+		Finish();
+	}
+
+	private void Finish()
+	{
 		GameManager.Resource.Destroy(flightArrow.gameObject);
 		flightArrow = null;
 

@@ -14,14 +14,17 @@ public abstract class KatanaQuickDrawBase : StateBase<Katana.State, Katana>
 	string triggerName;
 	bool endQuickDraw;
 	float scale;
+	float radius;
 
 	public KatanaQuickDrawBase(Katana owner, StateMachine<Katana.State, Katana> stateMachine
-		, string triggerName, bool endQuickDraw, string vfxPath = "Prefab/SlashVFX", float scale = 2f) : base(owner, stateMachine)
-	{
+		, string triggerName, bool endQuickDraw, string vfxPath = "Prefab/SlashVFX", 
+		float scale = 2f, float radius = 2f) : base(owner, stateMachine)
+	{ 
 		this.triggerName = triggerName;
 		this.endQuickDraw = endQuickDraw;
 		this.vfxPath = vfxPath;
 		this.scale = scale;
+		this.radius = radius;
 	}
 
 	public override void Enter()
@@ -107,6 +110,9 @@ public abstract class KatanaQuickDrawBase : StateBase<Katana.State, Katana>
 		zAxisRotation = Quaternion.Euler(0f, 0f, rotAngle);
 		vfx.transform.rotation = quaternion * zAxisRotation;
 		vfx.transform.localScale = Vector3.one * scale;
+
+		Vector3 position = owner.transform.position + owner.transform.forward * radius;
+		owner.SphereCastAttack(position, radius, owner.FinalDamage);
 	}
 
 	protected virtual void AttackEnd()

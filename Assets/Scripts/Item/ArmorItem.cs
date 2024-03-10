@@ -7,6 +7,18 @@ using UnityEngine;
 
 [Serializable]
 public enum ArmorType { Helmet, Body, Legs, Boots, Cape, Gauntlets, Size }
+
+[Serializable]
+public struct ArmorStat
+{
+	public int maxHP;
+	public int maxMP;
+	public int recoveryHP;
+	public int recoveryMP;
+	public int defence;
+	public int stunResistance;
+}
+
 public class ArmorItem : EquipItem
 {
 	ArmorItemData armorItemData;
@@ -28,4 +40,5 @@ public class ArmorItem : EquipItem
 
 	public ArmorType ArmorType { get { return armorItemData.ArmorType; } }
 	public string ArmorSkinName { get { return armorItemData.ArmorSkinName; } }
+	public ArmorStat ArmorStat { get { return armorItemData.ArmorStat; } }
 }

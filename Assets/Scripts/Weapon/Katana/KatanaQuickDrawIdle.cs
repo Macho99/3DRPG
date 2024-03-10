@@ -59,14 +59,19 @@ public class KatanaQuickDrawIdle : StateBase<Katana.State, Katana>
 		playerMove = player.GetComponent<PlayerMove>();
 	}
 
+	private void ReturnToIdle()
+	{
+		owner.QuickDrawCnt = 0;
+		player.ChangeState(Player.State.Idle);
+		playerAttack.SetAnimTrigger("BaseExit");
+		stateMachine.ChangeState(Katana.State.Unarmed);
+	}
+
 	public override void Transition()
 	{
 		if (playerMove.MoveInput.sqrMagnitude > 0.1f)
 		{
-			owner.QuickDrawCnt = 0;
-			player.ChangeState(Player.State.Idle);
-			playerAttack.SetAnimTrigger("BaseExit");
-			stateMachine.ChangeState(Katana.State.Unarmed);
+			ReturnToIdle();
 			return;
 		}
 
@@ -97,10 +102,20 @@ public class KatanaQuickDrawIdle : StateBase<Katana.State, Katana>
 		}
 		else if (attack1DownTime + charge2Time > Time.time)
 		{
+			if(GameManager.Stat.TrySubCurMP(50) == false)
+			{
+				ReturnToIdle();
+				return;
+			}
 			stateMachine.ChangeState(Katana.State.QuickDraw5);
 		}
 		else
 		{
+			if (GameManager.Stat.TrySubCurMP(70) == false)
+			{
+				ReturnToIdle();
+				return;
+			}
 			stateMachine.ChangeState(Katana.State.QuickDraw6);
 		}
 	}

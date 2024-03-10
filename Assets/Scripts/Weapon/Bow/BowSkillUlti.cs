@@ -40,6 +40,7 @@ public class BowSkillUlti : StateBase<Bow.State, Bow>
 		aimPoint = playerLook.AimPoint;
 		decal = GameManager.Resource.Instantiate<DecalProjector>("Prefab/BowUltiDecal",
 			aimPoint.transform.position, Quaternion.Euler(90f, 0f, 0f), true);
+		owner.DamageMultiplier = 0.4f;
 	}
 
 	public override void Exit()
@@ -59,6 +60,8 @@ public class BowSkillUlti : StateBase<Bow.State, Bow>
 		playerAttack.OnAttack1Down.RemoveListener(SkillCast);
 		playerAttack.OnAttack2Down.RemoveListener(SkillUndo);
 		playerAttack.OnEButtonDown.RemoveListener(SkillUndo);
+		GameManager.UI.HideSceneUI(false);
+		owner.DamageMultiplier = 1f;
 	}
 
 	public override void Setup()
@@ -90,12 +93,16 @@ public class BowSkillUlti : StateBase<Bow.State, Bow>
 	private void SkillCast(Player.State state)
 	{
 		if(waitAnim == true) return;
-		waitAnim = true;
 
-		player.IgnoreInput(true, false);
-		GameManager.Resource.Destroy(decal.gameObject);
-		decal = null;
-		_ = owner.StartCoroutine(CoSkillCast());
+		if(owner.UltiSkill() == true)
+		{
+			waitAnim = true;
+			player.IgnoreInput(true, false);
+			GameManager.Resource.Destroy(decal.gameObject);
+			decal = null;
+			_ = owner.StartCoroutine(CoSkillCast());
+			GameManager.UI.HideSceneUI(true);
+		}
 	}
 
 	private IEnumerator CoSkillCast()
@@ -109,7 +116,6 @@ public class BowSkillUlti : StateBase<Bow.State, Bow>
 		owner.WindControllerPrepareAttack();
 		playerAttack.SetAnimUpdateMode(AnimatorUpdateMode.UnscaledTime);
 		Time.timeScale = 0.24f;
-		owner.UltiSkill();
 		float normalizedTime = 0f;
 		do
 		{
