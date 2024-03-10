@@ -107,12 +107,9 @@ public class MonsterShield : Monster
                 }
                 anim.SetTrigger("Hit");
                 viewAngle = 360f;
-                obstacleMask = LayerMask.NameToLayer("Nothing");
+                obstacleMask = LayerMask.GetMask("Nothing");
 
                 audioSource?.PlayOneShot(SetSound(race, "Hit"));
-                //Quaternion effectRot = Quaternion.Euler(0f, Random.Range(0f, 360f), 0f);
-                //GameObject hitEffectPrefab = Instantiate(SetEffect(race, "Hit"), transform.position, effectRot);
-                //Destroy(hitEffectPrefab, 1f);
 
                 if (target == null)
                 {

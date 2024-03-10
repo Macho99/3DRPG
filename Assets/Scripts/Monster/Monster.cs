@@ -57,10 +57,10 @@ public class Monster : MonoBehaviour
 
     public BoxCollider attackCol; // 어택 범위
 
-    [HideInInspector] public bool isReturning; // 돌아가는 상태 체크
+    /*[HideInInspector]*/ public bool isReturning; // 돌아가는 상태 체크
 
     [SerializeField] protected LayerMask targetMask; // 타겟레이어
-    [SerializeField] protected LayerMask obstacleMask; // 장애물레이어
+    [SerializeField] public LayerMask obstacleMask; // 장애물레이어
 
     protected AudioSource audioSource;
     protected NavMeshAgent agent;
@@ -149,7 +149,7 @@ public class Monster : MonoBehaviour
         if (target != null)
         {
             viewAngle = 360f;
-            obstacleMask = LayerMask.NameToLayer("Nothing");
+            obstacleMask = LayerMask.GetMask("Nothing");
             return;
         }
 
@@ -186,7 +186,7 @@ public class Monster : MonoBehaviour
         {
             anim.SetTrigger("Hit");
             viewAngle = 360f;
-            obstacleMask = LayerMask.NameToLayer("Nothing");
+            obstacleMask = LayerMask.GetMask("Nothing");
 
             audioSource?.PlayOneShot(SetSound(race, "Hit"));
 
@@ -257,6 +257,7 @@ public class Monster : MonoBehaviour
     public void RecovereryHp()
     {
         currentHp = maxHp;
+        SubCurHP(0);
     }
 
     public void SetAttackTypeInfo(int damage, bool hitFeedback, float stunDuration, Vector3 knockback)
