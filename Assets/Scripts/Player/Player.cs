@@ -46,7 +46,7 @@ public class Player : MonoBehaviour
 		JumpTest,
 		DoubleJump, DoubleOnAir, DoubleLand, BreakFall,
 		StandAttack, OnAirAttack, MoveAttack,
-		Stun, Die};
+		Stun, Die, Sit};
 
 	private Animator anim;
 	private MMFollowTarget camRootFollower;
@@ -111,6 +111,7 @@ public class Player : MonoBehaviour
 
 		stateMachine.AddState(State.Stun, new PlayerStun(this, stateMachine));
 		stateMachine.AddState(State.Die, new PlayerDie(this, stateMachine));
+		stateMachine.AddState(State.Sit, new PlayerSit(this, stateMachine));
 
 		BindSkin();
 	}
@@ -127,7 +128,7 @@ public class Player : MonoBehaviour
 
 	private void Start()
 	{
-		stateMachine.SetUp(State.Idle);
+		stateMachine.SetUp(State.Sit);
 		_ = StartCoroutine(CoRecovery());
 	}
 

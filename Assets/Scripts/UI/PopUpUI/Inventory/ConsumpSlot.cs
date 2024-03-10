@@ -41,7 +41,7 @@ public class ConsumpSlot : MountingSlot
 
 	public void Refresh()
 	{
-		SetItem(curItem);
+		SetItem(GameManager.Inven.GetConsumpSlot(slotType));
 	}
 
 	protected override void SetItem(Item item)

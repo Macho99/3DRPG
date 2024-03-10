@@ -10,6 +10,7 @@ public class MenuUI : PopUpUI
         buttons["InventoryButton"].onClick.AddListener(OpenInventory);
         buttons["StatusButton"].onClick.AddListener(OpenStatus);
         buttons["Blocker"].onClick.AddListener(GameManager.UI.MenuToggle);
+        buttons["ExitButton"].onClick.AddListener(Application.Quit);
 	}
 
 	public void OpenInventory()

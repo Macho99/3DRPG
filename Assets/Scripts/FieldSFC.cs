@@ -15,6 +15,7 @@ public class FieldSFC : MonoBehaviour
 	[SerializeField] MMF_Player stun;
 	[SerializeField] MMF_Player MPLack;
 	[SerializeField] MMF_Player fadeInAndOut;
+	[SerializeField] MMF_Player fadeOut;
 
 	private PlayerInput playerInput;
 
@@ -152,5 +153,10 @@ public class FieldSFC : MonoBehaviour
 	public void PlayFadeInAndOut()
 	{
 		fadeInAndOut.PlayFeedbacks();
+	}
+
+	public void PlayFadeOut()
+	{
+		fadeOut.PlayFeedbacks();
 	}
 }
