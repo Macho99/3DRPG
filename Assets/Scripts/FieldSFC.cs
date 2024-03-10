@@ -14,6 +14,7 @@ public class FieldSFC : MonoBehaviour
 	[SerializeField] MMF_Player hit;
 	[SerializeField] MMF_Player stun;
 	[SerializeField] MMF_Player MPLack;
+	[SerializeField] MMF_Player fadeInAndOut;
 
 	private PlayerInput playerInput;
 
@@ -43,6 +44,7 @@ public class FieldSFC : MonoBehaviour
 		}
 		instance = this;
 		playerInput = GetComponent<PlayerInput>();
+		DontDestroyOnLoad(gameObject.transform.parent);
 	}
 
 	private void Start()
@@ -145,5 +147,10 @@ public class FieldSFC : MonoBehaviour
 	public void PlayMPLack()
 	{
 		MPLack.PlayFeedbacks();
+	}
+
+	public void PlayFadeInAndOut()
+	{
+		fadeInAndOut.PlayFeedbacks();
 	}
 }

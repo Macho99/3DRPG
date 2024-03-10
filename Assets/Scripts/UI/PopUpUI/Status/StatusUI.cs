@@ -80,7 +80,7 @@ public class StatusUI : PopUpUI
     {
         healthPoint.text = $"{GameManager.Stat.CurHP} / {GameManager.Stat.MaxHP}";
         manaPoint.text = $"{GameManager.Stat.CurMP} / {GameManager.Stat.MaxMP}";
-        attackPoint.text = $"{GameManager.Stat.AttackMultiplier.ToString("N1")}";
+        //attackPoint.text = $"{GameManager.Stat.AttackMultiplier.ToString("N1")}";
         armorPoint.text = $"{GameManager.Stat.Defence}";
         currentMoney.text = $"{GameManager.Stat.Money}";
     }

@@ -5,7 +5,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class LeftMoneyUI : MenuToggleUI
+public class LeftMoneyUI : HideableSceneUI
 {
     TextMeshProUGUI leftMoney;
 

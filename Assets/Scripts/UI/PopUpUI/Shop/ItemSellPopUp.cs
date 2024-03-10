@@ -25,7 +25,14 @@ public class ItemSellPopUp : PopUpUI
         if (target != null)
         {
             GameManager.Inven.DeleteItem(target);
-            GameManager.Stat.AddMoney(target.Price);
+            if(target is MultipleItem multipleItem)
+			{
+				GameManager.Stat.AddMoney(target.Price * multipleItem.Amount);
+			}
+            else
+            {
+                GameManager.Stat.AddMoney(target.Price);
+            }
         }
         CloseUI();
     }

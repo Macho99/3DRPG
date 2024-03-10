@@ -38,7 +38,7 @@ public class ItemBuyPopUP : PopUpUI
                 explain.text = "돈이 부족합니다.";
                 return;
             }
-            GameManager.Inven.AddItem(target);
+            GameManager.Inven.AddItem(target.Clone());
             GameManager.Stat.SubMoney(target.Price);
         }
         CloseUI();

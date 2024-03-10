@@ -106,7 +106,7 @@ public class InvenUI : PopUpUI
 	private void OnEnable()
 	{
 		GameManager.Inven.OnItemChange.AddListener(RefreshInven);
-		if(started == false)
+		if(started == true)
 			RefreshInven();
 	}
 
