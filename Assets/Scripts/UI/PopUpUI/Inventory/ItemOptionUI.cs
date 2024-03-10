@@ -12,6 +12,8 @@ public class ItemOptionUI : PopUpUI
 	RectTransform panel;
 	InvenUI invenUI;
 
+	Button sellButton;
+
 	protected override void Awake()
 	{
 		base.Awake();
@@ -20,6 +22,10 @@ public class ItemOptionUI : PopUpUI
 		equipButton = buttons["EquipButton"];
 		equipButton.onClick.AddListener(Equip);
 		panel = transforms["ItemOptionPanel"];
+
+		sellButton = buttons["SellButton"];
+		sellButton.onClick.AddListener(CheckSell);
+		sellButton.gameObject.SetActive(false);
 	}
 
 	public void Init(InvenUI invenUI, Item target, Vector2 position)
@@ -63,8 +69,19 @@ public class ItemOptionUI : PopUpUI
 		CloseUI();
 	}
 
+    private void Update()
+    {
+        if (GameManager.Dialogue.InteractionNPC.GetComponent<IsTradeAble>() == null)
+        {
+			sellButton.gameObject.SetActive(false);
+        }
+		else
+		{
+            sellButton.gameObject.SetActive(true);
+        }
+    }
 
-	private void CheckDelete()
+    private void CheckDelete()
 	{
 		CloseUI();
 		if (target != null)
@@ -72,4 +89,18 @@ public class ItemOptionUI : PopUpUI
 			GameManager.UI.ShowPopUpUI<ItemDeletePopUpUI>("UI/PopUpUI/Inventory/ItemDeletePopUp", false).Init(target);
 		}
 	}
+
+    private void CheckSell()
+    {
+		if(GameManager.Dialogue.InteractionNPC == null)
+		{
+			return;
+		}
+
+        CloseUI();
+        if (target != null)
+        {
+            GameManager.UI.ShowPopUpUI<ItemSellPopUp>("UI/PopUpUI/Shop/ItemSellPopUp", false).Init(target);
+        }
+    }
 }

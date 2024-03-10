@@ -6,7 +6,7 @@ public class TargetFollowHead : MonoBehaviour
 {
     private GameObject player;
 
-    private void Awake()
+    private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
     }

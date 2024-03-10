@@ -30,7 +30,7 @@ public class Bow : Weapon
 	public enum State { Inactive, Idle, Reload, StartAim, Aiming, UndoAim, Shot, FastAim, FastShot, 
 		FireRain, Ulti, };
 	[Serializable]
-	public enum ArrowProperty { None, Ice, Wind, Fire }
+	public enum ArrowProperty { Ice, Wind, Fire }
 	public enum ArrowHoldMode { None, Draw, Hold, LeftHand };
 
 	[SerializeField] ArrowProperty curArrowProperty;
@@ -40,26 +40,28 @@ public class Bow : Weapon
 	StateMachine<State, Bow> stateMachine;
 	ArrowHoldMode curArrowHold;
 	LayerMask enemyMask;
-	Collider[] cols = new Collider[10];
-	BowAimPoint bowAimPoint;
+	Collider[] traceCols = new Collider[10];
+	BowUI bowUI;
 
 	Action<RaycastHit, int, Arrow> hitAction;
 	Action<Arrow> updateAction;
 	Material initMat;
 
-	const float IceSkillCooltime = 20f;
-	float IceSkillUseableTime = -IceSkillCooltime;
+	[SerializeField] float[] qCooltimes;
+	[SerializeField] float[] eCooltimes;
+	[SerializeField] float ultiSkillCooltime = 180f;
+	[SerializeField] int[] qManas;
+	[SerializeField] int[] eManas;
+	[SerializeField] int ultiMana;
 
-	const float windSkillCooltime = 30f;
-	float windSkillUseableTime = -windSkillCooltime;
+
 	WindSkillController windController;
 
-	const float ultiSkillCooltime = 1f;
-	float ultiSkillUseableTime = -ultiSkillCooltime;
+	float[] qUseableTimes = new float[3];
+	float[] eUseableTimes = new float[3];
+	float ultiSkillUseableTime = 0f;
 
 	bool aimLock;
-
-	int damage;
 
 	public bool AimLock { get { return aimLock; } set {
 			aimLock = value;
@@ -80,7 +82,6 @@ public class Bow : Weapon
 	protected override void Awake()
 	{
 		base.Awake();
-		ArrowSelect(ArrowProperty.Ice);
 		curArrowHold = ArrowHoldMode.None;
 		initMat = arrowToShoot.material;
 
@@ -111,6 +112,7 @@ public class Bow : Weapon
 	protected override void Start()
 	{
 		base.Start();
+		ArrowSelect(ArrowProperty.Ice);
 		stateMachine.SetUp(State.Inactive);
 	}
 
@@ -131,15 +133,22 @@ public class Bow : Weapon
 
 	private void OnEnable()
 	{
-		bowAimPoint = GameManager.UI.ShowSceneUI<BowAimPoint>("UI/SceneUI/BowAimPoint");
+		bowUI = GameManager.UI.ShowSceneUI<BowUI>("UI/SceneUI/BowUI");
+		bowUI.UIUpdate(curArrowProperty, GetCooltimeStruct());
 		player.SetNeckRigWeight(0.6f);
 		playerMove.AimLockOffset = new Vector3(0f, 45f, 0f);
 	}
 
 	private void OnDisable()
 	{
-		bowAimPoint.CloseUI();
-		bowAimPoint = null;
+		bowUI.CloseUI();
+		bowUI = null; 
+		if(windController != null)
+		{
+			windController.Stop();
+			GameManager.Resource.Destroy(windController.gameObject);
+			windController = null;
+		}
 		player.SetNeckRigWeight(0f);
 		playerMove.AimLockOffset = Vector3.zero;
 	}
@@ -208,20 +217,10 @@ public class Bow : Weapon
 
 	public void MonsterHit(RaycastHit hitInfo, int hitCnt, Arrow arrow)
 	{
-		damage = Damage;
-
 		int layer = hitInfo.collider.gameObject.layer;
 		if(IsMonsterLayer(layer) == true)
 		{
-			// TODO: 활 데미지 임시부여 (데미지 수치 변경 필요)
-			if (hitInfo.collider.TryGetComponent(out Monster monster))
-			{
-				monster.TakeDamage(damage);
-			}
-            if (hitInfo.collider.TryGetComponent(out DeathKnight knight))
-            {
-                knight.TakeDamage(damage);
-            }
+			MonsterAttack(hitInfo.collider.gameObject, FinalDamage);
             windController?.Attack(hitInfo.transform);
 			arrow.transform.parent = hitInfo.collider.transform;
 			arrow.AutoOff();
@@ -292,17 +291,18 @@ public class Bow : Weapon
 		GameObject obj = GameManager.Resource.Instantiate<GameObject>("Prefab/FireArrowExplosion", 
 			hitInfo.point, Quaternion.identity, true);
 		obj.transform.localScale = Vector3.one * 2f;
+		SphereCastAttack(hitInfo.point, 1.5f, FinalDamage);
 		arrow.GroundHit(hitInfo, hitCnt, arrow);
 	}
 
 	public void TraceMonster(Arrow arrow)
 	{
-		int monsterNum = Physics.OverlapSphereNonAlloc(arrow.transform.position, 5f, cols, enemyMask);
+		int monsterNum = Physics.OverlapSphereNonAlloc(arrow.transform.position, 5f, traceCols, enemyMask);
 		float minSqrDist = 99999f;
 		Collider minCol = null;
 		for(int i = 0; i < monsterNum; i++)
 		{
-			Collider col = cols[i];
+			Collider col = traceCols[i];
 			float sqrDist = (arrow.transform.position - col.transform.position).sqrMagnitude;
 			if(sqrDist < minSqrDist)
 			{
@@ -312,7 +312,7 @@ public class Bow : Weapon
 		}
 		if (minCol == null) return;
 
-		Vector3 monsterDir = (minCol.transform.position - arrow.transform.position).normalized;
+		Vector3 monsterDir = (minCol.transform.position + Vector3.up - arrow.transform.position).normalized;
 		Vector3 vel = arrow.Velocity;
 		arrow.Velocity = Vector3.Lerp(vel, monsterDir * vel.magnitude, Time.deltaTime * 20f);
 	}
@@ -335,15 +335,13 @@ public class Bow : Weapon
 		arrowSelect.Init(ArrowSelect);
 	}
 
-	private void ArrowSelect(ArrowProperty arrowState)
+	private void ArrowSelect(ArrowProperty property)
 	{
-		if (arrowState == ArrowProperty.None) return;
-
-		curArrowProperty = arrowState;
+		curArrowProperty = property;
 		updateAction = null;
 		hitAction = MonsterHit;
 
-		switch(arrowState)
+		switch(property)
 		{
 			case ArrowProperty.Ice:
 				curAimParticle = iceParticle;
@@ -358,9 +356,24 @@ public class Bow : Weapon
 				updateAction = TraceMonster;
 				break;
 			default:
-				print($"올바르지 않은 ArrowState : {arrowState}");
+				print($"올바르지 않은 ArrowState : {property}");
 				break;
 		}
+
+		bowUI.UIUpdate(property, GetCooltimeStruct());
+	}
+
+	private BowUI.SkillCooltimeStruct GetCooltimeStruct()
+	{
+		BowUI.SkillCooltimeStruct cooltime = new();
+		int curIdx = (int)curArrowProperty;
+		cooltime.qCooltime = qCooltimes[curIdx];
+		cooltime.qLefttime = qUseableTimes[curIdx] - Time.time;
+		cooltime.eCooltime = eCooltimes[curIdx];
+		cooltime.eLefttime = eUseableTimes[curIdx] - Time.time;
+		cooltime.rCooltime = ultiSkillCooltime;
+		cooltime.rLefttime = ultiSkillUseableTime - Time.time;
+		return cooltime;
 	}
 
 	public void SetFastShotArrowMat(bool value)
@@ -380,13 +393,61 @@ public class Bow : Weapon
 		fastShotVFX.Play();
 	}
 
-	public void IceSkill()
+	public void QSkill()
 	{
-		if(Time.time > IceSkillUseableTime)
+		int curIdx = (int)curArrowProperty;
+		if(Time.time > qUseableTimes[curIdx])
 		{
-			IceSkillUseableTime = Time.time + IceSkillCooltime;
-			_ = StartCoroutine(CoIceSkill());
+			if (GameManager.Stat.TrySubCurMP(qManas[curIdx]) == true)
+			{
+				qUseableTimes[curIdx] = Time.time + qCooltimes[curIdx];
+				bowUI.UIUpdate(curArrowProperty, GetCooltimeStruct());
+				AimLock = true;
+				stateMachine.ChangeState(Bow.State.FastAim);
+			}
 		}
+	}
+
+	public void IceESkill()
+	{
+		int curIdx = (int)curArrowProperty;
+		if (Time.time > eUseableTimes[curIdx])
+		{
+			if (GameManager.Stat.TrySubCurMP(eManas[curIdx]) == true)
+			{
+				eUseableTimes[curIdx] = Time.time + eCooltimes[curIdx];
+				bowUI.UIUpdate(curArrowProperty, GetCooltimeStruct());
+				_ = StartCoroutine(CoIceSkill());
+			}
+		}
+	}
+	public void WindESkill()
+	{
+		int curIdx = (int)curArrowProperty;
+		if (Time.time > eUseableTimes[curIdx])
+		{
+			if (GameManager.Stat.TrySubCurMP(eManas[curIdx]) == true)
+			{
+				eUseableTimes[curIdx] = Time.time + eCooltimes[curIdx];
+				bowUI.UIUpdate(curArrowProperty, GetCooltimeStruct());
+				_ = StartCoroutine(CoWindSkill());
+			}
+		}
+	}
+
+	public bool FireESkill()
+	{
+		int curIdx = (int)curArrowProperty;
+		if (Time.time > eUseableTimes[curIdx])
+		{
+			if (GameManager.Stat.TrySubCurMP(eManas[curIdx]) == true)
+			{
+				eUseableTimes[curIdx] = Time.time + eCooltimes[curIdx];
+				bowUI.UIUpdate(curArrowProperty, GetCooltimeStruct());
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private IEnumerator CoIceSkill()
@@ -407,21 +468,13 @@ public class Bow : Weapon
 		enhanceIceVFX.Stop();
 	}
 
-	public void WindSkill()
-	{
-		if(Time.time > windSkillUseableTime)
-		{
-			windSkillUseableTime = Time.time + windSkillCooltime;
-			_ = StartCoroutine(CoWindSkill());
-		}
-	}
 
 	private IEnumerator CoWindSkill()
 	{
-		float endTime = Time.time + windSkillCooltime;
+		float endTime = Time.time + eCooltimes[(int) ArrowProperty.Wind] * 0.5f;
 		windController = GameManager.Resource.Instantiate<WindSkillController>(
 			"Prefab/WindSkillController", transform.position, Quaternion.identity, true);
-		windController.Init(5);
+		windController.Init(5, (int) (BaseDamage * 0.3f));
 
 		while((curArrowProperty == ArrowProperty.Wind) && (Time.time < endTime))
 		{
@@ -438,18 +491,21 @@ public class Bow : Weapon
 		windController?.PrepareAttack();
 	}
 
-	public void UltiSkill()
+	public bool UltiSkill()
 	{
-		if (Time.time < ultiSkillUseableTime)
+		if (Time.time > ultiSkillUseableTime)
 		{
-			print($"궁극기 쿨타임: {ultiSkillUseableTime - Time.time}");
-			return;
+			if(GameManager.Stat.TrySubCurMP(ultiMana) == true)
+			{
+				ultiSkillUseableTime = Time.time + ultiSkillCooltime;
+				bowUI.UIUpdate(curArrowProperty, GetCooltimeStruct());
+				SetUltiRow(0, 11);
+				SetUltiRow(1, 8);
+				SetUltiRow(2, 5);
+				return true;
+			}
 		}
-		
-		ultiSkillUseableTime = Time.time + ultiSkillCooltime;
-		SetUltiRow(0, 11);
-		SetUltiRow(1, 8);
-		SetUltiRow(2, 5);
+		return false;
 	}
 
 	private void SetUltiRow(int rowNum, int col)
@@ -473,7 +529,7 @@ public class Bow : Weapon
 
 			BowUltiElem ultiElem = GameManager.Resource.Instantiate<BowUltiElem>("Prefab/BowUltiElem",
 				position, rotation, true);
-			ultiElem.Init(this, (ArrowProperty)Random.Range(1, 4));
+			ultiElem.Init(this, (ArrowProperty)Random.Range(0, 3));
 		}
 	}
 	
@@ -487,11 +543,12 @@ public class Bow : Weapon
 
 	public void SetAimPointSize(float weight)
 	{
-		bowAimPoint.SetOutCircleScale(weight);
+		bowUI.SetOutCircleScale(weight);
 	}
 
 	public void HideAimPoint(bool value)
 	{
-		bowAimPoint.AimPointHide(value);
+		bowUI.AimPointHide(value);
 	}
+
 }

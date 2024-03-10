@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ItemSlot : MonoBehaviour, /*IPointerEnterHandler, IPointerExitHandler, IPointerMoveHandler,*/
+public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerMoveHandler,
 	IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler, IPointerClickHandler
 {
 	InvenUI invenUI;
@@ -40,7 +40,7 @@ public class ItemSlot : MonoBehaviour, /*IPointerEnterHandler, IPointerExitHandl
 		toggle.onValueChanged.AddListener(Selected);
 	}
 
-	private void Selected(bool value)
+    private void Selected(bool value)
 	{
 		invenUI.Selected(this, value);
 	}
@@ -79,25 +79,32 @@ public class ItemSlot : MonoBehaviour, /*IPointerEnterHandler, IPointerExitHandl
 		toggle.interactable = true;
 	}
 
-	//public void OnPointerEnter(PointerEventData eventData)
-	//{
-	//	if (curItem == null) return;
-	//	GameManager.UI.ItemInfo.Set(curItem);
-	//}
+	public void OnPointerEnter(PointerEventData eventData)
+	{
+		if (curItem == null) return;
+		if(curItem.ItemType == Item.Type.Armor)
+		{
+			invenUI.SlotPointerEnter((ArmorItem)curItem);
+		}
+	}
 
-	//public void OnPointerMove(PointerEventData eventData)
-	//{
-	//	if (curItem == null) return;
-	//	Vector2 pos = eventData.position;
-	//	pos.x += 10f;
-	//	GameManager.UI.ItemInfo.Move(pos);
-	//}
+	public void OnPointerMove(PointerEventData eventData)
+	{
+		if (curItem == null) return;
+		if (curItem.ItemType == Item.Type.Armor)
+		{
+			invenUI.SlotPointerMove(eventData.position);
+		}
+	}
 
-	//public void OnPointerExit(PointerEventData eventData)
-	//{
-	//	if (curItem == null) return;
-	//	GameManager.UI.ItemInfo.Set(null);
-	//}
+	public void OnPointerExit(PointerEventData eventData)
+	{
+		if (curItem == null) return;
+		if (curItem.ItemType == Item.Type.Armor)
+		{
+			invenUI.SlotPointerExit();
+		}
+	}
 
 	public void OnBeginDrag(PointerEventData eventData)
 	{
@@ -114,7 +121,6 @@ public class ItemSlot : MonoBehaviour, /*IPointerEnterHandler, IPointerExitHandl
 	{
 		if (curItem == null) return;
 		invenUI.SlotDragMove(this, eventData.position);
-		//GameManager.UI.DragInfo.Move(eventData.position);
 	}
 
 	public void OnDrop(PointerEventData eventData)

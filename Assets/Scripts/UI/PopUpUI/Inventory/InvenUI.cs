@@ -4,12 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TMPro;
+using UnityEditor.Searcher;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class InvenUI : PopUpUI
 {
 	[SerializeField] private Color[] rateColors;
+	[SerializeField] private Color redColor;
+	[SerializeField] private Color greenColor;
 
 	InvenType curInvenType;
 	ToggleGroup itemSlotGroup;
@@ -26,6 +29,10 @@ public class InvenUI : PopUpUI
 
 	ItemSlot curDragingSlot;
 	Image dragInfo;
+	Image armorInfo;
+	TextMeshProUGUI armorNameText;
+	TextMeshProUGUI armorStatText;
+	TextMeshProUGUI[] comparisonTexts = new TextMeshProUGUI[6];
 
 	ArmorSlot[] armorSlots;
 	WeaponSlot[] weaponSlots;
@@ -69,6 +76,17 @@ public class InvenUI : PopUpUI
 		consumpSlots[(int)ConsumpSlotType.Slot1] = transforms["ConsumpSlot1"].GetComponent<ConsumpSlot>();
 		consumpSlots[(int)ConsumpSlotType.Slot2] = transforms["ConsumpSlot2"].GetComponent<ConsumpSlot>();
 
+		armorInfo = images["ArmorInfo"];
+		armorInfo.gameObject.SetActive(false);
+		armorNameText = texts["ArmorName"];
+		armorStatText = texts["ArmorStatText"];
+		comparisonTexts[0] = texts["MaxHPText"];
+		comparisonTexts[1] = texts["MaxMPText"];
+		comparisonTexts[2] = texts["RecoveryHPText"];
+		comparisonTexts[3] = texts["RecoveryMPText"];
+		comparisonTexts[4] = texts["DefenceText"];
+		comparisonTexts[5] = texts["StunResistText"];
+
 		dragInfo = images["DragInfo"];
 		dragInfo.gameObject.SetActive(false);
 
@@ -88,7 +106,7 @@ public class InvenUI : PopUpUI
 	private void OnEnable()
 	{
 		GameManager.Inven.OnItemChange.AddListener(RefreshInven);
-		if(started == false)
+		if(started == true)
 			RefreshInven();
 	}
 
@@ -199,9 +217,85 @@ public class InvenUI : PopUpUI
 		dragInfo.gameObject.SetActive(false);
 	}
 
+	public void SlotPointerEnter(ArmorItem armorItem)
+	{
+		armorNameText.text = armorItem.ItemName;
+
+		StringBuilder sb = new StringBuilder();
+		ArmorStat slotStat = armorItem.ArmorStat;
+		sb.Append($"{slotStat.maxHP}\n");
+		sb.Append($"{slotStat.maxMP}\n");
+		sb.Append($"{slotStat.recoveryHP}\n");
+		sb.Append($"{slotStat.recoveryMP}\n");
+		sb.Append($"{slotStat.defence}\n");
+		sb.Append($"{slotStat.stunResistance}\n");
+		armorStatText.text = sb.ToString();
+
+		ArmorItem equipedArmor = GameManager.Inven.GetArmorSlot(armorItem.ArmorType);
+		ArmorStat equipedStat;
+		if (equipedArmor == null)
+		{
+			equipedStat = new();
+		}
+		else
+		{
+			equipedStat = equipedArmor.ArmorStat;
+		}
+
+		SetComparisonText(comparisonTexts[0], equipedStat.maxHP, slotStat.maxHP);
+		SetComparisonText(comparisonTexts[1], equipedStat.maxMP, slotStat.maxMP);
+		SetComparisonText(comparisonTexts[2], equipedStat.recoveryHP, slotStat.recoveryHP);
+		SetComparisonText(comparisonTexts[3], equipedStat.recoveryMP, slotStat.recoveryMP);
+		SetComparisonText(comparisonTexts[4], equipedStat.defence, slotStat.defence);
+		SetComparisonText(comparisonTexts[5], equipedStat.stunResistance, slotStat.stunResistance);
+
+		armorInfo.gameObject.SetActive(true);
+	}
+
+	private void SetComparisonText(TextMeshProUGUI targetText, int equiped, int itemSlot)
+	{
+		StringBuilder sb = new StringBuilder();
+		Color color = Color.white;
+		if(equiped == itemSlot)
+		{
+			sb.Append(" ");
+		}
+		else
+		{
+			sb.Append('(');
+			if (equiped > itemSlot)
+			{
+				color = Color.red;
+				sb.Append('▼');
+			}
+			else if(equiped < itemSlot)
+			{
+				color = Color.green;
+				sb.Append('▲');
+			}
+			sb.Append(Mathf.Abs(equiped - itemSlot).ToString());
+			sb.Append(')');
+		}
+
+		targetText.text = sb.ToString();
+		targetText.color = color;
+	}
+
+	public void SlotPointerMove(Vector3 position)
+	{
+		position += new Vector3(150f, 0f);
+		armorInfo.rectTransform.position = position;
+	}
+
+	public void SlotPointerExit()
+	{
+		armorInfo.gameObject.SetActive(false);
+	}
+
 	public void Equip(ArmorItem armorItem)
 	{
 		armorSlots[(int) armorItem.ArmorType].Equip(armorItem);
+		SlotPointerExit();
 	}
 
 	public void Equip(WeaponItem weaponItem)

@@ -11,9 +11,11 @@ public abstract class BaseUI : MonoBehaviour
 	protected Dictionary<string, Toggle> toggles;
 	protected Dictionary<string, TextMeshProUGUI> texts;
 	protected Dictionary<string, Image> images;
+	protected RectTransform rectTransform;
 
 	protected virtual void Awake()
 	{
+		rectTransform = GetComponent<RectTransform>();
 		BindChildren();
 	}
 

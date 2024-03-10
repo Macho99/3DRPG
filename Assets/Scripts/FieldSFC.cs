@@ -13,6 +13,10 @@ public class FieldSFC : MonoBehaviour
 	[SerializeField] MMF_Player bowUlti;
 	[SerializeField] MMF_Player hit;
 	[SerializeField] MMF_Player stun;
+	[SerializeField] MMF_Player MPLack;
+	[SerializeField] MMF_Player fadeInAndOut;
+
+	private PlayerInput playerInput;
 
 	private static FieldSFC instance;
 	private static Player player;
@@ -39,12 +43,26 @@ public class FieldSFC : MonoBehaviour
 			return;
 		}
 		instance = this;
+		playerInput = GetComponent<PlayerInput>();
+		DontDestroyOnLoad(gameObject.transform.parent);
 	}
 
 	private void Start()
 	{
-		GameManager.UI.ShowSceneUI<PlayerConditionUI>("UI/SceneUI/PlayerConditionUI");
 		GameManager.UI.ShowSceneUI<QuickSlotUI>("UI/SceneUI/QuickSlotUI");
+		GameManager.UI.ShowSceneUI<LeftMoneyUI>("UI/SceneUI/Money");
+	}
+
+	public void IgnoreInput(bool ignore)
+	{
+		if(ignore == true)
+		{
+			playerInput.enabled = false;
+		}
+		else
+		{
+			playerInput.enabled = true;
+		}
 	}
 
 	private void OnDestroy()
@@ -67,25 +85,21 @@ public class FieldSFC : MonoBehaviour
 
 	private void OnInteraction(InputValue value)
 	{
-		//if(player.GetComponent<PlayerUseUI>().testCube == null)
-		//{
-		//	Debug.Log("nonObj");
-		//	return;
-		//}
-		//else if (player.GetComponent<PlayerUseUI>().testCube != null &&
-		//	player.GetComponent<PlayerUseUI>().testCube.haveItem == true)
-		//{
-		//	Debug.Log("getItem");
-		//	_ = StartCoroutine(player.GetComponent<PlayerUseUI>().testCube.ShowGainItem());
-  //          GameManager.Inven.TryGainConsumItem(player.GetComponent<PlayerUseUI>().testCube.testItem);
-  //          player.GetComponent<PlayerUseUI>().testCube.haveItem = false;
-  //      }
-		//else if (player.GetComponent<PlayerUseUI>().testCube != null && player.GetComponent<PlayerUseUI>().testCube.haveItem == false)
-		//{
-		//	Debug.Log("ClearWindow");
-		//	GameManager.UI.ClearWindowUI();
-		//}
-	}
+		if (GameManager.Dialogue.canTalk == true)
+		{
+			if (GameManager.Dialogue.isTalking == false)
+				GameManager.Dialogue.ShowChatBox();
+			else
+			{
+				if (FindObjectOfType<NPCChatBox>() &&
+					FindObjectOfType<NPCChatBox>().isTyping == false)
+				{
+                    FindObjectOfType<NPCChatBox>().NextSentence();
+                }
+			}
+		}
+		
+    }
 	
 	public void PlayDeathfault()
 	{
@@ -128,5 +142,15 @@ public class FieldSFC : MonoBehaviour
 	public void PlayStun()
 	{
 		stun.PlayFeedbacks();
+	}
+
+	public void PlayMPLack()
+	{
+		MPLack.PlayFeedbacks();
+	}
+
+	public void PlayFadeInAndOut()
+	{
+		fadeInAndOut.PlayFeedbacks();
 	}
 }

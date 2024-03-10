@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Resources;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class GameManager : MonoBehaviour
 {
@@ -14,6 +16,7 @@ public class GameManager : MonoBehaviour
 	private static StatManager statManager;
     private static MonsterManager monsterManager;
 	private static DialogueManager dialogueManager;
+	private static MySceneManager sceneManager;
 
     public static GameManager Instance { get { return instance; } }
 	public static PoolManager Pool { get { return poolManager; } }
@@ -24,6 +27,7 @@ public class GameManager : MonoBehaviour
 	public static StatManager Stat { get { return statManager; } }
     public static MonsterManager Monster { get { return monsterManager; } }
 	public static DialogueManager Dialogue {  get { return dialogueManager; } }
+	public static MySceneManager Scene { get { return sceneManager; } }
 
     private void Awake()
 	{
@@ -36,6 +40,16 @@ public class GameManager : MonoBehaviour
 		instance = this;
 		DontDestroyOnLoad(this);
 		InitManagers();
+	}
+
+	private void Start()
+	{
+		if (Scene.CheckSceneLoaded("Field") == false)
+			SceneManager.LoadScene("PlayerScene", LoadSceneMode.Additive);
+		if (Scene.CheckSceneLoaded("Village") == false)
+			SceneManager.LoadScene("VillageScene", LoadSceneMode.Additive);
+		if (Scene.CheckSceneLoaded("Boss") == false)
+			SceneManager.LoadScene("Boss_Scene", LoadSceneMode.Additive);
 	}
 
 	private void OnDestroy()
@@ -85,5 +99,10 @@ public class GameManager : MonoBehaviour
         dialogueObj.name = "DialogueManager";
         dialogueObj.transform.parent = transform;
         dialogueManager = dialogueObj.AddComponent<DialogueManager>();
+
+		GameObject sceneObj = new GameObject();
+		sceneObj.name = "SceneManager";
+		sceneObj.transform.parent = transform;
+		sceneManager = sceneObj.AddComponent<MySceneManager>();
     }
 }

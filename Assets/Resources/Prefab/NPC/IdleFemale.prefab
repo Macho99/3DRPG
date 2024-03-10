@@ -1252,9 +1252,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sentence:
-  - "\uC5B4\uC11C\uC624\uC138\uC694."
-  - "\uC5B4\uCA4C\uAD6C\uC800\uCA4C\uAD6C"
-  - "\uBE14\uB77C\uBE14\uB77C"
+  - "\uADFC\uB798\uC5D4 \uBC16\uC774 \uC704\uD5D8\uD574\uC11C \uB2E4\uB4E4 \uB9CE\uC774
+    \uC608\uBBFC\uD574\uC84C\uC5B4\uC694."
+  - "\uB108\uBB34 \uC18C\uB780\uD53C\uC6B0\uC9C4 \uB9D0\uC544\uC8FC\uC138\uC694..."
   savePos: {x: 0, y: 0, z: 0, w: 0}
 --- !u!114 &1638880915764020564
 MonoBehaviour:

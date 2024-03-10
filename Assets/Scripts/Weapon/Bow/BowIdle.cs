@@ -19,12 +19,14 @@ public class BowIdle : StateBase<Bow.State, Bow>
 
 	public override void Enter()
 	{
+		owner.HideAimPoint(!owner.AimLock);
+		player.SetNeckRigWeight(0.6f);
 		owner.FastShotNum = 0;
 		player.WeaponIdle();
 		owner.SetAimPointSize(1f);
 		owner.SetFastShotArrowMat(false);
 		playerAttack.OnAttack1Down.AddListener(Aim);
-		playerAttack.OnQButtonDown.AddListener(FastAim);
+		playerAttack.OnQButtonDown.AddListener(QSkill);
 		playerAttack.OnEButtonDown.AddListener(ESkill);
 		playerAttack.OnRButtonDown.AddListener(RSkill);
 	}
@@ -32,7 +34,7 @@ public class BowIdle : StateBase<Bow.State, Bow>
 	public override void Exit()
 	{
 		playerAttack.OnAttack1Down.RemoveListener(Aim);
-		playerAttack.OnQButtonDown.RemoveListener(FastAim);
+		playerAttack.OnQButtonDown.RemoveListener(QSkill);
 		playerAttack.OnEButtonDown.RemoveListener(ESkill);
 		playerAttack.OnRButtonDown.RemoveListener(RSkill);
 	}
@@ -127,12 +129,11 @@ public class BowIdle : StateBase<Bow.State, Bow>
 		stateMachine.ChangeState(Bow.State.StartAim);
 	}
 
-	private void FastAim(Player.State state)
+	private void QSkill(Player.State state)
 	{
 		if (CheckAvailableState(state) == false) return;
 
-		owner.AimLock = true;
-		stateMachine.ChangeState(Bow.State.FastAim);
+		owner.QSkill();
 	}
 
 	private void ESkill(Player.State state)
@@ -141,14 +142,14 @@ public class BowIdle : StateBase<Bow.State, Bow>
 
 		switch (owner.CurArrowProperty) {
 			case Bow.ArrowProperty.Ice:
-				owner.IceSkill();
+				owner.IceESkill();
 				break;
 			case Bow.ArrowProperty.Fire:
 				owner.AimLock = true;
 				stateMachine.ChangeState(Bow.State.FireRain);
 				break;
 			case Bow.ArrowProperty.Wind:
-				owner.WindSkill();
+				owner.WindESkill();
 				break;
 		}
 	}

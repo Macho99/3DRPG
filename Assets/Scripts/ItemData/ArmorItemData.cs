@@ -10,6 +10,7 @@ public class ArmorItemData : ItemData
 {
 	[SerializeField] ArmorType armorType;
 	[SerializeField] string armorSkinName;
+	[SerializeField] ArmorStat armorStat;
 
 	private void Awake()
 	{
@@ -18,4 +19,5 @@ public class ArmorItemData : ItemData
 
 	public ArmorType ArmorType { get { return armorType; } }
 	public string ArmorSkinName { get { return armorSkinName; } }
+	public ArmorStat ArmorStat { get { return armorStat; } }
 }

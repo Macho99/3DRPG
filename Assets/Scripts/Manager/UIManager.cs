@@ -18,7 +18,7 @@ public class UIManager : MonoBehaviour
 	private Canvas bossCanvas;
 
 	private bool menuOpened;
-	[HideInInspector] public UnityEvent<bool> OnMenuToggle = new();
+	[HideInInspector] public UnityEvent<bool> OnHideSceneUI = new();
 
     private void Awake()
 	{
@@ -45,7 +45,8 @@ public class UIManager : MonoBehaviour
 		//menu = GameManager.Resource.Instantiate<MenuUI>("UI/PopUpUI/Menu");
 	}
 
-    public T ShowPopUpUI<T>(T popUpUI, bool setInactivePrev = true) where T : PopUpUI
+
+	public T ShowPopUpUI<T>(T popUpUI, bool setInactivePrev = true) where T : PopUpUI
 	{
 		if (popUpStack.Count > 0)
 		{
@@ -240,39 +241,39 @@ public class UIManager : MonoBehaviour
         bossCanvas.sortingOrder = 100;
     }
 
-    public T ShowBossUI<T>(T bossUI) where T : BossUI
-    {
-        T ui = GameManager.Pool.GetUI(bossUI);
-        ui.transform.SetParent(sceneCanvas.transform, false);
+	public T ShowBossUI<T>(T bossUI) where T : BossUI
+	{
+		T ui = GameManager.Pool.GetUI(bossUI);
+		ui.transform.SetParent(sceneCanvas.transform, false);
 
-        return ui;
-    }
+		return ui;
+	}
 
-    public T ShowBossUI<T>(string path) where T : BossUI
-    {
-        T ui = GameManager.Resource.Load<T>(path);
-        return ShowBossUI(ui);
-    }
+	public T ShowBossUI<T>(string path) where T : BossUI
+	{
+		T ui = GameManager.Resource.Load<T>(path);
+		return ShowBossUI(ui);
+	}
 
-    public void CloseBossUI<T>(T inBossUI) where T : BossUI
-    {
-        GameManager.Pool.ReleaseUI(inBossUI.gameObject);
-    }
+	public void CloseBossUI<T>(T inBossUI) where T : BossUI
+	{
+		GameManager.Pool.ReleaseUI(inBossUI.gameObject);
+	}
 
-    public void ClearBossUI()
-    {
-        if (inGameCanvas == null) return;
+	public void ClearBossUI()
+	{
+		if (inGameCanvas == null) return;
 
-        BossUI[] bosses = inGameCanvas.GetComponentsInChildren<BossUI>();
+		BossUI[] bosses = inGameCanvas.GetComponentsInChildren<BossUI>();
 
-        foreach (BossUI bossUI in bosses)
-        {
-            GameManager.Pool.ReleaseUI(bossUI.gameObject);
-        }
-    }
-	////////////////////////////////////////////////////////////////////////
+		foreach (BossUI bossUI in bosses)
+		{
+			GameManager.Pool.ReleaseUI(bossUI.gameObject);
+		}
+	}
+	//////////////////////////////////////////////////////////////////////////
 
-    public void MenuToggle()
+	public void MenuToggle()
 	{
 		menuOpened = !menuOpened;
 
@@ -284,11 +285,23 @@ public class UIManager : MonoBehaviour
 		{
 			ClearPopUpUI();
 		}
-		OnMenuToggle?.Invoke(menuOpened);
+		HideSceneUI(menuOpened);
 	}
 
-	public void InvenFullAlarm()
+	public void HideSceneUI(bool hide, float wait = 0f)
 	{
-		throw new NotImplementedException();
+		_ = StartCoroutine(CoHide(hide, wait));
+	}
+
+	private IEnumerator CoHide(bool hide, float wait)
+	{
+		yield return new WaitForSeconds(wait);
+		OnHideSceneUI?.Invoke(hide);
+	}
+
+	public void MakeAlarm(string upperStr, string lowerStr = null, Sprite sprite = null)
+	{
+		Alarm alarm = GameManager.UI.ShowSceneUI<Alarm>("UI/SceneUI/Alarm");
+		alarm.Init(upperStr, lowerStr, sprite);
 	}
 }

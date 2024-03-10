@@ -40,7 +40,6 @@ public class ArrowSelect : PopUpUI
 
 	private void NoneSelect()
 	{
-		resultFunc?.Invoke(Bow.ArrowProperty.None);
 		CloseUI();
 	}
 }

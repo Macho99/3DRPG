@@ -49893,6 +49893,18 @@ MonoBehaviour:
   arrowRigLerpSpeed: 5
   curArrowProperty: 0
   curState: 0
+  qCooltimes:
+  - 20
+  - 20
+  - 20
+  eCooltimes:
+  - 30
+  - 60
+  - 15
+  ultiSkillCooltime: 180
+  qManas: 140000001400000014000000
+  eManas: 140000001400000014000000
+  ultiMana: 100
 --- !u!1 &6151430184902864370
 GameObject:
   m_ObjectHideFlags: 0

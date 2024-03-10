@@ -169,7 +169,7 @@ public class Monster : MonoBehaviour
     public virtual void TakeDamage(float damage)
     {
         if (state == State.DEAD || isReturning) { return; }
-
+        print(damage);
         currentHp -= damage;
 
         if (currentHp > 0f)
