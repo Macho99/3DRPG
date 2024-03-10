@@ -17,7 +17,8 @@ public enum MonsterRace
     Orc,
     Skeleton,
     TargetDummy,
-    Mimic
+    Mimic,
+    Boss
 }
 
 public class Monster : MonoBehaviour
@@ -99,41 +100,41 @@ public class Monster : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, viewRadius);
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.color = Color.blue;
+    //    Gizmos.DrawWireSphere(transform.position, viewRadius);
 
-        if (target != null)
-        {
-            Gizmos.color = Color.green;
-            Gizmos.DrawLine(transform.position, target.position);
-        }
+    //    if (target != null)
+    //    {
+    //        Gizmos.color = Color.green;
+    //        Gizmos.DrawLine(transform.position, target.position);
+    //    }
 
-        Gizmos.color = Color.red;
+    //    Gizmos.color = Color.red;
 
-        int segments = 36;
-        float step = viewAngle / segments;
-        for (int i = 0; i < segments; i++)
-        {
-            float angle = i * step - viewAngle / 2;
-            float x = Mathf.Sin(Mathf.Deg2Rad * angle) * viewRadius;
-            float z = Mathf.Cos(Mathf.Deg2Rad * angle) * viewRadius;
-            Vector3 start = transform.position + Vector3.up * eyeHeight;
-            Vector3 dir = transform.TransformDirection(new Vector3(x, 0, z));
-            //Gizmos.DrawLine(transform.position, transform.position + dir);
+    //    int segments = 36;
+    //    float step = viewAngle / segments;
+    //    for (int i = 0; i < segments; i++)
+    //    {
+    //        float angle = i * step - viewAngle / 2;
+    //        float x = Mathf.Sin(Mathf.Deg2Rad * angle) * viewRadius;
+    //        float z = Mathf.Cos(Mathf.Deg2Rad * angle) * viewRadius;
+    //        Vector3 start = transform.position + Vector3.up * eyeHeight;
+    //        Vector3 dir = transform.TransformDirection(new Vector3(x, 0, z));
+    //        //Gizmos.DrawLine(transform.position, transform.position + dir);
 
-            RaycastHit hit;
-            if (Physics.Raycast(start, dir, out hit, viewRadius, obstacleMask))
-            {
-                Gizmos.DrawLine(start, hit.point);
-            }
-            else
-            {
-                Gizmos.DrawLine(start, transform.position + dir);
-            }
-        }
-    }
+    //        RaycastHit hit;
+    //        if (Physics.Raycast(start, dir, out hit, viewRadius, obstacleMask))
+    //        {
+    //            Gizmos.DrawLine(start, hit.point);
+    //        }
+    //        else
+    //        {
+    //            Gizmos.DrawLine(start, transform.position + dir);
+    //        }
+    //    }
+    //}
 
     protected void FindVisibleTargets()
     {
@@ -178,13 +179,10 @@ public class Monster : MonoBehaviour
             obstacleMask = LayerMask.NameToLayer("Nothing");
 
             audioSource?.PlayOneShot(SetSound(race, "Hit"));
-            //Quaternion effectRot = Quaternion.Euler(0f, Random.Range(0f, 360f), 0f);
-            //GameObject hitEffectPrefab = Instantiate(SetEffect(race, "Hit"), transform.position, effectRot);
-            //Destroy(hitEffectPrefab, 1f);
 
             if (target == null)
             {
-                Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, targetMask);
+                Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, 30, targetMask);
 
                 for (int i = 0; i < targetsInViewRadius.Length; i++)
                 {
@@ -206,6 +204,8 @@ public class Monster : MonoBehaviour
 
     protected void Die()
     {
+        GetComponent<Collider>().enabled = false;
+        DropItem();
         anim.SetTrigger("Dead");
         StopAllCoroutines();
         target = null;
@@ -213,6 +213,13 @@ public class Monster : MonoBehaviour
         audioSource?.PlayOneShot(SetSound(race, "Hit"));
         audioSource?.PlayOneShot(SetSound(race, "Dead"));
         Destroy(gameObject, 3f);
+    }
+
+    private void DropItem()
+    {
+        GameObject obj = GameManager.Monster.GetItemObj();
+        GameObject item = Instantiate(obj, transform.position + Vector3.up * 1f, Quaternion.identity);
+        item.GetComponent<DropItem>()?.SetMonsterRace(race);
     }
 
     protected AudioClip SetSound(MonsterRace race, string soundName)
@@ -258,10 +265,6 @@ public class Monster : MonoBehaviour
         audioSource?.PlayOneShot(SetSound(race, "Attack"));
     }
 
-    //protected void PlaySecondAttackSound()
-    //{
-    //    audioSource?.PlayOneShot(SetSound(race, "Attack"));
-    //}
     private void PlayOpenSound()
     {
         audioSource?.PlayOneShot(SetSound(race, "Open"));

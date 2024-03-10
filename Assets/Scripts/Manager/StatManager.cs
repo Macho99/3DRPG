@@ -79,7 +79,7 @@ public class StatManager : MonoBehaviour
 		OnPlayerHPChange?.Invoke(HPRatio);
 	}
 
-	public void AddMaxMP(int amount)
+    public void AddMaxMP(int amount)
 	{
 		maxMP += amount;
 		OnPlayerMPChange?.Invoke(MPRatio);

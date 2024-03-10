@@ -124,51 +124,6 @@ public class NormalAttackCDState : StateMachineBehaviour
         }
     }
 
-    //void ChooseNextMotion(Animator animator)
-    //{
-    //    int rand = Random.Range(0, 8);
-
-    //    switch (rand)
-    //    {
-    //        case 0:
-    //            animator.SetTrigger("MeleeAttack1");
-    //            agent.stoppingDistance = knight.meleeAttackRange;
-    //            break;
-    //        case 1:
-    //            animator.SetTrigger("MeleeAttack2");
-    //            agent.stoppingDistance = knight.meleeAttackRange;
-    //            break;
-    //        case 2:
-    //            animator.SetTrigger("MeleeAttack3");
-    //            agent.stoppingDistance = knight.meleeAttackRange;
-    //            break;
-    //        case 3:
-    //            animator.SetTrigger("MeleeCombo1");
-    //            agent.stoppingDistance = knight.meleeAttackRange;
-    //            break;
-    //        case 4:
-    //            animator.SetTrigger("MeleeCombo2");
-    //            agent.stoppingDistance = knight.meleeAttackRange;
-    //            break;
-    //        case 5:
-    //            animator.SetTrigger("Skill1");
-    //            agent.stoppingDistance = knight.skillAttackRange;
-    //            break;
-    //        case 6:
-    //            animator.SetTrigger("Skill2");
-    //            agent.stoppingDistance = knight.skillAttackRange;
-    //            break;
-    //        case 7:
-    //            animator.SetTrigger("Skill3");
-    //            agent.stoppingDistance = knight.skillAttackRange;
-    //            break;
-    //        default:
-    //            animator.SetTrigger("MeleeAttack1");
-    //            agent.stoppingDistance = knight.meleeAttackRange;
-    //            break;
-    //    }
-    //}
-
     void TwoHandedChooseNextMotion(Animator animator)
     {
         int rand = Random.Range(0, 7);

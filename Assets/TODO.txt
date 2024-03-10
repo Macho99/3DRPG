@@ -1,4 +1,5 @@
 TODO:
 
-- boss screen effect, camerashaking, skill3
-- Effect, Sound
+- monster Hp ui
+- make monster attack timing corretly
+- Dungeon music timing

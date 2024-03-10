@@ -3151,6 +3151,12 @@ MonoBehaviour:
   swordEffect: {fileID: 5934796224209841345}
   skillCD: 0
   skillCoolDown: 0
+  OnBossHPChange:
+    m_PersistentCalls:
+      m_Calls: []
+  OnBossDie:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1639463214672714411
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3163,12 +3169,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1a1048fa52320b4e9492f1d8f5f0579, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  normalSkills: []
-  twoHandedSkills:
-  - {fileID: 7082525810440381746, guid: 89497e8f1d77ce64b9665f59fc9d25ad, type: 3}
-  - {fileID: 6104107114863222821, guid: cc5c1070bd409284a95aafa65e3c6e68, type: 3}
-  - {fileID: 782190285946635262, guid: 0b646d7f7956da24c98743d33d297401, type: 3}
-  - {fileID: 2134000535842535392, guid: f27b67430ffbd7c46885b5cd33531952, type: 3}
   weaponPoint: {fileID: 8405696320771282510}
   kickPoint: {fileID: 2631803466720596277}
 --- !u!95 &340431182340803193
@@ -3262,7 +3262,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!82 &1392128640533057562
 AudioSource:
