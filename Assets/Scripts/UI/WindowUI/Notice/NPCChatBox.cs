@@ -54,7 +54,6 @@ public class NPCChatBox : WindowUI
 
     public IEnumerator Typing(string line)
     {
-        print("typeΩ√¿€");
         dialogueText.text = "";
         foreach (char letter in line.ToCharArray())
         {

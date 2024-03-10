@@ -2458,8 +2458,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sentence:
-  - "\uBC2D\uC77C\uC911.."
-  - "\uAC00\uC148.."
+  - "\uBC2D\uC5D4 \uD2B9\uBCC4\uD560 \uC77C\uC774 \uC5C6\uC5B4\uC694.."
+  - "\uC90D\uACE0.. \uCE90\uACE0.. \uC90D\uACE0.. \uCE90\uACE0..\uC90D\uACE0.. \uCE90\uACE0..
+    \uC90D\uACE0.. \uCE90\uACE0..\uC90D\uACE0.. \uCE90\uACE0.. \uC90D\uACE0.. \uCE90\uACE0..\uC90D\uACE0..
+    \uCE90\uACE0.. \uC90D\uACE0.. \uCE90\uACE0..\uC90D\uACE0.. \uCE90\uACE0.. \uC90D\uACE0..
+    \uCE90\uACE0..\uC90D\uACE0.. \uCE90\uACE0.. \uC90D\uACE0.. \uCE90\uACE0..\uC90D\uACE0..
+    \uCE90\uACE0.. \uC90D\uACE0.. \uCE90\uACE0.."
   savePos: {x: 0, y: 0, z: 0, w: 0}
 --- !u!95 &4445159518006869958
 Animator:

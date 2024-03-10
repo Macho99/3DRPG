@@ -8,6 +8,7 @@ public class MenuUI : PopUpUI
 	{
 		base.Awake();
         buttons["InventoryButton"].onClick.AddListener(OpenInventory);
+        buttons["StatusButton"].onClick.AddListener(OpenStatus);
         buttons["Blocker"].onClick.AddListener(GameManager.UI.MenuToggle);
 	}
 
@@ -16,8 +17,8 @@ public class MenuUI : PopUpUI
         GameManager.UI.ShowPopUpUI<InvenUI>("UI/PopUpUI/Inventory/Inventory");
     }
 
-    public void OpenEquip()
+    public void OpenStatus()
     {
-        //GameManager.UI.ShowPopUpUI<EquipUI>("UI/PopUpUI/Equip/EquipUI");
+        GameManager.UI.ShowPopUpUI<StatusUI>("UI/PopUpUI/Status/Status");
     }
 }

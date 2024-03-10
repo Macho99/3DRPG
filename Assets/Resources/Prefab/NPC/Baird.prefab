@@ -1027,8 +1027,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sentence:
-  - "\uB178\uB798\uC911..."
-  - "\u3147\u3147"
+  - "\uBC18\uAC11\uB124 \uBAA8\uD5D8\uAC00~!"
   savePos: {x: 0, y: 0, z: 0, w: 0}
 --- !u!95 &9045187219132756603
 Animator:
@@ -1163,8 +1162,8 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 0
-  MinDistance: 0.5
-  MaxDistance: 1.01
+  MinDistance: 1
+  MaxDistance: 1.5
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -1174,23 +1173,32 @@ AudioSource:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
+      time: 0.30293372
       value: 1
-      inSlope: 0
-      outSlope: 0
+      inSlope: -2.0208108
+      outSlope: -2.0208108
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.5960255
+      value: 0.6966934
+      inSlope: -0.5052027
+      outSlope: -0.5052027
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
     - serializedVersion: 3
       time: 1
       value: 0
-      inSlope: 0
-      outSlope: 0
+      inSlope: -0.4952468
+      outSlope: -0.4952468
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4

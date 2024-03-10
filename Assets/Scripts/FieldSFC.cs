@@ -45,6 +45,7 @@ public class FieldSFC : MonoBehaviour
 	{
 		GameManager.UI.ShowSceneUI<PlayerConditionUI>("UI/SceneUI/PlayerConditionUI");
 		GameManager.UI.ShowSceneUI<QuickSlotUI>("UI/SceneUI/QuickSlotUI");
+		GameManager.UI.ShowSceneUI<LeftMoneyUI>("UI/SceneUI/Money");
 	}
 
 	private void OnDestroy()
@@ -67,25 +68,21 @@ public class FieldSFC : MonoBehaviour
 
 	private void OnInteraction(InputValue value)
 	{
-		//if(player.GetComponent<PlayerUseUI>().testCube == null)
-		//{
-		//	Debug.Log("nonObj");
-		//	return;
-		//}
-		//else if (player.GetComponent<PlayerUseUI>().testCube != null &&
-		//	player.GetComponent<PlayerUseUI>().testCube.haveItem == true)
-		//{
-		//	Debug.Log("getItem");
-		//	_ = StartCoroutine(player.GetComponent<PlayerUseUI>().testCube.ShowGainItem());
-  //          GameManager.Inven.TryGainConsumItem(player.GetComponent<PlayerUseUI>().testCube.testItem);
-  //          player.GetComponent<PlayerUseUI>().testCube.haveItem = false;
-  //      }
-		//else if (player.GetComponent<PlayerUseUI>().testCube != null && player.GetComponent<PlayerUseUI>().testCube.haveItem == false)
-		//{
-		//	Debug.Log("ClearWindow");
-		//	GameManager.UI.ClearWindowUI();
-		//}
-	}
+		if (GameManager.Dialogue.canTalk == true)
+		{
+			if (GameManager.Dialogue.isTalking == false)
+				GameManager.Dialogue.ShowChatBox();
+			else
+			{
+				if (FindObjectOfType<NPCChatBox>() &&
+					FindObjectOfType<NPCChatBox>().isTyping == false)
+				{
+                    FindObjectOfType<NPCChatBox>().NextSentence();
+                }
+			}
+		}
+		
+    }
 	
 	public void PlayDeathfault()
 	{

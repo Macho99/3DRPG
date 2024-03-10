@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.ProBuilder.MeshOperations;
 
 public class StatManager : MonoBehaviour
 {
@@ -14,7 +15,7 @@ public class StatManager : MonoBehaviour
 	[SerializeField] private int curMP;
 	[SerializeField] private float attackMultiplier = 1;
 	[SerializeField] private int defence = 0;
-	[SerializeField] private int money;
+	[SerializeField] private int money = 0;
 
 	public int MaxHP { get { return maxHP; } }
 	public int CurHP {  get { return curHP; } }
@@ -25,8 +26,9 @@ public class StatManager : MonoBehaviour
 
 	public float AttackMultiplier { get {  return attackMultiplier; } }
 	public int Defence { get { return defence; } }
+    public int Money { get { return money; } }
 
-	[HideInInspector] public UnityEvent OnPlayerDie = new();
+    [HideInInspector] public UnityEvent OnPlayerDie = new();
 	[HideInInspector] public UnityEvent<float> OnPlayerHPChange = new();
 	[HideInInspector] public UnityEvent<float> OnPlayerMPChange = new();
 
@@ -83,4 +85,18 @@ public class StatManager : MonoBehaviour
 		OnPlayerMPChange?.Invoke(MPRatio);
 		return true;
 	}
+
+	public void AddMoney(int amount)
+	{
+        money += amount;
+    }
+
+    public void SubMoney(int amount)
+    {
+        if (money - amount < 0) { return; }
+		else
+		{
+            money -= amount;
+        }
+    }
 }
