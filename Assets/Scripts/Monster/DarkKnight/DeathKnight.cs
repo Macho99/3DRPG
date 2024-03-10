@@ -48,6 +48,7 @@ public class DeathKnight : MonoBehaviour
     [SerializeField] private GameObject myWeapon;
     [SerializeField] private Material mySwordMaterial;
     [SerializeField] private GameObject swordEffect;
+    [SerializeField] private EnterBossRoom room;
 
     [HideInInspector] public bool skillCD;
     [HideInInspector] public float skillCoolDown;
@@ -57,6 +58,7 @@ public class DeathKnight : MonoBehaviour
 
     private void Awake()
     {
+        room = FindObjectOfType<EnterBossRoom>();
         race = MonsterRace.Boss;
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
@@ -64,7 +66,6 @@ public class DeathKnight : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         hitFeedback = true;
         stunDuration = 1f;
-        skillCoolDown = 0f;
     }
 
     private void Start()
@@ -77,23 +78,6 @@ public class DeathKnight : MonoBehaviour
         bossState = BossState.NORMAL;
     }
 
-    private void Update()
-    {
-        CheckSkillCD();
-    }
-
-    private void CheckSkillCD()
-    {
-        if (skillCoolDown > 0f)
-        {
-            skillCoolDown -= Time.deltaTime;
-        }
-
-        if (skillCoolDown <= 0f)
-        {
-            skillCD = false;
-        }
-    }
 
     public void TakeDamage(float damage)
     {
@@ -130,6 +114,7 @@ public class DeathKnight : MonoBehaviour
         anim.applyRootMotion = true;
         anim.SetTrigger("Dead");
         DropItem();
+        room.BlockOnOff();
         target = null;
         bossState = BossState.DEAD;
         Invoke("ReleaseBossUI", 3f);
