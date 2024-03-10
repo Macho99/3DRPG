@@ -42,7 +42,8 @@ public class UIManager : MonoBehaviour
 		//menu = GameManager.Resource.Instantiate<MenuUI>("UI/PopUpUI/Menu");
 	}
 
-    public T ShowPopUpUI<T>(T popUpUI, bool setInactivePrev = true) where T : PopUpUI
+
+	public T ShowPopUpUI<T>(T popUpUI, bool setInactivePrev = true) where T : PopUpUI
 	{
 		if (popUpStack.Count > 0)
 		{

@@ -22536,7 +22536,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &561997420
 Transform:
   m_ObjectHideFlags: 0
@@ -103819,7 +103819,7 @@ MonoBehaviour:
   OnDodgeAttackStart:
     m_PersistentCalls:
       m_Calls: []
-  stunDuration: 0
+  stunDuration: 10
   stunDir: {x: 0, y: 0, z: 0}
   damage: 30
 --- !u!4 &8266675328221822204

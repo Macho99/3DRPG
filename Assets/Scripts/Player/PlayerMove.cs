@@ -185,6 +185,13 @@ public class PlayerMove : MonoBehaviour
 		controller.Move(moveVec * time);
 	}
 
+	public void Teleport(Vector3 position)
+	{
+		controller.enabled = false;
+		transform.position = position;
+		controller.enabled = true;
+	}
+
 	private void OnMove(InputValue value)
 	{
 		MoveInput = value.Get<Vector2>();

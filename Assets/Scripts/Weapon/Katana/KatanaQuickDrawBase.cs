@@ -15,16 +15,11 @@ public abstract class KatanaQuickDrawBase : StateBase<Katana.State, Katana>
 	bool endQuickDraw;
 	float scale;
 	float radius;
-	int damage;
 
 	public KatanaQuickDrawBase(Katana owner, StateMachine<Katana.State, Katana> stateMachine
 		, string triggerName, bool endQuickDraw, string vfxPath = "Prefab/SlashVFX", 
-		float scale = 2f, float radius = 2f, int? damage = null) : base(owner, stateMachine)
-	{
-		if(damage == null)
-		{
-			damage = owner.Damage;
-		}
+		float scale = 2f, float radius = 2f) : base(owner, stateMachine)
+	{ 
 		this.triggerName = triggerName;
 		this.endQuickDraw = endQuickDraw;
 		this.vfxPath = vfxPath;
@@ -117,7 +112,7 @@ public abstract class KatanaQuickDrawBase : StateBase<Katana.State, Katana>
 		vfx.transform.localScale = Vector3.one * scale;
 
 		Vector3 position = owner.transform.position + owner.transform.forward * radius;
-		owner.SphereCastAttack(position, radius, owner.Damage);
+		owner.SphereCastAttack(position, radius, owner.FinalDamage);
 	}
 
 	protected virtual void AttackEnd()

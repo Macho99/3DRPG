@@ -40,6 +40,7 @@ public class BowSkillUlti : StateBase<Bow.State, Bow>
 		aimPoint = playerLook.AimPoint;
 		decal = GameManager.Resource.Instantiate<DecalProjector>("Prefab/BowUltiDecal",
 			aimPoint.transform.position, Quaternion.Euler(90f, 0f, 0f), true);
+		owner.DamageMultiplier = 0.4f;
 	}
 
 	public override void Exit()
@@ -60,6 +61,7 @@ public class BowSkillUlti : StateBase<Bow.State, Bow>
 		playerAttack.OnAttack2Down.RemoveListener(SkillUndo);
 		playerAttack.OnEButtonDown.RemoveListener(SkillUndo);
 		GameManager.UI.HideSceneUI(false);
+		owner.DamageMultiplier = 1f;
 	}
 
 	public override void Setup()

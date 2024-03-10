@@ -19,6 +19,8 @@ public class BowIdle : StateBase<Bow.State, Bow>
 
 	public override void Enter()
 	{
+		owner.HideAimPoint(!owner.AimLock);
+		player.SetNeckRigWeight(0.6f);
 		owner.FastShotNum = 0;
 		player.WeaponIdle();
 		owner.SetAimPointSize(1f);

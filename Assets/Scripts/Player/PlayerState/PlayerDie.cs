@@ -17,14 +17,18 @@ public class PlayerDie : StateBase<Player.State, Player>
 	{
 		owner.SetAnimRootMotion(true);
 		owner.IgnoreInput(true);
+		FieldSFC.Instance.IgnoreInput(true);
 		playerAttack.SetAnimBool("Die", true);
 		playerMove.MoveMultiplier = 0f;
+		PlayerDieUI playerDieUI = GameManager.UI.ShowPopUpUI<PlayerDieUI>("UI/PopUpUI/PlayerDie");
+		playerDieUI.Init(Resurrection);
 	}
 
 	public override void Exit()
 	{
 		owner.SetAnimRootMotion(false);
 		owner.IgnoreInput(false);
+		FieldSFC.Instance.IgnoreInput(false);
 		playerAttack.SetAnimBool("Die", false);
 		playerMove.MoveMultiplier = 1f;
 	}
@@ -43,5 +47,11 @@ public class PlayerDie : StateBase<Player.State, Player>
 	public override void Update()
 	{
 
+	}
+
+	private void Resurrection()
+	{
+		GameManager.Stat.AddCurHP(100);
+		stateMachine.ChangeState(Player.State.Idle);
 	}
 }

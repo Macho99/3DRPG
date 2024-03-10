@@ -134,6 +134,7 @@ public class Bow : Weapon
 	private void OnEnable()
 	{
 		bowUI = GameManager.UI.ShowSceneUI<BowUI>("UI/SceneUI/BowUI");
+		bowUI.UIUpdate(curArrowProperty, GetCooltimeStruct());
 		player.SetNeckRigWeight(0.6f);
 		playerMove.AimLockOffset = new Vector3(0f, 45f, 0f);
 	}
@@ -219,7 +220,7 @@ public class Bow : Weapon
 		int layer = hitInfo.collider.gameObject.layer;
 		if(IsMonsterLayer(layer) == true)
 		{
-			MonsterAttack(hitInfo.collider.gameObject, Damage);
+			MonsterAttack(hitInfo.collider.gameObject, FinalDamage);
             windController?.Attack(hitInfo.transform);
 			arrow.transform.parent = hitInfo.collider.transform;
 			arrow.AutoOff();
@@ -290,7 +291,7 @@ public class Bow : Weapon
 		GameObject obj = GameManager.Resource.Instantiate<GameObject>("Prefab/FireArrowExplosion", 
 			hitInfo.point, Quaternion.identity, true);
 		obj.transform.localScale = Vector3.one * 2f;
-		SphereCastAttack(hitInfo.point, 1.5f, Damage);
+		SphereCastAttack(hitInfo.point, 1.5f, FinalDamage);
 		arrow.GroundHit(hitInfo, hitCnt, arrow);
 	}
 
@@ -470,10 +471,10 @@ public class Bow : Weapon
 
 	private IEnumerator CoWindSkill()
 	{
-		float endTime = Time.time + eCooltimes[(int) ArrowProperty.Wind];
+		float endTime = Time.time + eCooltimes[(int) ArrowProperty.Wind] * 0.5f;
 		windController = GameManager.Resource.Instantiate<WindSkillController>(
 			"Prefab/WindSkillController", transform.position, Quaternion.identity, true);
-		windController.Init(5, Damage);
+		windController.Init(5, (int) (BaseDamage * 0.3f));
 
 		while((curArrowProperty == ArrowProperty.Wind) && (Time.time < endTime))
 		{

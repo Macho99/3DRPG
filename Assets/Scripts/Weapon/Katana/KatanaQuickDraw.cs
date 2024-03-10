@@ -33,29 +33,55 @@ public class KatanaQuickDraw3 : KatanaQuickDrawBase
 public class KatanaQuickDraw4 : KatanaQuickDrawBase
 {
 	public KatanaQuickDraw4(Katana owner, StateMachine<Katana.State, Katana> stateMachine)
-		: base(owner, stateMachine, "Attack6", true, "Prefab/CrackSlashVFX", 1f, 3f, (int) (owner.Damage * 1.5))
+		: base(owner, stateMachine, "Attack6", true, "Prefab/CrackSlashVFX", 1f, 3f)
 	{
+	}
+	public override void Enter()
+	{
+		base.Enter();
+		owner.DamageMultiplier = 1.5f;
+	}
+
+	public override void Exit()
+	{
+		base.Exit();
+		owner.DamageMultiplier = 1f;
 	}
 }
 
 
-public class KatanaQuickDraw5 : KatanaQuickDrawBase
+public class KatanaDeathfault : KatanaQuickDrawBase
 {
-	public KatanaQuickDraw5(Katana owner, StateMachine<Katana.State, Katana> stateMachine)
-		: base(owner, stateMachine, "Attack17", true, "Prefab/SlashVFX", 10f, owner.Damage * 5)
+	const float radius = 10f;
+
+	public KatanaDeathfault(Katana owner, StateMachine<Katana.State, Katana> stateMachine)
+		: base(owner, stateMachine, "Attack17", true)
 	{
+	}
+	public override void Enter()
+	{
+		base.Enter();
+		owner.DamageMultiplier = 3f;
+	}
+
+	public override void Exit()
+	{
+		base.Exit();
+		owner.DamageMultiplier = 1f;
 	}
 
 	protected override void Attack(bool clockwise)
 	{
-		FieldSFC.Instance?.PlayDeathfault();
+		FieldSFC.Instance?.PlayDeathfault(); 
+		Vector3 position = owner.transform.position + owner.transform.forward * radius;
+		owner.SphereCastAttack(position, radius, owner.FinalDamage);
 	}
 }
 
-public class KatanaQuickDraw6 : KatanaQuickDrawBase
+public class KatanaUlti1_1 : KatanaQuickDrawBase
 {
-	public KatanaQuickDraw6(Katana owner, StateMachine<Katana.State, Katana> stateMachine)
-		: base(owner, stateMachine, "Attack7", true, "Prefab/CrackSlashVFX", 1f)
+	public KatanaUlti1_1(Katana owner, StateMachine<Katana.State, Katana> stateMachine)
+		: base(owner, stateMachine, "Attack7", true, "Prefab/CrackSlashVFX", 1f, 3f)
 	{
 	}
 
@@ -86,7 +112,7 @@ public class KatanaQuickDraw6 : KatanaQuickDrawBase
 	}
 }
 
-public class KatanaQuickDraw7 : StateBase<Katana.State, Katana>
+public class KatanaUlti1_2 : StateBase<Katana.State, Katana>
 {
 	const float moveDist = 8f; 
 	PlayerAttack playerAttack;
@@ -97,7 +123,7 @@ public class KatanaQuickDraw7 : StateBase<Katana.State, Katana>
 	Vector3 explosionPos;
 
 	bool attacked;
-	public KatanaQuickDraw7(Katana owner, StateMachine<Katana.State, Katana> stateMachine) : base(owner, stateMachine)
+	public KatanaUlti1_2(Katana owner, StateMachine<Katana.State, Katana> stateMachine) : base(owner, stateMachine)
 	{
 	}
 
@@ -109,12 +135,24 @@ public class KatanaQuickDraw7 : StateBase<Katana.State, Katana>
 		playerAnimEvent.OnClockWiseAttack.AddListener(Attack);
 		explosionPos = playerMove.transform.position + playerMove.transform.forward * (moveDist * 0.5f);
 
-		playerMove.ManualMove(playerMove.transform.forward * moveDist, 1f);
+		Vector3 teleportPos = playerMove.transform.position + playerMove.transform.forward * moveDist ;
+		Collider[] cols = Physics.OverlapSphere(teleportPos + Vector3.up, 0.3f, LayerMask.GetMask("Environment"));
+		if (cols.Length == 0)
+		{
+			playerMove.Teleport(teleportPos);
+		}
+		else
+		{
+			playerMove.ManualMove(playerMove.transform.forward * moveDist, 1f);
+		}
+
+
 		GameManager.Resource.Instantiate<GameObject>("Prefab/RushVFX", 
 			playerMove.transform.position, playerMove.transform.rotation, true);
 		playerAttack.SetAnimTrigger("Attack34");
 		playerLook.AutoRotate(0.5f, 150f, 0f);
 		GameManager.UI.HideSceneUI(true);
+		owner.DamageMultiplier = 5f;
 	}
 
 	public override void Exit()
@@ -123,6 +161,7 @@ public class KatanaQuickDraw7 : StateBase<Katana.State, Katana>
 		GameManager.UI.HideSceneUI(false);
 		playerAnimEvent.OnEquipChange.RemoveListener(EquipChange);
 		playerAnimEvent.OnClockWiseAttack.RemoveListener(Attack);
+		owner.DamageMultiplier = 1f;
 	}
 
 	public override void Setup()
@@ -159,7 +198,7 @@ public class KatanaQuickDraw7 : StateBase<Katana.State, Katana>
 		attacked = true;
 		GameManager.Resource.Instantiate<GameObject>("Prefab/FX_splash_explosion_air", 
 			explosionPos + Vector3.up * 2f, Quaternion.identity, true);
-		owner.SphereCastAttack(explosionPos, 5f, owner.Damage * 5);
+		owner.SphereCastAttack(explosionPos, 5f, owner.FinalDamage);
 		GameManager.UI.HideSceneUI(false);
 	}
 }

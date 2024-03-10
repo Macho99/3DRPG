@@ -22,7 +22,9 @@ public abstract class Weapon : MonoBehaviour
 
 	private Collider[] sphereCols = new Collider[10];
 
-	public int Damage { get; private set; }
+	public int BaseDamage { get; protected set; }
+	public float DamageMultiplier { get; set; } = 1f;
+	public int FinalDamage { get { return (int)(BaseDamage * DamageMultiplier); } }
 	public WeaponItem WeaponItem { get { return weaponItem; } }
 	public LayerMask HitMask { get { return hitMask; } }
 	public LayerMask MonsterMask { get { return monsterMask; } }
@@ -60,7 +62,7 @@ public abstract class Weapon : MonoBehaviour
 	public virtual void Init(WeaponItem weaponItem)
 	{
 		this.weaponItem = weaponItem;
-		Damage = weaponItem.Damage;
+		BaseDamage = weaponItem.Damage;
 	}
 
 	public void ChangePlayerState(Player.State state)

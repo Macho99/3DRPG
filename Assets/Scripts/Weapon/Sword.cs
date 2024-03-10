@@ -114,7 +114,7 @@ public abstract class Sword : Weapon
 				hitListCnt++;
 
 				// TODO: 검 데미지 임시부여 (데미지 수치 변경 필요)
-				MonsterAttack(hit.collider.gameObject, Damage);
+				MonsterAttack(hit.collider.gameObject, FinalDamage);
 			}
 		}
 		//print("End;");
