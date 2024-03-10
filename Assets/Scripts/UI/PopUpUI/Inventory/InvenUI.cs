@@ -141,6 +141,11 @@ public class InvenUI : PopUpUI
 			itemSlots[i].SetItem(inv[i]);
 		}
 
+		for(int i = 0; i < armorSlots.Length; i++)
+		{
+			armorSlots[i].Refresh();
+		}
+
 		for(int i = 0; i < consumpSlots.Length; i++)
 		{
 			consumpSlots[i].Refresh();

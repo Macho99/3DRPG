@@ -12,6 +12,7 @@ public class PlayerCamManager : MonoBehaviour
 	[SerializeField] CinemachineVirtualCamera bowUltiTrackCam;
 	[SerializeField] Transform bowUltiTrackLookPoint;
 	[SerializeField] Transform equipInvenCamPivot;
+	[SerializeField] CinemachineVirtualCamera titleCam;
 
 	private CinemachineTrackedDolly bowUltiTrackedDolly;
 	private bool equipInvCamRotating;
@@ -114,6 +115,18 @@ public class PlayerCamManager : MonoBehaviour
 			}
 				
 			yield return null;
+		}
+	}
+
+	public void SetTitleCam(bool value)
+	{
+		if(value == true)
+		{
+			titleCam.Priority = 30;
+		}
+		else
+		{
+			titleCam.Priority = 0;
 		}
 	}
 }

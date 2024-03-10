@@ -1,12 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class KatanaQuickDrawIdle : StateBase<Katana.State, Katana>
 {
 	private const float charge1Time = 1.5f;
 	private const float charge2Time = 3f;
-	private const float minimumExitTime = 0.15f; 
-	//너무 빨리 전환하면 Animator 트리거가 못따라와서 최소 대기시간을 가짐
 
 	Player player;
 	PlayerAttack playerAttack;
@@ -17,6 +16,7 @@ public class KatanaQuickDrawIdle : StateBase<Katana.State, Katana>
 	float attack1DownTime;
 	bool attack1DownTriggered;
 	bool attack1Up;
+	bool waitAnim;
 
 	public KatanaQuickDrawIdle(Katana owner, StateMachine<Katana.State, Katana> stateMachine) : base(owner, stateMachine)
 	{
@@ -24,6 +24,7 @@ public class KatanaQuickDrawIdle : StateBase<Katana.State, Katana>
 
 	public override void Enter()
 	{
+		waitAnim = false;
 		chargeLevel = 0;
 		enterTime = Time.time;
 		attack1DownTriggered = false;
@@ -77,7 +78,6 @@ public class KatanaQuickDrawIdle : StateBase<Katana.State, Katana>
 
 		if (attack1DownTriggered == false) return;
 		if (attack1Up == false) return;
-		if (Time.time < enterTime + minimumExitTime) return;
 
 		if (Time.time < attack1DownTime + charge1Time)
 		{
@@ -148,19 +148,25 @@ public class KatanaQuickDrawIdle : StateBase<Katana.State, Katana>
 
 	private void Attack1Down(Player.State state)
 	{
+		if (waitAnim == true) return;
+
 		if(attack1DownTriggered == false)
 		{
-			attack1DownTriggered = true;
 			playerAttack.SetAnimTrigger("Hold2");
 			attack1DownTime = Time.time;
+			waitAnim = true;
+			_ = owner.StartCoroutine(CoWaitAnim());
 		}
+	}
+
+	private IEnumerator CoWaitAnim()
+	{
+		yield return new WaitUntil(() => playerAttack.IsAnimName(0, "Hold2"));
+		attack1DownTriggered = true;
 	}
 
 	private void Attack1Up(Player.State state)
 	{
-		if (attack1DownTriggered == false)
-			return;
-
 		attack1Up = true;
 	}
 }

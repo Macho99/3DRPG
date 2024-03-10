@@ -16,8 +16,10 @@ MonoBehaviour:
   rate: 2
   sprite: {fileID: 21300000, guid: 691754dc1e501794594f35a00c251112, type: 3}
   summary: "\uB2E8\uB2E8\uD55C \uAE30\uC0AC \uAC11\uC637 \uC2E0\uBC1C\uC774\uB2E4."
-  detailDesc: "\uC801\uC758 \uACF5\uACA9\uC5D0 \uD53C\uD574\uB97C \uB35C\uBC1B\uC744\uC9C0\uB3C4?"
-  price: 0
+  detailDesc: "\uAC00\uBCBC\uC6B4 \uBC1C\uAC78\uC74C\uC5D0 \uB9C8\uB098 \uC7AC\uC0DD\uB825\uC774
+    \uD06C\uAC8C \uB298\uC5B4\uB098\uB294 \uAC83 \uAC19\uB2E4."
+  price: 30
+  id: 
   armorType: 3
   armorSkinName: PT_Female_Armor_01_A_boots
   armorStat:

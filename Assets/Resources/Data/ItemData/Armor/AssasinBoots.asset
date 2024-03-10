@@ -18,7 +18,8 @@ MonoBehaviour:
   summary: "\uBC29\uC5B4\uB825 +10"
   detailDesc: "\uC785\uC740 \uAC83\uB9CC\uC73C\uB85C\uB3C4 \uC790\uC2E0\uAC10\uC774
     \uC19F\uAD6C\uCE58\uB294 \uC2E0\uBC1C\uC774\uB2E4."
-  price: 0
+  price: 100
+  id: 
   armorType: 3
   armorSkinName: PT_Female_Armor_05_C_boots
   armorStat:

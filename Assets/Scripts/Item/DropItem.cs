@@ -27,7 +27,7 @@ public class DropItem : MonoBehaviour
         if (other.TryGetComponent(out Player player))
         {
             string itemName = GameManager.Monster.GetDropItemId(race);
-            GameManager.Inven.AddItem(GameManager.Data.GetItem(itemName));
+            GameManager.Inven.AddItemWithAlarm(GameManager.Data.GetItem(itemName));
 
             col.enabled = false;
             meshRenderer.enabled = false;

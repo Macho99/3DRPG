@@ -49,12 +49,24 @@ public class InventoryManager : MonoBehaviour
 		AddItem(GameManager.Data.GetItem("KnightCape"));
 		AddItem(GameManager.Data.GetItem("KnightGauntlets"));
 		AddItem(GameManager.Data.GetItem("KnightLegs"));
-		AddItem(GameManager.Data.GetItem("AssasinHelmet"));
-		AddItem(GameManager.Data.GetItem("AssasinBody"));
-		AddItem(GameManager.Data.GetItem("AssasinBoots"));
-		AddItem(GameManager.Data.GetItem("AssasinCape"));
-		AddItem(GameManager.Data.GetItem("AssasinGauntlets"));
-		AddItem(GameManager.Data.GetItem("AssasinLegs"));
+		ArmorItem armor = (ArmorItem) GameManager.Data.GetItem("AssasinHelmet");
+		AddItem(armor);
+		SetArmorSlot(armor);
+		armor = (ArmorItem)GameManager.Data.GetItem("AssasinBody");
+		AddItem(armor);
+		SetArmorSlot(armor);
+		armor = (ArmorItem)GameManager.Data.GetItem("AssasinBoots");
+		AddItem(armor);
+		SetArmorSlot(armor);
+		armor = (ArmorItem)GameManager.Data.GetItem("AssasinCape");
+		AddItem(armor);
+		SetArmorSlot(armor);
+		armor = (ArmorItem)GameManager.Data.GetItem("AssasinGauntlets");
+		AddItem(armor);
+		SetArmorSlot(armor);
+		armor = (ArmorItem)GameManager.Data.GetItem("AssasinLegs");
+		AddItem(armor);
+		SetArmorSlot(armor);
 		AddItem(GameManager.Data.GetItem("BasicBody"));
 		AddItem(GameManager.Data.GetItem("BasicBoots"));
 		AddItem(GameManager.Data.GetItem("BasicGauntlets"));
@@ -156,6 +168,12 @@ public class InventoryManager : MonoBehaviour
 	{
 		return otherInv;
 	}
+	
+	public void AddItemWithAlarm(Item item)
+	{
+		if(AddItem(item) == true)
+			GameManager.UI.MakeAlarm("아이템 획득!!", item.ItemName, item.Sprite);
+	}
 
 	public bool AddItem(Item item, bool refresh = true)
 	{
@@ -173,7 +191,7 @@ public class InventoryManager : MonoBehaviour
 		int idx = GetEmptySlot(inv);
 		if (idx == -1)
 		{
-			//GameManager.UI.InvenFullAlarm();
+			GameManager.UI.MakeAlarm("인벤토리가 가득 찼습니다!");
 			return false;
 		}
 
@@ -345,7 +363,7 @@ public class InventoryManager : MonoBehaviour
 					FindSlotItem(item, inv, out idx);
 					if(idx == -1)
 					{
-						Debug.LogError("인벤토리에 존재하지 않는 아이템을 삭제하려고 합니다.");
+						Debug.Log("인벤토리에 존재하지 않는 아이템을 삭제하려고 합니다.");
 						return;
 					}
 				}

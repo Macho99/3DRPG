@@ -13,7 +13,9 @@ public class PlayerLook : MonoBehaviour
     [SerializeField] float characterRotationSpeed = 10f;
     [SerializeField] Transform aimPoint;
     [SerializeField] bool follow = true;
+    [SerializeField] float initXAngle;
 
+    public bool Follow { get { return follow; } set { follow = value; } }
     public Transform CamRoot { get { return camRoot; } }
     public Transform AimPoint { get { return aimPoint; } }
     public Vector2 LookInput { get { return lookInput; } }
@@ -26,6 +28,7 @@ public class PlayerLook : MonoBehaviour
 
     private void Awake()
     {
+        xAngle = initXAngle;
         float height = GetComponent<CharacterController>().height;
         environmentMask = LayerMask.GetMask("Environment");
         lastLookDistSqr = 50f;

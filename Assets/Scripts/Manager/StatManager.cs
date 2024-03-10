@@ -19,7 +19,7 @@ public class StatManager : MonoBehaviour
 	//[SerializeField] private float attackMultiplier = 1;
 	[SerializeField] private int defence = 0;
 	[SerializeField] private int stunResistance = 0;
-	[SerializeField] private int money = 0;
+	[SerializeField] private int money = 1000;
 
 	public int MaxHP { get { return maxHP; } }
 	public int CurHP {  get { return curHP; } }
