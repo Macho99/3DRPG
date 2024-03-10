@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7aea61f55a824af4589848cf334e5be9, type: 3}
+  m_Name: Droptable
+  m_EditorClassIdentifier: 
+  OrcDroptable:
+  - {fileID: 11400000, guid: 46de1809d3790984087f7aa84b2fe5bb, type: 2}
+  - {fileID: 11400000, guid: 41ed5f26e8a5f67468c7a33942659094, type: 2}
+  SkeletonDroptable:
+  - {fileID: 11400000, guid: e820960e978b694409a5493190f1241e, type: 2}
+  - {fileID: 11400000, guid: ce1f8bddf6a557044bee326146e877ae, type: 2}
+  TargetDummyDroptable:
+  - {fileID: 11400000, guid: 1b7d374abfeefbd4a852b6d556f0a735, type: 2}
+  - {fileID: 11400000, guid: 41ed5f26e8a5f67468c7a33942659094, type: 2}
+  MimicDroptable:
+  - {fileID: 11400000, guid: 41ed5f26e8a5f67468c7a33942659094, type: 2}
+  - {fileID: 11400000, guid: 46de1809d3790984087f7aa84b2fe5bb, type: 2}
+  - {fileID: 11400000, guid: e820960e978b694409a5493190f1241e, type: 2}
+  BossDroptable:
+  - {fileID: 11400000, guid: 2d432662bbcaea441bf1d77c91c43b6a, type: 2}
+  itemObj: {fileID: 4730522615456927136, guid: 7abf9561c0e84a74db32392626fe0e8c, type: 3}
+  pickupSound: {fileID: 8300000, guid: 7e340985e3ac19940a3e75e06bc66ed1, type: 3}

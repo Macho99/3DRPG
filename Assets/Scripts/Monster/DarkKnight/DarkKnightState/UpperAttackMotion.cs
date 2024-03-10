@@ -12,6 +12,7 @@ public class UpperAttackMotion : StateMachineBehaviour
     {
         target = animator.GetComponent<DeathKnight>().target;
         myTf = animator.GetComponent<Transform>();
+        animator.transform.LookAt(target);
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

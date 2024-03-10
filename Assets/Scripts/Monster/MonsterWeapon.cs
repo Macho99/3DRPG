@@ -47,6 +47,7 @@ public class MonsterWeapon : MonoBehaviour
                 {
                     Vector3 knockbackDir = (player.transform.position - knightTf.position).normalized;
                     knockback = knockbackDir;
+                    Debug.Log("back");
                 }
                 else if (monster == null && knight == null)
                 {

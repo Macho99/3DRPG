@@ -154,7 +154,7 @@ public class InventoryManager : MonoBehaviour
 		return otherInv;
 	}
 
-	private bool AddItem(Item item, bool refresh = true)
+	public bool AddItem(Item item, bool refresh = true)
 	{
 		Item[] inv;
 		switch (item.ItemType)

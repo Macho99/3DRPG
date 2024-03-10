@@ -496,7 +496,7 @@ ModelImporter:
         floatParameter: 0.2
         intParameter: 0
         messageOptions: 0
-      - time: 0.029547164
+      - time: 0.04021384
         functionName: TwoHandedSkill2Sound
         data: 
         objectReferenceParameter: {instanceID: 0}

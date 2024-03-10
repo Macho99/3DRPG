@@ -119,12 +119,12 @@ public abstract class Sword : Weapon
                 // TODO: 검 데미지 임시부여 (데미지 수치 변경 필요)
                 if (hit.collider.TryGetComponent(out Monster monster))
 				{
-					monster.TakeDamage(damage);
+					monster.TakeDamage(100);
 				}
 
 				if (hit.collider.TryGetComponent(out DeathKnight knight))
 				{
-					knight.TakeDamage(damage);
+					knight.TakeDamage(500);
 				}
 			}
 		}
