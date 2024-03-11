@@ -4813,6 +4813,7 @@ MonoBehaviour:
   bowUltiTrackCam: {fileID: 183593122}
   bowUltiTrackLookPoint: {fileID: 1959573653}
   equipInvenCamPivot: {fileID: 859041725}
+  titleCam: {fileID: 0}
 --- !u!114 &142612836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4991,6 +4992,7 @@ MonoBehaviour:
   characterRotationSpeed: 10
   aimPoint: {fileID: 1546807558}
   follow: 1
+  initXAngle: 0
 --- !u!114 &142612842
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44786,7 +44788,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 224be7680beba604681faa43a7695e5d, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.66
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -51713,6 +51715,7 @@ MonoBehaviour:
   stun: {fileID: 1813002168}
   MPLack: {fileID: 2042803957}
   fadeInAndOut: {fileID: 0}
+  fadeOut: {fileID: 0}
 --- !u!4 &1499600432
 Transform:
   m_ObjectHideFlags: 0
@@ -55330,7 +55333,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 224be7680beba604681faa43a7695e5d, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.6
   m_Pitch: 1
   Loop: 1
   Mute: 0

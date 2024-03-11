@@ -87,15 +87,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "TestButton",
-                    "type": "Button",
-                    "id": "b7e16a74-09c6-43cb-970c-33cb8630cb5d",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "QButton",
                     "type": "Value",
                     "id": "a6a88a95-ac1d-48ca-91cb-c7f2b834693d",
@@ -377,17 +368,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "Num4Button",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "fe9cfbbe-e034-4d9f-b2fb-07c9163820ec",
-                    "path": "<Keyboard>/leftAlt",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "TestButton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
