@@ -68,7 +68,7 @@ public class MonsterShield : Monster
             if (currentStamina <= 0)
             {
                 state = State.GUARD_BREAK;
-                currentStamina = maxStamina;
+                //currentStamina = maxStamina;
                 anim.SetTrigger("GuardBreak");
                 audioSource?.PlayOneShot(SetSound(race, "GuardBreak"));
             }

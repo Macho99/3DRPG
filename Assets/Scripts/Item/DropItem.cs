@@ -9,12 +9,14 @@ public class DropItem : MonoBehaviour
     private MeshRenderer meshRenderer;
 
     AudioSource audioSource;
+    GameObject parentObj;
 
     private void Awake()
     {
         col = GetComponent<SphereCollider>();
         meshRenderer = GetComponent<MeshRenderer>();
         audioSource = GetComponent<AudioSource>();
+        parentObj = transform.parent.gameObject;
     }
 
     public void SetMonsterRace(MonsterRace race)
@@ -33,7 +35,7 @@ public class DropItem : MonoBehaviour
             meshRenderer.enabled = false;
             audioSource?.PlayOneShot(GameManager.Monster.GetPickupItemSound());
 
-            Destroy(gameObject, 1f);
+            Destroy(parentObj, 1f);
         }
     }
 }

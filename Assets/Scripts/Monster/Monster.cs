@@ -230,7 +230,7 @@ public class Monster : MonoBehaviour
     {
         GameObject obj = GameManager.Monster.GetItemObj();
         GameObject item = Instantiate(obj, transform.position + Vector3.up * 1f, Quaternion.identity);
-        item.GetComponent<DropItem>()?.SetMonsterRace(race);
+        item.GetComponentInChildren<DropItem>()?.SetMonsterRace(race);
     }
 
     public void SubCurHP(int amount)
