@@ -16,6 +16,8 @@ public class MotioningState : StateMachineBehaviour
         rotationValue = animator.GetComponent<DeathKnight>().rotationSpeed;
         target = animator.GetComponent<DeathKnight>().target;
         myTf = animator.GetComponent<Transform>();
+
+        animator.transform.LookAt(new Vector3(target.position.x, animator.transform.position.y, target.position.z));
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 
 public enum State
 {
@@ -26,6 +27,7 @@ public class Monster : MonoBehaviour
     [SerializeField] protected float maxHp;
     [SerializeField] protected float currentHp;
     [SerializeField] protected int damage;
+    public float hPRatio { get { return (float)currentHp / maxHp; } }
     private bool hitFeedback;
     private float stunDuration;
     private Vector3 knockback;
@@ -55,10 +57,10 @@ public class Monster : MonoBehaviour
 
     public BoxCollider attackCol; // 어택 범위
 
-    [HideInInspector] public bool isReturning; // 돌아가는 상태 체크
+    /*[HideInInspector]*/ public bool isReturning; // 돌아가는 상태 체크
 
     [SerializeField] protected LayerMask targetMask; // 타겟레이어
-    [SerializeField] protected LayerMask obstacleMask; // 장애물레이어
+    [SerializeField] public LayerMask obstacleMask; // 장애물레이어
 
     protected AudioSource audioSource;
     protected NavMeshAgent agent;
@@ -68,6 +70,10 @@ public class Monster : MonoBehaviour
     public MonsterRace race;
 
     public List<Transform> wayPoints;
+    protected Canvas canvas;
+
+    [HideInInspector] public UnityEvent<float> OnMonsterHPChange = new();
+    [HideInInspector] public UnityEvent OnMonsterDie = new();
 
 
     private void Awake()
@@ -75,6 +81,7 @@ public class Monster : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
+        canvas = transform.Find("Canvas").GetComponent<Canvas>();
     }
 
     protected virtual void Start()
@@ -86,7 +93,6 @@ public class Monster : MonoBehaviour
         spawnPosition = transform.position;
         spawnDir = transform.forward;
         agent.speed = moveSpeed;
-        //agent.stoppingDistance = attackRange;
         state = State.IDLE;
         StartCoroutine(FindTargetWithDelay(.2f));
     }
@@ -143,7 +149,7 @@ public class Monster : MonoBehaviour
         if (target != null)
         {
             viewAngle = 360f;
-            obstacleMask = LayerMask.NameToLayer("Nothing");
+            obstacleMask = LayerMask.GetMask("Nothing");
             return;
         }
 
@@ -169,14 +175,18 @@ public class Monster : MonoBehaviour
     public virtual void TakeDamage(float damage)
     {
         if (state == State.DEAD || isReturning) { return; }
-        print(damage);
-        currentHp -= damage;
+        SubCurHP((int)damage);
+
+        if (canvas.enabled == false)
+        {
+            canvas.enabled = true;
+        }
 
         if (currentHp > 0f)
         {
             anim.SetTrigger("Hit");
             viewAngle = 360f;
-            obstacleMask = LayerMask.NameToLayer("Nothing");
+            obstacleMask = LayerMask.GetMask("Nothing");
 
             audioSource?.PlayOneShot(SetSound(race, "Hit"));
 
@@ -212,6 +222,7 @@ public class Monster : MonoBehaviour
         state = State.DEAD;
         audioSource?.PlayOneShot(SetSound(race, "Hit"));
         audioSource?.PlayOneShot(SetSound(race, "Dead"));
+        
         Destroy(gameObject, 3f);
     }
 
@@ -219,7 +230,18 @@ public class Monster : MonoBehaviour
     {
         GameObject obj = GameManager.Monster.GetItemObj();
         GameObject item = Instantiate(obj, transform.position + Vector3.up * 1f, Quaternion.identity);
-        item.GetComponent<DropItem>()?.SetMonsterRace(race);
+        item.GetComponentInChildren<DropItem>()?.SetMonsterRace(race);
+    }
+
+    public void SubCurHP(int amount)
+    {
+        currentHp -= amount;
+        OnMonsterHPChange?.Invoke(hPRatio);
+        if (currentHp <= 0)
+        {
+            currentHp = 0;
+            OnMonsterDie?.Invoke();
+        }
     }
 
     protected AudioClip SetSound(MonsterRace race, string soundName)
@@ -235,6 +257,7 @@ public class Monster : MonoBehaviour
     public void RecovereryHp()
     {
         currentHp = maxHp;
+        SubCurHP(0);
     }
 
     public void SetAttackTypeInfo(int damage, bool hitFeedback, float stunDuration, Vector3 knockback)

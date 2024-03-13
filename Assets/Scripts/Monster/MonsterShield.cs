@@ -68,7 +68,7 @@ public class MonsterShield : Monster
             if (currentStamina <= 0)
             {
                 state = State.GUARD_BREAK;
-                currentStamina = maxStamina;
+                //currentStamina = maxStamina;
                 anim.SetTrigger("GuardBreak");
                 audioSource?.PlayOneShot(SetSound(race, "GuardBreak"));
             }
@@ -82,12 +82,13 @@ public class MonsterShield : Monster
         {
             if (currentHp > 0f)
             {
-                currentHp -= damage * 1.5f;
+                SubCurHP((int)damage * 2);
+                if (canvas.enabled == false)
+                {
+                    canvas.enabled = true;
+                }
                 anim.SetTrigger("Hit");
                 audioSource?.PlayOneShot(SetSound(race, "Hit"));
-                //Quaternion effectRot = Quaternion.Euler(0f, Random.Range(0f, 360f), 0f);
-                //GameObject hitEffectPrefab = Instantiate(SetEffect(race, "Hit"), transform.position, effectRot);
-                //Destroy(hitEffectPrefab, 1f);
             }
             else
             {
@@ -99,15 +100,16 @@ public class MonsterShield : Monster
         {
             if (currentHp > 0f)
             {
-                currentHp -= damage;
+                SubCurHP((int)damage);
+                if (canvas.enabled == false)
+                {
+                    canvas.enabled = true;
+                }
                 anim.SetTrigger("Hit");
                 viewAngle = 360f;
-                obstacleMask = LayerMask.NameToLayer("Nothing");
+                obstacleMask = LayerMask.GetMask("Nothing");
 
                 audioSource?.PlayOneShot(SetSound(race, "Hit"));
-                //Quaternion effectRot = Quaternion.Euler(0f, Random.Range(0f, 360f), 0f);
-                //GameObject hitEffectPrefab = Instantiate(SetEffect(race, "Hit"), transform.position, effectRot);
-                //Destroy(hitEffectPrefab, 1f);
 
                 if (target == null)
                 {

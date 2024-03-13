@@ -1,5 +1,4 @@
 TODO:
 
-- monster Hp ui
-- make monster attack timing corretly
-- Dungeon music timing
+- class diagram
+- video

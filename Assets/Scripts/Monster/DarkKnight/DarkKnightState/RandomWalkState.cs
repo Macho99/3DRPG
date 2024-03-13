@@ -43,7 +43,7 @@ public class RandomWalkState : StateMachineBehaviour
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        animator.transform.LookAt(target);
+        animator.transform.LookAt(new Vector3(target.position.x, animator.transform.position.y, target.position.z));
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

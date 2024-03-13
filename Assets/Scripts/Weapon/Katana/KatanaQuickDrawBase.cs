@@ -1,5 +1,4 @@
-﻿using Autodesk.Fbx;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 using UnityEngine.VFX;

@@ -52,4 +52,4 @@ MonoBehaviour:
     sound: {fileID: 8300000, guid: cd5035029f420e84e865cf535676ccb4, type: 3}
   - soundName: Dead
     effect: {fileID: 0}
-    sound: {fileID: 8300000, guid: 2acaea1189b1e51468ef3338c733b716, type: 3}
+    sound: {fileID: 8300000, guid: ad14d2d727174574bb220edae5444daa, type: 3}
