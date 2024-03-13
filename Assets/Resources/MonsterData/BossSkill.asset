@@ -14,31 +14,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bossSkills:
   - skillName: NormalSkill1
-    skill: {fileID: 1871041086231115576, guid: 2deb22a80675da14386faa797e6425c6, type: 3}
+    skill: {fileID: 1871041086231115576, guid: 223be256b92f1cd45a4286cca6780caf, type: 3}
     sound: {fileID: 8300000, guid: 30bbda08a48f2b24cbe7739c8d73bc21, type: 3}
   - skillName: NormalSkill2
-    skill: {fileID: 1992029900475280859, guid: 3f143c63be59f1341a0960e47d101b36, type: 3}
+    skill: {fileID: 1992029900475280859, guid: 62d26f8792ba70847afd80c5dbe08a1a, type: 3}
     sound: {fileID: 8300000, guid: 816a5bb5025129545a8f5cec5966c2a5, type: 3}
   - skillName: NormalSkill3
-    skill: {fileID: 8170752514618103492, guid: 3f68106e94df7a546a0345024228a871, type: 3}
+    skill: {fileID: 8170752514618103492, guid: 9eba3b595f333154f8309616eec955f6, type: 3}
     sound: {fileID: 8300000, guid: d8222c0feaf64da4db56f0b97decd920, type: 3}
   - skillName: NormalMeleeAttack3
-    skill: {fileID: 3946140628572098603, guid: 130426332735bf74a97566eea600f876, type: 3}
+    skill: {fileID: 3946140628572098603, guid: b655e7f7f55ed0b4a829dd1df0b85e1d, type: 3}
     sound: {fileID: 8300000, guid: ba37e9a02f258bf459e6920d91233c17, type: 3}
   - skillName: TwoHandedSkill1
-    skill: {fileID: 7082525810440381746, guid: 89497e8f1d77ce64b9665f59fc9d25ad, type: 3}
+    skill: {fileID: 7082525810440381746, guid: 2bc32593465bbf14485bac23435f2438, type: 3}
     sound: {fileID: 8300000, guid: ca1d3fcfd1a54744c97f7ab343450e86, type: 3}
   - skillName: TwoHandedSkill2
-    skill: {fileID: 6104107114863222821, guid: cc5c1070bd409284a95aafa65e3c6e68, type: 3}
+    skill: {fileID: 6104107114863222821, guid: d02dc71f1f5afe2449d440d252ccd27b, type: 3}
     sound: {fileID: 8300000, guid: 6e6d2b781eb718842ad4c4c49fc1a44f, type: 3}
   - skillName: TwoHandedSkill3
-    skill: {fileID: 782190285946635262, guid: 0b646d7f7956da24c98743d33d297401, type: 3}
+    skill: {fileID: 782190285946635262, guid: 85984132beb4b864c984ec3291ff85f9, type: 3}
     sound: {fileID: 8300000, guid: b0c00f80461cf8041bcb27561cb98b19, type: 3}
   - skillName: TwoHandedSkill4
-    skill: {fileID: 2134000535842535392, guid: f27b67430ffbd7c46885b5cd33531952, type: 3}
+    skill: {fileID: 2134000535842535392, guid: 297e6cfc9c7b49349936398dbe4c1b29, type: 3}
     sound: {fileID: 8300000, guid: ac576e5c2d2041e4c96fa1379bdd4d50, type: 3}
   - skillName: TwoHandedSkill4_2
-    skill: {fileID: 2134000535842535392, guid: f27b67430ffbd7c46885b5cd33531952, type: 3}
+    skill: {fileID: 2134000535842535392, guid: 297e6cfc9c7b49349936398dbe4c1b29, type: 3}
     sound: {fileID: 8300000, guid: ac576e5c2d2041e4c96fa1379bdd4d50, type: 3}
   bossSfxes:
   - soundName: Attack
@@ -52,4 +52,4 @@ MonoBehaviour:
     sound: {fileID: 8300000, guid: cd5035029f420e84e865cf535676ccb4, type: 3}
   - soundName: Dead
     effect: {fileID: 0}
-    sound: {fileID: 8300000, guid: 2acaea1189b1e51468ef3338c733b716, type: 3}
+    sound: {fileID: 8300000, guid: ad14d2d727174574bb220edae5444daa, type: 3}

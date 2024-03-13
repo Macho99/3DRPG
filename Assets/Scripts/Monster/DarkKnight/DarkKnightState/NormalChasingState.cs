@@ -25,7 +25,7 @@ public class NormalChasingState : StateMachineBehaviour
         {
             animator.SetBool("isAttacking", true);
         }
-        animator.transform.LookAt(target.position);
+        animator.transform.LookAt(new Vector3(target.position.x, animator.transform.position.y, target.position.z));
         agent.SetDestination(target.position);
     }
 

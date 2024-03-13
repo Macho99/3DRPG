@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TMPro;
-using UnityEditor.Searcher;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -106,7 +105,7 @@ public class InvenUI : PopUpUI
 	private void OnEnable()
 	{
 		GameManager.Inven.OnItemChange.AddListener(RefreshInven);
-		if(started == false)
+		if(started == true)
 			RefreshInven();
 	}
 
@@ -139,6 +138,11 @@ public class InvenUI : PopUpUI
 		for(int i=0; i<itemSlots.Length;i++)
 		{
 			itemSlots[i].SetItem(inv[i]);
+		}
+
+		for(int i = 0; i < armorSlots.Length; i++)
+		{
+			armorSlots[i].Refresh();
 		}
 
 		for(int i = 0; i < consumpSlots.Length; i++)

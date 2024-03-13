@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using TMPro;
-using Unity.PlasticSCM.Editor.WebApi;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UIElements;
@@ -16,11 +15,14 @@ public class Baird : MonoBehaviour
     NavMeshAgent theAgent;
     private HeadAiming headAiming;
 
+    bool isHeal;
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
         theAgent = GetComponent<NavMeshAgent>();
         headAiming = GetComponent<HeadAiming>();
+        isHeal = false;
     }
 
     private void Start()
@@ -45,7 +47,14 @@ public class Baird : MonoBehaviour
         animator.SetBool("IsWalk", true);
     }
 
-    
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Player")
+        {
+            isHeal = true;
+            StartCoroutine(BairdHealing());
+        }
+    }
 
     private void OnTriggerStay(Collider other)
     {
@@ -61,6 +70,18 @@ public class Baird : MonoBehaviour
         if(other.tag == "Player")
         {
             NextTargeting();
+            isHeal = false;
         }
     }
+
+    IEnumerator BairdHealing()
+    {
+        while (isHeal)
+        {
+            GameManager.Stat.AddCurHP(5);
+            GameManager.Stat.AddCurMP(5);
+            yield return new WaitForSeconds(2f);
+        }
+    }
+
 }

@@ -1,8 +1,10 @@
+using MoreMountains.Tools;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 
 public enum BossState
 {
@@ -13,10 +15,9 @@ public enum BossState
 
 public class DeathKnight : MonoBehaviour
 {
-    private float speedValue; // 애니메이션 속도 수치
-
     [SerializeField] private float maxHp;
     [SerializeField] private float currentHp;
+    public float hPRatio { get { return (float)currentHp / maxHp; } }
     [SerializeField] protected int damage;
     [SerializeField] private bool hitFeedback;
     [SerializeField] private float stunDuration;
@@ -36,6 +37,7 @@ public class DeathKnight : MonoBehaviour
 
     public BoxCollider attackCol; // 어택 범위
 
+    MonsterRace race;
     AudioSource audioSource;
     NavMeshAgent agent;
     Animator anim;
@@ -46,18 +48,24 @@ public class DeathKnight : MonoBehaviour
     [SerializeField] private GameObject myWeapon;
     [SerializeField] private Material mySwordMaterial;
     [SerializeField] private GameObject swordEffect;
+    [SerializeField] private EnterBossRoom room;
 
     [HideInInspector] public bool skillCD;
     [HideInInspector] public float skillCoolDown;
 
+    [HideInInspector] public UnityEvent<float> OnBossHPChange = new();
+    [HideInInspector] public UnityEvent OnBossDie = new();
+
     private void Awake()
     {
+        room = FindObjectOfType<EnterBossRoom>();
+        race = MonsterRace.Boss;
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         rb = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
         hitFeedback = true;
-        skillCoolDown = 0f;
+        stunDuration = 1f;
     }
 
     private void Start()
@@ -70,29 +78,13 @@ public class DeathKnight : MonoBehaviour
         bossState = BossState.NORMAL;
     }
 
-    private void Update()
-    {
-        CheckSkillCD();
-    }
-
-    private void CheckSkillCD()
-    {
-        if (skillCoolDown > 0f)
-        {
-            skillCoolDown -= Time.deltaTime;
-        }
-
-        if (skillCoolDown <= 0f)
-        {
-            skillCD = false;
-        }
-    }
 
     public void TakeDamage(float damage)
     {
         if (bossState == BossState.DEAD) { return; }
 
-        currentHp -= damage;
+        //currentHp -= damage;
+        SubCurHP((int)damage);
 
         if (currentHp <= maxHp / 2)
         {
@@ -116,12 +108,49 @@ public class DeathKnight : MonoBehaviour
 
     private void Die()
     {
-        //audioSource?.PlayOneShot(SetSound("Dead"));
+        audioSource?.PlayOneShot(SetSound("Dead"));
+        agent.isStopped = true;
+        rb.velocity = Vector3.zero;
         anim.applyRootMotion = true;
         anim.SetTrigger("Dead");
+        DropItem();
+        room.BlockOnOff();
         target = null;
         bossState = BossState.DEAD;
-        Destroy(gameObject, 3f);
+        Invoke("ReleaseBossUI", 3f);
+        Destroy(gameObject, 4f);
+    }
+
+    private void ReleaseBossUI()
+    {
+        GameManager.UI.ClearBossUI();
+        GameManager.UI.CloseBossUI(GameManager.UI.SceneCanvas.transform.Find("BossUI").GetComponent<BossUI>());
+    }
+
+    private void DropItem()
+    {
+        GameObject obj = GameManager.Monster.GetItemObj();
+        GameObject item = Instantiate(obj, transform.position + Vector3.up * 1f, Quaternion.identity);
+        item.GetComponentInChildren<DropItem>()?.SetMonsterRace(race);
+    }
+
+    public void AddCurHP(int amount)
+    {
+        currentHp += amount;
+        if (currentHp > maxHp)
+            currentHp = maxHp;
+        OnBossHPChange?.Invoke(hPRatio);
+    }
+
+    public void SubCurHP(int amount)
+    {
+        currentHp -= amount;
+        OnBossHPChange?.Invoke(hPRatio);
+        if (currentHp <= 0)
+        {
+            currentHp = 0;
+            OnBossDie?.Invoke();
+        }
     }
 
     private AudioClip SetSound(string soundName)
@@ -145,6 +174,7 @@ public class DeathKnight : MonoBehaviour
         {
             Vector3 moveDir = new Vector3(transform.forward.x, 0, transform.forward.z);
             rb.velocity = moveSpeed * moveDir;
+            //agent.Move(moveDir * moveSpeed);
         }
     }
 
@@ -166,6 +196,7 @@ public class DeathKnight : MonoBehaviour
     private void OnMoveStop()
     {
         rb.velocity = Vector3.zero;
+        //agent.SetDestination(transform.position);
     }
 
     private void StopAttackTmp(float time)
@@ -223,5 +254,20 @@ public class DeathKnight : MonoBehaviour
     private void TwoHandedSkill4_2Sound()
     {
         audioSource?.PlayOneShot(GameManager.Monster.GetBossSkillSound("TwoHandedSkill4_2"));
+    }
+
+    private void SetKnockback()
+    {
+        hitFeedback = false;
+
+        Vector3 knockbackDir = (target.position - transform.position).normalized;
+
+        knockback = knockbackDir;
+    }
+
+    private void ResetKnockback()
+    {
+        hitFeedback = true;
+        knockback = Vector3.zero;
     }
 }

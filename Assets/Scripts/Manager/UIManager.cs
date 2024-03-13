@@ -13,6 +13,9 @@ public class UIManager : MonoBehaviour
 	private Canvas windowCanvas;
 	private Canvas inGameCanvas;
 	private Canvas sceneCanvas;
+	public Canvas SceneCanvas => sceneCanvas;
+
+	private Canvas bossCanvas;
 
 	private bool menuOpened;
 	[HideInInspector] public UnityEvent<bool> OnHideSceneUI = new();
@@ -230,6 +233,46 @@ public class UIManager : MonoBehaviour
 		}
 	}
 
+	//TODO: BossUI
+	public void ShowBossUI()
+	{
+        bossCanvas = GameManager.Resource.Instantiate<Canvas>("UI/Canvas");
+        bossCanvas.gameObject.name = "BossCanvas";
+        bossCanvas.sortingOrder = 100;
+    }
+
+	public T ShowBossUI<T>(T bossUI) where T : BossUI
+	{
+		T ui = GameManager.Pool.GetUI(bossUI);
+		ui.transform.SetParent(sceneCanvas.transform, false);
+
+		return ui;
+	}
+
+	public T ShowBossUI<T>(string path) where T : BossUI
+	{
+		T ui = GameManager.Resource.Load<T>(path);
+		return ShowBossUI(ui);
+	}
+
+	public void CloseBossUI<T>(T inBossUI) where T : BossUI
+	{
+		GameManager.Pool.ReleaseUI(inBossUI.gameObject);
+	}
+
+	public void ClearBossUI()
+	{
+		if (inGameCanvas == null) return;
+
+		BossUI[] bosses = inGameCanvas.GetComponentsInChildren<BossUI>();
+
+		foreach (BossUI bossUI in bosses)
+		{
+			GameManager.Pool.ReleaseUI(bossUI.gameObject);
+		}
+	}
+	//////////////////////////////////////////////////////////////////////////
+
 	public void MenuToggle()
 	{
 		menuOpened = !menuOpened;
@@ -245,8 +288,14 @@ public class UIManager : MonoBehaviour
 		HideSceneUI(menuOpened);
 	}
 
-	public void HideSceneUI(bool hide)
+	public void HideSceneUI(bool hide, float wait = 0f)
 	{
+		_ = StartCoroutine(CoHide(hide, wait));
+	}
+
+	private IEnumerator CoHide(bool hide, float wait)
+	{
+		yield return new WaitForSeconds(wait);
 		OnHideSceneUI?.Invoke(hide);
 	}
 

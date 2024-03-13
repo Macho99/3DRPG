@@ -25,7 +25,7 @@ public class WalkRightState : StateMachineBehaviour
         timer += Time.deltaTime;
 
         agent.Move(animator.transform.right * 2f * Time.deltaTime);
-        animator.transform.LookAt(target);
+        animator.transform.LookAt(new Vector3(target.position.x, animator.transform.position.y, target.position.z));
 
         if (timer > randomTime)
         {

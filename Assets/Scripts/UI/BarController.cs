@@ -51,9 +51,12 @@ public abstract class BarController : BaseUI
 		float ratio = initValueFunc();
 		mediumMask.fillAmount = ratio;
 		frontMask.fillAmount = ratio;
-		BarText barText = updateTextFunc();
-		curText.text = barText.cur.ToString();
-		maxText.text = barText.max.ToString();
+		if(updateTextFunc != null)
+		{
+			BarText barText = updateTextFunc();
+			curText.text = barText.cur.ToString();
+			maxText.text = barText.max.ToString();
+		}
 	}
 
 	private void OnDisable()
@@ -67,9 +70,12 @@ public abstract class BarController : BaseUI
 		bool heal = prevRatio < ratio;
 		_ = StartCoroutine(CoLerp(ratio, heal));
 		prevRatio = ratio;
-		BarText barText = updateTextFunc();
-		curText.text = barText.cur.ToString();
-		maxText.text = barText.max.ToString();
+		if (updateTextFunc != null)
+		{
+			BarText barText = updateTextFunc();
+			curText.text = barText.cur.ToString();
+			maxText.text = barText.max.ToString();
+		}
 	}
 
 	private IEnumerator CoLerp(float ratio, bool heal)

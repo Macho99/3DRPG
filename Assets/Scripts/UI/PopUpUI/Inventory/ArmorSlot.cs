@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -48,4 +49,9 @@ public class ArmorSlot : MountingSlot
 	{
 		_ = TryUnEquip();
     }
+
+	public void Refresh()
+	{
+		SetItem(GameManager.Inven.GetArmorSlot(armorType));
+	}
 }

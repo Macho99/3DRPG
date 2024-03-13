@@ -823,8 +823,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sentence:
-  - "\uB09A\uC2DC\uC911.."
-  - "\uB09A\uC2DC\uC911..\u314B\u314B.."
+  - "\uAD11\uC7A5\uC758 \uC74C\uC545\uAC00\uC758 \uB178\uB798\uB97C \uB4E4\uC740
+    \uC0AC\uB78C\uB4E4\uC774 \uD798\uC774 \uB418\uC5C8\uB2E4\uACE0 \uD558\uB354\uB77C\uACE0\uC694."
+  - "\uC2DC\uAC04\uC774 \uB098\uBA74 \uD55C\uBC88 \uB4E4\uB824\uBCF4\uC138\uC694~"
   savePos: {x: 0, y: 0, z: 0, w: 0}
 --- !u!114 &4320817488949333218
 MonoBehaviour:
@@ -5651,7 +5652,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 6943
+  m_VersionIndex: 6946
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []

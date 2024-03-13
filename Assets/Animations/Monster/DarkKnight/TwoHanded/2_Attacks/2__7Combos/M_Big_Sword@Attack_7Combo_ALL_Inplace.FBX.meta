@@ -493,7 +493,7 @@ ModelImporter:
         functionName: OnMoveForward
         data: 
         objectReferenceParameter: {instanceID: 0}
-        floatParameter: 10
+        floatParameter: 8
         intParameter: 0
         messageOptions: 0
       - time: 0.30365297
@@ -507,7 +507,7 @@ ModelImporter:
         functionName: OnMoveForward
         data: 
         objectReferenceParameter: {instanceID: 0}
-        floatParameter: 10
+        floatParameter: 8
         intParameter: 0
         messageOptions: 0
       - time: 0.5707763
@@ -521,7 +521,7 @@ ModelImporter:
         functionName: OnMoveForward
         data: 
         objectReferenceParameter: {instanceID: 0}
-        floatParameter: 15
+        floatParameter: 10
         intParameter: 0
         messageOptions: 0
       - time: 0.7945205
@@ -589,6 +589,20 @@ ModelImporter:
         messageOptions: 0
       - time: 0.71622705
         functionName: TwoHandedSwingSound
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.56172466
+        functionName: SetKnockback
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.8287063
+        functionName: ResetKnockback
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0

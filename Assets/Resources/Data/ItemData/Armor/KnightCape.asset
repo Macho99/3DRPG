@@ -17,7 +17,8 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: 82daf976b93d4274bb14b429206d2259, type: 3}
   summary: "\uAC04\uC9C0\uB098\uB294 \uAE30\uC0AC \uB9DD\uD1A0\uC774\uB2E4"
   detailDesc: "\uC880 \uB531\uB531\uD574\uBCF4\uC774\uC9C0\uB9CC \uAE30\uBD84\uD0D3\uC774\uB2E4"
-  price: 0
+  price: 30
+  id: 
   armorType: 4
   armorSkinName: PT_Female_Armor_01_A_cape
   armorStat:

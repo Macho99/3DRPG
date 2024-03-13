@@ -17,7 +17,8 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: 572521b61e6a73447a7b37e4406a5bd5, type: 3}
   summary: "\uB9C8\uB098 20 \uD68C\uBCF5"
   detailDesc: "\uC2A4\uD0AC\uC744 \uC4F0\uAE30\uC704\uD574 \uAF2D \uBA39\uC5B4\uC57C\uD55C\uB2E4."
-  price: 0
+  price: 2
+  id: 
   recoveryType: 1
   recoveryAmount: 20
   paritclePrefab: {fileID: 198587703769245278, guid: a75d986a64b13394aa88c1ce2071491b, type: 3}

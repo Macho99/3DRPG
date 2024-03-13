@@ -40,6 +40,8 @@ public class ChasingState : StateMachineBehaviour
         if (Vector3.Distance(animator.transform.position, monster.spawnPosition) > monster.distanceFromOriginPos)
         {
             agent.stoppingDistance = 0f;
+            monster.obstacleMask = LayerMask.GetMask("Tree", "Environment");
+            monster.viewAngle = 0f;
             agent.SetDestination(monster.spawnPosition);
             monster.target = null;
             target = null;

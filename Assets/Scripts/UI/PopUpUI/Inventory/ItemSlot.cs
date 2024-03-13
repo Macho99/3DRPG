@@ -40,7 +40,7 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 		toggle.onValueChanged.AddListener(Selected);
 	}
 
-	private void Selected(bool value)
+    private void Selected(bool value)
 	{
 		invenUI.Selected(this, value);
 	}

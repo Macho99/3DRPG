@@ -1,4 +1,4 @@
 TODO:
 
-- boss screen effect, camerashaking, skill3
-- Effect, Sound
+- class diagram
+- video
