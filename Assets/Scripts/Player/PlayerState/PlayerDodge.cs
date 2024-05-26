@@ -92,7 +92,6 @@ public class PlayerDodge : StateBase<Player.State, Player>
 
 	private void SetAnim()
 	{
-
 		Vector3 moveVec3;
 		if (playerMove.MoveInput.sqrMagnitude < 0.1f)
 		{

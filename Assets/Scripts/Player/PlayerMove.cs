@@ -294,7 +294,6 @@ public class PlayerMove : MonoBehaviour
 		float gd2 = 2 * -ScaledGravity * dist;
 		float sqrt = Mathf.Sqrt(velY * velY + gd2);
 		float result = (velY + sqrt) / -ScaledGravity;
-		//print(result);
 		return result;
 	}
 }

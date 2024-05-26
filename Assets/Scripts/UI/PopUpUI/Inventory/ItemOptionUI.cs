@@ -71,7 +71,7 @@ public class ItemOptionUI : PopUpUI
 
     private void Update()
     {
-        if (GameManager.Dialogue.InteractionNPC.GetComponent<IsTradeAble>() == null)
+        if (GameManager.Dialogue.InteractionNPC == null || GameManager.Dialogue.InteractionNPC.GetComponent<IsTradeAble>() == null)
         {
 			sellButton.gameObject.SetActive(false);
         }
