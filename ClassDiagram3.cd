@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="WeaponItemData" Collapsed="true">
+    <Position X="0.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAGAAAABgAAAAAAAAAAAAAAAAAAAAAAAAAIAAEA=</HashCode>
+      <FileName>Assets\Scripts\ItemData\WeaponItemData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ArmorItem" Collapsed="true">
+    <Position X="6.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAAAIAAAAAAAAAAAAAAgAAAAAAAAgAAAABA=</HashCode>
+      <FileName>Assets\Scripts\Item\ArmorItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ConsumpItem" Collapsed="true">
+    <Position X="11.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Item\ConsumpItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EquipItem" Collapsed="true">
+    <Position X="8" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Item\EquipItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Item" Collapsed="true">
+    <Position X="10" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACEAAAAAQAAgAAgACAAAAAAAAAEAAASAAAAAAAAAhA=</HashCode>
+      <FileName>Assets\Scripts\Item\Item.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MultipleItem" Collapsed="true">
+    <Position X="12.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAACAAAAAgAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Item\MultipleItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OtherItem" Collapsed="true">
+    <Position X="13.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAABA=</HashCode>
+      <FileName>Assets\Scripts\Item\OtherItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RecoveryConsumpItem" Collapsed="true">
+    <Position X="11.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAAAAAAAAAAAACgAEAAAAAAAEAAAAABA=</HashCode>
+      <FileName>Assets\Scripts\Item\RecoveryConsumpItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WeaponItem" Collapsed="true">
+    <Position X="9.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABABA=</HashCode>
+      <FileName>Assets\Scripts\Item\WeaponItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ArmorItemData" Collapsed="true">
+    <Position X="5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAAAIAAAACAQAAAAAAAgAAAAIAAAAAAAAEA=</HashCode>
+      <FileName>Assets\Scripts\ItemData\ArmorItemData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ItemData" Collapsed="true">
+    <Position X="2.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QACHAEAABQAAAAAgAAAAAAAAABAAAAAQAAACAAAAgiA=</HashCode>
+      <FileName>Assets\Scripts\ItemData\ItemData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RecoveryConsumpItemData" Collapsed="true">
+    <Position X="2.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAACAAAAAAAAAAAAAAAACAAAAAwAAAAEAAAAAEA=</HashCode>
+      <FileName>Assets\Scripts\ItemData\RecoveryConsumpItemData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="맑은 고딕" Size="9" />
+</ClassDiagram>
